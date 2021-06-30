@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="RobootFramework-环境">
+<meta property="og:url" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-Robootframework-%E7%8E%AF%E5%A2%83%5C1584930079140.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/1584930079140.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-Robootframework-%E7%8E%AF%E5%A2%83%5C1584930097612.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/1584930097612.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-Robootframework-%E7%8E%AF%E5%A2%83%5C1683050-8d2460da7abc2766.webp">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/1683050-8d2460da7abc2766.webp">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-Robootframework-%E7%8E%AF%E5%A2%83%5C1586929641345.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/1586929641345.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-Robootframework-%E7%8E%AF%E5%A2%83%5C20180821114955157.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/20180821114955157.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-Robootframework-%E7%8E%AF%E5%A2%83%5C20180524084707890.jpg">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/20180524084707890.jpg">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-Robootframework-%E7%8E%AF%E5%A2%83%5C1587525257904-1587525868005.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/1587525257904-1587525868005.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-Robootframework-%E7%8E%AF%E5%A2%83%5C1587524969800.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/1587524969800.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-Robootframework-%E7%8E%AF%E5%A2%83%5C20180707153903872.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/20180707153903872.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-Robootframework-%E7%8E%AF%E5%A2%83%5C20180707153956548.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/20180707153956548.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-Robootframework-%E7%8E%AF%E5%A2%83%5C2018070715485789.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2018070715485789.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-Robootframework-%E7%8E%AF%E5%A2%83%5C20180707154919513.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/20180707154919513.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-Robootframework-%E7%8E%AF%E5%A2%83%5C20180707160228358.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/20180707160228358.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83%5Cimage-20210628232059612-1624893661921.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83%5Cimage-20210628232143168.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83%5Cimage-20210628232258552.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83%5Cimage-20210628232327547.png">
+<meta property="article:published_time" content="2008-01-04T10:37:19.000Z">
+<meta property="article:modified_time" content="2021-06-28T15:24:26.173Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="RobootFramework-环境">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-Robootframework-%E7%8E%AF%E5%A2%83%5C1584930079140.png">
+
+<link rel="canonical" href="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>RobootFramework-环境 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">嘻嘻嘻嘻嘻嘻</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="What hurts more, the pain of hard work or the pain of regret?">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RobootFramework-环境
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2008-01-04 18:37:19" itemprop="dateCreated datePublished" datetime="2008-01-04T18:37:19+08:00">2008-01-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-28 23:24:26" itemprop="dateModified" datetime="2021-06-28T23:24:26+08:00">2021-06-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/RobootFramework/" itemprop="url" rel="index"><span itemprop="name">RobootFramework</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>15k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>14 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">新港windows自动化测试虚机</span><br><span class="line"></span><br><span class="line"><span class="number">10.242.11.232</span> mOQ:k03g    </span><br><span class="line"><span class="number">10.242.11.233</span> Y2hC0!xc</span><br><span class="line"></span><br><span class="line"><span class="number">233</span>后面给snbs使用，<span class="number">232</span>给uimg和oss使用</span><br><span class="line"></span><br><span class="line">用户名administrator</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$&#123;url&#125;	<span class="meta">Set</span> Variable	http://10.242.180.208:8787		</span><br><span class="line"><span class="meta">Create</span> Session	kvreq	$&#123;url&#125;		</span><br><span class="line">$&#123;resp&#125;	<span class="meta">Put</span> Request	kvreq	/region/pool/vol?pool=SNPOOL001<span class="variable">&amp;volume</span>=nude052<span class="variable">&amp;size</span>=107374182400	</span><br><span class="line">Should Be Equal <span class="meta">As</span> Strings	$&#123;resp.status_code&#125;	400		</span><br><span class="line"></span><br><span class="line">curl -<span class="meta">X</span> <span class="meta">PUT</span> http://127.0.01:8787/region/pool/vol?pool=SNPOOL001<span class="variable">&amp;volume</span>=nude052<span class="variable">&amp;size</span>=102400000</span><br><span class="line">并校验返回code</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">robotframework：</span><br><span class="line">https:<span class="regexp">//</span>www.cnblogs.com<span class="regexp">/jinjiangongzuoshi/</span>category<span class="regexp">/792137.html</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">4.保存工程</span><br><span class="line">  快捷键：ctrl+<span class="built_in">shift</span>+s（保存整个工程），ctrl+s（局部保存，只保存鼠标点击的部分）</span><br><span class="line">  </span><br><span class="line">  二、快捷键：</span><br><span class="line">重命名——》F2</span><br><span class="line"></span><br><span class="line">搜索关键字——》F5</span><br><span class="line"></span><br><span class="line">执行用例——》F8</span><br><span class="line"></span><br><span class="line">创建新工程——》ctrl+n</span><br><span class="line"></span><br><span class="line">创建新测试套——》ctrl+<span class="built_in">shift</span>+f</span><br><span class="line"></span><br><span class="line">创建新用例——》ctrl+<span class="built_in">shift</span>+t</span><br><span class="line"></span><br><span class="line">创建新关键字——》ctrl+<span class="built_in">shift</span>+k</span><br><span class="line"></span><br><span class="line">向上移动用例——》ctrl+↑</span><br><span class="line"></span><br><span class="line">向下移动用例——》ctrl+↓</span><br><span class="line"></span><br><span class="line">显示关键字信息——》 ctrl+鼠标悬浮（鼠标悬浮于关键字上）</span><br><span class="line"></span><br><span class="line">自动补全关键字——》ctrl+<span class="built_in">shift</span>+空格</span><br><span class="line"></span><br><span class="line">删除行——》ctrl+d</span><br><span class="line"></span><br><span class="line">删除单元格——》ctrl+<span class="built_in">shift</span>+d</span><br><span class="line"></span><br><span class="line">插入单元格——》ctrl+<span class="built_in">shift</span>+i</span><br><span class="line"></span><br><span class="line">插入行——》ctrl+i</span><br><span class="line"></span><br><span class="line">屏蔽代码——》ctrl+<span class="comment">#</span></span><br><span class="line"></span><br><span class="line">取消屏蔽——》ctrl+$</span><br><span class="line"></span><br><span class="line">保存整个工程——》ctrl+shit+s</span><br><span class="line"></span><br><span class="line">局部保存，保存鼠标点击的部分——》ctrl+s</span><br><span class="line"></span><br><span class="line">查看<span class="built_in">log</span>——》ctrl+L</span><br><span class="line"></span><br><span class="line">查看report——》ctrl+r</span><br><span class="line"></span><br><span class="line">注意：如果快捷键不能使用，先看看是否有其他软件已占用相应的快捷键</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">全局列表：</span><br><span class="line">在全变量下面选择<span class="string">"new list varible"</span></span><br><span class="line"></span><br><span class="line">如何读取列表中的某一个值：<span class="variable">$&#123;Master_ip[1]&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>循环：</span><br><span class="line">: <span class="keyword">FOR</span>	$&#123;<span class="keyword">table</span>-<span class="type">name</span>&#125;	<span class="keyword">IN</span>	@&#123;<span class="keyword">table</span>-list1&#125;		</span><br><span class="line">	<span class="keyword">create</span>-<span class="keyword">table</span><span class="number">-1</span>	$&#123;<span class="keyword">cluster</span>-ip&#125;	$&#123;<span class="keyword">cluster</span>-<span class="type">name</span>&#125;	$&#123;db-<span class="type">name</span>&#125;	$&#123;<span class="keyword">table</span>-<span class="type">name</span>&#125;</span><br><span class="line"><span class="keyword">log</span>	outside <span class="keyword">loop</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install robotframework-SSHLibrary --proxy http:<span class="regexp">//</span>xzproxy.cnsuning.com:<span class="number">8080</span>  -i https:<span class="regexp">//</span>pypi.tuna.tsinghua.edu.cn<span class="regexp">/simple/</span></span><br><span class="line">pip install jsonpatch --proxy http:<span class="regexp">//</span>xzproxy.cnsuning.com:<span class="number">8080</span>  -i https:<span class="regexp">//</span>pypi.tuna.tsinghua.edu.cn<span class="regexp">/simple/</span></span><br><span class="line">pip install robotframework-httplibrary --proxy http:<span class="regexp">//</span>xzproxy.cnsuning.com:<span class="number">8080</span>  -i https:<span class="regexp">//</span>pypi.tuna.tsinghua.edu.cn<span class="regexp">/simple/</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-Robootframework-%E7%8E%AF%E5%A2%83%5C1584930079140.png" alt> </p>
+<img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/1584930079140.png" class title="This is an example image">
+
+<p><img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-Robootframework-%E7%8E%AF%E5%A2%83%5C1584930097612.png" alt> </p>
+<img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/1584930097612.png" class title="This is an example image">
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">SSH 远程（可以不更改）</span><br><span class="line">号码注册激活、SMS 短信接收会用到的库 1. 安装 SSHLibrary cmd 中输入 pip <span class="keyword">install</span> robotframework-sshlibrary <span class="number">2.</span> 更改库文件中错误 site-packages/SSHLibrary/pythonclient.py 中 <span class="number">31</span> 和 <span class="number">32</span> 行更改为 <span class="keyword">def</span> _custom_start_client(<span class="keyword">self</span>, <span class="keyword">event</span>=<span class="keyword">None</span>, <span class="keyword">timeout</span>=<span class="keyword">None</span>): self.banner_timeout = <span class="keyword">timeout</span></span><br><span class="line"></span><br><span class="line">https://www.tceic.com/<span class="number">4</span>gg5268168ji5022ggkg998lii22hij126ll42i1.html</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">解决：ssh问题</span><br><span class="line">https://blog.csdn.net/Lsaisai/article/details/<span class="number">81510775</span></span><br><span class="line">安装ecdsa</span><br><span class="line">pip <span class="keyword">install</span> ecdsa</span><br><span class="line">安装paramiko</span><br><span class="line">pip <span class="keyword">install</span> paramiko==<span class="number">1.17</span><span class="number">.1</span> 注意版本号</span><br><span class="line">安装robotframework-sshlibrary</span><br><span class="line">pip <span class="keyword">install</span> robotframework-sshlibrary==<span class="number">2.1</span><span class="number">.1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">http</span>://blog.sina.com.cn/s/blog_71bc9d680102xa2q.html</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">Robot Framework中SSHLibrary 学习与总结：</span><br><span class="line"><span class="symbol">https:</span>/<span class="regexp">/www.cnblogs.com/mianbaoshu</span><span class="regexp">/p/</span><span class="number">8857765</span>.html</span><br><span class="line"><span class="symbol">https:</span>/<span class="regexp">/blog.csdn.net/silencemylove</span><span class="regexp">/article/details</span><span class="regexp">/48653615</span></span><br><span class="line"><span class="regexp">https:/</span><span class="regexp">/www.cnblogs.com/senjougahara</span><span class="regexp">/p/</span><span class="number">6090000</span>.html</span><br><span class="line"></span><br><span class="line">官方包下载地址：</span><br><span class="line"><span class="symbol">https:</span>/<span class="regexp">/pypi.org/project</span><span class="regexp">/paramiko/</span><span class="comment">#files</span></span><br><span class="line"></span><br><span class="line">pip源：</span><br><span class="line"><span class="symbol">http:</span>/<span class="regexp">/mirrors.aliyun.com/pypi</span><span class="regexp">/simple/</span></span><br><span class="line">清华：<span class="symbol">https:</span>/<span class="regexp">/pypi.tuna.tsinghua.edu.cn/simple</span></span><br><span class="line">阿里云：<span class="symbol">http:</span>/<span class="regexp">/mirrors.aliyun.com/pypi</span><span class="regexp">/simple/</span></span><br><span class="line">中国科技大学 <span class="symbol">https:</span>/<span class="regexp">/pypi.mirrors.ustc.edu.cn/simple</span><span class="regexp">/</span></span><br><span class="line"><span class="regexp">华中理工大学：http:/</span><span class="regexp">/pypi.hustunique.com/</span></span><br><span class="line">山东理工大学：<span class="symbol">http:</span>/<span class="regexp">/pypi.sdutlinux.org/</span> </span><br><span class="line">豆瓣：<span class="symbol">http:</span>/<span class="regexp">/pypi.douban.com/simple</span><span class="regexp">/</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">https:/</span><span class="regexp">/blog.csdn.net/</span>Lsaisai/article/details/<span class="number">81510775</span><span class="comment">#</span></span><br><span class="line"></span><br><span class="line"><span class="number">6</span>. 总结</span><br><span class="line">有 .whl 或 .egg 的, 就不要使用 .tgz, cffi 就很难在离线状态下从源码编译成功.</span><br><span class="line"></span><br><span class="line"><span class="symbol">http:</span>/<span class="regexp">/xzproxy.cnsuning.com:8080为代理</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">python -m pip install --upgrade pip --proxy http:/</span><span class="regexp">/xzproxy.cnsuning.com:8080 -i https:/</span><span class="regexp">/pypi.tuna.tsinghua.edu.cn/simple</span><span class="regexp">/</span></span><br><span class="line"><span class="regexp">pip install robotframework-SSHLibrary --proxy http:/</span><span class="regexp">/xzproxy.cnsuning.com:8080  -i https:/</span><span class="regexp">/pypi.tuna.tsinghua.edu.cn/simple</span><span class="regexp">/</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">pip install robotframework-SSHLibrary --proxy http:/</span><span class="regexp">/xzproxy.cnsuning.com:8080  -i http:/</span><span class="regexp">/mirrors.aliyun.com/pypi</span><span class="regexp">/simple/</span></span><br><span class="line"></span><br><span class="line">pip install robotframework-SSHLibrary==<span class="number">2.1</span>.<span class="number">1</span> --proxy <span class="symbol">http:</span>/<span class="regexp">/xzproxy.cnsuning.com:8080  -i http:/</span><span class="regexp">/mirrors.aliyun.com/pypi</span><span class="regexp">/simple/</span></span><br><span class="line"></span><br><span class="line">pip install robotframework-sshlibrary==<span class="number">2.1</span>.<span class="number">1</span> --proxy <span class="symbol">http:</span>/<span class="regexp">/xzproxy.cnsuning.com:8080</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">python -m pip install --upgrade pip --proxy http:/</span><span class="regexp">/xzproxy.cnsuning.com:8080 -i  https:/</span><span class="regexp">/pypi.tuna.tsinghua.edu.cn/simple</span><span class="regexp">/</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">pip install robotframework --proxy http:/</span><span class="regexp">/xzproxy.cnsuning.com:8080  -i  https:/</span><span class="regexp">/pypi.tuna.tsinghua.edu.cn/simple</span><span class="regexp">/</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">pip install robotframework-ride --proxy http:/</span><span class="regexp">/xzproxy.cnsuning.com:8080  -i  https:/</span><span class="regexp">/pypi.tuna.tsinghua.edu.cn/simple</span><span class="regexp">/</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">pip install robotframework-httplibrary --proxy http:/</span><span class="regexp">/xzproxy.cnsuning.com:8080 -i  https:/</span><span class="regexp">/pypi.tuna.tsinghua.edu.cn/simple</span><span class="regexp">/</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">robotframework默认值：https:<span class="comment">//www.jianshu.com/p/310d52d7f1d7</span></span><br><span class="line">假设我们想把其中第<span class="number">2</span>个参数设成选填参数，选填参数就是给参数加上默认值。</span><br><span class="line"></span><br><span class="line">默认值使用 = 加上值，如果想默认为空，只写等号就行了。</span><br><span class="line"></span><br><span class="line">（默认值的意思不需要细讲了哈，就是如果你在调用这个关键字的时候，如果不给这个选填参数传值，那么就使用默认值作为参数的值）</span><br><span class="line"></span><br><span class="line">如果我们直接这样加的话，点击OK就会报错。意思是说必填参数不允许在选填参数后面。</span><br><span class="line"></span><br><span class="line">也就是说如果某一个参数设置成了选填参数，那么他后面的参数都必须是选填参数，不能是必填参数。</span><br><span class="line"></span><br><span class="line">在我们这里就是第<span class="number">2</span>个参数如果要可选，要么把<span class="number">3</span>、<span class="number">4</span>参数也都设置上默认值，要么就把第<span class="number">2</span>个参数调整到最后去。我先调整成下面这样，就不会报错了</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-Robootframework-%E7%8E%AF%E5%A2%83%5C1683050-8d2460da7abc2766.webp" alt> </p>
+<img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/1683050-8d2460da7abc2766.webp" class title="This is an example image">
+
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">https://www.cnblogs.com/jasmine0112/p/<span class="number">12191140.</span>html</span><br><span class="line">robotframework常见报错记录</span><br><span class="line"><span class="number">1.</span><span class="string">'Response'</span> <span class="keyword">object</span> has <span class="keyword">no</span> <span class="keyword">attribute</span> <span class="string">'__getitem__'</span>：<span class="string">'Response'</span>对象没有属性<span class="string">' getitem__'</span></span><br><span class="line"></span><br><span class="line">response对象的属性</span><br><span class="line">r.status_code	　　             HTTP请求的返回状态</span><br><span class="line">r.text	　　　　　                HTTP响应内容的字符串形式，即：url对应的页面内容</span><br><span class="line">r.<span class="keyword">encoding</span>	　　                 从HTTP <span class="keyword">header</span>中猜测的响应内容编码方式</span><br><span class="line">r.apparent_encoding　　  从内容中分析出的响应内容编码方式（备选编码方式）</span><br><span class="line">r.content                            HTTP响应内容的二进制形式</span><br><span class="line"></span><br><span class="line">简单来说就是不能直接使用response对象，而是需要使用response对象的属性，经常使用的属性有r.content和r.text</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>Keyword <span class="string">'BuiltIn.Should Be Equal As Strings'</span> expected <span class="number">2</span> <span class="keyword">to</span> <span class="number">5</span> arguments, got <span class="number">0.</span></span><br><span class="line"></span><br><span class="line">检查条件语句的大小写和使用是否正确</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="怎么样导入RobotFramework-自定义关键字（库文件）"><a href="#怎么样导入RobotFramework-自定义关键字（库文件）" class="headerlink" title="怎么样导入RobotFramework 自定义关键字（库文件）"></a>怎么样导入RobotFramework 自定义关键字（库文件）</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">https:</span>/<span class="regexp">/my.oschina.net/hibony</span><span class="regexp">/blog/</span><span class="number">665001</span>?p=&#123;&#123;page</span><br><span class="line">mytool.py</span><br><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">mytool</span>():</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">		pass</span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">test_a_b</span><span class="params">(<span class="keyword">self</span>,a,b)</span></span><span class="symbol">:</span></span><br><span class="line">		<span class="string">''</span><span class="string">'</span></span><br><span class="line"><span class="string">		比较两个参数的大小</span></span><br><span class="line"><span class="string">		'</span><span class="string">''</span></span><br><span class="line">		<span class="keyword">if</span> a&gt;<span class="symbol">b:</span></span><br><span class="line">			flag = False</span><br><span class="line">			<span class="keyword">return</span> flag</span><br><span class="line">		<span class="symbol">else:</span></span><br><span class="line">			flag = True</span><br><span class="line">			<span class="keyword">return</span> flag</span><br><span class="line">			</span><br><span class="line">__init_<span class="number">_</span>.py </span><br><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line">from mytool import mytool</span><br><span class="line">version = <span class="string">'1.0'</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyLibrary</span>(<span class="title">mytool</span>):</span></span><br><span class="line">    ROBOT_LIBRARY_SCOPE = <span class="string">'GLOBAL'</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">在编辑工具中添加插件</span><br><span class="line"></span><br><span class="line">在编辑工具中添加插件，支持RF的格式高亮等</span><br><span class="line"><span class="number">1</span>、notepad++</span><br><span class="line">https:<span class="comment">//github.com/vkosuri/npp-robot</span></span><br><span class="line"></span><br><span class="line"><span class="number">2</span>、其他IDE参考</span><br><span class="line">https:<span class="comment">//robotframework.org/#tools</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="RobotFramework-获取当前时间戳"><a href="#RobotFramework-获取当前时间戳" class="headerlink" title="RobotFramework: 获取当前时间戳"></a>RobotFramework: 获取当前时间戳</h1><p>DateTime 库</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#获取当前时间：<span class="number">2019</span><span class="number">-07</span><span class="number">-31</span> <span class="number">10</span>:<span class="number">46</span>:<span class="number">29.940</span></span><br><span class="line"> $&#123;time&#125;    Get Current Date    result_format=timestamp</span><br><span class="line"> #转化为原始时间戳：<span class="number">1564541189.94</span></span><br><span class="line"> $&#123;time_stamp&#125;    Convert Date    $&#123;time&#125;    epoch</span><br><span class="line"> #转化为毫秒级时间戳：<span class="number">1564541189940</span></span><br><span class="line"> $&#123;time_stamp2&#125;    evaluate    <span class="built_in">int</span>(round($&#123;time_stamp&#125; * <span class="number">1000</span>))</span><br></pre></td></tr></table></figure>
+
+<h1 id="Python2-X如何将Unicode中文字符串转换成-string字符串"><a href="#Python2-X如何将Unicode中文字符串转换成-string字符串" class="headerlink" title="Python2.X如何将Unicode中文字符串转换成 string字符串"></a>Python2.X如何将Unicode中文字符串转换成 string字符串</h1><p><a href="https://www.cnblogs.com/xiaojikuaipao/p/9584386.html" target="_blank" rel="noopener external nofollow noreferrer">https://www.cnblogs.com/xiaojikuaipao/p/9584386.html</a></p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">普通字符串可以用多种方式编码成Unicode字符串，具体要看你究竟选择了哪种编码：</span><br><span class="line"><span class="attr">unicodestring</span> = u<span class="string">"Hello world"</span> </span><br><span class="line"><span class="comment"># 将Unicode转化为普通Python字符串："encode"  </span></span><br><span class="line"><span class="attr">utf8string</span> = unicodestring.encode(<span class="string">"utf-8"</span>)  </span><br><span class="line"><span class="attr">asciistring</span> = unicodestring.encode(<span class="string">"ascii"</span>)  </span><br><span class="line"><span class="attr">isostring</span> = unicodestring.encode(<span class="string">"ISO-8859-1"</span>)  </span><br><span class="line"><span class="attr">utf16string</span> = unicodestring.encode(<span class="string">"utf-16"</span>)  </span><br><span class="line"><span class="comment"># 将普通Python字符串转化为Unicode："decode"  </span></span><br><span class="line"><span class="attr">plainstring1</span> = unicode(utf8string, <span class="string">"utf-8"</span>)  </span><br><span class="line"><span class="attr">plainstring2</span> = unicode(asciistring, <span class="string">"ascii"</span>)  </span><br><span class="line"><span class="attr">plainstring3</span> = unicode(isostring, <span class="string">"ISO-8859-1"</span>)  </span><br><span class="line"><span class="attr">plainstring4</span> = unicode(utf16string, <span class="string">"utf-16"</span>)  </span><br><span class="line"><span class="keyword">assert</span> <span class="attr">plainstring1</span> == <span class="attr">plainstring2</span> == <span class="attr">plainstring3</span> == plainstring4</span><br></pre></td></tr></table></figure>
+
+<h1 id="自定库使用断言来判断是否异常"><a href="#自定库使用断言来判断是否异常" class="headerlink" title="自定库使用断言来判断是否异常"></a>自定库使用断言来判断是否异常</h1><p><a href="https://www.jianshu.com/p/eea0b0e432da" target="_blank" rel="noopener external nofollow noreferrer">https://www.jianshu.com/p/eea0b0e432da</a></p>
+<p><a href="https://www.jianshu.com/p/b70b3340e55f" target="_blank" rel="noopener external nofollow noreferrer">https://www.jianshu.com/p/b70b3340e55f</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compare</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    <span class="keyword">assert</span> a&gt;b, <span class="string">'error: b is bigger'</span></span><br><span class="line">    print(<span class="string">'compare: %d %d'</span> %(a, b))</span><br><span class="line"></span><br><span class="line">compare(<span class="number">1</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="自定库备注展示-0xb2-不展示中文"><a href="#自定库备注展示-0xb2-不展示中文" class="headerlink" title="自定库备注展示 0xb2 不展示中文"></a>自定库备注展示 <strong>0xb2</strong> 不展示中文</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">建notepate++ 编码改成 UTF<span class="number">-8</span>格式编码</span><br></pre></td></tr></table></figure>
+<p><img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-Robootframework-%E7%8E%AF%E5%A2%83%5C1586929641345.png" alt> </p>
+<img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/1586929641345.png" class title="This is an example image">
+
+<h1 id="关键字run-keyword-if-使用总结包括【Evaluate神奇用法】"><a href="#关键字run-keyword-if-使用总结包括【Evaluate神奇用法】" class="headerlink" title="关键字run keyword if 使用总结包括【Evaluate神奇用法】"></a>关键字run keyword if 使用总结包括【Evaluate神奇用法】</h1><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="regexp">//</span>blog.csdn.net<span class="regexp">/haiweizhourong/</span>article<span class="regexp">/details/</span><span class="number">81905016</span></span><br><span class="line">robot framework ——关键字run keyword <span class="keyword">if</span> 使用总结包括</span><br></pre></td></tr></table></figure>
+
+<p>1、if后要执行多关键字方法用 Run Keywords AND ，或者封装一个关键字的组合</p>
+<p>2、if 后面的条件是多条件的用and，见下图<br><img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-Robootframework-%E7%8E%AF%E5%A2%83%5C20180821114955157.png" alt> </p>
+<img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/20180821114955157.png" class title="This is an example image">
+
+<p>3、run keyword if   ELSE  注意这个ELSE 不能用小写，robotframwork 的关键字不区分大小写，但是这个ELSE例外</p>
+<p>4、常用的比较符合见下图，供参考<br> <img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-Robootframework-%E7%8E%AF%E5%A2%83%5C20180524084707890.jpg" alt> </p>
+<img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/20180524084707890.jpg" class title="This is an example image">
+
+<h1 id="robotframework-多进程-多线程"><a href="#robotframework-多进程-多线程" class="headerlink" title="robotframework 多进程 多线程"></a>robotframework 多进程 多线程</h1><figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">自己使用总结：</span><br><span class="line">Run Process	pybot.bat	-t	003	-o	D:<span class="symbol">\\</span>Document<span class="symbol">\\</span>opt1.xml	D:<span class="symbol">\\</span>AutoTest<span class="symbol">\\</span>SNBSAutoTest<span class="symbol">\\</span>01-L0<span class="symbol">\\</span>01-基本功能<span class="symbol">\\</span>04-卷功能<span class="symbol">\\</span>01-普通卷.txt</span><br><span class="line"></span><br><span class="line">注意点：</span><br><span class="line">Start Process 代表后台执行，不用等待进程执行完成 </span><br><span class="line">Run Process 执行线程，需要等待进程执行完成</span><br><span class="line"></span><br><span class="line">start process pybot.bat -t 案例名称 -o 日志输出到哪里 测试套名称文件 alias=case1</span><br><span class="line">Run Process pybot.bat -t 案例名称 -o 日志输出到哪里 测试套名称文件</span><br><span class="line">wait for process	case1#配合后台start process执行</span><br><span class="line"></span><br><span class="line">具体例子：</span><br><span class="line">start process	pybot.bat	-t	003-卷读写	-o	D:<span class="symbol">\\</span>Document<span class="symbol">\\</span>opt1.xml	D:<span class="symbol">\\</span>AutoTest<span class="symbol">\\</span>SNBSAutoTest<span class="symbol">\\</span>01-L0<span class="symbol">\\</span>01-基本功能<span class="symbol">\\</span>04-卷功能<span class="symbol">\\</span>01-普通卷.txt	alias=case1</span><br><span class="line">start process	pybot.bat	-t	004-卷扩容	-o	D:<span class="symbol">\\</span>Document<span class="symbol">\\</span>opt2.xml	D:<span class="symbol">\\</span>AutoTest<span class="symbol">\\</span>SNBSAutoTest<span class="symbol">\\</span>01-L0<span class="symbol">\\</span>01-基本功能<span class="symbol">\\</span>04-卷功能<span class="symbol">\\</span>01-普通卷.txt	alias=case2</span><br><span class="line">wait for process	case1						</span><br><span class="line">wait for process	case2						</span><br><span class="line">Run Process	python	-m	robot.rebot	-d	D:/Document	-R	D:/Document/*.xml</span><br><span class="line"></span><br><span class="line">备注：</span><br><span class="line">003-卷读写、004-卷扩容	 #案例名称</span><br><span class="line">D:<span class="symbol">\\</span>Document<span class="symbol">\\</span>opt1.xml D:<span class="symbol">\\</span>Document<span class="symbol">\\</span>opt2.xml #日志路径</span><br><span class="line">D:<span class="symbol">\\</span>AutoTest<span class="symbol">\\</span>SNBSAutoTest<span class="symbol">\\</span>01-L0<span class="symbol">\\</span>01-基本功能<span class="symbol">\\</span>04-卷功能<span class="symbol">\\</span>01-普通卷.txt #测试套，案例所在文本文件</span><br><span class="line">alias=case1 alias=case2 #别名</span><br><span class="line">python	-m	robot.rebot	-d	D:/Document	-R	D:/Document/*.xml #将案例日志合并输出</span><br></pre></td></tr></table></figure>
+<p><img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-Robootframework-%E7%8E%AF%E5%A2%83%5C1587525257904-1587525868005.png" alt> </p>
+<img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/1587525257904-1587525868005.png" class title="This is an example image">
+
+<p><img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-Robootframework-%E7%8E%AF%E5%A2%83%5C1587524969800.png" alt> </p>
+<img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/1587524969800.png" class title="This is an example image">
+
+
+
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">https:</span><span class="comment">//blog.csdn.net/qq_38317509/article/details/80952236</span></span><br><span class="line">robotframework 多进程 多线程</span><br><span class="line">参考答案： </span><br><span class="line">使用Process Library 多进程，后台执行 </span><br><span class="line"><span class="string">https:</span><span class="comment">//stackoverflow.com/questions/25427506/robotframework-threads </span></span><br><span class="line"><span class="string">http:</span><span class="comment">//robotframework.org/robotframework/latest/libraries/Process.html </span></span><br><span class="line">RF 合并测试结果的工具 <span class="string">Rebot:</span> </span><br><span class="line"><span class="string">https:</span><span class="comment">//stackoverflow.com/questions/16519277/aggregate-the-reports-from-different-robot-testsuites</span></span><br><span class="line"></span><br><span class="line">下面给出使用Process 的例子： </span><br><span class="line">导入Process 库下</span><br></pre></td></tr></table></figure>
+<p><img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-Robootframework-%E7%8E%AF%E5%A2%83%5C20180707153903872.png" alt> </p>
+<img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/20180707153903872.png" class title="This is an example image">
+
+<p>使用多进程执行：<br>Start Process 代表后台执行，不用等待进程执行完成<br>Run Process 执行线程，需要等待进程执行完成<br><img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-Robootframework-%E7%8E%AF%E5%A2%83%5C20180707153956548.png" alt> </p>
+<img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/20180707153956548.png" class title="This is an example image">
+
+<p>分析：<br>Start Process 执行的命令是，执行python 代码，等待100s<br>但是我们执行Process 的时候，并没有等待这个进程执行完<br>然后就执行了 Run Process 的进程，这个进程会打开计算器程序。<br>需要我们手动关闭计算机程序，Run Process 这个进程才会结束。</p>
+<p>发散思维：<br>既然我们可以使用 Start Process 后台执行命令，那我们可以多起<br>几个后台进程，这个就相当于多进程执行了。<br>例如：</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">Start</span> Process pybot -s suite1 -o xx/output1.<span class="keyword">xml</span> <span class="title">D</span>:/xxx/project</span><br><span class="line"><span class="literal">Start</span> Process pybot -s suite2 -o xx/output2.<span class="keyword">xml</span> <span class="title">D</span>:/xxx/project</span><br><span class="line"><span class="literal">Start</span> Process pybot -s suite3 -o xx/output3.<span class="keyword">xml</span> <span class="title">D</span>:/xxx/project</span><br><span class="line"><span class="literal">Start</span> Process pybot -s suite4 -o xx/output4.<span class="keyword">xml</span> <span class="title">D</span>:/xxx/project1234</span><br></pre></td></tr></table></figure>
+
+<p>这里就相当于后台执行project 的4个测试套件，然后我们会得到四个output?.xml 输出文件<br>OK， 这个时候我们合并输出结果的命令就可以派上用场了<br>这个命令还有其他参数，详细使用命令可以在cmd窗口使用命令查看：<br>rebot –help</p>
+<p>python -m robot.rebot outputs/*.xml -r report/merge_report.html</p>
+<p>最后得到的merge_report.html 就是我们合并后的最终测试报告<br>理论上可行，但还是实践一下最好：<br>我们新建一个空文件夹<br><img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-Robootframework-%E7%8E%AF%E5%A2%83%5C2018070715485789.png" alt> </p>
+<img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2018070715485789.png" class title="This is an example image">
+
+<p>再看看我们的case:<br>一共有3个case, 我们利用 process 去多进程执行 另外两个case<br>并把两个进程生成的测试结果合并生成一个测试报告<br><img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-Robootframework-%E7%8E%AF%E5%A2%83%5C20180707154919513.png" alt> </p>
+<img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/20180707154919513.png" class title="This is an example image">
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">start</span> process   pybot.bat   -t  exec_script -o  D:/<span class="keyword">Document</span>/outputs/opt1.xml    D:/<span class="keyword">Document</span>/GitProject/<span class="keyword">auto</span>-unix/unix.txt   <span class="keyword">alias</span>=case1 <span class="keyword">start</span> process   pybot.bat   -t  test_remote -o  D:/<span class="keyword">Document</span>/outputs/opt2.xml    D:/<span class="keyword">Document</span>/GitProject/<span class="keyword">auto</span>-unix/unix.txt   <span class="keyword">alias</span>=case2 <span class="keyword">wait</span> <span class="keyword">for</span> process    case1                        <span class="keyword">wait</span> <span class="keyword">for</span> process    case2                        Run Process python  -m  robot.rebot -d  D:/<span class="keyword">Document</span>/outputs -R  D:/<span class="keyword">Document</span>/outputs<span class="comment">/*.xml</span></span><br></pre></td></tr></table></figure>
+
+<p> 后跑一下，看看我们的结果：<br>注意哦，里面加了两个进程的等待<br>我们要等所有进程结束，才能合并生成完整的测试报告<br><img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-Robootframework-%E7%8E%AF%E5%A2%83%5C20180707160228358.png" alt> </p>
+<img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/20180707160228358.png" class title="This is an example image">
+
+<h1 id="数字计算"><a href="#数字计算" class="headerlink" title="数字计算"></a>数字计算</h1><figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="comment">//www.cnblogs.com/xybxj/articles/5344061.html</span></span><br><span class="line">转换参数为浮点数。</span><br><span class="line">如果可选参数<span class="keyword">precision</span>是正数或零，返回的四舍五入的值。负数则相当于修改-<span class="keyword">precision</span>位数为<span class="number">0</span></span><br><span class="line">如果可选参数<span class="keyword">precision</span>是负数，返回的四舍五入的值。</span><br></pre></td></tr></table></figure>
+
+<p>例子:</p>
+<table>
+<thead>
+<tr>
+<th>${result} =</th>
+<th>Convert To Number</th>
+<th>42.512</th>
+<th></th>
+<th># Result is 42.512</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>${result} =</td>
+<td>Convert To Number</td>
+<td>42.512</td>
+<td>1</td>
+<td># Result is 42.5</td>
+</tr>
+<tr>
+<td>${result} =</td>
+<td>Convert To Number</td>
+<td>42.512</td>
+<td>0</td>
+<td># Result is 43.0</td>
+</tr>
+<tr>
+<td>${result} =</td>
+<td>Convert To Number</td>
+<td>42.512</td>
+<td>-1</td>
+<td># Result is 40.0</td>
+</tr>
+</tbody></table>
+<p>注意机器一般不能准确地存储浮点数。参见<a href="http://translate.googleusercontent.com/translate_c?hl=zh-CN&ie=UTF8&prev=_t&rurl=translate.google.com.hk&sl=en&tl=zh-CN&u=http://docs.python.org/tutorial/floatingpoint.html&usg=ALkJrhh4UwUi95IAIB_V1ikvPA5YsQkBwQ" target="_blank" rel="noopener external nofollow noreferrer">http://docs.python.org/tutorial/floatingpoint.html</a>。</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">转换参数为八进制字符串。</span><br><span class="line">如果添加了base参数，则先内部使用Convert <span class="keyword">To</span> <span class="built_in">Integer</span>转换为整数，然后再转换为八进制数字，以字符串的形式显示，比如<span class="string">'775'</span><span class="string">'。</span></span><br><span class="line"><span class="string">返回值可以包含可选的前缀和最小长度(不包含前缀和负号等)。如果返回值比要求的长度短，则使用0填充。</span></span><br><span class="line"><span class="string">默认返回大写字符串，lowercase参数会转换值为小写（不包含前缀）。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">例子：</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>${result} =</th>
+<th>Convert To Octal</th>
+<th>10</th>
+<th></th>
+<th></th>
+<th># Result is 12</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>${result} =</td>
+<td>Convert To Octal</td>
+<td>-F</td>
+<td>base=16</td>
+<td>prefix=0</td>
+<td># Result is -017</td>
+</tr>
+<tr>
+<td>${result} =</td>
+<td>Convert To Octal</td>
+<td>16</td>
+<td>prefix=oct</td>
+<td>length=4</td>
+<td># Result is oct0020</td>
+</tr>
+</tbody></table>
+<p> 技巧整数构造浮点数：</p>
+<h1 id="使用robotframework做接口测试之一——准备工作"><a href="#使用robotframework做接口测试之一——准备工作" class="headerlink" title="使用robotframework做接口测试之一——准备工作"></a>使用robotframework做接口测试之一——准备工作</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">最近发现做接口测试的朋友越来越多了，打算写一个系列的rf+requests做接口测试（主要是Http接口）的文档，可以帮助新入门的同学对接口测试有个大概的了解，同时也是敦促自己做总结的一种手段。希望经验丰富的大神路过时，如发现我文档中的不足，提出中肯的批评及更好的解决思路。以期共同进步。</span><br><span class="line"> </span><br><span class="line">一、环境准备</span><br><span class="line"><span class="number">1</span>）默认已经安装robotframework</span><br><span class="line"><span class="number">2</span>）默认已经安装requests库</span><br><span class="line"><span class="number">3</span>）默认已经安装并成功导入RequestsLibrary</span><br><span class="line"><span class="number">4</span>）会用抓包工具，fiddler或Charles都可</span><br><span class="line"></span><br><span class="line">用这个库做接口测试，希望用户本身对这个库有一定的了解，如果不了解，那么我们来叨一叨选择的理由。</span><br><span class="line"><span class="number">1</span>）Python的requests库号称是“HTTP <span class="keyword">for</span> Humans”，它提供了非常方便且人性化的接口调用方法，上手快，功能强大且完美，甩同类库urllib2, httplib好几条街。国外网友的使用心得大多是，呵呵呵呵，用requests库十几行代码，把以前的几百行代码重构了。缺点是封装了太多层，不利于http底层原理的理解。中文版用户指南：http:<span class="comment">//docs.python-requests.org/zh_CN/latest/user/quickstart.html </span></span><br><span class="line"><span class="number">2</span>）RequestsLibrary是基于requests模块做的RF库，其根基本身就强大，再加上git上有一些大神一直在对其进行持续地更新及维护，提供了很不错的官方Demo，从使用人数来说，也是完爆那些HTTPLibrary之流，意味着遇到问题得到解答的机会更大。Git地址：https:<span class="comment">//github.com/bulkan/robotframework-requests/</span></span><br><span class="line"> </span><br><span class="line">二、Http接口测试初窥</span><br><span class="line">这一节要写一个<span class="keyword">get</span>请求的例子，强烈推荐使用官方Demo入门，并且建议新老用户都熟悉Demo的每一个细节，对，是每一个细节。笔者当初多走了许多弯路，对这个细致的Demo相见恨晚，每次都温习demo而后知耻。。</span><br><span class="line">第一个栗子：假如有个这样的<span class="keyword">get</span>请求：https:<span class="comment">//api.github.com/users/bulkan，抓包</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83%5Cimage-20210628232059612-1624893661921.png" alt></p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">可以看出，这个接口请求中：</span><br><span class="line">协议：  https</span><br><span class="line">访问的host： api.github.com</span><br><span class="line">root url(基础url)： https:<span class="comment">//api.github.com</span></span><br><span class="line">相对uri： /users/bulkan</span><br><span class="line"><span class="function"><span class="keyword">method</span>： <span class="title">get</span></span></span><br><span class="line"><span class="function">传输参数： 无</span></span><br><span class="line"><span class="function">该抓包其对应的测试用例如下：</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83%5Cimage-20210628232143168.png" alt></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">对应到用例，第一步创建一个到https://api.github.com的<span class="keyword">session</span>，取个很容易认的别名github，第二步，使用<span class="keyword">get</span>方法，访问别名为github的相对路径/users/bulkan。第<span class="number">3</span>,<span class="number">4</span>步断言返回数据。</span><br><span class="line">对于前面两步，直接使用requests.<span class="keyword">get</span>方法可以一步完成，为什么要强制拆成两步呢。可以大概揣测一下作者的意图：</span><br><span class="line"><span class="number">1</span>、使用别名，会使后面的请求写起来更顺手，用例也比较好看，大部分时候访问同一地址的请求，不需要重复创建<span class="keyword">session</span>  </span><br><span class="line"><span class="number">2</span>、<span class="keyword">session</span>的使用，可以实现跨请求保持一些cookie，这个功能才是<span class="keyword">session</span>的重头戏。</span><br><span class="line"></span><br><span class="line"><span class="keyword">Get</span> request的好基友是post request，也是非常基础的必须掌握的一种请求方式，这个我就不写了。官方Demo几乎列出了所有可能出现的<span class="keyword">get</span> 及post请求的例子，非常经典，实际项目中都能从里面找到原型。另外还有一些不常见的请求方式如head, put, <span class="keyword">delete</span>等，也有例子。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">三、如何开始你的接口测试第一步</span><br><span class="line">首先，你得有项目组完善且规范的接口文档。好吧，大部分的中小公司的宝宝会说啥文档也没有。也可以通过抓包来开始做项目的接口demo，在无须外力的因素下迈出第一步，但是单凭抓包是抓不全的，所以最终实施前还是得搞来一份完整的接口文档，才能保证用例的覆盖。</span><br><span class="line">单有接口文档也是不够的，还要学会如何抓包，抓包后知道如何解剖一个请求，重点关注请求的<span class="keyword">method</span>, url, request <span class="keyword">header</span>, request body, cookie, response <span class="keyword">header</span>, response body等，还是那句话，办法永远比问题多，培养好的观察能力和解决问题能力无比重要。</span><br></pre></td></tr></table></figure>
+
+<p>举例：</p>
+<figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$&#123;url&#125;	<span class="meta">Set</span> Variable	http://10.242.180.208:8787		</span><br><span class="line"><span class="meta">Create</span> Session	kvreq	$&#123;url&#125;		</span><br><span class="line">$&#123;resp&#125;	<span class="meta">Put</span> Request	kvreq	/region/pool/vol?pool=SNPOOL001<span class="variable">&amp;volume</span>=nude052<span class="variable">&amp;size</span>=107374182400	</span><br><span class="line">Should Be Equal <span class="meta">As</span> Strings	$&#123;resp.status_code&#125;	400		</span><br><span class="line"></span><br><span class="line">curl -<span class="meta">X</span> <span class="meta">PUT</span> http://127.0.01:8787/region/pool/vol?pool=SNPOOL001<span class="variable">&amp;volume</span>=nude052<span class="variable">&amp;size</span>=102400000</span><br><span class="line">并校验返回code</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">全局列表：</span><br><span class="line">在全变量下面选择<span class="string">"new list varible"</span></span><br><span class="line"></span><br><span class="line">如何读取列表中的某一个值：<span class="variable">$&#123;Master_ip[1]&#125;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>循环：</span><br><span class="line">: <span class="keyword">FOR</span>	$&#123;<span class="keyword">table</span>-<span class="type">name</span>&#125;	<span class="keyword">IN</span>	@&#123;<span class="keyword">table</span>-list1&#125;		</span><br><span class="line">	<span class="keyword">create</span>-<span class="keyword">table</span><span class="number">-1</span>	$&#123;<span class="keyword">cluster</span>-ip&#125;	$&#123;<span class="keyword">cluster</span>-<span class="type">name</span>&#125;	$&#123;db-<span class="type">name</span>&#125;	$&#123;<span class="keyword">table</span>-<span class="type">name</span>&#125;</span><br><span class="line"><span class="keyword">log</span>	outside <span class="keyword">loop</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install robotframework-SSHLibrary --proxy http:<span class="regexp">//</span>xzproxy.cnsuning.com:<span class="number">8080</span>  -i https:<span class="regexp">//</span>pypi.tuna.tsinghua.edu.cn<span class="regexp">/simple/</span></span><br><span class="line">pip install jsonpatch --proxy http:<span class="regexp">//</span>xzproxy.cnsuning.com:<span class="number">8080</span>  -i https:<span class="regexp">//</span>pypi.tuna.tsinghua.edu.cn<span class="regexp">/simple/</span></span><br><span class="line">pip install robotframework-httplibrary --proxy http:<span class="regexp">//</span>xzproxy.cnsuning.com:<span class="number">8080</span>  -i https:<span class="regexp">//</span>pypi.tuna.tsinghua.edu.cn<span class="regexp">/simple/</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83%5Cimage-20210628232258552.png" alt></p>
+<p>ssh远程：</p>
+<p><img src="/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83%5Cimage-20210628232327547.png" alt></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">SSH 远程（可以不更改）</span><br><span class="line">号码注册激活、SMS 短信接收会用到的库 1. 安装 SSHLibrary cmd 中输入 pip <span class="keyword">install</span> robotframework-sshlibrary <span class="number">2.</span> 更改库文件中错误 site-packages/SSHLibrary/pythonclient.py 中 <span class="number">31</span> 和 <span class="number">32</span> 行更改为 <span class="keyword">def</span> _custom_start_client(<span class="keyword">self</span>, <span class="keyword">event</span>=<span class="keyword">None</span>, <span class="keyword">timeout</span>=<span class="keyword">None</span>): self.banner_timeout = <span class="keyword">timeout</span></span><br><span class="line"></span><br><span class="line">https://www.tceic.com/<span class="number">4</span>gg5268168ji5022ggkg998lii22hij126ll42i1.html</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">解决：ssh问题</span><br><span class="line">https://blog.csdn.net/Lsaisai/article/details/<span class="number">81510775</span></span><br><span class="line">安装ecdsa</span><br><span class="line">pip <span class="keyword">install</span> ecdsa</span><br><span class="line">安装paramiko</span><br><span class="line">pip <span class="keyword">install</span> paramiko==<span class="number">1.17</span><span class="number">.1</span> 注意版本号</span><br><span class="line">安装robotframework-sshlibrary</span><br><span class="line">pip <span class="keyword">install</span> robotframework-sshlibrary==<span class="number">2.1</span><span class="number">.1</span></span><br></pre></td></tr></table></figure>
+
+<p>Robot Framework中SSHLibrary 学习与总结：</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">Robot Framework中SSHLibrary 学习与总结：</span><br><span class="line"><span class="symbol">https:</span>/<span class="regexp">/www.cnblogs.com/mianbaoshu</span><span class="regexp">/p/</span><span class="number">8857765</span>.html</span><br><span class="line"><span class="symbol">https:</span>/<span class="regexp">/blog.csdn.net/silencemylove</span><span class="regexp">/article/details</span><span class="regexp">/48653615</span></span><br><span class="line"><span class="regexp">https:/</span><span class="regexp">/www.cnblogs.com/senjougahara</span><span class="regexp">/p/</span><span class="number">6090000</span>.html</span><br><span class="line"></span><br><span class="line">官方包下载地址：</span><br><span class="line"><span class="symbol">https:</span>/<span class="regexp">/pypi.org/project</span><span class="regexp">/paramiko/</span><span class="comment">#files</span></span><br><span class="line"></span><br><span class="line">pip源：</span><br><span class="line"><span class="symbol">http:</span>/<span class="regexp">/mirrors.aliyun.com/pypi</span><span class="regexp">/simple/</span></span><br><span class="line">清华：<span class="symbol">https:</span>/<span class="regexp">/pypi.tuna.tsinghua.edu.cn/simple</span></span><br><span class="line">阿里云：<span class="symbol">http:</span>/<span class="regexp">/mirrors.aliyun.com/pypi</span><span class="regexp">/simple/</span></span><br><span class="line">中国科技大学 <span class="symbol">https:</span>/<span class="regexp">/pypi.mirrors.ustc.edu.cn/simple</span><span class="regexp">/</span></span><br><span class="line"><span class="regexp">华中理工大学：http:/</span><span class="regexp">/pypi.hustunique.com/</span></span><br><span class="line">山东理工大学：<span class="symbol">http:</span>/<span class="regexp">/pypi.sdutlinux.org/</span> </span><br><span class="line">豆瓣：<span class="symbol">http:</span>/<span class="regexp">/pypi.douban.com/simple</span><span class="regexp">/</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">https:/</span><span class="regexp">/blog.csdn.net/</span>Lsaisai/article/details/<span class="number">81510775</span><span class="comment">#</span></span><br><span class="line"></span><br><span class="line"><span class="number">6</span>. 总结</span><br><span class="line">有 .whl 或 .egg 的, 就不要使用 .tgz, cffi 就很难在离线状态下从源码编译成功.</span><br><span class="line"></span><br><span class="line"><span class="symbol">http:</span>/<span class="regexp">/xzproxy.cnsuning.com:8080为代理</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">python -m pip install --upgrade pip --proxy http:/</span><span class="regexp">/xzproxy.cnsuning.com:8080 -i https:/</span><span class="regexp">/pypi.tuna.tsinghua.edu.cn/simple</span><span class="regexp">/</span></span><br><span class="line"><span class="regexp">pip install robotframework-SSHLibrary --proxy http:/</span><span class="regexp">/xzproxy.cnsuning.com:8080  -i https:/</span><span class="regexp">/pypi.tuna.tsinghua.edu.cn/simple</span><span class="regexp">/</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">pip install robotframework-SSHLibrary --proxy http:/</span><span class="regexp">/xzproxy.cnsuning.com:8080  -i http:/</span><span class="regexp">/mirrors.aliyun.com/pypi</span><span class="regexp">/simple/</span></span><br><span class="line"></span><br><span class="line">pip install robotframework-SSHLibrary==<span class="number">2.1</span>.<span class="number">1</span> --proxy <span class="symbol">http:</span>/<span class="regexp">/xzproxy.cnsuning.com:8080  -i http:/</span><span class="regexp">/mirrors.aliyun.com/pypi</span><span class="regexp">/simple/</span></span><br><span class="line"></span><br><span class="line">pip install robotframework-sshlibrary==<span class="number">2.1</span>.<span class="number">1</span> --proxy <span class="symbol">http:</span>/<span class="regexp">/xzproxy.cnsuning.com:8080</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">python -m pip install --upgrade pip --proxy http:/</span><span class="regexp">/xzproxy.cnsuning.com:8080 -i  https:/</span><span class="regexp">/pypi.tuna.tsinghua.edu.cn/simple</span><span class="regexp">/</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">pip install robotframework --proxy http:/</span><span class="regexp">/xzproxy.cnsuning.com:8080  -i  https:/</span><span class="regexp">/pypi.tuna.tsinghua.edu.cn/simple</span><span class="regexp">/</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">pip install robotframework-ride --proxy http:/</span><span class="regexp">/xzproxy.cnsuning.com:8080  -i  https:/</span><span class="regexp">/pypi.tuna.tsinghua.edu.cn/simple</span><span class="regexp">/</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">pip install robotframework-httplibrary --proxy http:/</span><span class="regexp">/xzproxy.cnsuning.com:8080 -i  https:/</span><span class="regexp">/pypi.tuna.tsinghua.edu.cn/simple</span><span class="regexp">/</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+      
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-%E7%8E%AF%E5%A2%83/" title="RobootFramework-环境">https://tongsiying.github.io/2008/01/04/RobootFramework/2008-01-04-RobootFramework-环境/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/RobootFramework-%E7%8E%AF%E5%A2%83/" rel="tag"># RobootFramework-环境</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2008/01/04/blog/2008-01-04-other-blog/" rel="prev" title="bog-Collection">
+      <i class="fa fa-chevron-left"></i> bog-Collection
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2008/01/04/English/2007-01-17-English-%E8%8B%B1%E8%AF%AD%E5%AD%A6%E4%B9%A0%E7%9A%84%E4%B8%80%E4%BA%9B%E7%BB%8F%E9%AA%8C/" rel="next" title="英语学习的一些经验">
+      英语学习的一些经验 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#怎么样导入RobotFramework-自定义关键字（库文件）"><span class="nav-text">怎么样导入RobotFramework 自定义关键字（库文件）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RobotFramework-获取当前时间戳"><span class="nav-text">RobotFramework: 获取当前时间戳</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Python2-X如何将Unicode中文字符串转换成-string字符串"><span class="nav-text">Python2.X如何将Unicode中文字符串转换成 string字符串</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定库使用断言来判断是否异常"><span class="nav-text">自定库使用断言来判断是否异常</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定库备注展示-0xb2-不展示中文"><span class="nav-text">自定库备注展示 0xb2 不展示中文</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关键字run-keyword-if-使用总结包括【Evaluate神奇用法】"><span class="nav-text">关键字run keyword if 使用总结包括【Evaluate神奇用法】</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#robotframework-多进程-多线程"><span class="nav-text">robotframework 多进程 多线程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数字计算"><span class="nav-text">数字计算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用robotframework做接口测试之一——准备工作"><span class="nav-text">使用robotframework做接口测试之一——准备工作</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">What hurts more, the pain of hard work or the pain of regret?</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">34:51</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

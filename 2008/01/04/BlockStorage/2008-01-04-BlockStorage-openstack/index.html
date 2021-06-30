@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="BlockStorage-openstack">
+<meta property="og:url" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-openstack/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2008-01-04T10:37:19.000Z">
+<meta property="article:modified_time" content="2021-02-12T03:57:22.918Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="BlockStorage-openstack">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-openstack/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>BlockStorage-openstack | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">嘻嘻嘻嘻嘻嘻</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-openstack/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="What hurts more, the pain of hard work or the pain of regret?">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          BlockStorage-openstack
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2008-01-04 18:37:19" itemprop="dateCreated datePublished" datetime="2008-01-04T18:37:19+08:00">2008-01-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-02-12 11:57:22" itemprop="dateModified" datetime="2021-02-12T11:57:22+08:00">2021-02-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BlockStorage/" itemprop="url" rel="index"><span itemprop="name">BlockStorage</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>17k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>16 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+<h1 id="000-随便粘"><a href="#000-随便粘" class="headerlink" title="000-随便粘"></a>000-随便粘</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>sit环境：</span><br><span class="line">控制节点：</span><br><span class="line"><span class="number">10.243</span><span class="number">.72</span><span class="number">.1</span></span><br><span class="line"><span class="number">10.243</span><span class="number">.72</span><span class="number">.2</span></span><br><span class="line"><span class="number">10.243</span><span class="number">.72</span><span class="number">.3</span></span><br><span class="line"></span><br><span class="line">史家豪(<span class="number">19042668</span>) <span class="number">2019</span><span class="number">-12</span><span class="number">-19</span> <span class="number">15</span>:<span class="number">09</span>:<span class="number">43</span></span><br><span class="line">先用cinder show XXX 能看到挂载的虚机id ；XXX是卷uuid</span><br><span class="line">再用openstack server show XXX,XXX虚机uuid</span><br><span class="line"></span><br><span class="line">史家豪(<span class="number">19042668</span>) <span class="number">2019</span><span class="number">-12</span><span class="number">-19</span> <span class="number">15</span>:<span class="number">09</span>:<span class="number">53</span></span><br><span class="line">多租户</span><br><span class="line">史家豪(<span class="number">19042668</span>) <span class="number">2019</span><span class="number">-12</span><span class="number">-19</span> <span class="number">15</span>:<span class="number">10</span>:<span class="number">04</span></span><br><span class="line">想看所有的得用nova list --all</span><br><span class="line">不过虚机太多可能会出错</span><br><span class="line"></span><br><span class="line">openstack server show 虚机id </span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>cinder --os-volume-api-version <span class="number">3.28</span> create --name SNBS-Boot<span class="number">-161.7</span> --image-id <span class="number">84f</span>bcff2-ca3d<span class="number">-4524</span>-b80e<span class="number">-11025</span>bd9d987  --volume-type snbs --lvm_instance_hostname xgto01n010244025044.sncloud.com <span class="number">75</span></span><br><span class="line">史家豪 <span class="number">2019</span><span class="number">-12</span><span class="number">-19</span> <span class="number">20</span>:<span class="number">02</span>:<span class="number">51</span></span><br><span class="line">这个创建启动盘</span><br><span class="line">史家豪 <span class="number">2019</span><span class="number">-12</span><span class="number">-19</span> <span class="number">20</span>:<span class="number">03</span>:<span class="number">01</span></span><br><span class="line">指定节点创建启动卷</span><br><span class="line">史家豪 <span class="number">2019</span><span class="number">-12</span><span class="number">-19</span> <span class="number">20</span>:<span class="number">03</span>:<span class="number">07</span></span><br><span class="line">虚机不变</span><br><span class="line">史家豪 <span class="number">2019</span><span class="number">-12</span><span class="number">-19</span> <span class="number">20</span>:<span class="number">03</span>:<span class="number">12</span></span><br><span class="line">创建虚机命令不变</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span></span><br><span class="line">---------------------------------iso镜像-----------------------------------------------</span><br><span class="line"><span class="number">10.27</span><span class="number">.244</span><span class="number">.140</span>/CentOS<span class="number">-7</span>-x86_64-DVD<span class="number">-1611.</span>iso</span><br><span class="line">服务器上在这个目录/var/www/html/</span><br><span class="line">浏览器上也能下~直接粘进去也行</span><br><span class="line"></span><br><span class="line">----------------------------------qcow2镜像----------------------------------------------</span><br><span class="line">ftp:<span class="comment">//10.102.141.120/image/</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-------------------------------------------------------------------------------------</span><br><span class="line">openstack+pcp+snbs：</span><br><span class="line"><span class="number">1</span>、pcp建虚机是串行的，每台之间有个<span class="number">5</span>s钟的间隔</span><br><span class="line"><span class="number">2</span>、这个虚机挂了个数据盘 根据fiaas的逻辑 挂数据盘时 先要ping通虚机 只有虚机网络通了之后才挂数据盘，虚机网络通 需要经历虚机系统启动 中间还有个cloud-init读取配置时间(<span class="number">120</span>秒)</span><br><span class="line"><span class="number">3</span>、PCP目前优先指的是SNBS容量不够的情况下，调用本地</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="001-openstack人员"><a href="#001-openstack人员" class="headerlink" title="001-openstack人员"></a>001-openstack人员</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>cinder：玮哥</span><br><span class="line"><span class="number">2.</span>glance：乐乐</span><br><span class="line"><span class="number">3.</span>nova：文斌</span><br><span class="line"></span><br><span class="line">有关启动卷\数据卷\扩容等等的 是玮哥</span><br><span class="line">有关镜像分发等等的 乐乐</span><br><span class="line">有关虚机创建\迁移等等的 是文斌</span><br><span class="line"></span><br><span class="line">现在ip是<span class="number">10.244</span><span class="number">.30</span><span class="number">.129</span><span class="number">-253</span>这些是可用的ip</span><br><span class="line"><span class="number">10.244</span><span class="number">.33</span><span class="number">.1</span><span class="number">-10.244</span><span class="number">.33</span><span class="number">.250</span>    <span class="number">10.244</span><span class="number">.34</span><span class="number">.1</span><span class="number">-10.244</span><span class="number">.34</span><span class="number">.250</span>新分配的；网关分别是<span class="number">10.244</span><span class="number">.33</span><span class="number">.254</span>/<span class="number">24</span> ;<span class="number">10.244</span><span class="number">.34</span><span class="number">.254</span>/<span class="number">24</span></span><br><span class="line"></span><br><span class="line"><span class="number">56</span>节点/var/run/libvirt/qemu 这个目录下xml文件随便拿个</span><br></pre></td></tr></table></figure>
+
+<h1 id="002-首先条件"><a href="#002-首先条件" class="headerlink" title="002-首先条件"></a>002-首先条件</h1><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>.进入openstack命令行首先条件</span><br><span class="line"><span class="keyword">source</span> openrc</span><br><span class="line">注：其它命令必须在家目录下操作（切换到家目录：<span class="keyword">cd</span> )</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>.通过帮助信息，查看命令行参数信息</span><br><span class="line">cinder <span class="keyword">help</span> create </span><br><span class="line"></span><br><span class="line">注：以下是基于snbs创建虚机的方法，如想创建基于计算节点本地的虚机可去除--<span class="keyword">tag</span> snbs、--volume-<span class="built_in">type</span> snbs等参数</span><br></pre></td></tr></table></figure>
+
+<h1 id="003-上传镜像"><a href="#003-上传镜像" class="headerlink" title="003-上传镜像"></a>003-上传镜像</h1><figure class="highlight tp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash -x /root/cp_image.sh -U <span class="string">"ftp://10.102.141.120"</span> -<span class="keyword">P</span> <span class="string">"/image/centos67/"</span> -N <span class="string">"CentOS6U7_GLOBAL_64bit_75G_20190904_APP.qcow2"</span> -I <span class="string">"CentOS6U7_GLOBAL_64bit_75G_20200414_APP"</span> -<span class="keyword">R</span> <span class="string">"OCATA"</span> -Q <span class="string">"SNBS"</span> -O <span class="string">"snpool001"</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">bash -x /root/cp_image-local.sh -U <span class="string">"ftp://10.102.141.120"</span> -P <span class="string">"/image/centos67/"</span> -N <span class="string">"CentOS6U7_GLOBAL_64bit_75G_20190904_APP.qcow2"</span> -I <span class="string">"CentOS6U7"</span> -R <span class="string">"OCATA"</span> -Q <span class="string">"SNBS"</span> -O <span class="string">"snpool001"</span> </span><br><span class="line">史家豪 <span class="number">2020</span><span class="number">-04</span><span class="number">-14</span> <span class="number">14</span>:<span class="number">21</span>:<span class="number">16</span> </span><br><span class="line">史家豪 </span><br><span class="line">我把<span class="number">25.1</span>上的cp_image脚本改了下 试试 </span><br><span class="line">史家豪 <span class="number">2020</span><span class="number">-04</span><span class="number">-14</span> <span class="number">14</span>:<span class="number">21</span>:<span class="number">29</span> </span><br><span class="line">史家豪 </span><br><span class="line">命令还是原来的命令 只是不走ftp </span><br><span class="line">史家豪 <span class="number">2020</span><span class="number">-04</span><span class="number">-14</span> <span class="number">14</span>:<span class="number">21</span>:<span class="number">47</span> </span><br><span class="line">史家豪 </span><br><span class="line">先把镜像传到 /gluster_glance 这个目录下 </span><br><span class="line">史家豪 <span class="number">2020</span><span class="number">-04</span><span class="number">-14</span> <span class="number">14</span>:<span class="number">22</span>:<span class="number">33</span> </span><br><span class="line">史家豪 </span><br><span class="line">-N 参数换成要传镜像的名字 </span><br><span class="line">王星童 <span class="number">2020</span><span class="number">-04</span><span class="number">-14</span> <span class="number">14</span>:<span class="number">23</span>:<span class="number">02</span> </span><br><span class="line">王星童 </span><br><span class="line"></span><br><span class="line">bash -x /root/cp_image-local.sh -U <span class="string">"ftp://10.102.141.120"</span> -P <span class="string">"/image/centos67/"</span> -N <span class="string">"OSS_REDHAT_200316A202004011432.qcow2"</span> -I <span class="string">"OSS_REDHAT_200316A202004011432"</span> -R <span class="string">"OCATA"</span> -Q <span class="string">"SNBS"</span> -O <span class="string">"snpool001"</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">一、上传基础镜像</span><br><span class="line">1.上传基础镜像脚本见附件：cp_image.sh </span><br><span class="line">使用方法：</span><br><span class="line">(-U ftp的地址， -P 镜像在ftp上的路径， -N 镜像的名称    -I 镜像上传到glance名称（不要和已经上传过的镜像重名） -R openstack版本(可以选择JUNO、OCATA)  -Q 存储类型（SNBS、LOCALLVM）)</span><br><span class="line"></span><br><span class="line">bash -x /root/cp_image.sh -U <span class="string">"ftp://10.102.141.120"</span> -P <span class="string">"/image/centos67/"</span> -N <span class="string">"CentOS6U7_GLOBAL_64bit_75G_20190904_APP.qcow2"</span> -I <span class="string">"CentOS6U7_GLOBAL_64bit_75G_20190904_APP"</span> -R <span class="string">"OCATA"</span> -Q <span class="string">"SNBS"</span> -O <span class="string">"snpool001"</span></span><br><span class="line"></span><br><span class="line">bash -x /opt/cp_image.sh -U <span class="string">"ftp://10.102.141.120"</span> -P <span class="string">"/image/rhel63/20191115updatesalt/"</span> -N <span class="string">"RHEL6U3_GLOBAL_64bit_75G_20191115_APP_O.qcow2"</span> -I RHEL6U3_GLOBAL_64bit_75G_20191115_APP_O_SNBS -R <span class="string">"OCATA"</span> -Q <span class="string">"SNBS"</span> -O <span class="string">"snpool001"</span></span><br><span class="line"></span><br><span class="line">-----------------------------------------------------------------------------------------</span><br><span class="line">手动上传镜像：</span><br><span class="line">1.上传qcow2格式的镜像</span><br><span class="line">glance image-create --container-format bare  --disk-format qcow2  --name=test111 --file=/root/cirros-0.4.0-x86_64-disk.qcow2  --tag snbs </span><br><span class="line">disk-format参数的值与要上传镜像的格式一一对应</span><br><span class="line"></span><br><span class="line">2.上传raw格式的镜像（下图的基础镜像id在后面创建虚机系统有用的到）</span><br><span class="line">glance image-create --container-format bare   --disk-format raw --name=test114 --file=/os_data/cirrostest.raw</span><br><span class="line">glance image-create --container-format bare --disk-format raw --name=wxt001 --file=/os_data/CentOS7U3_beijing.raw  --tag snbs</span><br><span class="line"></span><br><span class="line">3.查询所有基础镜像信息</span><br><span class="line">glance image-list </span><br><span class="line">[root<span class="meta">@xgto01n0102442501</span> ~]<span class="comment"># glance image-list </span></span><br><span class="line">+--------------------------------------+----------------------------------------------------------+</span><br><span class="line">|<span class="string"> ID                                   </span>|<span class="string"> Name                                                     </span>|</span><br><span class="line">+--------------------------------------+----------------------------------------------------------+</span><br><span class="line">|<span class="string"> 0be63c96-3669-4d8e-bda5-fd26cd1e9cb7 </span>|<span class="string"> CentOS6U7_GLOBAL_64bit_75G_20190904_APP                  </span>|</span><br><span class="line">+--------------------------------------+----------------------------------------------------------+</span><br><span class="line">ID名称也对应snbs上的卷名</span><br><span class="line"></span><br><span class="line">4.查看某一个镜像的详细信息</span><br><span class="line">glance image-show 镜像uuid</span><br><span class="line">[root<span class="meta">@xgto01n0102442501</span> ~]<span class="comment"># glance image-show 0be63c96-3669-4d8e-bda5-fd26cd1e9cb7</span></span><br><span class="line">+------------------+-------------------------------------------------+</span><br><span class="line">|<span class="string"> Property         </span>|<span class="string"> Value                                           </span>|</span><br><span class="line">+------------------+-------------------------------------------------+</span><br><span class="line">|<span class="string"> checksum         </span>|<span class="string"> None                                            </span>|</span><br><span class="line">|<span class="string"> container_format </span>|<span class="string"> bare                                            </span>|</span><br><span class="line">|<span class="string"> created_at       </span>|<span class="string"> 2020-03-19T06:17:35Z                            </span>|</span><br><span class="line">|<span class="string"> direct_url       </span>|<span class="string"> snbsfuse://0be63c96-3669-4d8e-bda5-fd26cd1e9cb7 </span>|</span><br><span class="line">|<span class="string"> disk_format      </span>|<span class="string"> raw                                             </span>|</span><br><span class="line">|<span class="string"> id               </span>|<span class="string"> 0be63c96-3669-4d8e-bda5-fd26cd1e9cb7            </span>|</span><br><span class="line">|<span class="string"> min_disk         </span>|<span class="string"> 0                                               </span>|</span><br><span class="line">|<span class="string"> min_ram          </span>|<span class="string"> 0                                               </span>|</span><br><span class="line">|<span class="string"> name             </span>|<span class="string"> CentOS6U7_GLOBAL_64bit_75G_20190904_APP         </span>|</span><br><span class="line">|<span class="string"> owner            </span>|<span class="string"> dcddd00bd4d74a7d99648a55f906738f                </span>|</span><br><span class="line">|<span class="string"> pool             </span>|<span class="string"> snpool001                                       </span>|</span><br><span class="line">|<span class="string"> protected        </span>|<span class="string"> False                                           </span>|</span><br><span class="line">|<span class="string"> size             </span>|<span class="string"> 80530636800                                     </span>|</span><br><span class="line">|<span class="string"> status           </span>|<span class="string"> active                                          </span>|</span><br><span class="line">|<span class="string"> tags             </span>|<span class="string"> ["snbs"]                                        </span>|</span><br><span class="line">|<span class="string"> updated_at       </span>|<span class="string"> 2020-03-19T06:17:36Z                            </span>|</span><br><span class="line">|<span class="string"> virtual_size     </span>|<span class="string"> None                                            </span>|</span><br><span class="line">|<span class="string"> visibility       </span>|<span class="string"> shared                                          </span>|</span><br><span class="line">+------------------+-------------------------------------------------+</span><br><span class="line"></span><br><span class="line">5.删除镜像</span><br><span class="line">glance image-delete 镜像uuid</span><br><span class="line">[root<span class="meta">@xgto01n0102442501</span> ~]<span class="comment"># glance image-delete 0be63c96-3669-4d8e-bda5-fd26cd1e9cb7</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="004-独立克隆"><a href="#004-独立克隆" class="headerlink" title="004-独立克隆"></a>004-独立克隆</h1><figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">【002、中的基础镜像实际卷名创建特殊的独立克隆（也叫镜像卷），然后在独立克隆上创建链接克隆】</span><br><span class="line">1.创建镜像卷（特殊的独立克隆）</span><br><span class="line">[root@host102442554 snbs]# curl -X PUT "http://10.238.161.6:8686/region/pool/vol/fullclone?volname=0be63c96<span class="string">-3669</span><span class="string">-4</span>d8e-bda5-fd26cd1e9cb7"</span><br><span class="line">&#123;"newname":"0be63c96<span class="string">-3669</span><span class="string">-4</span>d8e-bda5-fd26cd1e9cb7<span class="string">-1</span>-f"&#125;</span><br><span class="line">0be63c96<span class="string">-3669</span><span class="string">-4</span>d8e-bda5-fd26cd1e9cb7：基础镜像卷名</span><br><span class="line"></span><br><span class="line">2.查询全量克隆</span><br><span class="line">[root@host102442554 snbs]# curl -X GET "http://10.238.161.6:8686/region/pool/vol/snapshot?volname=0be63c96<span class="string">-3669</span><span class="string">-4</span>d8e-bda5-fd26cd1e9cb7&amp;newname=0be63c96<span class="string">-3669</span><span class="string">-4</span>d8e-bda5-fd26cd1e9cb7<span class="string">-1</span>-f&amp;type=fullclone"</span><br><span class="line">&#123;"result":"55/161"&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="005-创建启动卷"><a href="#005-创建启动卷" class="headerlink" title="005-创建启动卷"></a>005-创建启动卷</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>创建启动卷,镜像的格式必须是raw格式，创建的启动卷才能正常的启动虚拟机</span><br><span class="line">【链接克隆卷】</span><br><span class="line">cinder create --name boot1 --image-id <span class="number">2</span>a39804d-b6b9<span class="number">-4</span>bac<span class="number">-9200</span>-ee50073b3890  --volume-type snbs <span class="number">75</span></span><br><span class="line">或者</span><br><span class="line">指定计算节点（issci服务端和客户端在同一个节点）：</span><br><span class="line">cinder --os-volume-api-version <span class="number">3.28</span> create --name SNBS-Boot<span class="number">-161.7</span> --image-id <span class="number">84f</span>bcff2-ca3d<span class="number">-4524</span>-b80e<span class="number">-11025</span>bd9d987  --volume-type snbs --lvm_instance_hostname xgto01n010244025044.sncloud.com <span class="number">75</span></span><br><span class="line"></span><br><span class="line">--image-id：镜像id，<span class="number">2</span>a39804d-b6b9<span class="number">-4</span>bac<span class="number">-9200</span>-ee50073b3890  可以通过：glance image-list查询</span><br><span class="line">--volume-type：snbs（基于snbs创建的），不填默认走lvm（计算节点本地）</span><br><span class="line">返回：启动卷id,启动虚机使用</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>查看所有创建的启动卷</span><br><span class="line">cinder list</span><br><span class="line">[<span class="symbol">root@</span>xgto01n0102442501 ~]# cinder list</span><br><span class="line">+--------------------------------------+--------+-------------------+------+-------------+----------+--------------------------------------+</span><br><span class="line">| ID                                   | Status | Name              | Size | Volume Type | Bootable | Attached to                          |</span><br><span class="line">+--------------------------------------+--------+-------------------+------+-------------+----------+--------------------------------------+</span><br><span class="line">| <span class="number">024</span>bfe5a<span class="number">-58</span>b5<span class="number">-4e24</span><span class="number">-94</span>c7<span class="number">-749</span>a5d182048 | <span class="keyword">in</span>-use | SNBS-Boot<span class="number">-162.137</span> | <span class="number">75</span>   | snbs        | <span class="literal">true</span>     | <span class="number">76f</span>5737c<span class="number">-98e1</span><span class="number">-49</span>b1<span class="number">-9406</span>-c3118c69cd0a |</span><br><span class="line">| <span class="number">02683</span>b2c<span class="number">-7fe7</span><span class="number">-4</span>a39<span class="number">-9973</span><span class="number">-7e9</span>ae50d59f3 | <span class="keyword">in</span>-use | SNBS-Boot<span class="number">-162.58</span>  | <span class="number">75</span>   | snbs        | <span class="literal">true</span>     | <span class="number">1</span>bb4f3d1<span class="number">-1f</span>2a<span class="number">-4531</span>-a2c9<span class="number">-16e5</span>ac96f897 |</span><br><span class="line">| <span class="number">02</span>ad0e1c<span class="number">-6f</span>05<span class="number">-429f</span>-a5d7<span class="number">-0000</span>ccdc6974 | <span class="keyword">in</span>-use | SNBS-Boot<span class="number">-162.111</span> | <span class="number">75</span>   | snbs        | <span class="literal">true</span>     | <span class="number">244</span>da327-fe85<span class="number">-4</span>dd7<span class="number">-9</span>c2c<span class="number">-5</span>cc9fd6ef3d5 |</span><br><span class="line"></span><br><span class="line">返回：</span><br><span class="line">ID：对应snbs上实际的卷名，也是虚机启动读写的卷</span><br><span class="line">Attached to ：是虚机id，下面nova list命令可以查询，不启动虚机该值为空</span><br><span class="line"></span><br><span class="line"><span class="number">3</span>、从启动卷启动虚拟机</span><br><span class="line">nova boot --flavor=<span class="number">3</span>ba9daaa-d03b<span class="number">-419f</span>-a356-d4a7356ffd65 --boot-volume=b7707b7c-d4a2<span class="number">-45</span>da<span class="number">-956</span>b<span class="number">-12425574363</span>e --nic net-id=<span class="number">6</span>cfc5f5d-e911<span class="number">-4</span>d06<span class="number">-96f</span>5-fd4f96e8419b,v4-fixed-ip=<span class="number">10.244</span><span class="number">.30</span><span class="number">.141</span> --user-data=/opt/user<span class="number">-141.</span>txt --config-drive <span class="literal">true</span> --availability-zone=nova:xgto01n0102442548.sncloud.com oss141_instance</span><br><span class="line">具体参数查询文章最后附录；</span><br><span class="line">--boot-volume参数的值：启动卷id：cinderlist可以查询</span><br><span class="line"></span><br><span class="line"><span class="number">4.</span>查看虚机启动情况</span><br><span class="line">nova list或者openstack server list</span><br><span class="line">+--------------------------------------+-------------------+--------+------------+-------------+-------------------------+</span><br><span class="line">| ID                                   | Name              | Status | Task State | Power State | Networks                |</span><br><span class="line">+--------------------------------------+-------------------+--------+------------+-------------+-------------------------+</span><br><span class="line">| b60fb66c<span class="number">-14</span>a0<span class="number">-4</span>de9-af7f<span class="number">-7f</span>40eb254161 | SNBS-Boot<span class="number">-161.100</span> | ACTIVE | -          | Running     | SNBS_161=<span class="number">10.238</span><span class="number">.161</span><span class="number">.100</span> |</span><br><span class="line">| <span class="number">22f</span>9d10b<span class="number">-6954</span><span class="number">-4</span>df7<span class="number">-863</span>d<span class="number">-250</span>bf1c764de | SNBS-Boot<span class="number">-161.101</span> | ACTIVE | -          | Running     | SNBS_161=<span class="number">10.238</span><span class="number">.161</span><span class="number">.101</span> |</span><br><span class="line">| <span class="number">9</span>d884ddb<span class="number">-1391</span><span class="number">-4</span>a40-a9a0-a95b68e6f53f | SNBS-Boot<span class="number">-161.102</span> | ACTIVE | -          | Running     | SNBS_161=<span class="number">10.238</span><span class="number">.161</span><span class="number">.102</span> |</span><br><span class="line">| <span class="number">6</span>bb9d5f6-e3ac<span class="number">-4631</span>-bc76<span class="number">-05e03f</span>a13873 | SNBS-Boot<span class="number">-161.103</span> | ACTIVE | -          | Running     | SNBS_161=<span class="number">10.238</span><span class="number">.161</span><span class="number">.103</span> |</span><br><span class="line"></span><br><span class="line">返回：</span><br><span class="line">ID：虚机id；对应cinder list中的Attached to</span><br></pre></td></tr></table></figure>
+
+<h1 id="006-创建数据盘"><a href="#006-创建数据盘" class="headerlink" title="006-创建数据盘"></a>006-创建数据盘</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">三、虚拟机挂载数据盘（数据盘也是基于snbs）</span><br><span class="line"><span class="number">1.</span>创建数据卷，单位（GB）</span><br><span class="line">cinder create --name=data161<span class="number">-201</span>b <span class="number">100</span> --volume-type snbs</span><br><span class="line"><span class="number">100</span>：数据盘大小</span><br><span class="line">返回：数据卷id</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>查看数据卷</span><br><span class="line">cinder list --all</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>数据卷加载到虚机</span><br><span class="line">nova volume-attach 虚机id 数据卷id</span><br><span class="line">nova volume-attach f32060f4-a447<span class="number">-4212</span>-a12c<span class="number">-93</span>afe743138b dc36525b<span class="number">-4190</span><span class="number">-4</span>c26-af5b<span class="number">-06883f</span>3a2e9b</span><br><span class="line"></span><br><span class="line">libvirt底层机制：虚机xml里配的disk为network 标明了iscsi lun地址 libvirt自动连接</span><br><span class="line">连接成功 模拟到虚机里</span><br><span class="line"></span><br><span class="line"><span class="number">4.</span>登录到虚机上看下lsblk：</span><br><span class="line"></span><br><span class="line"><span class="number">5.</span>从虚机删数据盘</span><br><span class="line">nova volume-detach 虚机id 数据盘id</span><br><span class="line"></span><br><span class="line"><span class="number">6.</span>删除数据卷</span><br><span class="line">cinder delete 数据盘id</span><br><span class="line"></span><br><span class="line"><span class="number">7.</span>获取vnc地址</span><br><span class="line">nova <span class="keyword">get</span>-vnc-console a58b4e26<span class="number">-7</span>c88<span class="number">-407</span>c<span class="number">-8552</span><span class="number">-85e4</span>e1f0855b novnc</span><br><span class="line">a58b4e26<span class="number">-7</span>c88<span class="number">-407</span>c<span class="number">-8552</span><span class="number">-85e4</span>e1f0855b：虚机id（nova list）</span><br><span class="line"></span><br><span class="line"><span class="number">9.</span>浏览器打开http:<span class="comment">//10.244.25.100:6080/vnc_auto.html?token=dab6e3a1-ddef-4b48-8588-51ba18651188</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="007-其它命令"><a href="#007-其它命令" class="headerlink" title="007-其它命令"></a>007-其它命令</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">其它命令：</span><br><span class="line"><span class="number">1.</span>nova虚机相关</span><br><span class="line">nova list</span><br><span class="line">nova reset-state 虚机id</span><br><span class="line">nova reboot 虚机id</span><br><span class="line">nova  stop 虚机id</span><br><span class="line">nova start 虚机id</span><br><span class="line">nova <span class="keyword">get</span>-vnc-console a58b4e26<span class="number">-7</span>c88<span class="number">-407</span>c<span class="number">-8552</span><span class="number">-85e4</span>e1f0855b novnc</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>删除启动卷、数据卷</span><br><span class="line">nova volume-attach 虚机id 数据卷id</span><br><span class="line">nova volume-detach 虚机id 数据卷id</span><br><span class="line">cinder create --name=data161<span class="number">-201</span>b <span class="number">100</span> --volume-type snbs</span><br><span class="line">cinder delete 卷id</span><br><span class="line">nova show 虚机uuid【OS-EXT-STS:vm_state 状态需要为active】</span><br><span class="line">nova show <span class="number">52421068</span><span class="number">-1</span>bea<span class="number">-4</span>c55<span class="number">-8336</span>-c8f449a694a3</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>查看某个镜像的某些卷：（计算节点）</span><br><span class="line">virsh list</span><br><span class="line">virsh vncdisplay  instance<span class="number">-000054</span>ea</span><br><span class="line">virsh domblklist instance<span class="number">-000054</span>ea</span><br><span class="line"></span><br><span class="line">[<span class="symbol">root@</span>xgto01n010244025044 qemu]# virsh list</span><br><span class="line"> Id    Name                           State</span><br><span class="line">----------------------------------------------------</span><br><span class="line"> <span class="number">6908</span>  instance<span class="number">-000012f</span>f              running</span><br><span class="line"></span><br><span class="line">[<span class="symbol">root@</span>xgto01n010244025044 qemu]# virsh vncdisplay  instance<span class="number">-000012f</span>f </span><br><span class="line"><span class="number">10.244</span><span class="number">.25</span><span class="number">.44</span>:<span class="number">0</span></span><br><span class="line"></span><br><span class="line">[<span class="symbol">root@</span>xgto01n010244025044 qemu]# virsh domblklist instance<span class="number">-000012f</span>f</span><br><span class="line">Target     Source</span><br><span class="line">------------------------------------------------</span><br><span class="line">vda        iqn<span class="number">.2019</span><span class="number">-01.</span>com.suning:storage.snbs.ff400839-ed5b<span class="number">-4921</span>-a9f7-df84b88494d0/<span class="number">1</span></span><br><span class="line">vdb        /os_instance/b60fb66c<span class="number">-14</span>a0<span class="number">-4</span>de9-af7f<span class="number">-7f</span>40eb254161/disk.config</span><br><span class="line"></span><br><span class="line"><span class="number">4.</span>场景：将某个虚机的盘挂到另外一个虚机上</span><br><span class="line">步骤就是先在a主机上执行nova volume-detach </span><br><span class="line">nova volume-detach <span class="number">5429088f</span><span class="number">-99f</span>9<span class="number">-48</span>b2-b849-bb9187b7960a <span class="number">72</span>cdd842-e0e1<span class="number">-4</span>a58-b73e<span class="number">-93</span>ca708ff8ba </span><br><span class="line"></span><br><span class="line">再在b主机上执行nova volume-attach </span><br><span class="line">nova volume-attach <span class="number">5429088f</span><span class="number">-99f</span>9<span class="number">-48</span>b2-b849-bb9187b7960a <span class="number">72</span>cdd842-e0e1<span class="number">-4</span>a58-b73e<span class="number">-93</span>ca708ff8ba</span><br><span class="line">nova reset-state <span class="number">4117941</span>d<span class="number">-1709</span><span class="number">-4e7</span>b<span class="number">-8</span>a15<span class="number">-6805e113</span>be8b  --active</span><br><span class="line">nova stop</span><br><span class="line">nova start</span><br></pre></td></tr></table></figure>
+
+<h1 id="008-附录"><a href="#008-附录" class="headerlink" title="008-附录"></a>008-附录</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">附录：</span><br><span class="line"><span class="number">1.</span>从启动卷启动虚拟机各参数详解</span><br><span class="line">nova boot --flavor=<span class="number">3</span>ba9daaa-d03b<span class="number">-419f</span>-a356-d4a7356ffd65 --boot-volume=b7707b7c-d4a2<span class="number">-45</span>da<span class="number">-956</span>b<span class="number">-12425574363</span>e --nic net-id=<span class="number">6</span>cfc5f5d-e911<span class="number">-4</span>d06<span class="number">-96f</span>5-fd4f96e8419b,v4-fixed-ip=<span class="number">10.244</span><span class="number">.30</span><span class="number">.141</span> --user-data=/opt/user<span class="number">-141.</span>txt --config-drive <span class="literal">true</span> --availability-zone=nova:xgto01n0102442548.sncloud.com oss141_instance</span><br><span class="line">参数：</span><br><span class="line">--flavor=<span class="number">3</span>ba9daaa-d03b<span class="number">-419f</span>-a356-d4a7356ffd65   #参数的值，通过命令行nova flavor-list，选择一个合适的flavor【虚机配置】</span><br><span class="line"></span><br><span class="line">--nic net-id=<span class="number">6</span>cfc5f5d-e911<span class="number">-4</span>d06<span class="number">-96f</span>5-fd4f96e8419b, #参数的值，通过命令行neutron net-list，选择一个可用的network</span><br><span class="line"></span><br><span class="line">v4-fixed-ip=<span class="number">10.243</span><span class="number">.0</span><span class="number">.1</span>，#该ip必须和/opt/user-data.txt（或者其他目录）文件中一致</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">--config-drive <span class="literal">true</span>  #</span><br><span class="line">--availability-zone=nova:xgto01n0102442548.sncloud.com oss141_instance #--availability-zone参数的值，通过命令行nova service-list,选择一个可用的nova-compute服务节点</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>定制flavor参数</span><br><span class="line">下面是<span class="number">2</span>c4g，系统盘<span class="number">30</span>G的</span><br><span class="line">nova flavor-create <span class="number">2</span>c_4g_30g <span class="built_in">auto</span> <span class="number">4096</span> <span class="number">30</span> <span class="number">2</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>注入固定ip的userdate文件内容，redhat和centos是一样的</span><br><span class="line">[<span class="symbol">root@</span>xzto01n010027244129 ~]# cat user-data.txt</span><br><span class="line">#cloud-config</span><br><span class="line">runcmd:</span><br><span class="line">- echo DEVICE=eth0 &gt; /etc/sysconfig/network-scripts/ifcfg-eth0</span><br><span class="line">- echo BOOTPROTO=static &gt;&gt; /etc/sysconfig/network-scripts/ifcfg-eth0</span><br><span class="line">- echo ONBOOT=yes &gt;&gt; /etc/sysconfig/network-scripts/ifcfg-eth0</span><br><span class="line">- echo USERCTL=no &gt;&gt; /etc/sysconfig/network-scripts/ifcfg-eth0</span><br><span class="line">- echo IPADDR=<span class="number">10.1</span><span class="number">.0</span><span class="number">.125</span> &gt;&gt; /etc/sysconfig/network-scripts/ifcfg-eth0</span><br><span class="line">- echo NETMASK=<span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span> &gt;&gt; /etc/sysconfig/network-scripts/ifcfg-eth0</span><br><span class="line">- echo GATEWAY=<span class="number">10.1</span><span class="number">.0</span><span class="number">.1</span> &gt;&gt; /etc/sysconfig/network-scripts/ifcfg-eth0</span><br><span class="line">- [ cloud-init-per, once, restart_netconfig, service, network, restart ]</span><br><span class="line">主要修改标红的三项</span><br></pre></td></tr></table></figure>
+
+<h1 id="009-环境清理"><a href="#009-环境清理" class="headerlink" title="009-环境清理"></a>009-环境清理</h1><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">【脚本清理openstack环境：】</span><br><span class="line">删磁盘和删虚机的时候需要注意，先执行卸载磁盘的命令，然后在删除磁盘和虚机，删除磁盘和虚机，不用注意顺序了</span><br><span class="line">删除磁盘</span><br><span class="line"><span class="keyword">for</span> i in `cinder list --all-tenants |awk <span class="string">'&#123;print $2&#125;'</span> |<span class="keyword">grep</span> -v <span class="string">'ID'</span>|<span class="keyword">grep</span> -v <span class="string">'^$'</span>`;<span class="keyword">do</span> cinder <span class="keyword">delete</span> $i;done</span><br><span class="line">删除虚机</span><br><span class="line"><span class="keyword">for</span> i in `nova list --all-tenants |awk <span class="string">'&#123;print $2&#125;'</span> |<span class="keyword">grep</span> -v <span class="string">'ID'</span>|<span class="keyword">grep</span> -v <span class="string">'^$'</span>`;<span class="keyword">do</span> nova <span class="keyword">delete</span> $i;done</span><br><span class="line">删除port</span><br><span class="line"><span class="keyword">for</span> i in `neutron port-list |awk <span class="string">'&#123;print $2&#125;'</span> |<span class="keyword">grep</span> -v <span class="string">'id'</span>|<span class="keyword">grep</span> -v <span class="string">'^$'</span>` ;<span class="keyword">do</span> neutron port-<span class="keyword">delete</span> $i;done</span><br><span class="line">删除镜像</span><br><span class="line"><span class="keyword">for</span> i in `glance image-list | awk <span class="string">'&#123;print $2&#125;'</span> |<span class="keyword">grep</span> -v <span class="string">'ID'</span>|<span class="keyword">grep</span> -v <span class="string">'^$'</span>`;<span class="keyword">do</span> glance image-<span class="keyword">delete</span> $i;done</span><br><span class="line">删除subnet</span><br><span class="line"><span class="keyword">for</span> i in `neutron subnet-list | awk <span class="string">'&#123;print $2&#125;'</span> |<span class="keyword">grep</span> -v <span class="string">'id'</span>|<span class="keyword">grep</span> -v <span class="string">'^$'</span>`;<span class="keyword">do</span> neutron subnet-<span class="keyword">delete</span> $i;done</span><br><span class="line">删除net</span><br><span class="line"><span class="keyword">for</span> i in `neutron net-list |awk <span class="string">'&#123;print $2&#125;'</span> |<span class="keyword">grep</span> -v <span class="string">'id'</span>|<span class="keyword">grep</span> -v <span class="string">'^$'</span>`;<span class="keyword">do</span> neutron net-<span class="keyword">delete</span> $i;done</span><br><span class="line">删除flavor</span><br><span class="line"><span class="keyword">for</span> i in `nova flavor-list | awk <span class="string">'&#123;print $2&#125;'</span> |<span class="keyword">grep</span> -v <span class="string">'ID'</span>|<span class="keyword">grep</span> -v <span class="string">'^$'</span>`;<span class="keyword">do</span> nova flavor-<span class="keyword">delete</span> $i;done</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">卸载磁盘</span><br><span class="line"><span class="keyword">for</span> i in `cinder list --all-tenants |awk <span class="string">'&#123;print $2&#125;'</span> |<span class="keyword">grep</span> -v <span class="string">'ID'</span>|<span class="keyword">grep</span> -v <span class="string">'^$'</span>`;</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  j=`cinder list --all |<span class="keyword">grep</span> $i | awk <span class="string">'&#123;print $16&#125;'</span> |<span class="keyword">grep</span> -v <span class="string">'Attached'</span>|<span class="keyword">grep</span> -v <span class="string">'^$'</span>`</span><br><span class="line">  nova volume-detach $j $i</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+<h1 id="010-虚机快照、扩容、疏散"><a href="#010-虚机快照、扩容、疏散" class="headerlink" title="010-虚机快照、扩容、疏散"></a>010-虚机快照、扩容、疏散</h1><p><strong>快照</strong></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">快照：cinder <span class="keyword">snapshot</span>-<span class="keyword">create</span> <span class="comment">--force true --name XXX --description XXX  volumeUUID </span></span><br><span class="line">当卷处于挂载状态时 进行快照 需要添加<span class="comment">--force参数</span></span><br><span class="line">列快照:cinder <span class="keyword">snapshot</span>-list</span><br><span class="line">删除快照：cinder <span class="keyword">snapshot</span>-<span class="keyword">delete</span></span><br><span class="line">重置：cinder <span class="keyword">snapshot</span>-<span class="keyword">reset</span>-state <span class="comment">--state available 11664a6a-b42c-4078-abd0-f8433c74d166</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>扩容</strong></p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">扩容：cinder extend volumeUUID（卷id)  newSize </span><br><span class="line">该命令不区分是否处于挂载状态【非挂载状态下 就是冷的；挂载状态下 就是热的】</span><br><span class="line">如果已经挂载但没有做文件系统那可以直接扩容；如果已经挂载而且做了文件系统可以直接扩容，还需在虚机内部执行resize2fs</span><br><span class="line">【redhat6<span class="number">.3</span>及一下版本不管是否挂载都不支持自动resize2fs】</span><br><span class="line"></span><br><span class="line">冷扩容：</span><br><span class="line"><span class="number">1.</span>如果已经mount 需要先umount</span><br><span class="line"><span class="number">2.</span>nova volume-detach卸载</span><br><span class="line"><span class="number">3.</span>cinder extend</span><br><span class="line"><span class="number">4.</span>nova volume-<span class="section">attach</span>挂载</span><br><span class="line"><span class="number">5.</span>mount</span><br><span class="line"><span class="number">6.</span>resize2fs</span><br><span class="line"></span><br><span class="line">热扩容：</span><br><span class="line"><span class="number">1.</span>cinder extend</span><br><span class="line"><span class="number">2.</span>resize2fs</span><br><span class="line">冷热的区别就是需不需要虚机内部umount 外部detach <span class="section">attach</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>迁移</strong></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>理论上都是多台设备同时 但根据测试现象 热迁移在libvirt层是一台一台迁的 冷迁移和虚机扩容可以多台同时迁</span><br><span class="line"><span class="number">2.</span>根据前期测试数据冷迁一台虚机好像<span class="number">2</span>min吧，批量的话得写专门的工具 多线程任务同时跑 单线程的话 是同步的</span><br><span class="line">现在这个时效要比之前本地虚机好些 本地虚机冷迁少的得几十分钟 多的话 五六个小时</span><br><span class="line"></span><br><span class="line">冷迁：</span><br><span class="line">nova migrate vmUUID hostName </span><br><span class="line">其中hostName可通过nova hypervisor-list查看；</span><br><span class="line">虚机状态变为VERIFY_RESIZE 执行：nova resize-confirm VMUUID</span><br><span class="line">什么情况下会导致VERIFY_RESIZE？</span><br><span class="line">这个是冷迁过程的中间状态,虚机已经迁移到目标节点后 会出现这个状态,confirm操作是对源节点一些遗留数据进行清理</span><br><span class="line"></span><br><span class="line">热迁：</span><br><span class="line">nova live-migration vmUUID hostName </span><br><span class="line">其中hostName可通过nova hypervisor-list查看</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[<span class="symbol">root@</span>snbs-boot<span class="number">-161</span> ~]# lsblk</span><br><span class="line">NAME                       MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT</span><br><span class="line">vda                        <span class="number">252</span>:<span class="number">0</span>    <span class="number">0</span>    <span class="number">75</span>G  <span class="number">0</span> disk </span><br><span class="line">├─vda1                     <span class="number">252</span>:<span class="number">1</span>    <span class="number">0</span>   <span class="number">200</span>M  <span class="number">0</span> part /boot</span><br><span class="line">└─vda2                     <span class="number">252</span>:<span class="number">2</span>    <span class="number">0</span>  <span class="number">74.8</span>G  <span class="number">0</span> part </span><br><span class="line">  ├─systemvg-swaplv (dm<span class="number">-0</span>) <span class="number">253</span>:<span class="number">0</span>    <span class="number">0</span>    <span class="number">10</span>G  <span class="number">0</span> lvm  [SWAP]</span><br><span class="line">  ├─systemvg-rootlv (dm<span class="number">-1</span>) <span class="number">253</span>:<span class="number">1</span>    <span class="number">0</span>     <span class="number">8</span>G  <span class="number">0</span> lvm  /</span><br><span class="line">  ├─systemvg-homelv (dm<span class="number">-2</span>) <span class="number">253</span>:<span class="number">2</span>    <span class="number">0</span>     <span class="number">2</span>G  <span class="number">0</span> lvm  /home</span><br><span class="line">  ├─systemvg-varlv (dm<span class="number">-3</span>)  <span class="number">253</span>:<span class="number">3</span>    <span class="number">0</span>     <span class="number">6</span>G  <span class="number">0</span> lvm  /var</span><br><span class="line">  ├─systemvg-tmplv (dm<span class="number">-4</span>)  <span class="number">253</span>:<span class="number">4</span>    <span class="number">0</span>     <span class="number">2</span>G  <span class="number">0</span> lvm  /tmp</span><br><span class="line">  ├─systemvg-optlv (dm<span class="number">-5</span>)  <span class="number">253</span>:<span class="number">5</span>    <span class="number">0</span>    <span class="number">30</span>G  <span class="number">0</span> lvm  /opt</span><br><span class="line">  └─systemvg-usrlv (dm<span class="number">-6</span>)  <span class="number">253</span>:<span class="number">6</span>    <span class="number">0</span>    <span class="number">10</span>G  <span class="number">0</span> lvm  /usr</span><br><span class="line">vdb                        <span class="number">252</span>:<span class="number">16</span>   <span class="number">0</span>    <span class="number">64</span>M  <span class="number">0</span> disk</span><br><span class="line">vdb是user data注入数据</span><br><span class="line">之前user data是以iso格式挂载到cdrom 这种方式下 libvirt不支持热迁</span><br><span class="line"></span><br><span class="line">热迁移有几十毫秒的中断；</span><br><span class="line">往磁盘的读写 基本都是先到OS page cache 然后再由OS自身的IO调度完成具体的IO落盘 热迁在libvirt层通过post-copy算法完成虚机内存迁移 所以中断时间内相关数据一直在内存 迁移完毕后再由OS调度进行落盘，具体的细节可以找谢老大进行印证</span><br><span class="line"></span><br><span class="line">刚才热迁就是失败的原因是：</span><br><span class="line">热迁时候需要通过主机名建立libvirt层连接而<span class="number">25.1</span>（控制节点）这个集群没有dns服务，计算节点间没法通过主机名通信 我已经把<span class="number">44</span>和<span class="number">48</span>的主机名互写到对方hosts里了</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span>每台计算节点占用的资源都比较多，迁移的时候资源判断没通过，没选到有效的节点，需要在热迁命令后面加个force参数</span><br><span class="line">nova live-migration a0d8cbe7<span class="number">-07</span>a4<span class="number">-4691</span>-bb0b<span class="number">-8</span>dd5b85d32ef xgto01n010244025056.sncloud.com --force</span><br><span class="line">--force的意思是跳过nova scheduler组件的节点筛选 </span><br><span class="line"><span class="number">2.44</span> <span class="number">48</span> <span class="number">55</span> <span class="number">56</span>四台计算节点的libvirt配置有问题没开启热迁配置 </span><br><span class="line">原因是 <span class="number">25.1</span>压测环境的部署脚本不是最新的 这四台计算节点的libvirt配置我已经修改完了</span><br></pre></td></tr></table></figure>
+
+<p><strong>疏散</strong></p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">疏散：</span><br><span class="line">nova host-evacuate --target_host newHostname oldHostname</span><br><span class="line">疏散功能用于计算节点宕机后将源节点的所有虚机疏散到目标节点</span><br><span class="line">【newHostname是目标节点 oldHostname是宕机节点】</span><br><span class="line">新节点会再次add lun</span><br><span class="line"></span><br><span class="line">【nova service-<span class="keyword">list</span></span><br><span class="line"><span class="number">44</span>节点对应的compute服务状态为down的时候再操作疏散命令】</span><br><span class="line"></span><br><span class="line">【不加--force可能会走调度，意思不一定全部迁移到目标节点，可能迁移到其他节点，--force就只会迁移到指定节点】</span><br><span class="line"></span><br><span class="line">这个版本要保证 vm volume <span class="keyword">target</span>在同一节点，所以迁移后要验证 vm volume <span class="keyword">target</span>是否还在同一节点，源节点<span class="keyword">target</span>是否删除</span><br><span class="line"></span><br><span class="line">宕机恢复就是疏散，pcp那边做这个功能，不单单要调这个接口，还要有计算节点宕机检测支持，宕机检测要在上层监控层面做不会死openstack做。</span><br></pre></td></tr></table></figure>
+
+<h1 id="011-问题"><a href="#011-问题" class="headerlink" title="011-问题"></a>011-问题</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">问题解决：</span><br><span class="line"><span class="number">1.</span>控制lun加到某一个计算节点</span><br><span class="line">方法：停掉其他三个节点的nova-compute、cinder-volume服务</span><br><span class="line">停volume的</span><br><span class="line">systemctl stop openstack-cinder-volume.service</span><br><span class="line">停compute的</span><br><span class="line">systemctl stop openstack-nova-compute.service</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>问题：| e737244d-adc6<span class="number">-4e37</span>-b808<span class="number">-53</span>c7b9ce2984 | snbs162_88_instance  | SHUTOFF | powering-on  | Shutdown    | SNBS_162=<span class="number">10.238</span><span class="number">.162</span><span class="number">.88</span>        |</span><br><span class="line">解决：</span><br><span class="line">nova reset-state 虚机id --active</span><br><span class="line">nova reset-state e737244d-adc6<span class="number">-4e37</span>-b808<span class="number">-53</span>c7b9ce2984 --active</span><br><span class="line">注：</span><br><span class="line">shutdown的状态powering on ，active的电源状态为powering off</span><br><span class="line">shutdow：powering-on 数据整理</span><br><span class="line">active：powering-off 数据整理</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>问题：cinder删除不掉</span><br><span class="line">原因：计算节点时间不同步</span><br><span class="line">解决：计算节点执行</span><br><span class="line">systemctl restart chronyd</span><br><span class="line">systemctl restart openstack-nova-compute</span><br><span class="line"></span><br><span class="line"><span class="number">4.</span>inuse状态不让删除：（使inuse状态变成available）</span><br><span class="line">cinder reset-state --state available --attach-status detached <span class="number">11664</span>a6a-b42c<span class="number">-4078</span>-abd0-f8433c74d166</span><br><span class="line"></span><br><span class="line"><span class="number">5.</span>停掉其他三个节点的nova-compute cinder-volume服务</span><br><span class="line">史家豪 <span class="number">2019</span><span class="number">-09</span><span class="number">-03</span> <span class="number">17</span>:<span class="number">46</span>:<span class="number">11</span></span><br><span class="line">systemctl stop openstack-cinder-volume.service</span><br><span class="line">史家豪 <span class="number">2019</span><span class="number">-09</span><span class="number">-03</span> <span class="number">17</span>:<span class="number">46</span>:<span class="number">18</span></span><br><span class="line">systemctl stop openstack-nova-compute.service</span><br><span class="line">史家豪 <span class="number">2019</span><span class="number">-09</span><span class="number">-03</span> <span class="number">17</span>:<span class="number">46</span>:<span class="number">25</span></span><br><span class="line">上面那个是停volume的</span><br><span class="line">史家豪 <span class="number">2019</span><span class="number">-09</span><span class="number">-03</span> <span class="number">17</span>:<span class="number">46</span>:<span class="number">32</span></span><br><span class="line">下面的是停compute的</span><br><span class="line"></span><br><span class="line"><span class="number">5.</span>问题：| e737244d-adc6<span class="number">-4e37</span>-b808<span class="number">-53</span>c7b9ce2984 | snbs162_88_instance  | SHUTOFF | powering-on  | Shutdown    | SNBS_162=<span class="number">10.238</span><span class="number">.162</span><span class="number">.88</span>        |</span><br><span class="line">解决：</span><br><span class="line">nova reset-state --active e737244d-adc6<span class="number">-4e37</span>-b808<span class="number">-53</span>c7b9ce2984</span><br><span class="line">刚才环境两个问题：shutdown的状态powering on ，active的电源状态为powering off。总共<span class="number">119</span>台</span><br><span class="line">宫旭飞(<span class="number">16111371</span>) <span class="number">2019</span><span class="number">-11</span><span class="number">-08</span> <span class="number">14</span>:<span class="number">31</span>:<span class="number">54</span></span><br><span class="line">nova reset-state 批量操作</span><br><span class="line">nova stop 批量操作</span><br><span class="line">nova start 批量操作</span><br><span class="line">宫旭飞(<span class="number">16111371</span>) <span class="number">2019</span><span class="number">-11</span><span class="number">-08</span> <span class="number">14</span>:<span class="number">32</span>:<span class="number">34</span></span><br><span class="line">还有就是</span><br><span class="line">shutdow：powering-on 数据整理</span><br><span class="line">active：powering-off 数据整理</span><br><span class="line"></span><br><span class="line"><span class="number">6.</span>计算节点给权限：</span><br><span class="line">lsattr  /etc/ssh/sshd_config</span><br><span class="line">chattr -i /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+
+<h1 id="012-脚本"><a href="#012-脚本" class="headerlink" title="012-脚本"></a>012-脚本</h1><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">生成ip配置文件</span><br><span class="line">[root@xgto01n0102442501 opt]# cat user-33/1.sh</span><br><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> `seq 3 100`</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    cp user-33-1.txt user-33-<span class="variable">$i</span>.txt</span><br><span class="line">    sed -i <span class="string">'s/IPADDR=10.244.33.1/IPADDR=10.244.33.'</span><span class="variable">$&#123;i&#125;</span><span class="string">'/g'</span> user-33-<span class="variable">$i</span>.txt</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">链接克隆生成虚机：</span><br><span class="line">[root@xgto01n0102442501 opt]# cat 44-33-100.sh</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> `seq 9 100`</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="attribute">a</span>=`cinder create --image-id f9bbdf34-fbc4-4845-99c1-8fea2912aa3c 50|grep <span class="string">"| id"</span>|sed <span class="string">'s/|//g'</span>|awk <span class="string">'&#123;print $2&#125;'</span>`</span><br><span class="line">    nova boot <span class="attribute">--flavor</span>=95f5e8dd-783c-4ed6-90f6-f7a48ac68fdf <span class="attribute">--boot-volume</span>=<span class="variable">$&#123;a&#125;</span> --nic <span class="attribute">net-id</span>=8181177d-a2c2-4f85-ad4c-39fb6ee38d1f,v4-fixed-ip=10.244.33.$i <span class="attribute">--user-data</span>=/opt/user-33/user-33-$i.txt --config-drive <span class="literal">true</span> <span class="attribute">--availability-zone</span>=nova:xgto01n010244025044.sncloud.com snbs33_<span class="variable">$&#123;i&#125;</span>_instance</span><br><span class="line">    echo 33-<span class="variable">$&#123;i&#125;</span> <span class="variable">$&#123;a&#125;</span> &gt;&gt;/opt/user-33/create.log</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">生成xshell登录文件：</span><br><span class="line">[root@block-storage14 111]# cat 2.sh</span><br><span class="line">do2unix 10.244.33.1.xsh</span><br><span class="line"><span class="keyword">for</span><span class="built_in"> ip </span><span class="keyword">in</span> `cat wxcs_ip.txt`</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    cp 10.244.33.1.xsh <span class="variable">$ip</span>.xsh</span><br><span class="line">    sed -i <span class="string">'s/Host=10.244.33.1/Host='</span><span class="variable">$ip</span><span class="string">'/g'</span> <span class="variable">$ip</span>.xsh</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+      
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-openstack/" title="BlockStorage-openstack">https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-openstack/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/BlockStorage-openstack/" rel="tag"># BlockStorage-openstack</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-question/" rel="prev" title="BlockStorage-question">
+      <i class="fa fa-chevron-left"></i> BlockStorage-question
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-kvm/" rel="next" title="BlockStorage-kvm">
+      BlockStorage-kvm <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#000-随便粘"><span class="nav-text">000-随便粘</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#001-openstack人员"><span class="nav-text">001-openstack人员</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#002-首先条件"><span class="nav-text">002-首先条件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#003-上传镜像"><span class="nav-text">003-上传镜像</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#004-独立克隆"><span class="nav-text">004-独立克隆</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#005-创建启动卷"><span class="nav-text">005-创建启动卷</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#006-创建数据盘"><span class="nav-text">006-创建数据盘</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#007-其它命令"><span class="nav-text">007-其它命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#008-附录"><span class="nav-text">008-附录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#009-环境清理"><span class="nav-text">009-环境清理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#010-虚机快照、扩容、疏散"><span class="nav-text">010-虚机快照、扩容、疏散</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#011-问题"><span class="nav-text">011-问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#012-脚本"><span class="nav-text">012-脚本</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">What hurts more, the pain of hard work or the pain of regret?</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">34:51</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

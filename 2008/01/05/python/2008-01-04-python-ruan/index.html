@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="python-ruan">
+<meta property="og:url" content="https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2008-01-04-python-ruan%5C20200922173947145.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/20200922173947145.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2008-01-04-python-ruan%5C2020092217434618.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/2020092217434618.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2008-01-04-python-ruan%5C20200922174913593.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/20200922174913593.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2008-01-04-python-ruan%5C20200922175433842.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/20200922175433842.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2008-01-04-python-ruan%5C20200922180018928.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/20200922180018928.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2008-01-04-python-ruan%5C2020092218013135.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/2020092218013135.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2008-01-04-python-ruan%5C20200922182017163.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/20200922182017163.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2008-01-04-python-ruan%5C20200922180523324.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/20200922180523324.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2008-01-04-python-ruan%5C20200922180923926.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/20200922180923926.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2008-01-04-python-ruan%5C20200922181333121.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/20200922181333121.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2008-01-04-python-ruan%5CImage.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/Image.png">
+<meta property="article:published_time" content="2008-01-05T10:37:19.000Z">
+<meta property="article:modified_time" content="2021-06-18T12:44:29.336Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2008-01-04-python-ruan%5C20200922173947145.png">
+
+<link rel="canonical" href="https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>python-ruan | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">嘻嘻嘻嘻嘻嘻</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="What hurts more, the pain of hard work or the pain of regret?">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          python-ruan
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2008-01-05 18:37:19" itemprop="dateCreated datePublished" datetime="2008-01-05T18:37:19+08:00">2008-01-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-18 20:44:29" itemprop="dateModified" datetime="2021-06-18T20:44:29+08:00">2021-06-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>23k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>21 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+
+
+<h1 id="001-python时间计算"><a href="#001-python时间计算" class="headerlink" title="001-python时间计算"></a>001-python时间计算</h1><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">https://blog.csdn.net/u012089823/article/details/<span class="number">79849502</span></span><br><span class="line">now = lambda: <span class="type">time</span>.time()    </span><br><span class="line">start = now() # 在同一个程序中，<span class="keyword">start</span>的值随系统时间动态变化</span><br><span class="line">now()-<span class="keyword">start</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="002-python多进程并发"><a href="#002-python多进程并发" class="headerlink" title="002-python多进程并发"></a>002-python多进程并发</h1><p><a href="https://www.cnblogs.com/garfieldcgf/p/8324852.html" target="_blank" rel="noopener external nofollow noreferrer">https://www.cnblogs.com/garfieldcgf/p/8324852.html</a></p>
+<p><a href="https://www.cnblogs.com/rexcheny/p/9427209.html" target="_blank" rel="noopener external nofollow noreferrer">https://www.cnblogs.com/rexcheny/p/9427209.html</a></p>
+<p><a href="http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html" target="_blank" rel="noopener external nofollow noreferrer">http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html</a> （进程与线程的一个简单解释）</p>
+<p>由于Python下调用Linux的Shell命令都需要等待返回，所以常常我们设置的多线程都达不到效果，<br>因此在调用shell命令不需要返回时，使用threading模块并不是最好的方法。<br>  <a href="http://www.coder4.com/archives/3352" target="_blank" rel="noopener external nofollow noreferrer">http://www.coder4.com/archives/3352</a></p>
+<p>Python提供了非常好用的多进程包multiprocessing，你只需要定义一个函数，Python会替你完成其他所有事情。<br>借助这个包，可以轻松完成从单进程到并发执行的转换。</p>
+<p>1、新建单一进程<br>如果我们新建少量进程，可以如下：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> multiprocessing</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">def <span class="function"><span class="keyword">func</span><span class="params">(msg)</span></span>:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">3</span>):</span><br><span class="line">        <span class="built_in">print</span> msg</span><br><span class="line">        time.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    p = multiprocessing.<span class="type">Process</span>(target=<span class="function"><span class="keyword">func</span>, <span class="title">args</span>=<span class="params">(<span class="string">"hello"</span>, )</span></span>)</span><br><span class="line">    p.start()</span><br><span class="line">    p.<span class="built_in">join</span>()</span><br><span class="line">    <span class="built_in">print</span> <span class="string">"Sub-process done."</span></span><br></pre></td></tr></table></figure>
+
+<p>2、使用进程池<br>是的，你没有看错，不是线程池。它可以让你跑满多核CPU，而且使用方法非常简单。<br>注意要用apply_async，如果落下async，就变成阻塞版本了。</p>
+<p>processes=4是最多并发进程数量。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import multiprocessing</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">def func(msg):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(3):</span><br><span class="line">        <span class="builtin-name">print</span> msg</span><br><span class="line">        time.sleep(1)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">   <span class="built_in"> pool </span>= multiprocessing.Pool(<span class="attribute">processes</span>=4)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(10):</span><br><span class="line">        msg = <span class="string">"hello %d"</span> %(i)</span><br><span class="line">        pool.apply_async(func, (msg, ))</span><br><span class="line">    pool.close()</span><br><span class="line">    pool.join()</span><br><span class="line">    <span class="builtin-name">print</span> <span class="string">"Sub-process(es) done."</span></span><br></pre></td></tr></table></figure>
+
+<p>3、使用Pool，并需要关注结果</p>
+<p>更多的时候，我们不仅需要多进程执行，还需要关注每个进程的执行结果，如下：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import multiprocessing</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">def func(msg):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(3):</span><br><span class="line">        <span class="builtin-name">print</span> msg</span><br><span class="line">        time.sleep(1)</span><br><span class="line">    return <span class="string">"done "</span> + msg</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">   <span class="built_in"> pool </span>= multiprocessing.Pool(<span class="attribute">processes</span>=4)</span><br><span class="line">    result = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(10):</span><br><span class="line">        msg = <span class="string">"hello %d"</span> %(i)</span><br><span class="line">        result.append(pool.apply_async(func, (msg, )))</span><br><span class="line">    pool.close()</span><br><span class="line">    pool.join()</span><br><span class="line">    <span class="keyword">for</span> res <span class="keyword">in</span> result:</span><br><span class="line">        <span class="builtin-name">print</span> res.<span class="builtin-name">get</span>()</span><br><span class="line">    <span class="builtin-name">print</span> <span class="string">"Sub-process(es) done."</span></span><br></pre></td></tr></table></figure>
+
+<p>根据网友评论中的反馈，在Windows下运行有可能崩溃(开启了一大堆新窗口、进程)，可以通过如下调用来解决：</p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">multiprocessing</span>.freeze_sup<span class="keyword">port</span>()</span><br></pre></td></tr></table></figure>
+
+<p>附录（自己的脚本）：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/<span class="keyword">python</span></span><br><span class="line">import threading</span><br><span class="line">import subprocess</span><br><span class="line">import datetime</span><br><span class="line">import multiprocessing</span><br><span class="line"></span><br><span class="line">def dd_test(<span class="built_in">round</span>, <span class="keyword">th</span>):</span><br><span class="line">    test_file_arg = <span class="string">'of=/zbkc/test_mds_crash/1m_%s_%s_&#123;&#125;'</span> %(<span class="built_in">round</span>, <span class="keyword">th</span>)</span><br><span class="line">    <span class="keyword">command</span> = <span class="string">"seq 100 | xargs -i dd if=/dev/zero %s  bs=1M count=1"</span>  %test_file_arg </span><br><span class="line">    <span class="keyword">print</span> <span class="keyword">command</span></span><br><span class="line">    subprocess.<span class="keyword">call</span>(<span class="keyword">command</span>,<span class="keyword">shell</span>=True,stdout=<span class="keyword">open</span>(<span class="string">'/dev/null'</span>,<span class="string">'w'</span>),stderr=subprocess.STDOUT)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def mds_stat(<span class="built_in">round</span>):</span><br><span class="line">    <span class="keyword">p</span> = subprocess.Popen(<span class="string">"zbkc mds stat"</span>, <span class="keyword">shell</span> = True, stdout = subprocess.PIPE)</span><br><span class="line">    out = <span class="keyword">p</span>.stdout.readlines()</span><br><span class="line">    <span class="keyword">if</span> out[<span class="number">0</span>].<span class="keyword">find</span>(<span class="string">'active'</span>) != -<span class="number">1</span>:</span><br><span class="line">        <span class="keyword">command</span> = <span class="string">"echo '0205pm %s round mds status OK, %s' &gt;&gt; /round_record"</span> %(<span class="built_in">round</span>, datetime.datetime.now())</span><br><span class="line">        command_2 = <span class="string">"time (ls /zbkc/test_mds_crash/) 2&gt;&gt;/round_record"</span></span><br><span class="line">        command_3 = <span class="string">"ls /zbkc/test_mds_crash | wc -l &gt;&gt; /round_record"</span></span><br><span class="line">        subprocess.<span class="keyword">call</span>(<span class="keyword">command</span>,<span class="keyword">shell</span>=True)</span><br><span class="line">        subprocess.<span class="keyword">call</span>(command_2,<span class="keyword">shell</span>=True)</span><br><span class="line">        subprocess.<span class="keyword">call</span>(command_3,<span class="keyword">shell</span>=True)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">command</span> = <span class="string">"echo '0205 %s round mds status abnormal, %s, %s' &gt;&gt; /round_record"</span> %(<span class="built_in">round</span>, out[<span class="number">0</span>], datetime.datetime.now())</span><br><span class="line">        subprocess.<span class="keyword">call</span>(<span class="keyword">command</span>,<span class="keyword">shell</span>=True)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#threads = []</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">round</span> in <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">1600</span>):</span><br><span class="line">    pool = multiprocessing.Pool(processes = <span class="number">10</span>) #使用进程池</span><br><span class="line">    <span class="keyword">for</span> <span class="keyword">th</span> in <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">#        th_name = <span class="string">"thread-"</span> + str(<span class="keyword">th</span>)</span><br><span class="line">#        threads.<span class="keyword">append</span>(th_name)   #添加线程到线程列表</span><br><span class="line">#        threading.Thread(target = dd_test, <span class="keyword">args</span> = (<span class="built_in">round</span>, <span class="keyword">th</span>), name = th_name).start()  #创建多线程任务</span><br><span class="line">        pool.apply_async(dd_test, (<span class="built_in">round</span>, <span class="keyword">th</span>))</span><br><span class="line">    pool.<span class="keyword">close</span>()</span><br><span class="line">    pool.<span class="keyword">join</span>()</span><br><span class="line">    #等待线程完成</span><br><span class="line">#    <span class="keyword">for</span> t in thread<span class="variable">s:</span></span><br><span class="line">#        t.<span class="keyword">join</span>()    </span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> mds_stat(<span class="built_in">round</span>) == <span class="number">0</span>: </span><br><span class="line">        subprocess.<span class="keyword">call</span>(<span class="string">"zbkc -s"</span>,<span class="keyword">shell</span>=True)</span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="003-Python获取多线程返回结果"><a href="#003-Python获取多线程返回结果" class="headerlink" title="003-Python获取多线程返回结果"></a>003-Python获取多线程返回结果</h1><p><a href="https://www.cnblogs.com/freeaihub/p/13401920.html" target="_blank" rel="noopener external nofollow noreferrer">https://www.cnblogs.com/freeaihub/p/13401920.html</a></p>
+<p>本文转自<a href="https://www.freeaihub.com/article/threading-return-in-python.html，该页可在线运行以下实例" target="_blank" rel="noopener external nofollow noreferrer">https://www.freeaihub.com/article/threading-return-in-python.html，该页可在线运行以下实例</a></p>
+<p>Python的thread模块，是不支持守护线程的。当主线程退出的时候，所有的子线程都将终止，不管他们是否仍在工作。本节我们开始介绍python的另外多线程模块threading，该模块支持守护线程，其工作方式：守护线程一般是一个等待客户端请求的服务器。如果没有客户端请求，守护线程就是空闲的。如果把一个线程设置为守护线程，就表示这个线程是不重要的，进程退出时不需要等待这个线程执行完成。<br>如果主线程准备退出的时候，不需要等待某些子线程完成，就可以为这些子线程设置守护线程标记。该标记值为真的时候，标示线程是不重要的，或者说该线程只是用来等待客户端请求而不做其他任何事情。使用下面的语句：thread.daemon=True 可以将一个线程设置为守护线程。同样的也可以通过这个值来查看线程的守护状态。一个新的子线程会继承父线程的守护标记。整个python程序（也可以称作主线程）将在所有的非守护线程退出之后才退出。</p>
+<p>threading模块除了Thread类之外，还包括许多好用的同步机制：</p>
+<table>
+<thead>
+<tr>
+<th><strong>对象</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Thread</td>
+<td>表示一个执行线程的对象</td>
+</tr>
+<tr>
+<td>Lock</td>
+<td>锁对象</td>
+</tr>
+<tr>
+<td>RLock</td>
+<td>可重入锁对象，使单一线程可以（再次）获得已持有的锁（递归锁）</td>
+</tr>
+<tr>
+<td>Condition</td>
+<td>条件变量对象，使得一个线程等待另外一个线程满足特定的条件，比如改变状态或者某个数据值</td>
+</tr>
+<tr>
+<td>Event</td>
+<td>条件变量的通用版本，任意数量的线程等待某个事件的发生，在该事件发生后所有的线程都将被激活</td>
+</tr>
+<tr>
+<td>Semaphore</td>
+<td>为线程间的有限资源提供一个计数器，如果没有可用资源时会被阻塞</td>
+</tr>
+<tr>
+<td>BoundedSemaphore</td>
+<td>于Semaphore相似，不过它不允许超过初始值</td>
+</tr>
+<tr>
+<td>Timer</td>
+<td>于Thread类似，不过它要在运行前等待一定时间</td>
+</tr>
+<tr>
+<td>Barrier</td>
+<td>创建一个障碍，必须达到指定数量的线程后才可以继续</td>
+</tr>
+</tbody></table>
+<p>其中，Thread类是threading模块的主要执行对象。</p>
+<p>下面是Thread类的属性和方法列表：</p>
+<table>
+<thead>
+<tr>
+<th><strong>属性</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Thread类属性</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>name</td>
+<td>线程名</td>
+</tr>
+<tr>
+<td>ident</td>
+<td>线程的标识符</td>
+</tr>
+<tr>
+<td>daemon</td>
+<td>布尔值，表示这个线程是否是守护线程</td>
+</tr>
+<tr>
+<td><strong>Thread类方法</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>init</strong>(group=None,target=None,name=None,args=(),kwargs={},verbose=None,daemon=None)</td>
+<td>实例化一个线程对象，需要一个可调用的target对象，以及参数args或者kwargs。还可以传递name和group参数。daemon的值将会设定thread.daemon的属性</td>
+</tr>
+<tr>
+<td>start()</td>
+<td>开始执行该线程</td>
+</tr>
+<tr>
+<td>run()</td>
+<td>定义线程的方法。（通常开发者应该在子类中重写）</td>
+</tr>
+<tr>
+<td>join(timeout=None)</td>
+<td>直至启动的线程终止之前一直挂起；除非给出了timeout(单位秒)，否则一直被阻塞</td>
+</tr>
+<tr>
+<td>getName()</td>
+<td>返回线程名（该方法已被弃用）</td>
+</tr>
+<tr>
+<td>setName()</td>
+<td>设定线程名（该方法已弃用）</td>
+</tr>
+<tr>
+<td>isAlive</td>
+<td>布尔值，表示这个线程是否还存活（驼峰式命名，python2.6版本开始已被取代）</td>
+</tr>
+<tr>
+<td>isDaemon()</td>
+<td>布尔值，表示是否是守护线程(已经弃用)</td>
+</tr>
+<tr>
+<td>setDaemon(布尔值)</td>
+<td>在线程start()之前调用，把线程的守护标识设定为指定的布尔值（已弃用）</td>
+</tr>
+</tbody></table>
+<p>使用Thread类，可以有多种方法创建线程：</p>
+<ul>
+<li>创建Thread类的实例，传递一个函数</li>
+<li>创建Thread类的实例，传递一个可调用的类实例</li>
+<li>派生Thread类的子类，并创建子类的实例</li>
+</ul>
+<p>一般的，我们会采用第一种或者第三种方法。如果需要一个更加符合面向对象的接口时，倾向于选择第三种方法，否则就用第一种方法吧。</p>
+<p><strong>第一种方法：创建Thread类，传递一个函数</strong></p>
+<p>下面的脚本中，我们先实例化Thread类，并传递一个函数（及其参数），当线程执行的时候，函数也会被执行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> sleep,ctime</span><br><span class="line"><span class="comment">#不再把4秒和2秒硬性的编码到不同的函数中，而是使用唯一的loop()函数，并把这些常量放进列表loops中</span></span><br><span class="line">loops=[<span class="number">4</span>,<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loop</span><span class="params">(nloop,nsec)</span>:</span></span><br><span class="line">    print(<span class="string">'开始循环'</span>,nloop,<span class="string">'at:'</span>,ctime())</span><br><span class="line">    sleep(nsec)</span><br><span class="line">    print(<span class="string">'循环'</span>,nloop,<span class="string">'结束于：'</span>,ctime())</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'程序开始于：'</span>,ctime())</span><br><span class="line">    threads=[]</span><br><span class="line">    nloops=range(len(loops))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> nloops:</span><br><span class="line">        t=threading.Thread(target=loop,args=(i,loops[i])) <span class="comment">#循环 实例化2个Thread类，传递函数及其参数，并将线程对象放入一个列表中</span></span><br><span class="line">        threads.append(t)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> nloops:</span><br><span class="line">        threads[i].start()  <span class="comment">#循环 开始线程</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> nloops:</span><br><span class="line">        threads[i].join()   <span class="comment">#循环 join()方法可以让主线程等待所有的线程都执行完毕。</span></span><br><span class="line"></span><br><span class="line">    print(<span class="string">'任务完成于：'</span>,ctime())</span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
+
+<p>和thread模块相比，不同点在于：实现同样的效果，thread模块需要锁对象，而threading模块的Thread类不需要。实例化Thread（调用Thread()）和调用thread.start_new_thread()的最大区别就是新线程不会立即执行！这是一个非常有用的同步功能，尤其在我们不希望线程立即开始执行的时候。</p>
+<p>当所有的线程都分配完成之后，通过调用每个线程的start()方法再让他们开始。相比于thread模块的管理一组锁（分配、获取、释放检查锁状态）来说，threading模块的Thread类只需要为每个线程调用join()方法即可。join(timeout=None)方法将等待线程结束，或者是达到指定的timeout时间时。这种锁又称为自旋锁。</p>
+<p>最重要的是：join()方法，其实你根本不需要调用它。一旦线程启动，就会一直执行，直到给定的函数完成后退出。如果主线程还有其他事情要做（并不需要等待这些线程完成），可以不调用join()。join()只有在你需要等待线程完成时候才是有用的。</p>
+<p>例如上面的脚本中，我们注释掉join()代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> sleep,ctime</span><br><span class="line"><span class="comment">#不再把4秒和2秒硬性的编码到不同的函数中，而是使用唯一的loop()函数，并把这些常量放进列表loops中</span></span><br><span class="line">loops=[<span class="number">4</span>,<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loop</span><span class="params">(nloop,nsec)</span>:</span></span><br><span class="line">    print(<span class="string">'开始循环'</span>,nloop,<span class="string">'at:'</span>,ctime())</span><br><span class="line">    sleep(nsec)</span><br><span class="line">    print(<span class="string">'循环'</span>,nloop,<span class="string">'结束于：'</span>,ctime())</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'程序开始于：'</span>,ctime())</span><br><span class="line">    threads=[]</span><br><span class="line">    nloops=range(len(loops))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> nloops:</span><br><span class="line">        t=threading.Thread(target=loop,args=(i,loops[i])) <span class="comment">#循环 实例化2个Thread类，传递函数及其参数，并将线程对象放入一个列表中</span></span><br><span class="line">        threads.append(t)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> nloops:</span><br><span class="line">        threads[i].start()  <span class="comment">#循环 开始线程</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#for i in nloops:</span></span><br><span class="line">        <span class="comment">#threads[i].join()   #循环 join()方法可以让主线程等待所有的线程都执行完毕。</span></span><br><span class="line"></span><br><span class="line">    print(<span class="string">'任务完成于：'</span>,ctime())</span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
+
+<p>我们发现：主线程的任务比两个循环线程要先执行（任务完成于……在 循环X结束……的前面）</p>
+<p><strong>第二种方法：创建Thread类的实例，传递一个可调用的类实例</strong></p>
+<p>创建线程时，于传入函数类似的方法是传入一个可调用的类的实例，用于线程执行——这种方法更加接近面向对象的多线程编程。比起一个函数或者从一个函数组中选择而言，这种可调用的类包含一个执行环境，有更好的灵活性。</p>
+<p>在上述的mtsleepC.py脚本中添加一个新类ThreadFunc，稍微改动一番，形成mtsleepD.py文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> sleep,ctime</span><br><span class="line"></span><br><span class="line">loops=[<span class="number">4</span>,<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ThreadFunc</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,func,args,name=<span class="string">''</span>)</span>:</span></span><br><span class="line">        self.name=name</span><br><span class="line">        self.func = func</span><br><span class="line">        self.args=args</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.func(*self.args)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loop</span><span class="params">(nloop,nsec)</span>:</span></span><br><span class="line">    print(<span class="string">'开始循环'</span>,nloop,<span class="string">'在：'</span>,ctime())</span><br><span class="line">    sleep(nsec)</span><br><span class="line">    print(<span class="string">'结束循环'</span>,nloop,<span class="string">'于：'</span>,ctime())</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'程序开始于：'</span>,ctime())</span><br><span class="line">    threads = []</span><br><span class="line">    nloops = range(len(loops))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> nloops:</span><br><span class="line">        t = threading.Thread(target=ThreadFunc(loop,(i,loops[i]),loop.__name__)) <span class="comment">#传递一个可调用类的实例</span></span><br><span class="line">        threads.append(t)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> nloops:</span><br><span class="line">        threads[i].start()  <span class="comment">#开始所有的线程</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> nloops:</span><br><span class="line">        threads[i].join()   <span class="comment">#等待所有的线程执行完毕</span></span><br><span class="line"></span><br><span class="line">    print(<span class="string">'任务完成于：'</span>,ctime())</span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
+
+<p>上述脚本中，主要添加了ThreadFunc类，并在实例化Thread对象时，通过传参的形式同时实例化了可调用类ThreadFunc。这里同时完成了两个实例化。</p>
+<p>我们研究一下创建ThreadFunc类的思想：我们希望这个类更加通用，而不是局限于loop()函数，为此，添加了一些新的东西，比如这个类保存了函数自身、函数的参数、以及函数名。构造函数<strong>init</strong>()用于设定上述值。当创建新线程的时候，Thread类的代码将调用ThreadFunc对象，此时会调用<strong>call</strong>()这个特殊方法。</p>
+<p>（老实说，这种方法显得有些尴尬，并且稍微难以阅读）</p>
+<p><strong>第三种方法：派生Thread的子类，并创建子类的实例</strong></p>
+<p>和方法二相比，方法三再创建线程时使用子类要相对更容易阅读，下面是mtsleepE.py脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#！/usr/bin/env pyhton</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> sleep,ctime</span><br><span class="line"></span><br><span class="line">loops=[<span class="number">4</span>,<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span><span class="params">(threading.Thread)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,func,args,name=<span class="string">''</span>)</span>:</span></span><br><span class="line">        threading.Thread.__init__(self)</span><br><span class="line">        self.name = name</span><br><span class="line">        self.func = func</span><br><span class="line">        self.args = args</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.func(*self.args)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loop</span><span class="params">(nloop,nsec)</span>:</span></span><br><span class="line">    print(<span class="string">'开始循环'</span>,nloop,<span class="string">'在：'</span>,ctime())</span><br><span class="line">    sleep(nsec)</span><br><span class="line">    print(<span class="string">'结束循环'</span>,nloop,<span class="string">'于：'</span>,ctime())</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'程序开始于：'</span>,ctime())</span><br><span class="line">    threads = []</span><br><span class="line">    nloops = range(len(loops))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> nloops:</span><br><span class="line">        t = MyThread(loop,(i,loops[i]),loop.__name__)</span><br><span class="line">        threads.append(t)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> nloops:</span><br><span class="line">        threads[i].start()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> nloops:</span><br><span class="line">        threads[i].join()</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'所有的任务完成于：'</span>,ctime())</span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
+
+<p>比较方法二和方法三，重要的变化在于：MyThread子类的构造函数必须先调用其父类的构造函数；重写run()方法，代替方法二中的<strong>call</strong>()方法。</p>
+<p><strong>优化第三种方法：</strong></p>
+<p>对MyThread类进行修改，增加一些调试信息的输出，另外，除了简单的调用函数外，还可以将结果保存在实例的属性self.res中，同时增加新的方法getResult()来获取这个值：</p>
+<p>以下代码比较了递归求斐波那契、阶乘和累计函数的执行，分别按照单线程和多线程的方式执行同样的任务：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> ctime,sleep</span><br><span class="line"></span><br><span class="line"><span class="comment">#对MyThread进行封装</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span><span class="params">(threading.Thread)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,func,args,name=<span class="string">''</span>)</span>:</span></span><br><span class="line">        threading.Thread.__init__(self)</span><br><span class="line">        self.func = func</span><br><span class="line">        self.name = name</span><br><span class="line">        self.args = args</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">'开始执行'</span>,self.name,<span class="string">' 在：'</span>,ctime())</span><br><span class="line">        self.res = self.func(*self.args)</span><br><span class="line">        print(self.name,<span class="string">'结束于：'</span>,ctime())</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getResult</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.res</span><br><span class="line">    </span><br><span class="line"><span class="comment">#斐波那契</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(x)</span>:</span></span><br><span class="line">    sleep(<span class="number">0.005</span>)</span><br><span class="line">    <span class="keyword">if</span> x &lt; <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> fib(x<span class="number">-1</span>)+fib(x<span class="number">-2</span>)</span><br><span class="line"><span class="comment">#阶乘</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fac</span><span class="params">(x)</span>:</span></span><br><span class="line">    sleep(<span class="number">0.1</span>)</span><br><span class="line">    <span class="keyword">if</span> x &lt; <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> x*fac(x<span class="number">-1</span>)</span><br><span class="line"><span class="comment">#累加</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sum</span><span class="params">(x)</span>:</span></span><br><span class="line">    sleep(<span class="number">0.1</span>)</span><br><span class="line">    <span class="keyword">if</span> x &lt; <span class="number">2</span> :</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> x + sum(x<span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line">funcs=[fib,fac,sum]</span><br><span class="line">n = <span class="number">12</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    nfuncs = range(len(funcs))</span><br><span class="line"></span><br><span class="line">    <span class="comment">#单线程</span></span><br><span class="line">    print(<span class="string">'单线程模式'</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> nfuncs:</span><br><span class="line">        print(<span class="string">'开始'</span>,funcs[i].__name__,<span class="string">' 在：'</span>,ctime())</span><br><span class="line">        print(funcs[i](n))</span><br><span class="line">        print(funcs[i].__name__,<span class="string">'结束于：'</span>,ctime())</span><br><span class="line"></span><br><span class="line">    <span class="comment">#多线程</span></span><br><span class="line">    print(<span class="string">'多线程模式'</span>)</span><br><span class="line">    threads = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> nfuncs :</span><br><span class="line">        t = MyThread(funcs[i],(n,),funcs[i].__name__)</span><br><span class="line">        threads.append(t)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> nfuncs:</span><br><span class="line">        threads[i].start()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> nfuncs:</span><br><span class="line">        threads[i].join()</span><br><span class="line">        print(threads[i].getResult())</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'所有的任务结束'</span>)</span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
+
+<p><strong>总结</strong></p>
+<p>程序中，为了看到多线程如何改善性能的，我们加入了sleep函数用于减慢执行速度。</p>
+<p>看到单线程模式中，只是简单的一次调用每个函数，并在函数结束执行的时候立即显示相关的结果；而使用多线程的时候，并不会立刻显示结果，因为我们希望MyThread类越通用越好（有输出和无输出都能执行），我们一直等到所有线程都join之后，再调用getResult()方法显示每个函数的返回值。</p>
+<h1 id="004-python列表转字符串"><a href="#004-python列表转字符串" class="headerlink" title="004-python列表转字符串"></a>004-python列表转字符串</h1><p><a href="https://www.cnblogs.com/who-care/p/9306800.html" target="_blank" rel="noopener external nofollow noreferrer">https://www.cnblogs.com/who-care/p/9306800.html</a></p>
+<h1 id="005-去除列表重复字符串"><a href="#005-去除列表重复字符串" class="headerlink" title="005-去除列表重复字符串"></a>005-去除列表重复字符串</h1><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">来自比较容易记忆的是用内置的set</span><br><span class="line">l1 = [<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'d'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'a'</span>,<span class="string">'a'</span>] </span><br><span class="line">l2 = list(<span class="builtin-name">set</span>(l1)) </span><br><span class="line"><span class="builtin-name">print</span> l2</span><br><span class="line">还有一种据说速度更快的，没测试过两者的速度差别</span><br><span class="line"></span><br><span class="line">l1 = [<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'d'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'a'</span>,<span class="string">'a'</span>] </span><br><span class="line">l2 = &#123;&#125;.fromkeys(l1).keys() </span><br><span class="line"><span class="builtin-name">print</span> l2</span><br><span class="line">这两种都有个缺点，祛除重复元素后排序变了：</span><br><span class="line">[<span class="string">'a'</span>, <span class="string">'c'</span>, <span class="string">'b'</span>, <span class="string">'d'</span>]</span><br><span class="line"></span><br><span class="line">如果想要保持他们原来的排序：</span><br><span class="line">用list类的sort方法</span><br><span class="line">l1 = [<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'d'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'a'</span>,<span class="string">'a'</span>] </span><br><span class="line">l2 = list(<span class="builtin-name">set</span>(l1)) </span><br><span class="line">l2.sort(<span class="attribute">key</span>=l1.index) </span><br><span class="line"><span class="builtin-name">print</span> l2</span><br><span class="line"></span><br><span class="line">也可以这样写</span><br><span class="line">l1 = [<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'d'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'a'</span>,<span class="string">'a'</span>] </span><br><span class="line">l2 = sorted(<span class="builtin-name">set</span>(l1),<span class="attribute">key</span>=l1.index) </span><br><span class="line"><span class="builtin-name">print</span> l2</span><br><span class="line"></span><br><span class="line">也可以用遍历</span><br><span class="line">l1 = [<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'d'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'a'</span>,<span class="string">'a'</span>] </span><br><span class="line">l2 = [] </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> l1: </span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> i <span class="keyword">in</span> l2: </span><br><span class="line">        l2.append(i) </span><br><span class="line"><span class="builtin-name">print</span> l2</span><br><span class="line"></span><br><span class="line">上面的代码也可以这样写</span><br><span class="line">l1 = [<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'d'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'a'</span>,<span class="string">'a'</span>] </span><br><span class="line">l2 = [] </span><br><span class="line">[l2.append(i) <span class="keyword">for</span> i <span class="keyword">in</span> l1 <span class="keyword">if</span> <span class="keyword">not</span> i <span class="keyword">in</span> l2] </span><br><span class="line"><span class="builtin-name">print</span> l2</span><br><span class="line"></span><br><span class="line">这样就可以保证排序不变了：</span><br><span class="line">[<span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'a'</span>]</span><br></pre></td></tr></table></figure>
+
+<h1 id="006-生成多张图"><a href="#006-生成多张图" class="headerlink" title="006-生成多张图"></a>006-生成多张图</h1><p><a href="http://blog.sina.cn/dpool/blog/s/blog_6cfd49b00102xhlu.html" target="_blank" rel="noopener external nofollow noreferrer">http://blog.sina.cn/dpool/blog/s/blog_6cfd49b00102xhlu.html</a></p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">单位电脑不能联网，离线安装Pyinstaller的时候费了一些周折，记录一下免得忘了。</span><br><span class="line">环境：Python2.<span class="number">7.12</span>-×<span class="number">32</span>，把能设成以管理员模式运行的都设上。</span><br><span class="line">准备：</span><br><span class="line"><span class="number">1</span>.future（http<span class="variable">s:</span>//pypi.<span class="keyword">python</span>.org/simple/future/，现在最新版是future-<span class="number">0.16</span>.<span class="number">0</span>.tar.gz）</span><br><span class="line"><span class="number">2</span>.pefile（http<span class="variable">s:</span>//pypi.<span class="keyword">python</span>.org/simple/pefile/，现在最新版是pefile-<span class="number">2016.3</span>.<span class="number">28</span>.zip）</span><br><span class="line"><span class="number">3</span>.pywin32（http://sourceforge.net/projects/pywin32/，现在最新版是pywin32-<span class="number">220</span>.win32-py2.<span class="number">7</span>.<span class="keyword">exe</span>）</span><br><span class="line"></span><br><span class="line">总结：</span><br><span class="line">pip install future </span><br><span class="line">pip install pefile </span><br><span class="line">pip install pywin32</span><br><span class="line">pip install dis3</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">下面用Pyinstaller生成一个可执行文件试试。</span><br><span class="line"><span class="number">1</span>.在命令提示符中去到要打包的目录；</span><br><span class="line"><span class="number">2</span>.直接输入Pyinstaller-F-<span class="keyword">w</span>文件名.<span class="keyword">py</span>（F大写）；</span><br><span class="line"><span class="number">3</span>.文件目录出现新的文件夹，里面就是打包好的<span class="keyword">exe</span>文件了；</span><br><span class="line">-F，-onefile：打包成一个<span class="keyword">exe</span>文件<span class="keyword">w</span>-windowed：使用窗口，无控制台</span><br><span class="line">-<span class="keyword">c</span>，-console：无窗口，使用控制台</span><br><span class="line">-D，-onedir：创建一个目录，包含<span class="keyword">exe</span>文件，但会依赖其他文件-icon=图标路径可以通过Pyinstaller-<span class="keyword">hi</span>来查看</span><br><span class="line"></span><br><span class="line">网址：</span><br><span class="line">http<span class="variable">s:</span>//jingyan.baidu.<span class="keyword">com</span>/article/<span class="number">6</span>fb756ec71f73e241858fb2b.html</span><br><span class="line">http<span class="variable">s:</span>//www.jianshu.<span class="keyword">com</span>/<span class="keyword">p</span>/<span class="number">2</span>c7c7dd602e2</span><br><span class="line">http<span class="variable">s:</span>//blog.csdn.net/weixin_43911278/article/details/<span class="number">90339738</span></span><br><span class="line">http<span class="variable">s:</span>//www.jianshu.<span class="keyword">com</span>/<span class="keyword">p</span>/<span class="number">2</span>c7c7dd602e2</span><br></pre></td></tr></table></figure>
+
+<h1 id="007-python将资源文件一起打包进exe-讲解（有算例）"><a href="#007-python将资源文件一起打包进exe-讲解（有算例）" class="headerlink" title="007-python将资源文件一起打包进exe 讲解（有算例）"></a>007-python将资源文件一起打包进exe 讲解（有算例）</h1><p><a href="https://blog.csdn.net/kobeyu652453/article/details/108732747" target="_blank" rel="noopener external nofollow noreferrer">https://blog.csdn.net/kobeyu652453/article/details/108732747</a></p>
+<p>之前学习了打包。今天学习下如何打包带有资源的程序。<br>之前的教程链接：<br><a href="https://blog.csdn.net/kobeyu652453/article/details/106466188" target="_blank" rel="noopener external nofollow noreferrer">python打包成exe 可执行文件 。教程</a><br><a href="https://blog.csdn.net/KOBEYU652453/article/details/108710837" target="_blank" rel="noopener external nofollow noreferrer">使用pipenv建立虚拟环境解决python打包exe文件过大的问题（附打包带图标，多个py文件打包exe）</a></p>
+<p>今天讲下如何将资源文件一起打包。</p>
+<p>开先我给程序中的添加资源那部分代码，资源写上绝对路径。发现打包的exe可以运行，但是当我把资源文件移动后，发现打包的exe不能运行，这肯定不行呀，意味着我们无法把exe给其他小伙伴。然后我尝试啦下的新的方法。<br><strong>第一步：建立虚拟环境，安装相关库</strong><br>这部分参考<br><a href="https://blog.csdn.net/KOBEYU652453/article/details/108710837" target="_blank" rel="noopener external nofollow noreferrer">使用pipenv建立虚拟环境解决python打包exe文件过大的问题（附打包带图标，多个py文件打包exe）</a></p>
+<p><strong>第二步：建立资源文件夹</strong><br>基本原理：Pyinstaller 可以将资源文件一起bundle到exe中，当exe在运行时，会生成一个临时文件夹，程序可通过sys._MEIPASS访问临时文件夹中的资源</p>
+<p>官方说明：<a href="https://pythonhosted.org/PyInstaller/spec-files.html#spec-file-operation" target="_blank" rel="noopener external nofollow noreferrer">https://pythonhosted.org/PyInstaller/spec-files.html#spec-file-operation</a></p>
+<p><img src="/2008/01/05/python/2008-01-04-python-ruan/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2008-01-04-python-ruan%5C20200922173947145.png" alt></p>
+<img src="/2008/01/05/python/2008-01-04-python-ruan/20200922173947145.png" class title="This is an example image">
+
+<p><img src="/2008/01/05/python/2008-01-04-python-ruan/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2008-01-04-python-ruan%5C2020092217434618.png" alt></p>
+<img src="/2008/01/05/python/2008-01-04-python-ruan/2020092217434618.png" class title="This is an example image">
+
+<p><strong>第三步：修改.py文件</strong><br>修改hm_004.py中读取资源数据路径部分的代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="comment">#生成资源文件目录访问路径</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">resource_path</span><span class="params">(relative_path)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> getattr(sys, <span class="string">'frozen'</span>, <span class="literal">False</span>): <span class="comment">#是否Bundle Resource</span></span><br><span class="line">        base_path = sys._MEIPASS</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        base_path = os.path.abspath(<span class="string">"."</span>)</span><br><span class="line">    <span class="keyword">return</span> os.path.join(base_path, relative_path)</span><br><span class="line"></span><br><span class="line"><span class="comment">#访问res文件夹下数据.txt的内容</span></span><br><span class="line">filename = resource_path(os.path.join(<span class="string">"res"</span>,<span class="string">"数据.txt"</span>))</span><br><span class="line"><span class="number">12345678910111213</span></span><br></pre></td></tr></table></figure>
+
+<p>hm_004.py代码如下<br>修改代码后，hm_004.py代码在pycharm等平台无法运行成功，因为读取路径方法发生变化，这有什么关系呀，我们要的是打包exen能运行就可以。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="comment">#生成资源文件目录访问路径</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">resource_path</span><span class="params">(relative_path)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> getattr(sys, <span class="string">'frozen'</span>, <span class="literal">False</span>): <span class="comment">#是否Bundle Resource</span></span><br><span class="line">        base_path = sys._MEIPASS</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        base_path = os.path.abspath(<span class="string">"."</span>)</span><br><span class="line">    <span class="keyword">return</span> os.path.join(base_path, relative_path)</span><br><span class="line"></span><br><span class="line"><span class="comment">#访问res文件夹下数据.txt的内容</span></span><br><span class="line">filename = resource_path(os.path.join(<span class="string">"res"</span>,<span class="string">"数据.txt"</span>))</span><br><span class="line">print(filename)</span><br><span class="line"><span class="keyword">with</span> open(filename,encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    lines = f.readlines()</span><br><span class="line">    print(lines)</span><br><span class="line">    f.close()</span><br><span class="line"></span><br><span class="line"><span class="number">1234567891011121314151617181920</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>第四步：打包exe</strong><br>结果会生成build，dist文件夹和spec文件。</p>
+<p><img src="/2008/01/05/python/2008-01-04-python-ruan/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2008-01-04-python-ruan%5C20200922174913593.png" alt></p>
+<img src="/2008/01/05/python/2008-01-04-python-ruan/20200922174913593.png" class title="This is an example image">
+
+<p><strong>第五步：删除build,dist文件夹.修改spec</strong><br>spec用记事本打开。首先打开一个记事本，然后把spec文件拖进去即可。<br>修改前datas=[]，本文这里把它改成下图所示，意思是</p>
+<p>将hm_004.py当前目录下的res目录（及其目录中的文件）加入目标exe中，在运行时放在零时文件的根目录下，名称为res。</p>
+<p><img src="/2008/01/05/python/2008-01-04-python-ruan/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2008-01-04-python-ruan%5C20200922175433842.png" alt></p>
+<img src="/2008/01/05/python/2008-01-04-python-ruan/20200922175433842.png" class title="This is an example image">
+
+<p>如果有多个资源</p>
+<blockquote>
+<p>datas=[(‘res/bg.jpg’, ‘res’), (‘exam.db’, ‘.’)]<br>列表里面是元组，左边是你要添加的filename（相对路径即可），右边是拷贝到项目中之后的文件夹名字。<br>比如：(‘res/bg.jpg’, ‘res’) 中的 ‘res/bg.jpg’ 表示工程根目录下res文件夹下有bg.jpg图片，拷贝到项目之后的res文件夹。<br>(‘exam.db’, ‘.’) 中的’exam.db’是工程根目录下的文件，’.’表示根目录，即拷贝到项目中的根目录下。<br>仍然要注意资源路径读取方式，参考第三步。</p>
+</blockquote>
+<p><strong>第六步：再次打包exe</strong><br>这次是打包spec文件.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pyinstaller -F hm_004.spec</span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2008/01/05/python/2008-01-04-python-ruan/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2008-01-04-python-ruan%5C20200922180018928.png" alt></p>
+<img src="/2008/01/05/python/2008-01-04-python-ruan/20200922180018928.png" class title="This is an example image">
+
+<p>会再次生成build,dist文件。没有新生成spec啦</p>
+<p><img src="/2008/01/05/python/2008-01-04-python-ruan/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2008-01-04-python-ruan%5C2020092218013135.png" alt></p>
+<img src="/2008/01/05/python/2008-01-04-python-ruan/2020092218013135.png" class title="This is an example image">
+
+<p>dist 文件</p>
+<p><img src="/2008/01/05/python/2008-01-04-python-ruan/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2008-01-04-python-ruan%5C20200922182017163.png" alt></p>
+<img src="/2008/01/05/python/2008-01-04-python-ruan/20200922182017163.png" class title="This is an example image">
+
+<p><strong>第七步：运行exe</strong><br>由于本文中的例子是一个简单程序，非界面，如果直接点击exe，会一闪而过，因为不是界面程序，如pyqt。<br>非界面，如何需要像运行python程序运行<br>cmd进入dist文件夹,然后输入程序名，回车.</p>
+<p>结果如下：发现文件路径和原始数据.txt绝对路径不一样啦。</p>
+<p><img src="/2008/01/05/python/2008-01-04-python-ruan/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2008-01-04-python-ruan%5C20200922180523324.png" alt></p>
+<img src="/2008/01/05/python/2008-01-04-python-ruan/20200922180523324.png" class title="This is an example image">
+
+<p><strong>发送给其他小伙伴尝试运行</strong><br>我将res文件删除。<br>并将dist文件夹复制到桌面（如果是界面程序可以只复制exe）<br>桌面上的dist文件,(这时我的电脑没有任何数据.txt资源文件啦，因为我已删除）</p>
+<p><img src="/2008/01/05/python/2008-01-04-python-ruan/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2008-01-04-python-ruan%5C20200922180923926.png" alt></p>
+<img src="/2008/01/05/python/2008-01-04-python-ruan/20200922180923926.png" class title="This is an example image">
+
+<p>再次运行：</p>
+<p><img src="/2008/01/05/python/2008-01-04-python-ruan/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2008-01-04-python-ruan%5C20200922181333121.png" alt></p>
+<img src="/2008/01/05/python/2008-01-04-python-ruan/20200922181333121.png" class title="This is an example image">
+
+<p><strong>其他</strong></p>
+<p>由于现实生活中，我们的任务一般都很复杂，如涉及模型等。需要下载tensorflow等。<br>有些包太大，直接在虚拟环境下安装不了，需要先下载到本地，在安装。<br>教程链接：<a href="https://blog.csdn.net/kobeyu652453/article/details/107883997" target="_blank" rel="noopener external nofollow noreferrer">python 安装第三方包</a></p>
+<p>哪些打包步骤都如之前的教程。不同的是因为需要的包太多了，包与包之间不兼容。如打包需要keras库，而Keras又需要tesorflow,打包过程中却显示tensorflow版本必须大于2.0。<br>包与包之间兼容的问题正是python的弊端。需要的时候自己慢慢调试包吧。</p>
+<p>sklearn模型打包讲解<br><a href="https://blog.csdn.net/kobeyu652453/article/details/108779501" target="_blank" rel="noopener external nofollow noreferrer">python打包exe 之打包sklearn模型中的各种坑及其解决方法。</a></p>
+<p>深度学习模型打包教程<br><a href="https://blog.csdn.net/kobeyu652453/article/details/108853403" target="_blank" rel="noopener external nofollow noreferrer">python打包exe之打包深度学习模型踩坑记录及其解决办法。</a></p>
+<h1 id="008-国内python源"><a href="#008-国内python源" class="headerlink" title="008-国内python源"></a>008-国内python源</h1><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">国内python源：</span><br><span class="line"><span class="string">https:</span><span class="comment">//www.cnblogs.com/schut/p/10410087.html</span></span><br><span class="line"><span class="string">https:</span><span class="comment">//www.cnblogs.com/yuki-nana/p/10898774.html</span></span><br><span class="line">有时候安装一些依赖包，网不好，直接超时，或者这个包就是死都下不下来的时候，可以指定国内源镜像。</span><br><span class="line">　　pip install -i 国内镜像地址 包名</span><br><span class="line">　　e.g. pip install -i  <span class="string">http:</span><span class="comment">//mirrors.aliyun.com/pypi/simple/ numpy 这是临时指定镜像地址</span></span><br><span class="line">清华：<span class="string">https:</span><span class="comment">//pypi.tuna.tsinghua.edu.cn/simple</span></span><br><span class="line">阿里云：<span class="string">http:</span><span class="comment">//mirrors.aliyun.com/pypi/simple/</span></span><br><span class="line">中国科技大学 <span class="string">https:</span><span class="comment">//pypi.mirrors.ustc.edu.cn/simple/</span></span><br><span class="line">华中理工大学：<span class="string">http:</span><span class="comment">//pypi.hustunique.com/</span></span><br><span class="line">山东理工大学：<span class="string">http:</span><span class="comment">//pypi.sdutlinux.org/ </span></span><br><span class="line">豆瓣：<span class="string">http:</span><span class="comment">//pypi.douban.com/simple/</span></span><br><span class="line">note：新版ubuntu要求使用https源，要注意。</span><br><span class="line">部分信息转自：<span class="string">https:</span><span class="comment">//www.cnblogs.com/wqpkita/p/7248525.htm</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="009-python执行Linux命令"><a href="#009-python执行Linux命令" class="headerlink" title="009-python执行Linux命令"></a>009-python执行Linux命令</h1><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">用python执行Linux命令</span><br><span class="line"></span><br><span class="line">https://www.cnblogs.com/clhac/p/3708166.html</span><br><span class="line">import subprocess</span><br><span class="line">subprocess.call(["ls","-l"])</span><br><span class="line"></span><br><span class="line">import os</span><br><span class="line">com="grep -v \"[<span class="string">a-Z</span>]\" "+PATH+"logfile.html|awk \'&#123;$1=\"\";print $0&#125;\'|sed \'s/^[<span class="string"> \t</span>]<span class="emphasis">*//\'|sed  \'s/[ ][ ]*</span>/,/g\'|sed \'/^\s<span class="emphasis">*$/d\'|sed \'/*</span>/d' &gt;&gt;" +PATH+"/map.txt"</span><br><span class="line">os.system(com)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import commands</span><br><span class="line">(status, output) = commands.getstatusoutput('ls -l')</span><br><span class="line">print output</span><br><span class="line">print status, output</span><br></pre></td></tr></table></figure>
+
+<h1 id="010-python脚本传递参数"><a href="#010-python脚本传递参数" class="headerlink" title="010-python脚本传递参数"></a>010-python脚本传递参数</h1><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">http<span class="variable">s:</span>//www.cnblogs.<span class="keyword">com</span>/lijunjiang2015/<span class="keyword">p</span>/<span class="number">7689492</span>.html</span><br><span class="line">给<span class="keyword">python</span>程序传递参数</span><br><span class="line">运行<span class="keyword">python</span>脚本时有时需要执行实传递参数</span><br><span class="line"></span><br><span class="line">在linux下：</span><br><span class="line">[root@Test ~]# <span class="keyword">cat</span> /<span class="keyword">opt</span>/<span class="keyword">python</span>.<span class="keyword">py</span> #!/usr/local/bin/python# -*- codin<span class="variable">g:utf</span>-<span class="number">8</span> -*-</span><br><span class="line">import sys</span><br><span class="line"><span class="keyword">print</span>(sys.<span class="built_in">argv</span>[<span class="number">0</span>])          #sys.<span class="built_in">argv</span>[<span class="number">0</span>] 类似于<span class="keyword">shell</span>中的$<span class="number">0</span>,但不是脚本名称，而是脚本的路径   <span class="keyword">print</span>(sys.<span class="built_in">argv</span>[<span class="number">1</span>])          #sys.<span class="built_in">argv</span>[<span class="number">1</span>] 表示传入的第一个参数，既 hello</span><br><span class="line"></span><br><span class="line">#运行结果：</span><br><span class="line">[root@Test ~]# <span class="keyword">python</span> /<span class="keyword">opt</span>/<span class="keyword">python</span>.<span class="keyword">py</span> hello</span><br><span class="line">/<span class="keyword">opt</span>/<span class="keyword">python</span>.<span class="keyword">py</span>       #打印<span class="built_in">argv</span>[<span class="number">0</span>]  脚本路径</span><br><span class="line">hello                      #打印<span class="built_in">argv</span>[<span class="number">1</span>]  传入的参数 hello</span><br></pre></td></tr></table></figure>
+
+<h1 id="011-将逗号分隔的字符串转换为Python中的列表"><a href="#011-将逗号分隔的字符串转换为Python中的列表" class="headerlink" title="011-将逗号分隔的字符串转换为Python中的列表"></a>011-将逗号分隔的字符串转换为Python中的列表</h1><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">给定一个字符串：</span><br><span class="line">它是由逗号分隔的几个值的序列：</span><br><span class="line">mStr = '<span class="number">192.168</span><span class="number">.1</span><span class="number">.1</span>,<span class="number">192.168</span><span class="number">.1</span><span class="number">.2</span>,<span class="number">192.168</span><span class="number">.1</span><span class="number">.3</span>'</span><br><span class="line"></span><br><span class="line">如何将字符串转换为列表？</span><br><span class="line">mStr = ['<span class="number">192.168</span><span class="number">.1</span><span class="number">.1</span>', '<span class="number">192.168</span><span class="number">.1</span><span class="number">.2</span>', '<span class="number">192.168</span><span class="number">.1</span><span class="number">.3</span>']</span><br><span class="line"></span><br><span class="line">使用str.split方法：</span><br><span class="line">&gt;&gt;&gt; mStr = '<span class="number">192.168</span><span class="number">.1</span><span class="number">.1</span>,<span class="number">192.168</span><span class="number">.1</span><span class="number">.2</span>,<span class="number">192.168</span><span class="number">.1</span><span class="number">.3</span>'</span><br><span class="line">&gt;&gt;&gt; mStr.split(<span class="string">","</span>)</span><br><span class="line">['<span class="number">192.168</span><span class="number">.1</span><span class="number">.1</span>', '<span class="number">192.168</span><span class="number">.1</span><span class="number">.2</span>', '<span class="number">192.168</span><span class="number">.1</span><span class="number">.3</span>']</span><br><span class="line"></span><br><span class="line">将字符串转成元组：</span><br><span class="line">&gt;&gt;&gt; mlist = mStr.split(<span class="string">","</span>)</span><br><span class="line">&gt;&gt;&gt; tuple(mlist)</span><br><span class="line">('<span class="number">192.168</span><span class="number">.1</span><span class="number">.1</span>', '<span class="number">192.168</span><span class="number">.1</span><span class="number">.2</span>', '<span class="number">192.168</span><span class="number">.1</span><span class="number">.3</span>')</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="012-zip"><a href="#012-zip" class="headerlink" title="012-zip"></a>012-zip</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">zip实例：</span><br><span class="line">x = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">y = [<span class="number">-1</span>, <span class="number">-2</span>, <span class="number">-3</span>] # y = [i * <span class="number">-1</span> <span class="keyword">for</span> i <span class="keyword">in</span> x]</span><br><span class="line">zip(x, y)</span><br><span class="line">zip的结果如下：</span><br><span class="line">[(<span class="number">1</span>, <span class="number">-1</span>), (<span class="number">2</span>, <span class="number">-2</span>), (<span class="number">3</span>, <span class="number">-3</span>)]</span><br><span class="line"></span><br><span class="line">zip([seql, ...])接受一系列可迭代对象作为参数，将对象中对应的元素打包成一个个tuple（元组），然后返回由这些tuples组成的list（列表）。</span><br><span class="line">进入正题：如何使用一个<span class="keyword">for</span>循环同时循环多个变量呢？使用tuple。如下，同时循环i和j变量。</span><br><span class="line"><span class="keyword">for</span> (i, j) <span class="keyword">in</span> [(<span class="number">1</span>, <span class="number">2</span>), (<span class="number">2</span>, <span class="number">3</span>), (<span class="number">4</span>, <span class="number">5</span>)]:</span><br><span class="line">print(i, j)</span><br><span class="line">输出结果如下：</span><br><span class="line">(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">(<span class="number">4</span>, <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">所以我们如果要将x和y中的元素分别相加，则可以使用如下代码：</span><br><span class="line"><span class="keyword">for</span> (i, j) <span class="keyword">in</span> zip(x, y):</span><br><span class="line">  print(i + j)</span><br><span class="line">输出结果：</span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="013-configparser-python读配置文件"><a href="#013-configparser-python读配置文件" class="headerlink" title="013-configparser python读配置文件"></a>013-configparser python读配置文件</h1><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">http<span class="variable">s:</span>//pypi.org/project/configparser/#fileshttp<span class="variable">s:</span>//www.cnblogs.<span class="keyword">com</span>/hanmk/<span class="keyword">p</span>/<span class="number">9843136</span>.htmlhttp<span class="variable">s:</span>//www.cnblogs.<span class="keyword">com</span>/feeland/<span class="keyword">p</span>/<span class="number">4514771</span>.htmlhttp<span class="variable">s:</span>//www.cnblogs.<span class="keyword">com</span>/clement-jiao/<span class="keyword">p</span>/<span class="number">9043110</span>.htmlhttp<span class="variable">s:</span>//zixuephp.net/article-<span class="number">431</span>.htmlhttp<span class="variable">s:</span>//blog.csdn.net/tadwork/article/details/<span class="number">80845599</span>今天把服务器上一个备份同步脚本放到老服务器上用，执行脚本后报错。import configparserImportError: No module named configparserpip安装configparser也没有，网上一查原来是<span class="keyword">python3</span>的，对应python2的是ConfigParser。修改代码<span class="keyword">try</span>:    import configparserexcep<span class="variable">t:</span>    import ConfigParser <span class="keyword">as</span> configparser</span><br><span class="line"></span><br><span class="line">[root@ceph4 vdench]# <span class="keyword">cat</span> config.ini</span><br><span class="line">[mysql]</span><br><span class="line">host = <span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line">port = <span class="number">3306</span></span><br><span class="line">user = root</span><br><span class="line">password = Zhsy08241128</span><br><span class="line">database = leartd</span><br><span class="line"></span><br><span class="line">[root@ceph4 vdench]# <span class="keyword">cat</span> <span class="number">2</span>.<span class="keyword">py</span></span><br><span class="line"># -*- codin<span class="variable">g:utf</span>-<span class="number">8</span> -*-</span><br><span class="line">import os</span><br><span class="line">#import ConfigParser</span><br><span class="line">import ConfigParser</span><br><span class="line"># 项目路径</span><br><span class="line">rootDir = os.path.<span class="keyword">split</span>(os.path.realpath(__file__))[<span class="number">0</span>]</span><br><span class="line"># config.ini文件路径</span><br><span class="line">configFilePath = os.path.<span class="keyword">join</span>(rootDir, <span class="string">'config.ini'</span>)</span><br><span class="line">def get_config_values(section, option):</span><br><span class="line">    <span class="string">""</span><span class="comment">"</span></span><br><span class="line">    根据传入的section获取对应的value</span><br><span class="line">    :param section: ini配置文件中用[]标识的内容</span><br><span class="line">    :<span class="keyword">return</span>:</span><br><span class="line">    <span class="string">""</span><span class="comment">"</span></span><br><span class="line">    config = ConfigParser.ConfigParser()</span><br><span class="line">    config.<span class="keyword">read</span>(configFilePath)</span><br><span class="line">    # <span class="keyword">return</span> config.<span class="built_in">items</span>(section=section)</span><br><span class="line">    <span class="keyword">return</span> config.<span class="built_in">get</span>(section=section, option=option)</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    result = get_config_values(<span class="string">'mysql'</span>, <span class="string">'port'</span>)</span><br><span class="line">    <span class="keyword">print</span>(result)</span><br></pre></td></tr></table></figure>
+
+<h1 id="014-python换行写"><a href="#014-python换行写" class="headerlink" title="014-python换行写"></a>014-python换行写</h1><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">"new.txt"</span>, <span class="string">"w"</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.<span class="built_in">write</span>(<span class="string">"Hello World!"</span>+<span class="string">"\n"</span>)</span><br><span class="line">    f.<span class="built_in">write</span>(<span class="string">"2"</span>+<span class="string">"\n"</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="015-enumerate-函数"><a href="#015-enumerate-函数" class="headerlink" title="015-enumerate() 函数"></a>015-enumerate() 函数</h1><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;seq = [<span class="string">'one'</span>, <span class="string">'two'</span>, <span class="string">'three'</span>]</span><br><span class="line">&gt;&gt;&gt; <span class="keyword">for</span> i, <span class="keyword">element</span> <span class="keyword">in</span> enumerate(seq):</span><br><span class="line">... print i, <span class="keyword">element</span></span><br><span class="line">...</span><br><span class="line"><span class="number">0</span> <span class="literal">one</span></span><br><span class="line"><span class="number">1</span> <span class="literal">two</span></span><br><span class="line"><span class="number">2</span> <span class="literal">three</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="016-matplotlib生成图表"><a href="#016-matplotlib生成图表" class="headerlink" title="016-matplotlib生成图表"></a>016-matplotlib生成图表</h1><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">http<span class="variable">s:</span>//www.php.<span class="keyword">cn</span>/<span class="keyword">python</span>-tutorials-<span class="number">423909</span>.html</span><br><span class="line"></span><br><span class="line"><span class="number">1</span>.进入到cmd窗口下</span><br><span class="line"><span class="keyword">python</span> -<span class="keyword">m</span> pip install -U pip setuptools --proxy http://xzproxy.cnsuning.<span class="keyword">com</span>:<span class="number">8080</span> -i   http<span class="variable">s:</span>//pypi.tuna.tsinghua.edu.<span class="keyword">cn</span>/simple/</span><br><span class="line"><span class="number">2</span>.接着键入进行自动的安装，系统会自动下载安装包。</span><br><span class="line"><span class="keyword">python</span> -<span class="keyword">m</span> pip install matplotlib --proxy http://xzproxy.cnsuning.<span class="keyword">com</span>:<span class="number">8080</span> -i   http<span class="variable">s:</span>//pypi.tuna.tsinghua.edu.<span class="keyword">cn</span>/simple/</span><br><span class="line"><span class="number">3</span>.安装完成后，可以用<span class="keyword">python</span> -<span class="keyword">m</span> pip <span class="keyword">list</span>查看本机的安装的所有模块，确保matplotlib已经安装成功。</span><br><span class="line">显示的界面为：</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2008/01/05/python/2008-01-04-python-ruan/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2008-01-04-python-ruan%5CImage.png" alt></p>
+<img src="/2008/01/05/python/2008-01-04-python-ruan/Image.png" class title="This is an example image">
+
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">http<span class="variable">s:</span>//www.cnblogs.<span class="keyword">com</span>/dingjiaoyang/<span class="keyword">p</span>/<span class="number">11579723</span>.html</span><br><span class="line"></span><br><span class="line">linux安装：</span><br><span class="line">yum install <span class="keyword">python</span>-matplotlib.x86_64</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://tongsiying.github.io/download/source/python-matplotlib-1.2.0-15.el7.x86_64.rpm">python-matplotlib-1.2.0-15.el7.x86_64.rpm</a></p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">002</span>-Linux服务器没有GUI的情况下使用matplotlib绘图</span><br><span class="line">https:<span class="comment">//www.cnblogs.com/devilmaycry812839668/p/10201971.html</span></span><br><span class="line"></span><br><span class="line">最近看到关于 python3 中用matplotlib 不进行交互画图，而是直接将图保存到硬盘，主要的一个设置就是  matplotlib.use(<span class="string">'agg'</span>)</span><br><span class="line"></span><br><span class="line">注明：</span><br><span class="line">其实不设置  matplotlib.use(<span class="string">'agg'</span>) 也可以把图片保存到硬盘，但是设置了这条语句再调用 matplotlib.pyplot.show 等进行交互式图片查看就会报错。</span><br><span class="line">可以这么理解，设置了  matplotlib.use(<span class="string">'agg'</span>) 后便强制你不能交互式查看显示图片，而只能保存到磁盘再查看。</span><br><span class="line"></span><br><span class="line">下面对其进行一些介绍：</span><br><span class="line"><span class="keyword">import</span> matplotlib</span><br><span class="line">matplotlib.use(<span class="string">'Agg'</span>)</span><br><span class="line">#而且matplotlib.use(<span class="string">'Agg'</span>)必须添加在 <span class="keyword">import</span> matplotlib.pyplot 之前，否则无效</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">#最后在后面加上</span><br><span class="line">plt.savefig(<span class="string">'/tmp/figure_2_1.png'</span>)</span><br><span class="line">#就可以把绘制的图存为png，down到本地查看就行了</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">003</span>-读文件生成图表</span><br><span class="line"><span class="comment"># encoding: utf-8</span></span><br><span class="line">import matplotlib</span><br><span class="line">matplotlib.use(<span class="string">'Agg'</span>)</span><br><span class="line">import matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="built_in">file</span> = <span class="built_in">open</span>(<span class="string">'map.txt'</span>)  <span class="comment">#打开文档</span></span><br><span class="line">data = <span class="built_in">file</span>.readlines() <span class="comment">#读取文档数据</span></span><br><span class="line">para_1 = []  <span class="comment">#新建列表，用于保存第一列数据</span></span><br><span class="line">para_2 = []  <span class="comment">#新建列表，用于保存第二列数据</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">num</span> <span class="keyword">in</span> data:</span><br><span class="line">    <span class="comment"># split用于将每一行数据用逗号分割成多个对象</span></span><br><span class="line">    <span class="comment">#取分割后的第0列，转换成float格式后添加到para_1列表中</span></span><br><span class="line">    para_1.append(float(<span class="built_in">num</span>.<span class="built_in">split</span>(<span class="string">','</span>)[<span class="number">0</span>]))</span><br><span class="line">    <span class="comment">#取分割后的第1列，转换成float格式后添加到para_1列表中</span></span><br><span class="line">    para_2.append(float(<span class="built_in">num</span>.<span class="built_in">split</span>(<span class="string">','</span>)[<span class="number">1</span>]))</span><br><span class="line">plt.figure()</span><br><span class="line">plt.title(<span class="string">'map'</span>)<span class="comment">#图片的标题</span></span><br><span class="line">plt.plot(para_1, para_2)</span><br><span class="line">plt.savefig(<span class="string">'./figure_2_1.png'</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">004-生成多张图</span><br><span class="line"><span class="comment"># encoding: utf-8</span></span><br><span class="line">import matplotlib</span><br><span class="line">matplotlib.use(<span class="string">'Agg'</span>)</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"><span class="keyword">from</span> numpy import *</span><br><span class="line"></span><br><span class="line"><span class="attribute">x</span>=linspace(-2,2)</span><br><span class="line"><span class="attribute">y1</span>=2*x+1</span><br><span class="line"><span class="attribute">y2</span>=x**2</span><br><span class="line"></span><br><span class="line">plt.figure()  </span><br><span class="line">plt.plot(x,y1)   </span><br><span class="line">plt.savefig(<span class="string">'./1.png'</span>)</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.plot(x,y2,<span class="attribute">color</span>=<span class="string">'red'</span>,linestyle='--')</span><br><span class="line">plt.savefig(<span class="string">'./2.png'</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line">005-读文件生成多张图</span><br><span class="line"><span class="comment"># encoding: utf-8</span></span><br><span class="line">import matplotlib</span><br><span class="line">matplotlib.use(<span class="string">'Agg'</span>)</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">file = open(<span class="string">'map.txt'</span>)  #打开文档</span><br><span class="line">data = file.readlines() #读取文档数据</span><br><span class="line">para_1 = []  #新建列表，用于保存第一列数据</span><br><span class="line">para_2 = []  #新建列表，用于保存第二列数据</span><br><span class="line">para_3 = []</span><br><span class="line"><span class="keyword">for</span> num <span class="keyword">in</span> data:</span><br><span class="line">    para_1.append(float(num.split(<span class="string">','</span>)[0]))</span><br><span class="line">    para_2.append(float(num.split(<span class="string">','</span>)[1]))</span><br><span class="line">    para_3.append(float(num.split(<span class="string">','</span>)[2]))</span><br><span class="line">            </span><br><span class="line">plt.figure()</span><br><span class="line">plt.title(<span class="string">'map'</span>)</span><br><span class="line"></span><br><span class="line">plt.plot(para_1, para_2)</span><br><span class="line">plt.savefig(<span class="string">'./1.png'</span>)</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.plot(para_1, para_3)</span><br><span class="line">plt.savefig(<span class="string">'./2.png'</span>)</span><br><span class="line"><span class="comment"># encoding: utf-8</span></span><br><span class="line">import matplotlib</span><br><span class="line">matplotlib.use(<span class="string">'Agg'</span>)</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">file = open(<span class="string">'map.txt'</span>)  #打开文档</span><br><span class="line">data = file.readlines() #读取文档数据</span><br><span class="line">para_1 = []  #新建列表，用于保存第一列数据</span><br><span class="line">para_2 = []  #新建列表，用于保存第二列数据</span><br><span class="line">para_3 = []</span><br><span class="line">para_4 = []</span><br><span class="line">para_5 = []</span><br><span class="line">para_6 = []</span><br><span class="line"><span class="keyword">for</span> num <span class="keyword">in</span> data:</span><br><span class="line">    para_1.append(float(num.split(<span class="string">','</span>)[0]))</span><br><span class="line">    para_2.append(float(num.split(<span class="string">','</span>)[1]))</span><br><span class="line">    para_3.append(float(num.split(<span class="string">','</span>)[2]))</span><br><span class="line">    para_4.append(float(num.split(<span class="string">','</span>)[4]))</span><br><span class="line">    para_5.append(float(num.split(<span class="string">','</span>)[5]))</span><br><span class="line">    para_6.append(float(num.split(<span class="string">','</span>)[6]))</span><br><span class="line">            </span><br><span class="line">plt.figure()</span><br><span class="line">plt.title(<span class="string">'IOPS'</span>)#图片标题</span><br><span class="line">plt.plot(para_1, para_2)</span><br><span class="line">plt.xlabel(<span class="string">"second"</span>)#x轴标题</span><br><span class="line">plt.ylabel(<span class="string">"tims"</span>)#y轴标题</span><br><span class="line">plt.figtext(0.75, 0.45, <span class="string">'IOPS'</span>,</span><br><span class="line">         <span class="attribute">fontsize</span>=40, <span class="attribute">color</span>=<span class="string">'gray'</span>,</span><br><span class="line">         <span class="attribute">ha</span>=<span class="string">'right'</span>, <span class="attribute">va</span>=<span class="string">'bottom'</span>, <span class="attribute">alpha</span>=0.4)</span><br><span class="line">plt.savefig(<span class="string">'./1.png'</span>)</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.title(<span class="string">'BW'</span>)</span><br><span class="line">plt.plot(para_1, para_3)</span><br><span class="line">plt.xlabel(<span class="string">"second"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"MB/sec"</span>)</span><br><span class="line">plt.figtext(0.75, 0.45, <span class="string">'BM'</span>,</span><br><span class="line">         <span class="attribute">fontsize</span>=40, <span class="attribute">color</span>=<span class="string">'gray'</span>,</span><br><span class="line">         <span class="attribute">ha</span>=<span class="string">'right'</span>, <span class="attribute">va</span>=<span class="string">'bottom'</span>, <span class="attribute">alpha</span>=0.4)</span><br><span class="line">plt.savefig(<span class="string">'./2.png'</span>)</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.title(<span class="string">'RESP'</span>)</span><br><span class="line">plt.plot(para_1, para_4)</span><br><span class="line">plt.xlabel(<span class="string">"second"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"resp/time"</span>)</span><br><span class="line">plt.figtext(0.75, 0.45, <span class="string">'RESP'</span>,</span><br><span class="line">         <span class="attribute">fontsize</span>=40, <span class="attribute">color</span>=<span class="string">'gray'</span>,</span><br><span class="line">         <span class="attribute">ha</span>=<span class="string">'right'</span>, <span class="attribute">va</span>=<span class="string">'bottom'</span>, <span class="attribute">alpha</span>=0.4)</span><br><span class="line">plt.savefig(<span class="string">'./3.png'</span>)</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.title(<span class="string">'READ-RESP'</span>)</span><br><span class="line">plt.plot(para_1, para_5)</span><br><span class="line">plt.xlabel(<span class="string">"second"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"read/resp"</span>)</span><br><span class="line">plt.figtext(0.75, 0.45, <span class="string">'READ-RESP'</span>,</span><br><span class="line">         <span class="attribute">fontsize</span>=40, <span class="attribute">color</span>=<span class="string">'gray'</span>,</span><br><span class="line">         <span class="attribute">ha</span>=<span class="string">'right'</span>, <span class="attribute">va</span>=<span class="string">'bottom'</span>, <span class="attribute">alpha</span>=0.4)</span><br><span class="line">plt.savefig(<span class="string">'./4.png'</span>)</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.title(<span class="string">'WRITE-RESP'</span>)</span><br><span class="line">plt.plot(para_1, para_6)</span><br><span class="line">plt.xlabel(<span class="string">"second"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"write/resp"</span>)</span><br><span class="line">plt.figtext(0.75, 0.45, <span class="string">'WRITE-RESP'</span>,</span><br><span class="line">         <span class="attribute">fontsize</span>=40, <span class="attribute">color</span>=<span class="string">'gray'</span>,</span><br><span class="line">         <span class="attribute">ha</span>=<span class="string">'right'</span>, <span class="attribute">va</span>=<span class="string">'bottom'</span>, <span class="attribute">alpha</span>=0.4)</span><br><span class="line">plt.savefig(<span class="string">'./5.png'</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">006</span>-生成图表写成函数</span><br><span class="line"><span class="comment"># encoding: utf-8</span></span><br><span class="line">import matplotlib</span><br><span class="line">matplotlib.use(<span class="string">'Agg'</span>)</span><br><span class="line">import matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="built_in">file</span> = <span class="built_in">open</span>(<span class="string">'map.txt'</span>)  <span class="comment">#打开文档</span></span><br><span class="line">data = <span class="built_in">file</span>.readlines() <span class="comment">#读取文档数据</span></span><br><span class="line">para_1 = []  <span class="comment">#新建列表，用于保存第一列数据</span></span><br><span class="line">para_2 = []  <span class="comment">#新建列表，用于保存第二列数据</span></span><br><span class="line">para_3 = []</span><br><span class="line">para_4 = []</span><br><span class="line">para_5 = []</span><br><span class="line">para_6 = []</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">num</span> <span class="keyword">in</span> data:</span><br><span class="line">    para_1.append(float(<span class="built_in">num</span>.<span class="built_in">split</span>(<span class="string">','</span>)[<span class="number">0</span>]))</span><br><span class="line">    para_2.append(float(<span class="built_in">num</span>.<span class="built_in">split</span>(<span class="string">','</span>)[<span class="number">1</span>]))</span><br><span class="line">    para_3.append(float(<span class="built_in">num</span>.<span class="built_in">split</span>(<span class="string">','</span>)[<span class="number">2</span>]))</span><br><span class="line">    para_4.append(float(<span class="built_in">num</span>.<span class="built_in">split</span>(<span class="string">','</span>)[<span class="number">4</span>]))</span><br><span class="line">    para_5.append(float(<span class="built_in">num</span>.<span class="built_in">split</span>(<span class="string">','</span>)[<span class="number">5</span>]))</span><br><span class="line">    para_6.append(float(<span class="built_in">num</span>.<span class="built_in">split</span>(<span class="string">','</span>)[<span class="number">6</span>]))</span><br><span class="line">            </span><br><span class="line">def figure_show(<span class="keyword">a</span>,x,y):</span><br><span class="line">            plt.figure()</span><br><span class="line">            plt.title(<span class="keyword">a</span>)</span><br><span class="line">            plt.plot(x, y)</span><br><span class="line">            plt.xlabel(<span class="string">"second"</span>)</span><br><span class="line">            plt.ylabel(<span class="keyword">a</span>)</span><br><span class="line">            plt.figtext(<span class="number">0.75</span>, <span class="number">0.45</span>, <span class="keyword">a</span>,</span><br><span class="line">                                     fontsize=<span class="number">40</span>, color=<span class="string">'gray'</span>,</span><br><span class="line">                                     ha=<span class="string">'right'</span>, va=<span class="string">'bottom'</span>, alpha=<span class="number">0.4</span>)</span><br><span class="line">            </span><br><span class="line">            plt.savefig(<span class="keyword">a</span>+<span class="string">".png"</span>)</span><br><span class="line"></span><br><span class="line">figure_show(<span class="string">'iops'</span>,para_1,para_2)</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">007</span>-报错解决</span><br><span class="line">直接报错：TypeError: cannot concatenate <span class="string">'str'</span> <span class="keyword">and</span> <span class="string">'int'</span> objects</span><br><span class="line">解决这个方法只有提前把<span class="built_in">num</span>转换为字符串类型，可以使用<span class="keyword">bytes</span>函数把int型转换为<span class="keyword">string</span>型。</span><br><span class="line">代码：</span><br><span class="line"><span class="comment"># coding=utf8</span></span><br><span class="line">str = <span class="string">'你的分数是:'</span></span><br><span class="line"><span class="built_in">num</span> = <span class="number">82</span></span><br><span class="line"><span class="built_in">num</span> = <span class="keyword">bytes</span>(<span class="built_in">num</span>)</span><br><span class="line"><span class="keyword">text</span> = str+<span class="built_in">num</span>+<span class="string">'分 | 琼台博客'</span></span><br><span class="line">print <span class="keyword">text</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="017-汇总"><a href="#017-汇总" class="headerlink" title="017-汇总"></a>017-汇总</h1><figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line">github</span><br><span class="line"></span><br><span class="line">搜<span class="keyword">python</span></span><br><span class="line">搜<span class="keyword">python</span>工具</span><br><span class="line">搜内周精选Githhb</span><br><span class="line"></span><br><span class="line">github.com/jackfrued</span><br><span class="line"></span><br><span class="line"><span class="keyword">python</span> turtle</span><br><span class="line"></span><br><span class="line">declare -A map=（）</span><br><span class="line"></span><br><span class="line">Counter类</span><br><span class="line"></span><br><span class="line">decode</span><br><span class="line">是</span><br><span class="line"><span class="keyword">python</span>打包exe</span><br><span class="line"></span><br><span class="line">sshpass</span><br><span class="line"></span><br><span class="line">jstack</span><br><span class="line"></span><br><span class="line">etcd</span><br><span class="line">redis</span><br><span class="line"></span><br><span class="line">nginx</span><br><span class="line"></span><br><span class="line">nmon</span><br><span class="line"></span><br><span class="line">es</span><br><span class="line"></span><br><span class="line">kafka</span><br><span class="line"></span><br><span class="line">awk 对 某个字段分割处理 -vOFS</span><br><span class="line"></span><br><span class="line"><span class="keyword">python</span>多进程编程 博客园</span><br><span class="line"></span><br><span class="line">shut -n</span><br><span class="line"></span><br><span class="line"><span class="keyword">python</span>多进程（线程池）</span><br><span class="line"><span class="keyword">python</span>多线程</span><br><span class="line"></span><br><span class="line">分块读文件</span><br><span class="line"></span><br><span class="line"><span class="keyword">python</span>爬虫<span class="number">01</span>-第一个小爬虫（博客园万有引力）</span><br><span class="line"></span><br><span class="line">书籍：</span><br><span class="line">Flask Web开发：基于Python的Web应用开发实战</span><br><span class="line"></span><br><span class="line">Python Web开发学习实录</span><br><span class="line"></span><br><span class="line">Python编程快速上手 让繁琐工作自动化</span><br><span class="line"></span><br><span class="line"><span class="keyword">python</span>算法教程</span><br><span class="line"></span><br><span class="line"><span class="keyword">python</span> redis</span><br><span class="line"></span><br><span class="line"><span class="keyword">python</span>捞取&lt;span&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">多进程：</span><br><span class="line">一、multiprocessing  csdn 清尘</span><br><span class="line"></span><br><span class="line"><span class="keyword">python</span>多线程/单线程 一休哥</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">2018.3</span><span class="number">.5</span></span><br><span class="line"></span><br><span class="line">python2<span class="number">.7</span> GUI csdn luyaran</span><br><span class="line"></span><br><span class="line">第一行和最后一行</span><br><span class="line">awk ‘NR==<span class="number">1</span>;END&#123;<span class="keyword">print</span>&#125;’</span><br><span class="line"></span><br><span class="line">lsof -i <span class="number">123</span>(端口）</span><br><span class="line"></span><br><span class="line">切换用户执行：</span><br><span class="line">su - xxx &lt;&lt;EOF</span><br><span class="line">xxxxx;</span><br><span class="line">exit;</span><br><span class="line">EOF </span><br><span class="line"></span><br><span class="line">shuf -n</span><br><span class="line">随机数</span><br><span class="line"></span><br><span class="line">打印时间点之间的每一分钟</span><br><span class="line"></span><br><span class="line">sshpass</span><br><span class="line"></span><br><span class="line">awk多个分隔符</span><br><span class="line"></span><br><span class="line"><span class="keyword">python</span>去除列表中的元素</span><br><span class="line"></span><br><span class="line">jstack</span><br><span class="line"></span><br><span class="line">awk substr（）函数</span><br><span class="line"></span><br><span class="line">awk判断大小</span><br><span class="line"></span><br><span class="line"><span class="keyword">python</span> redis</span><br><span class="line"></span><br><span class="line">list <span class="keyword">string</span></span><br><span class="line"></span><br><span class="line">data grip</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2008\01\04\python\2008-01-04-python-draft\" rel="bookmark">python-draft</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/" title="python-ruan">https://tongsiying.github.io/2008/01/05/python/2008-01-04-python-ruan/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-Chunkserver/" rel="prev" title="BlockStorage-Chunkserver">
+      <i class="fa fa-chevron-left"></i> BlockStorage-Chunkserver
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2008/01/05/Database/2008-01-05-mysqlRds-draft/" rel="next" title="mysqlRds-draft">
+      mysqlRds-draft <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#001-python时间计算"><span class="nav-text">001-python时间计算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#002-python多进程并发"><span class="nav-text">002-python多进程并发</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#003-Python获取多线程返回结果"><span class="nav-text">003-Python获取多线程返回结果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#004-python列表转字符串"><span class="nav-text">004-python列表转字符串</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#005-去除列表重复字符串"><span class="nav-text">005-去除列表重复字符串</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#006-生成多张图"><span class="nav-text">006-生成多张图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#007-python将资源文件一起打包进exe-讲解（有算例）"><span class="nav-text">007-python将资源文件一起打包进exe 讲解（有算例）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#008-国内python源"><span class="nav-text">008-国内python源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#009-python执行Linux命令"><span class="nav-text">009-python执行Linux命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#010-python脚本传递参数"><span class="nav-text">010-python脚本传递参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#011-将逗号分隔的字符串转换为Python中的列表"><span class="nav-text">011-将逗号分隔的字符串转换为Python中的列表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#012-zip"><span class="nav-text">012-zip</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#013-configparser-python读配置文件"><span class="nav-text">013-configparser python读配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#014-python换行写"><span class="nav-text">014-python换行写</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#015-enumerate-函数"><span class="nav-text">015-enumerate() 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#016-matplotlib生成图表"><span class="nav-text">016-matplotlib生成图表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#017-汇总"><span class="nav-text">017-汇总</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">What hurts more, the pain of hard work or the pain of regret?</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">34:51</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

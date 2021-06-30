@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="BlockStorage-ETCD">
+<meta property="og:url" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-ETCD/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2008-01-04T10:37:19.000Z">
+<meta property="article:modified_time" content="2021-06-24T15:00:00.591Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="BlockStorage-ETCD">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-ETCD/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>BlockStorage-ETCD | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">嘻嘻嘻嘻嘻嘻</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-ETCD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="What hurts more, the pain of hard work or the pain of regret?">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          BlockStorage-ETCD
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2008-01-04 18:37:19" itemprop="dateCreated datePublished" datetime="2008-01-04T18:37:19+08:00">2008-01-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-24 23:00:00" itemprop="dateModified" datetime="2021-06-24T23:00:00+08:00">2021-06-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BlockStorage/" itemprop="url" rel="index"><span itemprop="name">BlockStorage</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>20k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>19 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+<h1 id="etcd"><a href="#etcd" class="headerlink" title="etcd"></a>etcd</h1><h2 id="001-安装"><a href="#001-安装" class="headerlink" title="001-安装"></a>001-安装</h2><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br></pre></td><td class="code"><pre><span class="line">参考资料：</span><br><span class="line">https:<span class="string">//dreambo8563.github.io/2018/09/14/Etcd-</span>%E5%88%86%E5%B8%83%E5%BC%8F%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/</span><br><span class="line"></span><br><span class="line">描述：</span><br><span class="line">etcd正常是三个节点，节点越多性能越差，etcd对并发数也有限制为10000</span><br><span class="line">当集群内健康机器少于 3 台的时候,客户端报错,集群整体不可用</span><br><span class="line"></span><br><span class="line">原来版本：3.13（支持v2版本的命令）</span><br><span class="line">当前版本：3.5.0-pre</span><br><span class="line"></span><br><span class="line">下面配置的是单副本（多副本待确认）</span><br><span class="line">1. 解压etcd-v3.2.11-linux-amd64.tar，将etcd、etcdctl拷贝复制到<span class="string">/usr/local/bin</span>目录下</span><br><span class="line"></span><br><span class="line">2.进程：（或者修改run-etcd.sh）</span><br><span class="line"><span class="string">/usr/local/bin/etcd</span> <span class="params">--log-outputs=stdout</span> <span class="params">--name=etcd01</span> <span class="params">--data-dir=/mnt/etcd/default</span>.etcd/ <span class="params">--election-timeout=5000</span> <span class="params">--auto-compaction-retention=1</span> <span class="params">--quota-backend-bytes=134217728000</span> <span class="params">--backend-bbolt-freelist-type=map</span> <span class="params">--listen-client-urls=http</span>:<span class="string">//10.238.161.1</span><span class="function">:2379</span>,http:<span class="string">//127.0.0.1</span><span class="function">:2379</span> <span class="params">--listen-peer-urls=http</span>:<span class="string">//10.238.161.1</span><span class="function">:2380</span> <span class="params">--advertise-client-urls=http</span>:<span class="string">//10.238.161.1</span><span class="function">:2379</span> <span class="params">--initial-advertise-peer-urls=http</span>:<span class="string">//10.238.161.1</span><span class="function">:2380</span> <span class="params">--initial-cluster-token=etcd-cluster</span> <span class="params">--initial-cluster=etcd01=http</span>:<span class="string">//10.238.161.1</span><span class="function">:2380</span>,etcd02=http:<span class="string">//10.238.161.2</span><span class="function">:2380</span>,etcd03=http:<span class="string">//10.238.161.3</span><span class="function">:2380</span> <span class="params">--initial-cluster-state=existing</span> <span class="params">--enable-v2=true</span> <span class="params">--enable-pprof</span></span><br><span class="line"></span><br><span class="line">3.参数解释</span><br><span class="line"><span class="comment">#  设置空间配额为内存大小，单位字节</span></span><br><span class="line"><span class="params">--quota-backend-bytes=134217728000</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#  可以使用带有小时时间单位的 --auto-compaction 选项来设置为自动压缩键空间，保持一个小时的历史</span></span><br><span class="line"><span class="params">--auto-compaction-retention=1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#etcd日志级别</span></span><br><span class="line"><span class="params">--log-outputs=stdout</span> \  </span><br><span class="line">含义：指定'stdout'或'stderr'以跳过日志记录，即使在systemd或逗号分隔的输出目标列表下运行也是如此。</span><br><span class="line">默认值：default</span><br><span class="line">环境变量：ETCD_LOG_OUTPUT</span><br><span class="line"></span><br><span class="line"><span class="comment">#注意：</span></span><br><span class="line"><span class="params">--initial-cluster-state=new</span>           <span class="comment">#启动用new就行,之后重启用existing</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#etcd会打印debug日志</span></span><br><span class="line"><span class="params">--debug=true</span></span><br><span class="line"></span><br><span class="line">4.etcd健康</span><br><span class="line"><span class="comment">#查询etcd节点健康状态（V2的命令）</span></span><br><span class="line">etcdctl  <span class="params">--endpoints=</span><span class="string">"http://10.243.0.129:2379,http://10.243.0.130:2379,http://10.243.0.131:2379"</span> cluster-health</span><br><span class="line"></span><br><span class="line">5.执行etcd命令需要先设置系统变量</span><br><span class="line">export ETCDCTL_API=3</span><br><span class="line"></span><br><span class="line">6.查主etcd及etcd使用容量</span><br><span class="line">[root@host102442549 ChunkServer]<span class="comment"># ETCDCTL_API=3 etcdctl --endpoints="http://10.238.161.1:2379,http://10.238.161.2:2379,http://10.238.161.3:2379" endpoint status --write-out=table</span></span><br><span class="line">+<span class="params">--------------------------</span>+<span class="params">------------------</span>+<span class="params">-----------</span>+<span class="params">---------</span>+<span class="params">-----------</span>+<span class="params">------------</span>+<span class="params">-----------</span>+<span class="params">------------</span>+<span class="params">--------------------</span>+<span class="params">--------</span>+</span><br><span class="line">|         ENDPOINT         |        ID        |  VERSION  | DB SIZE | IS LEADER | IS LEARNER | RAFT TERM | RAFT INDEX | RAFT APPLIED INDEX | ERRORS |</span><br><span class="line">+<span class="params">--------------------------</span>+<span class="params">------------------</span>+<span class="params">-----------</span>+<span class="params">---------</span>+<span class="params">-----------</span>+<span class="params">------------</span>+<span class="params">-----------</span>+<span class="params">------------</span>+<span class="params">--------------------</span>+<span class="params">--------</span>+</span><br><span class="line">| http:<span class="string">//10.238.161.1</span><span class="function">:2379</span> | 26e7149d86c3a7bc | 3.5.0-pre |   86 MB |     <span class="literal">false</span> |      <span class="literal">false</span> |         2 |      53489 |              53489 |        |</span><br><span class="line">| http:<span class="string">//10.238.161.2</span><span class="function">:2379</span> |  693e6c16a77e623 | 3.5.0-pre |   86 MB |      <span class="literal">true</span> |      <span class="literal">false</span> |         2 |      53489 |              53489 |        |</span><br><span class="line">| http:<span class="string">//10.238.161.3</span><span class="function">:2379</span> | e88e2e5b8dc90da5 | 3.5.0-pre |   86 MB |     <span class="literal">false</span> |      <span class="literal">false</span> |         2 |      53489 |              53489 |        |</span><br><span class="line">+<span class="params">--------------------------</span>+<span class="params">------------------</span>+<span class="params">-----------</span>+<span class="params">---------</span>+<span class="params">-----------</span>+<span class="params">------------</span>+<span class="params">-----------</span>+<span class="params">------------</span>+<span class="params">--------------------</span>+<span class="params">--------</span>+</span><br><span class="line"></span><br><span class="line">7.这种方式更为方便：参考：https:<span class="string">//www.cnblogs.com/opama/p/5836674.html</span></span><br><span class="line">ETCDCTL_API=3 etcdctl get repair <span class="params">--prefix</span></span><br><span class="line"></span><br><span class="line">8.查看etcd单节点使用的空间</span><br><span class="line">[root@host102442549 ChunkServer]<span class="comment">#  ETCDCTL_API=3 etcdctl --endpoints=http://127.0.0.1:2379 endpoint status</span></span><br><span class="line">http:<span class="string">//127.0.0.1</span><span class="function">:2379</span>, 26e7149d86c3a7bc, 3.5.0-pre, 86 MB, <span class="literal">false</span>, <span class="literal">false</span>, 2, 53498, 53498,</span><br><span class="line"></span><br><span class="line">9.压缩etcd空间</span><br><span class="line">rev=$<span class="params">(<span class="attr">ETCDCTL_API</span>=3 etcdctl <span class="attr">--endpoints</span>=http://127.0.0.1:2379 endpoint status <span class="attr">--write-out</span>="json" | egrep -o '"revision":[0-9]*' | egrep -o '[0-9].*'</span></span><br><span class="line"><span class="params">或者</span></span><br><span class="line"><span class="params">etcdctl <span class="attr">--endpoints</span>=http://127.0.0.1:2379 compact $rev</span></span><br><span class="line"><span class="params">time etcdctl <span class="attr">--endpoints</span>=http://127.0.0.1:2379 <span class="attr">--dial-timeout</span>=10s <span class="attr">--command-timeout</span>=10000s defrag</span></span><br><span class="line"><span class="params"></span></span><br><span class="line"><span class="params">10.etcd启动脚本：（根据需要修改）</span></span><br><span class="line"><span class="params">[root@host102442549 oss]# cat /home/etcd/run-etcd.sh</span></span><br><span class="line"><span class="params">#!/bin/sh</span></span><br><span class="line"><span class="params"># 安装</span></span><br><span class="line"><span class="params"># ./run.sh etcd01 <span class="attr">etcd01</span>=http://10.37.2.18:2380,<span class="attr">etcd02</span>=http://10.37.2.19:2380,<span class="attr">etcd03</span>=http://10.37.2.20:2380 10.37.2.18 /mnt/data/etcd/</span></span><br><span class="line"><span class="params"></span></span><br><span class="line"><span class="params">etcd --version</span></span><br><span class="line"><span class="params">if [[ $? -eq 0 ]];</span></span><br><span class="line"><span class="params">    then</span></span><br><span class="line"><span class="params">        echo 'etcd exists!'</span></span><br><span class="line"><span class="params">    else</span></span><br><span class="line"><span class="params">        echo "etcd not exist!"</span></span><br><span class="line"><span class="params">    exit</span></span><br><span class="line"><span class="params">fi</span></span><br><span class="line"><span class="params"></span></span><br><span class="line"><span class="params">#export <span class="attr">HOST</span>=$(ifconfig | grep 'inet addr'| grep -v '127.0.0.1' | awk '&#123; print $2&#125;'| cut -d: -f2)</span></span><br><span class="line">export HOST=$3</span><br><span class="line"><span class="keyword">echo</span> $HOST</span><br><span class="line"></span><br><span class="line">mkdir -p <span class="string">/etc/etcd/</span></span><br><span class="line"></span><br><span class="line">ETCD_NAME=<span class="string">"$1"</span></span><br><span class="line">ETCD_DATA_DIR=<span class="string">"$4"</span></span><br><span class="line">ETCD_LISTEN_PEER_URLS=<span class="string">"http://$HOST:2380"</span></span><br><span class="line">ETCD_LISTEN_CLIENT_URLS=<span class="string">"http://$HOST:2379,http://127.0.0.1:2379"</span></span><br><span class="line">ETCD_INITIAL_ADVERTISE_PEER_URLS=<span class="string">"http://$HOST:2380"</span></span><br><span class="line">ETCD_ADVERTISE_CLIENT_URLS=<span class="string">"http://$HOST:2379"</span></span><br><span class="line"><span class="comment">#ETCD_INITIAL_CLUSTER_STATE="new"            #第一次启动用new</span></span><br><span class="line">ETCD_INITIAL_CLUSTER_STATE=<span class="string">"existing"</span>        <span class="comment">#之后启动用   existing</span></span><br><span class="line">ETCD_INITIAL_CLUSTER_TOKEN=<span class="string">"etcd-cluster1"</span></span><br><span class="line">ETCD_INITIAL_CLUSTER=<span class="string">"$2"</span></span><br><span class="line"></span><br><span class="line">tee <span class="string">/etc/etcd/etcd.conf</span> &lt;&lt;-'EOF'</span><br><span class="line">ETCD_NAME=<span class="string">"$1"</span></span><br><span class="line">ETCD_DATA_DIR=<span class="string">"$4"</span></span><br><span class="line">ETCD_LISTEN_PEER_URLS=<span class="string">"http://$HOST:2380"</span></span><br><span class="line">ETCD_LISTEN_CLIENT_URLS=<span class="string">"http://$HOST:2379,http://127.0.0.1:2379"</span></span><br><span class="line">ETCD_INITIAL_ADVERTISE_PEER_URLS=<span class="string">"http://$HOST:2380"</span></span><br><span class="line">ETCD_ADVERTISE_CLIENT_URLS=<span class="string">"http://$HOST:2379"</span></span><br><span class="line">ETCD_INITIAL_CLUSTER_STATE=<span class="string">"new"</span></span><br><span class="line">ETCD_INITIAL_CLUSTER_TOKEN=<span class="string">"etcd-cluster1"</span></span><br><span class="line">ETCD_INITIAL_CLUSTER=<span class="string">"$2"</span></span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">mkdir -p $4</span><br><span class="line"><span class="comment"># etcd01=http://192.168.2.44:2380,etcd02=http://192.168.2.45:2380,etcd03=http://192.168.2.46:2380</span></span><br><span class="line"><span class="comment"># 替换掉$HOST及$1</span></span><br><span class="line">sed -i <span class="string">"s%\$HOST%"</span>$HOST<span class="string">"%g"</span>  <span class="string">/etc/etcd/etcd.conf</span></span><br><span class="line">sed -i <span class="string">"s%\$1%"</span>$1<span class="string">"%g"</span>  <span class="string">/etc/etcd/etcd.conf</span></span><br><span class="line">sed -i <span class="string">"s%\$2%"</span>$2<span class="string">"%g"</span>  <span class="string">/etc/etcd/etcd.conf</span></span><br><span class="line"></span><br><span class="line">mkdir -p <span class="string">/usr/lib/systemd/system/</span></span><br><span class="line"></span><br><span class="line">tee  <span class="string">/usr/lib/systemd/system/etcd.service</span> &lt;&lt;-'EOF'</span><br><span class="line">[Unit]</span><br><span class="line">Description=Etcd Server</span><br><span class="line">After=network.target</span><br><span class="line">After=network-online.target</span><br><span class="line">Wants=network-online.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=notify</span><br><span class="line">WorkingDirectory=$4</span><br><span class="line">EnvironmentFile=<span class="string">/etc/etcd/etcd.conf</span></span><br><span class="line">User=etcd</span><br><span class="line"><span class="comment"># set GOMAXPROCS to number of processors</span></span><br><span class="line">ExecStart=<span class="string">/bin/bash</span> -c <span class="string">"GOMAXPROCS=$(nproc) /usr/bin/etcd --name=\"$&#123;ETCD_NAME&#125;\" --data-dir=\"$&#123;ETCD_DATA_DIR&#125;\" --listen-client-urls=\"$&#123;ETCD_LISTEN_CLIENT_URLS&#125;\" --listen-peer-urls=\"$&#123;ETCD_LISTEN_PEER_URLS&#125;\" --advertise-client-urls=\"$&#123;ETCD_ADVERTISE_CLIENT_URLS&#125;\" --initial-cluster-token=\"$&#123;ETCD_INITIAL_CLUSTER_TOKEN&#125;\" --initial-cluster=\"$&#123;ETCD_INITIAL_CLUSTER&#125;\" --initial-cluster-state=\"$&#123;ETCD_INITIAL_CLUSTER_STATE&#125;\" "</span></span><br><span class="line">Restart=on-failure</span><br><span class="line">LimitNOFILE=65536</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment">#service daemon-reload</span></span><br><span class="line">nohup etcd <span class="params">--log-output=stdout</span> \    <span class="comment">##有这个才能输出日志</span></span><br><span class="line">           <span class="params">--name=</span><span class="string">"$&#123;ETCD_NAME&#125;"</span> \</span><br><span class="line">           <span class="params">--data-dir=</span><span class="string">"$&#123;ETCD_DATA_DIR&#125;"</span> \</span><br><span class="line">                   <span class="params">--auto-compaction-retention=1</span> \</span><br><span class="line">                   <span class="params">--quota-backend-bytes=</span>$<span class="params">((125*1024*1024*1024)</span>) \</span><br><span class="line">           <span class="params">--listen-client-urls=</span><span class="string">"$&#123;ETCD_LISTEN_CLIENT_URLS&#125;"</span> \</span><br><span class="line">           <span class="params">--listen-peer-urls=</span><span class="string">"$&#123;ETCD_LISTEN_PEER_URLS&#125;"</span> \</span><br><span class="line">           <span class="params">--advertise-client-urls=</span><span class="string">"$&#123;ETCD_ADVERTISE_CLIENT_URLS&#125;"</span> \</span><br><span class="line">           <span class="params">--initial-advertise-peer-urls=</span><span class="string">"$&#123;ETCD_INITIAL_ADVERTISE_PEER_URLS&#125;"</span> \</span><br><span class="line">           <span class="params">--initial-cluster-token=</span><span class="string">"$&#123;ETCD_INITIAL_CLUSTER_TOKEN&#125;"</span> \</span><br><span class="line">           <span class="params">--initial-cluster=</span><span class="string">"$&#123;ETCD_INITIAL_CLUSTER&#125;"</span> \</span><br><span class="line">           <span class="params">--initial-cluster-state=</span><span class="string">"$&#123;ETCD_INITIAL_CLUSTER_STATE&#125;"</span> \</span><br><span class="line">           <span class="params">--enable-pprof</span> \</span><br><span class="line">           &gt;<span class="string">/mnt/snbslog/snbs/Master/Etcd.log</span> 2&gt;&amp;1 &amp;</span><br><span class="line"><span class="comment">#service enable etcd</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#etcdctl --endpoints="http://10.37.2.18:2379,http://10.37.2.19:2379,http://10.37.2.20:2379" member list</span></span><br><span class="line"><span class="comment">#etcdctl --endpoints="http://10.37.2.18:2379,http://10.37.2.19:2379,http://10.37.2.20:2379" cluster-health</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="002-常用etcd接口"><a href="#002-常用etcd接口" class="headerlink" title="002-常用etcd接口"></a>002-常用etcd接口</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line">* 查看etcd内容</span><br><span class="line">metadata</span><br><span class="line"><span class="number">*E</span><span class="attribute">TCDCTL_API</span>=3 etcdctl  <span class="attribute">--endpoints</span>=<span class="string">"http://10.242.180.207:2379,http://10.242.180.208:2379,http://10.242.180.209:2379"</span>  <span class="builtin-name">get</span>  metadata --prefix</span><br><span class="line">返回：</span><br><span class="line">metadata/00000000000186a5/00000000                                  ---key</span><br><span class="line">10.242.180.208:9595,10.242.180.212:9595,10.242.180.210:9595         ---value</span><br><span class="line"></span><br><span class="line"><span class="number">*E</span><span class="attribute">TCDCTL_API</span>=3 etcdctl  <span class="attribute">--endpoints</span>=<span class="string">"http://10.242.180.207:2379,http://10.242.180.208:2379,http://10.242.180.209:2379"</span>  <span class="builtin-name">get</span> metadata/00000000000186a5/00000000</span><br><span class="line">返回：</span><br><span class="line">metadata/00000000000186a5/00000000</span><br><span class="line">10.242.180.208:9595,10.242.180.212:9595,10.242.180.210:9595</span><br><span class="line"></span><br><span class="line">volumestate</span><br><span class="line"><span class="number">*E</span><span class="attribute">TCDCTL_API</span>=3 etcdctl  <span class="attribute">--endpoints</span>=<span class="string">"http://10.242.180.207:2379,http://10.242.180.208:2379,http://10.242.180.209:2379"</span>  <span class="builtin-name">get</span> volumestate --prefix</span><br><span class="line">volumestate/4fc2e14c-dab8-46e9-a9ca-84fe1cc4f198</span><br><span class="line">&#123;<span class="string">"FileName"</span>:<span class="string">"4fc2e14c-dab8-46e9-a9ca-84fe1cc4f198"</span>,<span class="string">"Prefix"</span>:<span class="string">"000000000010c8e5"</span>,<span class="string">"Size"</span>:107374182400,<span class="string">"Provisioning"</span>:<span class="string">"thin"</span>,<span class="string">"Creation_Time"</span>:<span class="string">"2019-07-16 17:00:42"</span>,<span class="string">"Copies"</span>:3,<span class="string">"Type"</span>:<span class="string">"origin"</span>,<span class="string">"Parent"</span>:<span class="string">""</span>,<span class="string">"Pool"</span>:<span class="string">"pool-openstack"</span>,<span class="string">"Owner"</span>:<span class="string">"10.242.180.211:8686"</span>,<span class="string">"Ref"</span>:0,<span class="string">"Status"</span>:0,<span class="string">"Index"</span>:0,<span class="string">"ReadOnly"</span>:false&#125;</span><br><span class="line"></span><br><span class="line"><span class="number">*E</span><span class="attribute">TCDCTL_API</span>=3 etcdctl  <span class="attribute">--endpoints</span>=<span class="string">"http://10.242.180.207:2379,http://10.242.180.208:2379,http://10.242.180.209:2379"</span>  <span class="builtin-name">get</span> volumestate/lCentOS-7.11.raw</span><br><span class="line">返回：</span><br><span class="line">volumestate/lCentOS-7.11.raw</span><br><span class="line">&#123;<span class="string">"FileName"</span>:<span class="string">"lCentOS-7.11.raw"</span>,<span class="string">"Prefix"</span>:<span class="string">"000000000010c8ee"</span>,<span class="string">"Size"</span>:2147483648,<span class="string">"Provisioning"</span>:<span class="string">"thin"</span>,<span class="string">"Creation_Time"</span>:<span class="string">"2019-07-16 19:31:53"</span>,<span class="string">"Copies"</span>:3,<span class="string">"Type"</span>:<span class="string">"origin"</span>,<span class="string">"Parent"</span>:<span class="string">""</span>,<span class="string">"Pool"</span>:<span class="string">"pool-openstack"</span>,<span class="string">"Owner"</span>:<span class="string">""</span>,<span class="string">"Ref"</span>:0,<span class="string">"Status"</span>:0,<span class="string">"Index"</span>:0,<span class="string">"ReadOnly"</span>:false&#125;</span><br><span class="line"></span><br><span class="line">pooldata</span><br><span class="line"><span class="number">*E</span><span class="attribute">TCDCTL_API</span>=3 etcdctl  <span class="attribute">--endpoints</span>=<span class="string">"http://10.242.180.207:2379,http://10.242.180.208:2379,http://10.242.180.209:2379"</span> <span class="builtin-name">get</span> pooldata --prefix</span><br><span class="line">返回：</span><br><span class="line">pooldata/pool-openstack/region-openstack/<span class="literal">null</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pooldata/pool-openstack/region-openstack/zone1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pooldata/pool-openstack/region-openstack/zone2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pooldata/pool-openstack/region-openstack/zone3</span><br><span class="line"></span><br><span class="line"><span class="number">*E</span><span class="attribute">TCDCTL_API</span>=3 etcdctl  <span class="attribute">--endpoints</span>=<span class="string">"http://10.242.180.207:2379,http://10.242.180.208:2379,http://10.242.180.209:2379"</span> <span class="builtin-name">get</span> pooldata/pool-openstack/region-openstack/zone1 --prefix</span><br><span class="line"></span><br><span class="line">poolstate</span><br><span class="line"><span class="number">*E</span><span class="attribute">TCDCTL_API</span>=3 etcdctl  <span class="attribute">--endpoints</span>=<span class="string">"http://10.242.180.207:2379,http://10.242.180.208:2379,http://10.242.180.209:2379"</span> <span class="builtin-name">get</span> poolstate --prefix</span><br><span class="line">poolstate/pool-openstack</span><br><span class="line">&#123;<span class="string">"Copies"</span>:3,<span class="string">"PoolName"</span>:<span class="string">"pool-openstack"</span>,<span class="string">"CreateTime"</span>:<span class="string">"2019-07-16 09:47:03"</span>,<span class="string">"Regionid"</span>:<span class="string">"region-openstack"</span>&#125;</span><br><span class="line"></span><br><span class="line">region</span><br><span class="line"><span class="attribute">ETCDCTL_API</span>=3 etcdctl  <span class="attribute">--endpoints</span>=<span class="string">"http://10.242.180.207:2379,http://10.242.180.208:2379,http://10.242.180.209:2379"</span> <span class="builtin-name">get</span> region --prefix</span><br><span class="line">region/region-openstack/<span class="literal">null</span>/<span class="literal">null</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">region/region-openstack/zone1/10.242.180.207:9595</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">region/region-openstack/zone1/10.242.180.208:9595</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">region/region-openstack/zone1/<span class="literal">null</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">region/region-openstack/zone2/10.242.180.209:9595</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">region/region-openstack/zone2/10.242.180.210:9595</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">region/region-openstack/zone2/<span class="literal">null</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">region/region-openstack/zone3/10.242.180.211:9595</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">region/region-openstack/zone3/10.242.180.212:9595</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">region/region-openstack/zone3/<span class="literal">null</span></span><br><span class="line"></span><br><span class="line">master：查看主master</span><br><span class="line"><span class="number">*E</span><span class="attribute">TCDCTL_API</span>=3 etcdctl  <span class="attribute">--endpoints</span>=<span class="string">"http://10.242.180.207:2379,http://10.242.180.208:2379,http://10.242.180.209:2379"</span> <span class="builtin-name">get</span> master --prefix</span><br><span class="line">master/master</span><br><span class="line">10.242.180.207:9393</span><br><span class="line"></span><br><span class="line">recycle:</span><br><span class="line"><span class="attribute">ETCDCTL_API</span>=3 etcdctl  <span class="attribute">--endpoints</span>=<span class="string">"http://10.243.0.129:2379,http://10.243.0.130:2379,http://10.243.0.131:2379"</span> <span class="builtin-name">get</span> recycle --prefix</span><br><span class="line">recycle目录不一定能看到，只有存在recycle的时候才会有</span><br><span class="line"></span><br><span class="line">* 查看迁移任务：migrate、repair</span><br><span class="line"><span class="attribute">ETCDCTL_API</span>=3 etcdctl  <span class="attribute">--endpoints</span>=<span class="string">"http://10.242.180.207:2379,http://10.242.180.208:2379,http://10.242.180.209:2379"</span> <span class="builtin-name">get</span> migrate --prefix</span><br><span class="line"><span class="builtin-name">get</span> migrate --prefix</span><br><span class="line"><span class="attribute">ETCDCTL_API</span>=3 etcdctl  <span class="attribute">--endpoints</span>=<span class="string">"http://10.242.180.207:2379,http://10.242.180.208:2379,http://10.242.180.209:2379"</span> <span class="builtin-name">get</span> repair --prefix</span><br><span class="line"></span><br><span class="line">*其它：prefic、get、put</span><br><span class="line">--prefix</span><br><span class="line"><span class="attribute">ETCDCTL_API</span>=3 <span class="attribute">ETCDCTL_API</span>=3 etcdctl  <span class="attribute">--endpoints</span>=<span class="string">"http://10.243.0.129:2379,http://10.243.0.130:2379,http://10.243.0.131:2379"</span>  <span class="builtin-name">get</span>  volumestate/project001 --prefix</span><br><span class="line"><span class="attribute">ETCDCTL_API</span>=3 etcdctl  <span class="attribute">--endpoints</span>=<span class="string">"http://10.243.0.129:2379,http://10.243.0.130:2379,http://10.243.0.131:2379"</span>  put volumestate/project001  <span class="string">'&#123;"FileName":"project001","Prefix":"000000000001875a","Size":107374182400,"Provisioning":"thin","Creation_Time":"2019-06-19  15:18:20","Copies":3,"Type":"origin","Parent":"","Pool":"SNPOOL001","Owner":"10.243.0.132:8585","Ref":0,"Status":0,"Index":0&#125;'</span></span><br><span class="line"></span><br><span class="line">*卷相关的数据会先放到recycle中，都放到recycle中之后才会删除正真的元数据</span><br><span class="line"><span class="attribute">ETCDCTL_API</span>=3  etcdctl <span class="attribute">--endpoints</span>=<span class="string">"http://10.37.2.18:2379,http://10.37.2.19:2379,http://10.37.2.20:2379"</span> <span class="builtin-name">get</span> recycle/ --prefix</span><br><span class="line"></span><br><span class="line">---查询主etcd</span><br><span class="line">etcdctl  <span class="attribute">--endpoints</span>=<span class="string">"http://10.243.0.129:2379,http://10.243.0.130:2379,http://10.243.0.131:2379"</span> member list</span><br><span class="line">etcdctl member list</span><br></pre></td></tr></table></figure>
+
+<h2 id="etcd-备份恢复方案"><a href="#etcd-备份恢复方案" class="headerlink" title="etcd-备份恢复方案"></a>etcd-备份恢复方案</h2><h2 id="003-金鑫etcd总结"><a href="#003-金鑫etcd总结" class="headerlink" title="003-金鑫etcd总结"></a>003-金鑫etcd总结</h2><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">Etcd测试与分析</span><br><span class="line">一、启动参数设置</span><br><span class="line">/usr/local/bin/etcd </span><br><span class="line">--log-outputs=stdout </span><br><span class="line">--name=etcd01</span><br><span class="line">--data-dir=/mnt/etcd/<span class="keyword">default</span>.etcd/ </span><br><span class="line">--election-timeout=<span class="number">5000</span> </span><br><span class="line">--<span class="built_in">auto</span>-compaction-retention=<span class="number">1</span> </span><br><span class="line">--quota-backend-bytes=<span class="number">214748364800</span></span><br><span class="line"> --backend-bbolt-freelist-type=map --listen-client-urls=http:<span class="comment">//10.238.161.1:2379,http://127.0.0.1:2379 </span></span><br><span class="line">--listen-peer-urls=http:<span class="comment">//10.238.161.1:2380</span></span><br><span class="line"> --advertise-client-urls=http:<span class="comment">//10.238.161.1:2379</span></span><br><span class="line"> --initial-advertise-peer-urls=http:<span class="comment">//10.238.161.1:2380</span></span><br><span class="line"> --initial-cluster-token=etcd-cluster --initial-cluster=etcd01=http:<span class="comment">//10.238.161.1:2380,etcd02=http://10.238.161.2:2380,etcd03=http://10.238.161.3:2380</span></span><br><span class="line"> --initial-cluster-state=existing</span><br><span class="line"> --enable-v2=<span class="literal">true</span> </span><br><span class="line">--enable-pprof</span><br><span class="line"></span><br><span class="line">二、测试数据</span><br><span class="line"><span class="number">1</span>）基于etcd <span class="number">3.3</span><span class="number">.12</span>版本测试，master优化之前的测试数据：</span><br><span class="line">卷数量（<span class="number">75</span>G）	chunk数量	etcd内存	etcd磁盘	Compact耗时</span><br><span class="line"><span class="number">70000</span>	<span class="number">2100</span>万	<span class="number">18</span>G	<span class="number">11</span>G	<span class="number">5</span>Min左右</span><br><span class="line"><span class="number">30000</span>	<span class="number">900</span>万	<span class="number">6</span>G	<span class="number">2.6</span>G	<span class="number">5</span>~<span class="number">10</span>s左右</span><br><span class="line"><span class="number">20000</span>	<span class="number">600</span>万	<span class="number">3.3</span>G	<span class="number">2</span>G	&lt;<span class="number">5</span>s</span><br><span class="line"><span class="number">15000</span>	<span class="number">450</span>万	<span class="number">2.8</span>G	<span class="number">1.5</span>G	&lt;<span class="number">5</span>s</span><br><span class="line">存在的问题：</span><br><span class="line"><span class="number">1.</span>etcd：Compact操作影响etcd的正常put/<span class="keyword">get</span>等数据存储的操作；</span><br><span class="line"><span class="number">2.</span>master：创建chunk的时候采用了分布式悲观锁，导致每条分布式锁都会记录在磁盘上，过期后也没有删除，只有在主动触发磁盘数据整理之后会将空间释放。</span><br><span class="line">优化策略：</span><br><span class="line"><span class="number">1.</span>etcd：采用了优化了compact的版本。</span><br><span class="line"><span class="number">2.</span>master：创建chunk的时候采用了分布式乐观锁，不需要创建每条锁记录，不占用任何磁盘空间。</span><br><span class="line"><span class="number">2</span>）基于etcd <span class="number">3.5</span><span class="number">.0</span>-pre版本测试，优化之后测试数据：</span><br><span class="line">卷数量（<span class="number">75</span>G）	chunk数量	etcd内存	磁盘容量	Compact耗时</span><br><span class="line"><span class="number">133333</span>	<span class="number">4</span>千万	<span class="number">16</span>G	<span class="number">6.4</span>G	无</span><br><span class="line">				</span><br><span class="line">三、Etcd数据存储分析</span><br><span class="line"><span class="number">1</span>、数据存储格式：</span><br><span class="line">etcd磁盘持久化存储的主要数据分为key-value，即将序列化（revision.main+revision.sub）作为作为key，value为KeyValue结构序列化方式存储，具体信息如下：</span><br><span class="line">Key：</span><br><span class="line">type revision struct &#123;</span><br><span class="line">    main <span class="built_in">int</span>64</span><br><span class="line">    sub  <span class="built_in">int</span>64</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Value:</span><br><span class="line">type KeyValue struct &#123;</span><br><span class="line">    <span class="comment">// key is the key in bytes. An empty key is not allowed.</span></span><br><span class="line">    Key []byte `protobuf:<span class="string">"bytes,1,opt,name=key,proto3"</span> json:<span class="string">"key,omitempty"</span>`</span><br><span class="line">    <span class="comment">// create_revision is the revision of last creation on this key.</span></span><br><span class="line">    CreateRevision <span class="built_in">int</span>64 `protobuf:<span class="string">"varint,2,opt,name=create_revision,json=createRevision,proto3"</span> json:<span class="string">"create_revision,omitempty"</span>`</span><br><span class="line">    <span class="comment">// mod_revision is the revision of last modification on this key.</span></span><br><span class="line">    ModRevision <span class="built_in">int</span>64 `protobuf:<span class="string">"varint,3,opt,name=mod_revision,json=modRevision,proto3"</span> json:<span class="string">"mod_revision,omitempty"</span>`</span><br><span class="line">    <span class="comment">// version is the version of the key. A deletion resets</span></span><br><span class="line">    <span class="comment">// the version to zero and any modification of the key</span></span><br><span class="line">    <span class="comment">// increases its version.</span></span><br><span class="line">    Version <span class="built_in">int</span>64 `protobuf:<span class="string">"varint,4,opt,name=version,proto3"</span> json:<span class="string">"version,omitempty"</span>`</span><br><span class="line">    <span class="comment">// value is the value held by the key, in bytes.</span></span><br><span class="line">    Value []byte `protobuf:<span class="string">"bytes,5,opt,name=value,proto3"</span> json:<span class="string">"value,omitempty"</span>`</span><br><span class="line">    <span class="comment">// lease is the ID of the lease that attached to key.</span></span><br><span class="line">    <span class="comment">// When the attached lease expires, the key will be deleted.</span></span><br><span class="line">    <span class="comment">// If lease is 0, then no lease is attached to the key.</span></span><br><span class="line">    Lease <span class="built_in">int</span>64 `protobuf:<span class="string">"varint,6,opt,name=lease,proto3"</span> json:<span class="string">"lease,omitempty"</span>`</span><br><span class="line">&#125;</span><br><span class="line">可以看到每条KV记录除了我们实际存储Key，Value值外，额外占用的内容包括revision （key）占<span class="number">16</span>个字节，CreateRevision，ModRevision，Version ，Lease占<span class="number">32</span>个字节，总共至少额外占用了<span class="number">48</span>个字节。</span><br><span class="line">根据实际测试数据<span class="number">540</span>万条记录，key-value：总共<span class="number">29</span>字节，理论应占用<span class="number">149</span>M，实际磁盘占用<span class="number">473</span>M 内，可以计算出每条记录多占用了<span class="number">60</span>字节，与分析结果差不多。</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>、数据整理</span><br><span class="line">Etcd存储在磁盘上的过期版本也会占用磁盘空间，需要手动执行回收多余的空间操作，才能将老版本的数据空间回收。通过命令实现：</span><br><span class="line">etcdctl --endpoints=http:<span class="comment">//127.0.0.1:2379 defrag</span></span><br><span class="line">在执行该操作的时候etcd集群会出现阻塞，所有的外部请求会出现超时。目前测试发现该过<span class="number">4</span>千万条记录耗时将近<span class="number">2</span>分钟的时间。（在非主etcd上执行也是会导致相同的现象）。</span><br></pre></td></tr></table></figure>
+
+<h2 id="Etcd-数据存储调研"><a href="#Etcd-数据存储调研" class="headerlink" title="Etcd 数据存储调研"></a>Etcd 数据存储调研</h2><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">Etcd 数据存储调研</span><br><span class="line"></span><br><span class="line"><span class="number">1</span>、数据存储容量：</span><br><span class="line">etcd磁盘持久化存储的主要数据分为key-value，即将序列化（revision.main+revision.sub）作为作为key，value为KeyValue结构序列化方式存储，具体信息如下：</span><br><span class="line"></span><br><span class="line">Key：</span><br><span class="line">type revision struct &#123;</span><br><span class="line">    main <span class="built_in">int</span>64</span><br><span class="line">    sub  <span class="built_in">int</span>64</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Value:</span><br><span class="line">type KeyValue struct &#123;</span><br><span class="line">    <span class="comment">// key is the key in bytes. An empty key is not allowed.</span></span><br><span class="line">    Key []byte `protobuf:<span class="string">"bytes,1,opt,name=key,proto3"</span> json:<span class="string">"key,omitempty"</span>`</span><br><span class="line">    <span class="comment">// create_revision is the revision of last creation on this key.</span></span><br><span class="line">    CreateRevision <span class="built_in">int</span>64 `protobuf:<span class="string">"varint,2,opt,name=create_revision,json=createRevision,proto3"</span> json:<span class="string">"create_revision,omitempty"</span>`</span><br><span class="line">    <span class="comment">// mod_revision is the revision of last modification on this key.</span></span><br><span class="line">    ModRevision <span class="built_in">int</span>64 `protobuf:<span class="string">"varint,3,opt,name=mod_revision,json=modRevision,proto3"</span> json:<span class="string">"mod_revision,omitempty"</span>`</span><br><span class="line">    <span class="comment">// version is the version of the key. A deletion resets</span></span><br><span class="line">    <span class="comment">// the version to zero and any modification of the key</span></span><br><span class="line">    <span class="comment">// increases its version.</span></span><br><span class="line">    Version <span class="built_in">int</span>64 `protobuf:<span class="string">"varint,4,opt,name=version,proto3"</span> json:<span class="string">"version,omitempty"</span>`</span><br><span class="line">    <span class="comment">// value is the value held by the key, in bytes.</span></span><br><span class="line">    Value []byte `protobuf:<span class="string">"bytes,5,opt,name=value,proto3"</span> json:<span class="string">"value,omitempty"</span>`</span><br><span class="line">    <span class="comment">// lease is the ID of the lease that attached to key.</span></span><br><span class="line">    <span class="comment">// When the attached lease expires, the key will be deleted.</span></span><br><span class="line">    <span class="comment">// If lease is 0, then no lease is attached to the key.</span></span><br><span class="line">    Lease <span class="built_in">int</span>64 `protobuf:<span class="string">"varint,6,opt,name=lease,proto3"</span> json:<span class="string">"lease,omitempty"</span>`</span><br><span class="line">&#125;</span><br><span class="line">可以看到每条KV记录除了我们实际存储Key，Value值外，额外占用的内容包括revision （key）占<span class="number">16</span>个字节，CreateRevision，ModRevision，Version ，Lease占<span class="number">32</span>个字节，总共至少额外占用了<span class="number">48</span>个字节。</span><br><span class="line"></span><br><span class="line">根据实际测试数据<span class="number">540</span>万条记录，key-value：总共<span class="number">29</span>字节，理论应占用<span class="number">149</span>M，实际磁盘占用<span class="number">473</span>M 内，可以计算出每条记录多占用了<span class="number">60</span>字节，与分析结果差不多。</span><br><span class="line"><span class="number">133333</span>个卷，每个卷<span class="number">75</span>G的实际测试结果如下：</span><br><span class="line">存储方式	chunk数量	etcd内存	磁盘容量	加载耗时</span><br><span class="line">目前存储方式	<span class="number">4</span>千万	<span class="number">16</span>G	<span class="number">6.4</span>G	<span class="number">5</span>min左右</span><br><span class="line">优化存储方式	<span class="number">4</span>千万	<span class="number">12</span>G	<span class="number">3.6</span>G	<span class="number">4</span>min左右</span><br><span class="line">				</span><br><span class="line">注：之前测试数据偏大，是由于在记录每个chunk的时候采用了分布式锁，导致每条分布式锁都会记录在磁盘上，过期后也没有删除，在进行数据整理之后会将空间释放。所以这部分创建chunk的逻辑需要优化。</span><br><span class="line"><span class="number">2</span>、数据整理</span><br><span class="line">Etcd存储在磁盘上的过期版本也会占用磁盘空间，需要手动执行回收多余的空间操作，才能将老版本的数据空间回收。通过命令实现：</span><br><span class="line">etcdctl --endpoints=http:<span class="comment">//127.0.0.1:2379 defrag</span></span><br><span class="line">在执行该操作的时候etcd集群会出现阻塞，所有的外部请求会出现超时。目前测试发现该过<span class="number">4</span>千万条记录耗时将近<span class="number">2</span>分钟的时间。（在非主etcd上执行也是会导致相同的现象）。</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="004-etcd连接风暴优化"><a href="#004-etcd连接风暴优化" class="headerlink" title="004-etcd连接风暴优化"></a>004-etcd连接风暴优化</h2><h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>测试发现大量客户端同时连接etcd服务器时，会触发大量连接错误，并且需要很长时间才会恢复。</p>
+<p>连接性能的测试结果如下</p>
+<ol>
+<li>单个客户端，每次连接耗时200ms，服务端etcd进程CPU增加55%</li>
+<li>多个客户端压测，连接qps稳定在 9，服务端etcd进程CPU利用率在110%左右。</li>
+</ol>
+<p>根据以上数据，在有4w agent客户端的情况下，如果etcd整个集群(5节点)发生断网或停机，重连将至少花费15分钟，期间etcd服务极不稳定。</p>
+<pre><code>40000/(9*5)=888s=15min</code></pre><h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>连接风暴期间，性能分析，发现</p>
+<ol>
+<li><p>CPU主要消耗在 blowfish.encryptBlock函数</p>
+<p> [root@sndspstdb52 ~]# perf top<br> 67.01%  etcd                     [.] etcd-3.3.13/cmd/vendor/golang.org/x/crypto/blowfish.encryptBlock<br>   4.06%  [kernel]                 [k] _spin_unlock_irqrestore<br>   3.68%  [kernel]                 [k] finish_task_switch<br>   3.06%  etcd                     [.] etcd-3.3.13/cmd/vendor/golang.org/x/crypto/blowfish.ExpandKey<br>   2.34%  [kernel]                 [k] find_busiest_group<br>   1.74%  [kernel]                 [k] iowrite16<br>   1.33%  [kernel]                 [k] __do_softirq<br>   0.58%  etcd                     [.] runtime.mallocgc<br>   0.50%  [kernel]                 [k] __rcu_process_callbacks<br>   0.49%  [kernel]                 [k] _spin_lock<br>   0.45%  [kernel]                 [k] pvclock_clocksource_read<br>   0.43%  etcd                     [.] runtime.findrunnable<br>   0.42%  [kernel]                 [k] rcu_process_gp_end<br>   0.40%  etcd                     [.] runtime.selectgo<br>   0.37%  [kernel]                 [k] rcu_process_callbacks<br>   0.34%  [kernel]                 [k] system_call_after_swapgs<br>   0.33%  etcd                     [.] runtime.lock<br>   0.33%  etcd                     [.] runtime.heapBitsSetType<br>   0.31%  [kernel]                 [k] rebalance_domains<br>   0.31%  [kernel]                 [k] tick_nohz_stop_sched_tick<br>   0.28%  etcd                     [.] runtime.deferreturn</p>
+</li>
+<li><p>etcd用bcrypt(blowfish)算法进行密码验证</p>
+<p> [root@sndspstdb52 ~]# pstack $etcd_pid<br> Thread 9 (Thread 0x7feb8abfd700 (LWP 2339)):<br> #0  0x000000000097b9da in etcd-3.3.13/cmd/vendor/golang.org/x/crypto/blowfish.encryptBlock ()<br> #1  0x000000000097b120 in etcd-3.3.13/cmd/vendor/golang.org/x/crypto/blowfish.ExpandKey ()<br> #2  0x000000000097dc34 in etcd-3.3.13/cmd/vendor/golang.org/x/crypto/bcrypt.expensiveBlowfishSetup ()<br> #3  0x000000000097d935 in etcd-3.3.13/cmd/vendor/golang.org/x/crypto/bcrypt.bcrypt ()<br> #4  0x000000000097d076 in etcd-3.3.13/cmd/vendor/golang.org/x/crypto/bcrypt.CompareHashAndPassword ()<br> #5  0x00000000009828d7 in etcd-3.3.13/cmd/vendor/github.com/coreos/etcd/auth.(<em>authStore).CheckPassword ()<br> #6  0x0000000000ad6cda in etcd-3.3.13/cmd/vendor/github.com/coreos/etcd/etcdserver.(</em>EtcdServer).Authenticate ()<br> #7  0x0000000000b75395 in etcd-3.3.13/cmd/vendor/github.com/coreos/etcd/etcdserver/api/v3rpc.(<em>AuthServer).Authenticate ()<br> #8  0x00000000008d9196 in etcd-3.3.13/cmd/vendor/github.com/coreos/etcd/etcdserver/etcdserverpb._Auth_Authenticate_Handler.func1 ()<br> #9  0x0000000000b53151 in etcd-3.3.13/cmd/vendor/github.com/coreos/etcd/vendor/github.com/grpc-ecosystem/go-grpc-middleware.ChainUnaryServer.func1.1 ()<br> #10 0x0000000000b5721e in etcd-3.3.13/cmd/vendor/github.com/grpc-ecosystem/go-grpc-prometheus.(</em>ServerMetrics).UnaryServerInterceptor.func1 ()<br> #11 0x0000000000b530d9 in etcd-3.3.13/cmd/vendor/github.com/coreos/etcd/vendor/github.com/grpc-ecosystem/go-grpc-middleware.ChainUnaryServer.func1.1 ()<br> #12 0x0000000000b80968 in etcd-3.3.13/cmd/vendor/github.com/coreos/etcd/etcdserver/api/v3rpc.newUnaryInterceptor.func1 ()<br> #13 0x0000000000b530d9 in etcd-3.3.13/cmd/vendor/github.com/coreos/etcd/vendor/github.com/grpc-ecosystem/go-grpc-middleware.ChainUnaryServer.func1.1 ()<br> #14 0x0000000000b80b5e in etcd-3.3.13/cmd/vendor/github.com/coreos/etcd/etcdserver/api/v3rpc.newLogUnaryInterceptor.func1 ()<br> #15 0x0000000000b532f3 in etcd-3.3.13/cmd/vendor/github.com/coreos/etcd/vendor/github.com/grpc-ecosystem/go-grpc-middleware.ChainUnaryServer.func1 ()<br> #16 0x000000000088beb8 in etcd-3.3.13/cmd/vendor/github.com/coreos/etcd/etcdserver/etcdserverpb._Auth_Authenticate_Handler ()<br> #17 0x00000000008568dc in etcd-3.3.13/cmd/vendor/google.golang.org/grpc.(<em>Server).processUnaryRPC ()<br> #18 0x00000000008598f5 in etcd-3.3.13/cmd/vendor/google.golang.org/grpc.(</em>Server).handleStream ()<br> #19 0x000000000085f66f in etcd-3.3.13/cmd/vendor/google.golang.org/grpc.(*Server).serveStreams.func1.1 ()<br> #20 0x000000000045ea31 in runtime.goexit ()<br> #21 0x000000c024d42e60 in ?? ()<br> #22 0x000000c0000f8780 in ?? ()<br> #23 0x0000000001018580 in ?? ()<br> #24 0x000000c0139b54a0 in ?? ()<br> #25 0x000000c01e07a100 in ?? ()<br> #26 0x0000000000000000 in ?? ()</p>
+</li>
+<li><p>进一步调查了解，Bcrypt消耗CPU高也是出于安全性考虑，增加密码被穷举破解的难度，并且加密性能可以通过参数调节。</p>
+<p> <a href="https://segmentfault.com/q/1010000003054250" target="_blank" rel="noopener external nofollow noreferrer">https://segmentfault.com/q/1010000003054250</a><br> md5加密是快,在密码只有小写字母+数字组合的情况下,一台比较好的PC机,在40s内就可以穷举出所有的口令.<br> Bcrypt虽然慢,但是对于验证用户口令方面不算慢,对于穷举来说,就很慢了.</p>
+<p> 因为bcrypt采用了一系列各种不同的Blowfish加密算法，并引入了一个work factor，这个工作因子可以让你决定这个算法的代价有多大。因为这些，这个算法不会因为计算机CPU处理速度变快了，而导致算法的时间会缩短了。因为，你可以增加work factor来把其性能降下来。</p>
+</li>
+</ol>
+<p>注:关闭密码认证，不会存在连接性能问题。</p>
+<h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><p>最新的etcd 3.4.0提供了一个参数bcrypt-cost,可以调节bcrypt的性能。</p>
+<pre><code>[root@sndspstdb51 etcd-v3.4.0-linux-amd64]#./etcd --help
+Auth:
+  ...
+  --bcrypt-cost 10
+    Specify the cost / strength of the bcrypt algorithm for hashing auth passwords. Valid values are between 4 and 31.</code></pre><p>测试结果如下</p>
+<pre><code>bcrypt-cost  单客户端连接时间  单客户端连接CPU  多客户端连接qps
+10(默认)     100ms               99%                10
+4              6ms               25%                600</code></pre><p>设置bcrypt-cost=4后，同时启动4000个agent连接，未发生连接报错和阻塞现象。</p>
+<p>因此优化方案如下</p>
+<ol>
+<li>使用etcd 3.4.0</li>
+<li>启动etcd时，设置参数 –bcrypt-cost=4</li>
+</ol>
+<h2 id="005-etcd客户端"><a href="#005-etcd客户端" class="headerlink" title="005-etcd客户端"></a>005-etcd客户端</h2><p>起etcd  grpc-proxy</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">etcd grpc-proxy start <span class="params">--endpoints=http</span>:<span class="string">//10.244.208.3</span><span class="function">:2379</span>,http:<span class="string">//10.244.208.4</span><span class="function">:2379</span>,http:<span class="string">//10.244.208.5</span><span class="function">:2379</span> <span class="params">--listen-addr=10</span>.242.4.92<span class="function">:2370</span></span><br></pre></td></tr></table></figure>
+
+<p>起etcd watch</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./watch -etcd=<span class="number">10.242</span><span class="number">.4</span><span class="number">.92</span>:<span class="number">2370</span>,<span class="number">10.242</span><span class="number">.4</span><span class="number">.93</span>:<span class="number">2370</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+      
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-ETCD/" title="BlockStorage-ETCD">https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-ETCD/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/BlockStorage-ETCD/" rel="tag"># BlockStorage-ETCD</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-Gateway/" rel="prev" title="BlockStorage-Gateway">
+      <i class="fa fa-chevron-left"></i> BlockStorage-Gateway
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-Emergency/" rel="next" title="BlockStorage-Emergency">
+      BlockStorage-Emergency <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#etcd"><span class="nav-text">etcd</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#001-安装"><span class="nav-text">001-安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#002-常用etcd接口"><span class="nav-text">002-常用etcd接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#etcd-备份恢复方案"><span class="nav-text">etcd-备份恢复方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#003-金鑫etcd总结"><span class="nav-text">003-金鑫etcd总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Etcd-数据存储调研"><span class="nav-text">Etcd 数据存储调研</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#004-etcd连接风暴优化"><span class="nav-text">004-etcd连接风暴优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题"><span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原因"><span class="nav-text">原因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化"><span class="nav-text">优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#005-etcd客户端"><span class="nav-text">005-etcd客户端</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">What hurts more, the pain of hard work or the pain of regret?</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">34:51</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

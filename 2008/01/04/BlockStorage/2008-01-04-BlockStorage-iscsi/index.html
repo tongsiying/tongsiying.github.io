@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="BlockStorage-iscsi">
+<meta property="og:url" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-iscsi/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2008-01-04T10:37:19.000Z">
+<meta property="article:modified_time" content="2021-02-12T03:54:52.417Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="BlockStorage-iscsi">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-iscsi/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>BlockStorage-iscsi | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">嘻嘻嘻嘻嘻嘻</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-iscsi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="What hurts more, the pain of hard work or the pain of regret?">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          BlockStorage-iscsi
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2008-01-04 18:37:19" itemprop="dateCreated datePublished" datetime="2008-01-04T18:37:19+08:00">2008-01-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-02-12 11:54:52" itemprop="dateModified" datetime="2021-02-12T11:54:52+08:00">2021-02-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BlockStorage/" itemprop="url" rel="index"><span itemprop="name">BlockStorage</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>22k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>20 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+<h1 id="001-常用接口："><a href="#001-常用接口：" class="headerlink" title="001-常用接口："></a>001-常用接口：</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">snbs使用iscsi方式：参考网址：http:<span class="comment">//www.cnblogs.com/wangzhigang/p/4609392.html</span></span><br><span class="line">注：snbs是一个卷对应一个tid，一个iqn，lun id固定是<span class="number">1</span>；</span><br><span class="line"><span class="number">1.</span>服务端启动：</span><br><span class="line">/usr/sbin/tgtd <span class="number">0</span></span><br><span class="line">注：<span class="number">0</span>表示带日志打印</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>添加tid</span><br><span class="line">tgtadm --lld iscsi --op new --mode target --tid <span class="number">3200</span> -T iqn<span class="number">.2001</span><span class="number">-04.</span>com.example:storage.disk2.amiens.sys1.xyz</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>删除ID为[id]的target:</span><br><span class="line">tgtadm --lld iscsi --op delete --mode target --tid <span class="number">3200</span></span><br><span class="line"></span><br><span class="line"><span class="number">4.</span>将创建出来的块设备加入tid</span><br><span class="line">tgtadm --lld iscsi --op new --mode logicalunit --tid <span class="number">3200</span> --lun <span class="number">1</span> -b volume-name</span><br><span class="line">注：volume-name是在snbs上创建的卷名</span><br><span class="line"></span><br><span class="line"><span class="number">5.</span>删除lun：</span><br><span class="line">tgtadm --lld iscsi --op delete --mode logicalunit --tid <span class="number">3200</span> --lun <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="number">6.</span>查询tid中的lun：</span><br><span class="line">tgtadm --lld iscsi --op show --mode target</span><br><span class="line"></span><br><span class="line"><span class="number">7.</span>启动监听,端口<span class="number">3260</span>：</span><br><span class="line">tgtadm --lld iscsi --op bind --mode target --tid <span class="number">1</span> -I ALL</span><br><span class="line">或者</span><br><span class="line">开放给<span class="number">192.168</span><span class="number">.85</span><span class="number">.0</span>/<span class="number">24</span>网段内的主机访问</span><br><span class="line">tgtadm -L iscsi -o bind -m target -t <span class="number">1</span> -I <span class="number">192.168</span><span class="number">.85</span><span class="number">.0</span>/<span class="number">24</span></span><br><span class="line"></span><br><span class="line"><span class="number">8.</span>开日志（日志路径：/var/log/message)</span><br><span class="line">tgtadm --lld iscsi --op snbslog --mode target </span><br><span class="line"></span><br><span class="line"><span class="number">10.</span>在iscsi上查看块设备信息</span><br><span class="line">tgtadm --lld iscsi --op gateway --mode target</span><br><span class="line"></span><br><span class="line"><span class="number">11.</span>打开iscsi读写io开关</span><br><span class="line">tgtadm --lld iscsi --op iostat --mode target</span><br><span class="line"></span><br><span class="line"><span class="number">12.</span>扩容</span><br><span class="line">tgtadm --lld iscsi --op expand --mode target --tid <span class="number">1</span> --lun <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="number">13.</span>查询服务端的iqn：</span><br><span class="line"> iscsiadm --mode discovery --type sendtargets --portal <span class="number">10.242</span><span class="number">.180</span><span class="number">.212</span>:<span class="number">3260</span></span><br><span class="line">或者</span><br><span class="line">iscsiadm -m discovery -t st -p <span class="number">192.168</span><span class="number">.14</span><span class="number">.112</span></span><br><span class="line">注：</span><br><span class="line">-t --type=type  #这里可以使用的类型为sendtargets(可简写为st)、slp、fw和 isns，此选项仅用于discovery模式，且目前仅支持st、fw和isns；其中st表示允许每个iSCSItarget发送一个可用target列表给initiator；</span><br><span class="line">-m  --mode op  #可用的mode有discovery, node, fw, host iface 和 session</span><br><span class="line">-p  --portal=ip[:port]   #指定target服务的IP和端口；</span><br><span class="line"></span><br><span class="line"><span class="number">14.</span>iscsi客户端登录服务端iqn：</span><br><span class="line">登录单个：</span><br><span class="line">iscsiadm -m node --targetname  iqn<span class="number">.2001</span><span class="number">-04.</span>com.example:storage.disk2.amiens.sys1.xyz --portal <span class="number">10.242</span><span class="number">.180</span><span class="number">.212</span>:<span class="number">3260</span> --login</span><br><span class="line">或者</span><br><span class="line">iscsiadm -m node -T iqn<span class="number">.2001</span><span class="number">-04.</span>com.example:storage.disk2.amiens.sys1.xyz -l</span><br><span class="line">登录所有：</span><br><span class="line">iscsiadm -m node -L all（登陆发现的所有目标器）</span><br><span class="line">登入需验证码的节点，在登陆前需执行：</span><br><span class="line">（<span class="number">1</span>）开启认证</span><br><span class="line">iscsiadm -m node -T  iqn<span class="number">.2015</span><span class="number">.06</span>.cn.hrbyg.www.ygcs.c0a802b8:wzgchap -o update --name node.session.auth.authmethod --value=CHAP</span><br><span class="line">（<span class="number">2</span>）添加用户</span><br><span class="line">iscsiadm -m node -T  iqn<span class="number">.2015</span><span class="number">.06</span>.cn.hrbyg.www.ygcs.c0a802b8:wzgchap --op update --name node.session.auth.username --value=mychap</span><br><span class="line">（<span class="number">3</span>）添加密码</span><br><span class="line">iscsiadm –m node –T  iqn<span class="number">.2015</span><span class="number">.06</span>.cn.hrbyg.www.ygcs.c0a802b8:wzgchap -–op update –name node.session.auth.password –value=mypassword</span><br><span class="line"></span><br><span class="line"><span class="number">15.</span>登出iqn：</span><br><span class="line">退出某个目标器：</span><br><span class="line">iscsiadm -m node --targetname  iqn<span class="number">.2001</span><span class="number">-04.</span>com.example:storage.disk2.amiens.sys1.xyz --portal <span class="number">10.242</span><span class="number">.180</span><span class="number">.212</span>:<span class="number">3260</span> --logout</span><br><span class="line">或者</span><br><span class="line">iscsiadm -m node -T iqn<span class="number">.2001</span><span class="number">-04.</span>com.example:storage.disk2.amiens.sys1.xyz -u</span><br><span class="line">退出所有目标器：</span><br><span class="line">iscsiadm -m node -U all</span><br><span class="line">连接死掉（断网或者target端断掉）时，使用如下指令：</span><br><span class="line">iscsiadm -m node -o delete –T  iqn<span class="number">.2015</span><span class="number">.06</span>.cn.hrbyg.www.ygcs.c0a802b8:wzgchap -p <span class="number">192.168</span><span class="number">.14</span><span class="number">.112</span></span><br><span class="line"></span><br><span class="line"><span class="number">16.</span>查看target记录</span><br><span class="line">iscsiadm -m node </span><br><span class="line"></span><br><span class="line"><span class="number">17.</span>查看session</span><br><span class="line">iscsiadm -m session （相当于iscsiadm -m session -P <span class="number">0</span>）</span><br><span class="line">iscsiadm -m session -P <span class="number">3</span>  (<span class="number">0</span><span class="number">-3</span>均可，默认为<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="number">18.</span>设置开机自动登录</span><br><span class="line">sudo iscsiadm -m node -o update -n node.startup -v <span class="built_in">auto</span>matic （可与-T选项结合使用，manual为手动的）</span><br><span class="line">注：open-iscsi配置文件在/etc/iscsi目录下。</span><br><span class="line"></span><br><span class="line"><span class="number">19.</span># 将LUN的gateway切换到指定gateway。该操作是异步的，同时需要LUN不为切换状态（主动切换gateway上的卷，有利于gateway升级）</span><br><span class="line">tgtadm --lld iscsi --op transfer --mode target --tid=<span class="number">1</span> --lun=<span class="number">1</span> --initiator-address <span class="number">10.37</span><span class="number">.2</span><span class="number">.16</span>:<span class="number">8585</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="002-超时设置："><a href="#002-超时设置：" class="headerlink" title="002-超时设置："></a>002-超时设置：</h1><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">有三种超时：</span><br><span class="line">前端块设备超时时间：<span class="params">-------</span>设置无限大</span><br><span class="line">iscsi tgt配置文件超时时间：<span class="params">-------</span>设置无限大</span><br><span class="line">tgt里面读写超时时间：<span class="params">-------</span>我们灵活设置，就可以控制整体的超时了</span><br><span class="line"></span><br><span class="line">前端块设备超时时间：</span><br><span class="line">以iscsiadm添加LUN的计算机上，编辑配置文件 <span class="string">/etc/udev/rules.d/50-udev.rules</span></span><br><span class="line">ACTION==<span class="string">"add"</span>, SUBSYSTEM==<span class="string">"scsi"</span> , ATTRS&#123;model&#125;==<span class="string">"SNBS-DISK"</span>, RUN+=<span class="string">"/bin/sh -c 'echo 86400 &gt; /sys$$DEVPATH/timeout'"</span></span><br><span class="line">配置好后，添加LUN后，假设对应sdu，执行下面指令，看一下是不是86400</span><br><span class="line">cat <span class="string">/sys/block/sdu/device/timeout</span></span><br><span class="line">【需要重新logout logn生效】</span><br><span class="line"></span><br><span class="line">iscsi tgt配置文件超时时间：</span><br><span class="line">之前让调研iscsi不产生超时，一直阻塞io的方法，结论如下：</span><br><span class="line"><span class="string">/etc/iscsi/iscsid.conf</span>                                                                  <span class="params">-----------</span>该配置文件可以配置iscsi 客户端的io超时时间</span><br><span class="line"><span class="comment"># To specify the length of time to wait for session re-establishment</span></span><br><span class="line"><span class="comment"># before failing SCSI commands back to the application when running</span></span><br><span class="line"><span class="comment"># the Linux SCSI Layer error handler, edit the line.</span></span><br><span class="line"><span class="comment"># The value is in seconds and the default is 120 seconds.</span></span><br><span class="line"><span class="comment"># Special values:</span></span><br><span class="line"><span class="comment"># - If the value is 0, IO will be failed immediately.</span></span><br><span class="line"><span class="comment"># - If the value is less than 0, IO will remain queued until the session</span></span><br><span class="line"><span class="comment"># is logged back in, or until the user runs the logout command.</span></span><br><span class="line">node.session.timeo.replacement_timeout = 120                        </span><br><span class="line"><span class="params">---------------</span>默认是120重试，可以自己配置时间或者使用小于0的值不重试，将io一直挂住</span><br><span class="line">3600 是重试3600秒</span><br><span class="line">86400</span><br><span class="line"></span><br><span class="line">tgt里面读写超时时间：</span><br><span class="line">下面命令配合错误码和重试：</span><br><span class="line"><span class="comment"># 操作超时，单位：秒</span></span><br><span class="line"><span class="comment"># 设置写超时</span></span><br><span class="line">tgtadm <span class="params">--lld</span> iscsi <span class="params">--op</span> timeout <span class="params">--mode</span> target <span class="params">--name=write</span> <span class="params">--value=86400</span></span><br><span class="line"><span class="comment"># 设置读超时</span></span><br><span class="line">tgtadm <span class="params">--lld</span> iscsi <span class="params">--op</span> timeout <span class="params">--mode</span> target <span class="params">--name=read</span> <span class="params">--value=86400</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重试超时，单位：秒</span></span><br><span class="line"><span class="comment"># 设置写重试超时</span></span><br><span class="line">tgtadm <span class="params">--lld</span> iscsi <span class="params">--op</span> timeout <span class="params">--mode</span> target <span class="params">--name=writeretry</span> <span class="params">--value=86400</span></span><br><span class="line"><span class="comment"># 设置读重试超时</span></span><br><span class="line">tgtadm <span class="params">--lld</span> iscsi <span class="params">--op</span> timeout <span class="params">--mode</span> target <span class="params">--name=readretry</span> <span class="params">--value=86400</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换/重连超时，单位：秒</span></span><br><span class="line"><span class="comment"># 切换等待时间</span></span><br><span class="line">tgtadm <span class="params">--lld</span> iscsi <span class="params">--op</span> timeout <span class="params">--mode</span> target <span class="params">--name=switch</span> <span class="params">--value=86400</span></span><br><span class="line"><span class="comment"># 切回等待时间，10的倍数</span></span><br><span class="line">tgtadm <span class="params">--lld</span> iscsi <span class="params">--op</span> timeout <span class="params">--mode</span> target <span class="params">--name=recovery</span> <span class="params">--value=86400</span></span><br><span class="line"><span class="comment"># LUN状态FAULT，恢复重连超时，10的倍数</span></span><br><span class="line">tgtadm <span class="params">--lld</span> iscsi <span class="params">--op</span> timeout <span class="params">--mode</span> target <span class="params">--name=reconnect</span> <span class="params">--value=86400</span></span><br><span class="line"></span><br><span class="line">查看是否设置成功：</span><br><span class="line">tgtadm <span class="params">--lld</span> iscsi <span class="params">--op</span> gateway <span class="params">--mode</span> target</span><br></pre></td></tr></table></figure>
+
+<h1 id="003-更换tgtd端口："><a href="#003-更换tgtd端口：" class="headerlink" title="003-更换tgtd端口："></a>003-更换tgtd端口：</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">更换tgtd3260端口方法：</span><br><span class="line"><span class="number">1.</span>启动tgtd指定端口</span><br><span class="line">tgtd --iscsi portal=<span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="number">3261</span></span><br><span class="line">进程必须如下图所示：</span><br><span class="line">[<span class="symbol">root@</span>snbs<span class="number">-208</span> one-vol]# ps -ef|grep tgtd</span><br><span class="line">root     <span class="number">13943</span> <span class="number">12998</span>  <span class="number">0</span> <span class="number">14</span>:<span class="number">35</span> pts/<span class="number">1</span>    <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> grep --color=<span class="built_in">auto</span> tgtd</span><br><span class="line">root     <span class="number">28410</span>     <span class="number">1</span>  <span class="number">1</span> Mar02 ?        <span class="number">06</span>:<span class="number">03</span>:<span class="number">05</span> /usr/sbin/tgtd --iscsi portal=<span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="number">3261</span></span><br><span class="line">root     <span class="number">28411</span> <span class="number">28410</span>  <span class="number">0</span> Mar02 ?        <span class="number">00</span>:<span class="number">00</span>:<span class="number">08</span> /usr/sbin/tgtd --iscsi portal=<span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="number">3261</span></span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>先查看当前的端口</span><br><span class="line">[<span class="symbol">root@</span>host102442554 snbs]# tgtadm --lld iscsi --op show --mode portal</span><br><span class="line">Portal: [::]:<span class="number">3260</span>,<span class="number">1</span></span><br><span class="line">Portal: <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="number">3260</span>,<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>删除<span class="number">3260</span>端口</span><br><span class="line">tgtadm --lld iscsi --op delete --mode portal --param portal=<span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="number">3260</span></span><br><span class="line">tgtadm --lld iscsi --op delete --mode portal --param portal=[::]:<span class="number">3260</span></span><br><span class="line"></span><br><span class="line"><span class="number">4.</span>新增<span class="number">3261</span>端口</span><br><span class="line">tgtadm --lld iscsi --op new --mode portal --param portal=<span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="number">3261</span></span><br><span class="line">tgtadm --lld iscsi --op new --mode portal --param portal=[::]:<span class="number">3261</span></span><br><span class="line"></span><br><span class="line">查询：</span><br><span class="line">tgtadm --lld iscsi --op show --mode portal</span><br></pre></td></tr></table></figure>
+
+<h1 id="004-iscsi的客户端守护进程："><a href="#004-iscsi的客户端守护进程：" class="headerlink" title="004-iscsi的客户端守护进程："></a>004-iscsi的客户端守护进程：</h1><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iscsi的客户端：上执行</span><br><span class="line">service iscsi start</span><br><span class="line">systemctl status  iscsi</span><br></pre></td></tr></table></figure>
+
+<h1 id="005-iscsi安装："><a href="#005-iscsi安装：" class="headerlink" title="005-iscsi安装："></a>005-iscsi安装：</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">安装iscsi-target-utils（服务端）</span><br><span class="line">在<span class="number">10.242</span><span class="number">.180</span><span class="number">.210</span>，<span class="number">10.242</span><span class="number">.180</span><span class="number">.211</span>，<span class="number">10.242</span><span class="number">.180</span><span class="number">.212</span>上执行</span><br><span class="line">（<span class="number">1</span>）下载源码svn：</span><br><span class="line">https:<span class="comment">//d.svncode.cnsuning.com/svn/snbs/branches/snbs_V0.5/c/tgt-1.0.73</span></span><br><span class="line">（<span class="number">2</span>）源码安装：</span><br><span class="line">      进入tgt<span class="number">-1.0</span><span class="number">.73</span>目录</span><br><span class="line">      执行make</span><br><span class="line">      在执行 make install</span><br><span class="line">iscsi-target-utils服务端配置：</span><br><span class="line"><span class="number">1.</span>在根目录下创建 snbs_config文件，里面配置gateway的ip和端口，例如：</span><br><span class="line"><span class="number">10.242</span><span class="number">.180</span><span class="number">.207</span>:<span class="number">8585</span></span><br><span class="line"><span class="number">10.242</span><span class="number">.180</span><span class="number">.208</span>:<span class="number">8585</span></span><br><span class="line"><span class="number">10.242</span><span class="number">.180</span><span class="number">.209</span>:<span class="number">8585</span></span><br><span class="line">（一个卷对应一个gateway）</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>在根目录下面创建snbs_rdwr_sock文件，作为本地域套接字使用</span><br><span class="line">touch /snbs_rdwr_sock</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">安装iscsi-initiator（客户端）</span><br><span class="line">在<span class="number">10.242</span><span class="number">.180</span><span class="number">.210</span>，<span class="number">10.242</span><span class="number">.180</span><span class="number">.211</span>，<span class="number">10.242</span><span class="number">.180</span><span class="number">.212</span>上执行</span><br><span class="line">yum install iscsi-initiator-utils.x86_64</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span>iscsi-initiator（客户端）安装：</span><br><span class="line">yum install iscsi-initiator</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>scsi-target-utils（服务端）安装：</span><br><span class="line">下载源码svn：</span><br><span class="line">https:<span class="comment">//d.svncode.cnsuning.com/svn/snbs/branches/snbs_V0.5/c/tgt-1.0.73</span></span><br><span class="line">源码安装：</span><br><span class="line">进入tgt<span class="number">-1.0</span><span class="number">.73</span>目录</span><br><span class="line">执行make</span><br><span class="line">在执行 make install</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>其他配置：</span><br><span class="line">在根目录下创建 snbs_config文件，里面配置tgtmaster的ip和端口</span><br><span class="line">例如：</span><br><span class="line">[<span class="symbol">root@</span>host102442554 snbs]# cat /snbs_config </span><br><span class="line"><span class="number">10.238</span><span class="number">.161</span><span class="number">.1</span>:<span class="number">8989</span></span><br><span class="line"><span class="number">10.238</span><span class="number">.161</span><span class="number">.2</span>:<span class="number">8989</span></span><br><span class="line"><span class="number">10.238</span><span class="number">.161</span><span class="number">.3</span>:<span class="number">8989</span></span><br><span class="line"></span><br><span class="line"><span class="number">4.</span>启动iscsiServer</span><br><span class="line">说明：为了使用方便，在iscsi服务端起一个server进程来实现tgtadm命令转http接口</span><br><span class="line">启动命令：</span><br><span class="line">/home/snbs/Iscsiserver/server -log_dir=/mnt/snbslog/snbs/Iscsiserver -v=<span class="number">0</span> Iscsi -ip=<span class="number">10.238</span><span class="number">.160</span><span class="number">.1</span> -masterip=<span class="number">10.238</span><span class="number">.161</span><span class="number">.1</span>,<span class="number">10.238</span><span class="number">.161</span><span class="number">.2</span>,<span class="number">10.238</span><span class="number">.161</span><span class="number">.3</span> -masterport=<span class="number">8383</span></span><br><span class="line">涉及接口：查看server版本</span><br><span class="line">[<span class="symbol">root@</span>xgto01n010244025044 ~]# curl <span class="string">"http://127.0.0.1:9527/sys/ver?pretty=y"</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"ChunkSize"</span>: <span class="string">"268435456"</span>,</span><br><span class="line">  <span class="string">"Version"</span>: <span class="string">"version SNBS_beatle-CentOS7.3-191012a-256M linux amd64"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="006-tgtadm结果注释："><a href="#006-tgtadm结果注释：" class="headerlink" title="006-tgtadm结果注释："></a>006-tgtadm结果注释：</h1><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">参考网址：http://blog.chinaunix.net/uid-30212356-id-5520549.html</span></span><br><span class="line"><span class="attr">Target 120:</span> <span class="string">iqn.2019-01.com.suning:storage.snbs.7b33be00-2c30-4020-afe6-5d1c5c643f28</span></span><br><span class="line">    <span class="attr">System information:</span></span><br><span class="line">        <span class="attr">Driver:</span> <span class="string">iscsi</span></span><br><span class="line">        <span class="attr">State:</span> <span class="string">ready</span></span><br><span class="line">    <span class="attr">I_T nexus information:</span></span><br><span class="line">        <span class="attr">I_T nexus:</span> <span class="number">22385</span></span><br><span class="line">            <span class="attr">Initiator: iqn.2008-11.org.linux-kvm:1fa616b5-048b-4ef3-8a58-f1ca317ea381 alias:</span> <span class="string">none</span></span><br><span class="line">            <span class="attr">Connection:</span> <span class="number">0</span></span><br><span class="line">                <span class="attr">IP Address:</span> <span class="number">10.238</span><span class="number">.160</span><span class="number">.1</span></span><br><span class="line">    <span class="attr">LUN information:</span></span><br><span class="line">        <span class="attr">LUN:</span> <span class="number">0</span></span><br><span class="line">            <span class="attr">Type:</span> <span class="string">controller</span></span><br><span class="line">            <span class="attr">SCSI ID:</span> <span class="string">IET</span>     <span class="number">00780000</span></span><br><span class="line">            <span class="attr">SCSI SN:</span> <span class="string">beaf1200</span></span><br><span class="line">            <span class="attr">Size:</span> <span class="number">0</span> <span class="string">MB,</span> <span class="attr">Block size:</span> <span class="number">1</span></span><br><span class="line">            <span class="attr">Online:</span> <span class="literal">Yes</span></span><br><span class="line">            <span class="attr">Removable media:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Prevent removal:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Readonly:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">SWP:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Thin-provisioning:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Backing store type:</span> <span class="literal">null</span></span><br><span class="line">            <span class="attr">Backing store path:</span> <span class="string">None</span></span><br><span class="line">            <span class="attr">Backing store flags:</span> </span><br><span class="line">        <span class="attr">LUN:</span> <span class="number">1</span></span><br><span class="line">            <span class="attr">Type:</span> <span class="string">disk</span></span><br><span class="line">            <span class="attr">SCSI ID:</span> <span class="string">IET</span>     <span class="number">00780001</span></span><br><span class="line">            <span class="attr">SCSI SN:</span> <span class="string">beaf1201</span></span><br><span class="line">            <span class="attr">Size:</span> <span class="number">536871</span> <span class="string">MB,</span> <span class="attr">Block size:</span> <span class="number">512</span>  <span class="comment">#磁盘大小及块大小</span></span><br><span class="line">            <span class="attr">Online:</span> <span class="literal">Yes</span></span><br><span class="line">            <span class="attr">Removable media:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Prevent removal:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Readonly:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">SWP:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Thin-provisioning:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Backing store type:</span> <span class="string">rdwr</span>               <span class="comment">#访问类型</span></span><br><span class="line">            <span class="attr">Backing store path:</span> <span class="string">7b33be00-2c30-4020-afe6-5d1c5c643f28</span>   <span class="comment">#关联设备（snbs的卷）</span></span><br><span class="line">            <span class="attr">Backing store flags:</span> </span><br><span class="line">    <span class="string">Account</span> <span class="string">information:#客户端登录信息</span></span><br><span class="line">    <span class="string">ACL</span> <span class="string">information:#授权信息</span></span><br><span class="line">        <span class="string">ALL</span></span><br><span class="line"></span><br><span class="line"><span class="string">注：lun0是一个controller，而lun1则是一个磁盘；</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="007-iSCSICHAP认证不完全攻略："><a href="#007-iSCSICHAP认证不完全攻略：" class="headerlink" title="007-iSCSICHAP认证不完全攻略："></a>007-iSCSICHAP认证不完全攻略：</h1><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">iSCSI</span> <span class="string">CHAP认证不完全攻略【带验证整理】：https://blog.csdn.net/sinchb/article/details/8433994</span></span><br><span class="line"><span class="string">建立新账号</span></span><br><span class="line"><span class="string">tgtadm</span> <span class="string">--lld</span> <span class="string">iscsi</span> <span class="string">--op</span> <span class="string">new</span> <span class="string">--mode</span> <span class="string">account</span> <span class="string">--user</span> <span class="string">han</span> <span class="string">--password</span> <span class="number">123.</span><span class="string">com</span></span><br><span class="line"><span class="string">显示账户信息</span></span><br><span class="line"><span class="string">tgtadm</span> <span class="string">--lld</span> <span class="string">iscsi</span> <span class="string">--op</span> <span class="string">show</span> <span class="string">--mode</span> <span class="string">account</span></span><br><span class="line"><span class="string">将一个账户和一个target邦定</span> <span class="string">(bind)</span></span><br><span class="line"><span class="string">tgtadm</span> <span class="string">--lld</span> <span class="string">iscsi</span> <span class="string">--op</span> <span class="string">bind</span> <span class="string">--mode</span> <span class="string">account</span> <span class="string">--tid</span> <span class="number">1</span> <span class="string">--user</span> <span class="string">han</span> </span><br><span class="line"></span><br><span class="line"><span class="string">一、</span> <span class="string">什么是CHAP？</span></span><br><span class="line"><span class="string">Challenge-Handshake</span> <span class="string">Authentication</span> <span class="string">Protocol</span></span><br><span class="line"><span class="string">iSCSI</span> <span class="string">initiators</span> <span class="string">and</span> <span class="string">targets</span> <span class="string">prove</span> <span class="string">their</span> <span class="string">identity</span> <span class="string">to</span> <span class="string">each</span> <span class="string">other</span> <span class="string">using</span> <span class="string">the</span> <span class="string">CHAP</span> <span class="string">protocol,</span> <span class="string">which</span> <span class="string">includes</span> <span class="string">a</span> <span class="string">mechanism</span> <span class="string">to</span> <span class="string">prevent</span> <span class="string">cleartext</span> <span class="string">passwords</span> <span class="string">from</span> <span class="string">appearing</span> <span class="string">on</span> <span class="string">the</span> <span class="string">wire.</span></span><br><span class="line"><span class="string">翻译：</span></span><br><span class="line"><span class="string">挑战握手验证协议</span></span><br><span class="line"><span class="string">iSCSI发起方和目标方使用CHAP协议相互证明其身份，该协议包括一种防止明文密码出现在线路上的机制。</span></span><br><span class="line"></span><br><span class="line"><span class="string">二、</span> <span class="string">iSCSI支持两种级别的chap</span> <span class="string">认证：</span></span><br><span class="line"><span class="string">Initiator</span> <span class="string">authentication和Target</span> <span class="string">authentication</span></span><br><span class="line"><span class="number">2.1</span> <span class="string">Initiator</span> <span class="string">认证要求：</span></span><br><span class="line">    <span class="string">在initiator尝试连接到一个target的时候，initator需要提供一个用户名和密码给target供target进行认证。下面我们称这个用户名密码为incoming账号，即：incoming账号是initiator端提供给target端，供target端认证的账号。</span></span><br><span class="line"><span class="number">2.2</span> <span class="string">target</span> <span class="string">认证要求：</span></span><br><span class="line">    <span class="string">在initiator尝试连接到一个target的时候，target需要提供一个用户名和密码给initiator供initiator进行认证。与之对应的是outcoming账号，即：outcoming账号是target端提供给initiator端，供initiator认证的账号。</span></span><br><span class="line">    <span class="string">Initiator认证可以在没有target</span> <span class="string">认证的时候应用，这种只要求target验证initiator的CHAP认证也称为Uni-directional</span> <span class="string">Authentication，单向认证（target做验证）</span></span><br><span class="line">    <span class="string">target认证则要求initiator认证被同时应用才可以，也就是说，initiator和target需要相互认证，这种认证被称为Bi-directional</span> <span class="string">Authentication，相互认证</span></span><br><span class="line">    <span class="string">iSCSI</span> <span class="string">CHAP认证的密码长度必须介于12到16个字符（但是下面测试的时候字符长度都没有超过12字符，也没有问题，这个问题需要进一步求证），空格是合法的密码字符，所以”I</span> <span class="string">Love</span> <span class="string">iSCSI!!!!”是一个合法的密码！</span></span><br><span class="line"></span><br><span class="line"><span class="string">三、</span> <span class="string">建立iscsi</span> <span class="string">target</span> <span class="string">lun</span></span><br><span class="line"><span class="number">3.1</span><span class="string">在target端建立target</span></span><br><span class="line">    <span class="string">按照下面的步骤建立有两个lun的target</span></span><br><span class="line"><span class="string">(1)创建一个target</span></span><br><span class="line"><span class="string">tgtadm</span> <span class="string">--lld</span> <span class="string">iscsi</span> <span class="string">--op</span> <span class="string">new</span> <span class="string">--mode</span> <span class="string">target</span> <span class="string">--tid</span> <span class="number">1</span> <span class="string">-T</span> <span class="string">1qn.2012-12:disk0</span></span><br><span class="line"><span class="string">(2)给这个target分配两个设备sdb,sdc</span></span><br><span class="line"><span class="string">tgtadm</span> <span class="string">--lld</span> <span class="string">iscsi</span> <span class="string">--op</span> <span class="string">new</span> <span class="string">--mode</span> <span class="string">logicalunit</span> <span class="string">--tid</span> <span class="number">1</span> <span class="string">--lun</span> <span class="number">1</span> <span class="string">-b</span> <span class="string">/dev/sdb</span></span><br><span class="line"><span class="string">tgtadm</span> <span class="string">--lld</span> <span class="string">iscsi</span> <span class="string">--op</span> <span class="string">new</span> <span class="string">--mode</span> <span class="string">logicalunit</span> <span class="string">--tid</span> <span class="number">1</span> <span class="string">--lun</span> <span class="number">2</span> <span class="string">-b</span> <span class="string">/dev/sdc</span></span><br><span class="line"><span class="string">(3)将ACL设置为ALL</span></span><br><span class="line">    <span class="string">ACL</span> <span class="string">是Access</span> <span class="string">Control</span> <span class="string">Lists</span> <span class="string">的缩写，访问控制列表，只有在这个列表中的ip才有权限访问本target。我们设置为ALL,默认所有ip都可以访问，当然，我们可以指定某些ip，只有这些ip才可以访问。</span></span><br><span class="line"><span class="string">tgtadm</span> <span class="string">--lld</span> <span class="string">iscsi</span> <span class="string">--op</span> <span class="string">bind</span> <span class="string">--mode</span> <span class="string">target</span> <span class="string">--tid</span> <span class="number">1</span> <span class="string">-I</span> <span class="string">ALL</span> <span class="string">（最后那个参数是大写字母I，不是数字1）</span></span><br><span class="line"><span class="string">(4)看看我们创建的target</span></span><br><span class="line">    <span class="string">[root@iscsiB</span> <span class="string">~]#</span> <span class="string">tgt-admin</span> <span class="string">--show</span></span><br><span class="line"><span class="attr">Target 1:</span> <span class="string">1qn.2012-12:disk0</span></span><br><span class="line">    <span class="attr">System information:</span></span><br><span class="line">        <span class="attr">Driver:</span> <span class="string">iscsi</span></span><br><span class="line">        <span class="attr">State:</span> <span class="string">ready</span></span><br><span class="line">    <span class="attr">I_T nexus information:</span></span><br><span class="line">    <span class="attr">LUN information:</span></span><br><span class="line">        <span class="attr">LUN:</span> <span class="number">0</span></span><br><span class="line">            <span class="attr">Type:</span> <span class="string">controller</span></span><br><span class="line">            <span class="attr">SCSI ID:</span> <span class="string">IET</span>     <span class="number">00010000</span></span><br><span class="line">            <span class="attr">SCSI SN:</span> <span class="string">beaf10</span></span><br><span class="line">            <span class="attr">Size:</span> <span class="number">0</span> <span class="string">MB,</span> <span class="attr">Block size:</span> <span class="number">1</span></span><br><span class="line">            <span class="attr">Online:</span> <span class="literal">Yes</span></span><br><span class="line">            <span class="attr">Removable media:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Prevent removal:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Readonly:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Backing store type:</span> <span class="literal">null</span></span><br><span class="line">            <span class="attr">Backing store path:</span> <span class="string">None</span></span><br><span class="line">            <span class="string">Backing</span> <span class="string">store</span> <span class="string">flags:</span> </span><br><span class="line">        <span class="attr">LUN:</span> <span class="number">1</span></span><br><span class="line">            <span class="attr">Type:</span> <span class="string">disk</span></span><br><span class="line">            <span class="attr">SCSI ID:</span> <span class="string">IET</span>     <span class="number">00010001</span></span><br><span class="line">            <span class="attr">SCSI SN:</span> <span class="string">beaf11</span></span><br><span class="line">            <span class="attr">Size:</span> <span class="number">10737</span> <span class="string">MB,</span> <span class="attr">Block size:</span> <span class="number">512</span></span><br><span class="line">            <span class="attr">Online:</span> <span class="literal">Yes</span></span><br><span class="line">            <span class="attr">Removable media:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Prevent removal:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Readonly:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Backing store type:</span> <span class="string">rdwr</span></span><br><span class="line">            <span class="attr">Backing store path:</span> <span class="string">/dev/sdb</span></span><br><span class="line">            <span class="string">Backing</span> <span class="string">store</span> <span class="string">flags:</span> </span><br><span class="line">        <span class="attr">LUN:</span> <span class="number">2</span></span><br><span class="line">            <span class="attr">Type:</span> <span class="string">disk</span></span><br><span class="line">            <span class="attr">SCSI ID:</span> <span class="string">IET</span>     <span class="number">00010002</span></span><br><span class="line">            <span class="attr">SCSI SN:</span> <span class="string">beaf12</span></span><br><span class="line">            <span class="attr">Size:</span> <span class="number">5369</span> <span class="string">MB,</span> <span class="attr">Block size:</span> <span class="number">512</span></span><br><span class="line">            <span class="attr">Online:</span> <span class="literal">Yes</span></span><br><span class="line">            <span class="attr">Removable media:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Prevent removal:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Readonly:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Backing store type:</span> <span class="string">rdwr</span></span><br><span class="line">            <span class="attr">Backing store path:</span> <span class="string">/dev/sdc</span></span><br><span class="line">            <span class="string">Backing</span> <span class="string">store</span> <span class="string">flags:</span> </span><br><span class="line">    <span class="attr">Account information:</span></span><br><span class="line">    <span class="attr">ACL information:</span></span><br><span class="line">        <span class="string">ALL</span></span><br><span class="line">    <span class="string">我们可以看到有两个lun(lun0是控制器，不算)。而Account</span> <span class="string">information则为空。</span></span><br><span class="line"></span><br><span class="line"><span class="string">四、</span> <span class="string">配置initiator单向认证</span></span><br><span class="line"><span class="string">设置initiator单向认证，要现在target端新建一个账号以及密码，并把这个账号绑定到特定的target上，然后再在initiator端的iscsi.conf文件中配置这个账号和密码。</span></span><br><span class="line"><span class="number">4.1</span><span class="string">．在target端创建redhat账号，密码是redhat123</span></span><br><span class="line"><span class="string">tgtadm</span> <span class="string">--lld</span> <span class="string">iscsi</span> <span class="string">--mode</span> <span class="string">account</span> <span class="string">--op</span> <span class="string">new</span> <span class="string">--user</span> <span class="string">redhat</span> <span class="string">--password</span> <span class="string">redhat123</span></span><br><span class="line"><span class="number">4.2</span><span class="string">.</span> <span class="string">在target端将账号绑定到指定的target</span></span><br><span class="line"><span class="string">tgtadm</span> <span class="string">--lld</span> <span class="string">iscsi</span> <span class="string">--mode</span> <span class="string">account</span> <span class="string">--op</span> <span class="string">bind</span> <span class="string">--tid</span> <span class="number">1</span> <span class="string">--user</span> <span class="string">redhat</span></span><br><span class="line"><span class="string">tgtadm</span> <span class="string">--lld</span> <span class="string">iscsi</span> <span class="string">--mode</span> <span class="string">target</span> <span class="string">--op</span> <span class="string">show</span></span><br><span class="line">    <span class="string">root@iscsiB</span> <span class="string">~]#</span> <span class="string">tgt-admin</span> <span class="string">--show</span></span><br><span class="line"><span class="attr">Target 1:</span> <span class="string">1qn.2012-12:disk0</span></span><br><span class="line">    <span class="attr">System information:</span></span><br><span class="line">        <span class="attr">Driver:</span> <span class="string">iscsi</span></span><br><span class="line">        <span class="attr">State:</span> <span class="string">ready</span></span><br><span class="line">    <span class="attr">I_T nexus information:</span></span><br><span class="line">    <span class="attr">LUN information:</span></span><br><span class="line">        <span class="attr">LUN:</span> <span class="number">0</span></span><br><span class="line">            <span class="attr">Type:</span> <span class="string">controller</span></span><br><span class="line">            <span class="attr">SCSI ID:</span> <span class="string">IET</span>     <span class="number">00010000</span></span><br><span class="line">            <span class="attr">SCSI SN:</span> <span class="string">beaf10</span></span><br><span class="line">            <span class="attr">Size:</span> <span class="number">0</span> <span class="string">MB,</span> <span class="attr">Block size:</span> <span class="number">1</span></span><br><span class="line">            <span class="attr">Online:</span> <span class="literal">Yes</span></span><br><span class="line">            <span class="attr">Removable media:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Prevent removal:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Readonly:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Backing store type:</span> <span class="literal">null</span></span><br><span class="line">            <span class="attr">Backing store path:</span> <span class="string">None</span></span><br><span class="line">            <span class="string">Backing</span> <span class="string">store</span> <span class="string">flags:</span> </span><br><span class="line">        <span class="attr">LUN:</span> <span class="number">1</span></span><br><span class="line">            <span class="attr">Type:</span> <span class="string">disk</span></span><br><span class="line">            <span class="attr">SCSI ID:</span> <span class="string">IET</span>     <span class="number">00010001</span></span><br><span class="line">            <span class="attr">SCSI SN:</span> <span class="string">beaf11</span></span><br><span class="line">            <span class="attr">Size:</span> <span class="number">10737</span> <span class="string">MB,</span> <span class="attr">Block size:</span> <span class="number">512</span></span><br><span class="line">            <span class="attr">Online:</span> <span class="literal">Yes</span></span><br><span class="line">            <span class="attr">Removable media:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Prevent removal:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Readonly:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Backing store type:</span> <span class="string">rdwr</span></span><br><span class="line">            <span class="attr">Backing store path:</span> <span class="string">/dev/sdb</span></span><br><span class="line">            <span class="string">Backing</span> <span class="string">store</span> <span class="string">flags:</span> </span><br><span class="line">        <span class="attr">LUN:</span> <span class="number">2</span></span><br><span class="line">            <span class="attr">Type:</span> <span class="string">disk</span></span><br><span class="line">            <span class="attr">SCSI ID:</span> <span class="string">IET</span>     <span class="number">00010002</span></span><br><span class="line">            <span class="attr">SCSI SN:</span> <span class="string">beaf12</span></span><br><span class="line">            <span class="attr">Size:</span> <span class="number">5369</span> <span class="string">MB,</span> <span class="attr">Block size:</span> <span class="number">512</span></span><br><span class="line">            <span class="attr">Online:</span> <span class="literal">Yes</span></span><br><span class="line">            <span class="attr">Removable media:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Prevent removal:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Readonly:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Backing store type:</span> <span class="string">rdwr</span></span><br><span class="line">            <span class="attr">Backing store path:</span> <span class="string">/dev/sdc</span></span><br><span class="line">            <span class="string">Backing</span> <span class="string">store</span> <span class="string">flags:</span> </span><br><span class="line">    <span class="attr">Account information:</span></span><br><span class="line">        <span class="string">redhat</span></span><br><span class="line">    <span class="string">可以看到，redhat这个账号已经绑定到我们刚刚建立的target上了。</span></span><br><span class="line"><span class="number">4.3</span><span class="string">.配置initiator端</span></span><br><span class="line"><span class="number">4.3</span><span class="number">.1</span><span class="string">.在initiator端配置iscsid.conf文件</span></span><br><span class="line">    <span class="string">打开这个文件，并找到CHAP</span> <span class="string">Settings，先开启CHAP认证，然后填写账号密码。注意不要填错！！！</span></span><br><span class="line"><span class="string">vim</span> <span class="string">/etc/iscsi/iscsid.conf</span>  <span class="comment">#将相关项前面的注释符#删除掉 </span></span><br><span class="line"><span class="string">node.session.auth.authmethod</span> <span class="string">=</span> <span class="string">CHAP</span>   <span class="string">//开启CHAP认证</span></span><br><span class="line"><span class="string">node.session.auth.username</span> <span class="string">=</span> <span class="string">redhat</span>    <span class="string">//配置账号</span></span><br><span class="line"><span class="string">node.session.auth.password</span> <span class="string">=</span> <span class="string">redhat123</span>  <span class="string">//密码</span></span><br><span class="line"><span class="number">4.3</span><span class="number">.2</span><span class="string">.重启iscsid服务</span></span><br><span class="line"><span class="string">/etc/init.d/iscsid</span> <span class="string">restart</span> <span class="string">（似乎不是必要的，如果你不能重启iscsid，请查看是否已经登录到某些target了，如果是，就先logout）</span></span><br><span class="line"><span class="number">4.3</span><span class="number">.3</span><span class="string">登录到target目标</span></span><br><span class="line"><span class="string">iscsiadm</span> <span class="string">-m</span> <span class="string">discovery</span> <span class="string">-t</span> <span class="string">sendtargets</span> <span class="string">-p</span> <span class="number">192.168</span><span class="number">.10</span><span class="number">.185</span><span class="string">（必须先discovery！！！）</span></span><br><span class="line"><span class="string">iscsiadm</span> <span class="string">-m</span> <span class="string">node</span> <span class="string">-T</span> <span class="string">1qn.2012-12:disk0</span> <span class="string">-p</span> <span class="number">192.168</span><span class="number">.10</span><span class="number">.185</span> <span class="string">-l</span></span><br><span class="line"><span class="string">如果配置的用户名密码不正确，则登录的时候会显示如下认证错误</span></span><br><span class="line"><span class="string">[root@Cherish</span> <span class="string">~]#</span> <span class="string">iscsiadm</span> <span class="string">-m</span> <span class="string">node</span> <span class="string">-T</span> <span class="string">1qn.2012-12:disk0</span> <span class="string">-p</span> <span class="number">192.168</span><span class="number">.10</span><span class="number">.185</span> <span class="string">--login</span></span><br><span class="line"><span class="string">Logging</span> <span class="string">in</span> <span class="string">to</span> <span class="string">[iface:</span> <span class="string">default,</span> <span class="attr">target:</span> <span class="string">1qn.2012-12:disk0,</span> <span class="attr">portal:</span> <span class="number">192.168</span><span class="number">.10</span><span class="number">.185</span><span class="string">,3260]</span> <span class="string">(multiple)</span></span><br><span class="line"><span class="attr">iscsiadm:</span> <span class="string">Could</span> <span class="string">not</span> <span class="string">login</span> <span class="string">to</span> <span class="string">[iface:</span> <span class="string">default,</span> <span class="attr">target:</span> <span class="string">1qn.2012-12:disk0,</span> <span class="attr">portal:</span> <span class="number">192.168</span><span class="number">.10</span><span class="number">.185</span><span class="string">,3260].</span></span><br><span class="line"><span class="attr">iscsiadm:</span> <span class="string">initiator</span> <span class="string">reported</span> <span class="string">error</span> <span class="string">(24</span> <span class="bullet">-</span> <span class="string">iSCSI</span> <span class="string">login</span> <span class="string">failed</span> <span class="string">due</span> <span class="string">to</span> <span class="string">authorization</span> <span class="string">failure)</span></span><br><span class="line"><span class="attr">iscsiadm:</span> <span class="string">Could</span> <span class="string">not</span> <span class="string">log</span> <span class="string">into</span> <span class="string">all</span> <span class="string">portals</span> </span><br><span class="line"><span class="string">注意：修改配置文件的用户名密码后，必须重新discovery目标ip之后才能用新的用户名密码login到target，否则也会提示上述认证错误。</span></span><br><span class="line"></span><br><span class="line"><span class="string">五、</span> <span class="string">双向认证（也称为mutul认证、相互认证、双向认证）</span></span><br><span class="line"><span class="number">5.1</span><span class="string">.在target端创建outgoing账号</span></span><br><span class="line"><span class="string">tgtadm</span> <span class="string">--lld</span> <span class="string">iscsi</span> <span class="string">--op</span> <span class="string">new</span> <span class="string">--mode</span> <span class="string">account</span> <span class="string">--user</span> <span class="string">out_redhat</span> <span class="string">--password</span> <span class="string">out_redhat123</span></span><br><span class="line"><span class="number">5.2</span><span class="string">.</span> <span class="string">在target端将账号绑定到相应的target</span></span><br><span class="line"><span class="string">tgtadm</span> <span class="string">--lld</span> <span class="string">iscsi</span> <span class="string">--mode</span> <span class="string">account</span> <span class="string">--op</span> <span class="string">bind</span> <span class="string">--tid</span> <span class="number">1</span> <span class="string">--user</span> <span class="string">out_redhat</span> <span class="string">--outgoing</span></span><br><span class="line"><span class="string">tgtadm</span> <span class="string">--lld</span> <span class="string">iscsi</span> <span class="string">--mode</span> <span class="string">target</span> <span class="string">--op</span> <span class="string">show</span></span><br><span class="line"><span class="string">root@iscsiB</span> <span class="string">~]#</span> <span class="string">tgt-admin</span> <span class="string">--show</span></span><br><span class="line"><span class="attr">Target 1:</span> <span class="string">1qn.2012-12:disk0</span></span><br><span class="line">    <span class="attr">System information:</span></span><br><span class="line">        <span class="attr">Driver:</span> <span class="string">iscsi</span></span><br><span class="line">        <span class="attr">State:</span> <span class="string">ready</span></span><br><span class="line">    <span class="attr">I_T nexus information:</span></span><br><span class="line">    <span class="attr">LUN information:</span></span><br><span class="line">        <span class="attr">LUN:</span> <span class="number">0</span></span><br><span class="line">            <span class="attr">Type:</span> <span class="string">controller</span></span><br><span class="line">            <span class="attr">SCSI ID:</span> <span class="string">IET</span>     <span class="number">00010000</span></span><br><span class="line">            <span class="attr">SCSI SN:</span> <span class="string">beaf10</span></span><br><span class="line">            <span class="attr">Size:</span> <span class="number">0</span> <span class="string">MB,</span> <span class="attr">Block size:</span> <span class="number">1</span></span><br><span class="line">            <span class="attr">Online:</span> <span class="literal">Yes</span></span><br><span class="line">            <span class="attr">Removable media:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Prevent removal:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Readonly:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Backing store type:</span> <span class="literal">null</span></span><br><span class="line">            <span class="attr">Backing store path:</span> <span class="string">None</span></span><br><span class="line">            <span class="string">Backing</span> <span class="string">store</span> <span class="string">flags:</span> </span><br><span class="line">        <span class="attr">LUN:</span> <span class="number">1</span></span><br><span class="line">            <span class="attr">Type:</span> <span class="string">disk</span></span><br><span class="line">            <span class="attr">SCSI ID:</span> <span class="string">IET</span>     <span class="number">00010001</span></span><br><span class="line">            <span class="attr">SCSI SN:</span> <span class="string">beaf11</span></span><br><span class="line">            <span class="attr">Size:</span> <span class="number">10737</span> <span class="string">MB,</span> <span class="attr">Block size:</span> <span class="number">512</span></span><br><span class="line">            <span class="attr">Online:</span> <span class="literal">Yes</span></span><br><span class="line">            <span class="attr">Removable media:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Prevent removal:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Readonly:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Backing store type:</span> <span class="string">rdwr</span></span><br><span class="line">            <span class="attr">Backing store path:</span> <span class="string">/dev/sdb</span></span><br><span class="line">            <span class="string">Backing</span> <span class="string">store</span> <span class="string">flags:</span> </span><br><span class="line">        <span class="attr">LUN:</span> <span class="number">2</span></span><br><span class="line">            <span class="attr">Type:</span> <span class="string">disk</span></span><br><span class="line">            <span class="attr">SCSI ID:</span> <span class="string">IET</span>     <span class="number">00010002</span></span><br><span class="line">            <span class="attr">SCSI SN:</span> <span class="string">beaf12</span></span><br><span class="line">            <span class="attr">Size:</span> <span class="number">5369</span> <span class="string">MB,</span> <span class="attr">Block size:</span> <span class="number">512</span></span><br><span class="line">            <span class="attr">Online:</span> <span class="literal">Yes</span></span><br><span class="line">            <span class="attr">Removable media:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Prevent removal:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Readonly:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Backing store type:</span> <span class="string">rdwr</span></span><br><span class="line">            <span class="attr">Backing store path:</span> <span class="string">/dev/sdc</span></span><br><span class="line">            <span class="string">Backing</span> <span class="string">store</span> <span class="string">flags:</span> </span><br><span class="line">    <span class="attr">Account information:</span></span><br><span class="line">        <span class="string">redhat</span></span><br><span class="line">        <span class="string">out_redhat</span> <span class="string">(outgoing)</span>  <span class="string">//注意这个标识</span></span><br><span class="line">    <span class="attr">ACL information:</span></span><br><span class="line">        <span class="string">ALL</span></span><br><span class="line"><span class="number">5.3</span><span class="string">.在initiator端配置iscsid.conf文件</span></span><br><span class="line">    <span class="string">vim</span> <span class="string">/etc/iscsi/iscsid.conf</span></span><br><span class="line"><span class="string">node.session.auth.username_in</span> <span class="string">=</span> <span class="string">out_redhat</span></span><br><span class="line"><span class="string">node.session.auth.password_in</span> <span class="string">=</span> <span class="string">out_redhat123</span></span><br><span class="line"><span class="number">5.4</span><span class="string">.在initiator端登录到target</span></span><br><span class="line"><span class="string">iscsiadm</span> <span class="string">-m</span> <span class="string">node</span> <span class="string">-T</span> <span class="string">1qn.2012-12:disk0</span> <span class="string">-p</span> <span class="number">192.168</span><span class="number">.10</span><span class="number">.185</span> <span class="string">--logout</span></span><br><span class="line"><span class="string">/etc/init.d/iscsid</span> <span class="string">reload（不是必要的）</span></span><br><span class="line"><span class="string">iscsiadm</span> <span class="string">-m</span> <span class="string">discovery</span> <span class="string">-t</span> <span class="string">sendtargets</span> <span class="string">-p</span> <span class="number">192.168</span><span class="number">.10</span><span class="number">.185</span><span class="string">（必须要重新discovery！！！）</span></span><br><span class="line"><span class="string">iscsiadm</span> <span class="string">-m</span> <span class="string">node</span> <span class="string">-T</span> <span class="string">1qn.2012-12:disk0</span> <span class="string">-p</span> <span class="number">192.168</span><span class="number">.10</span><span class="number">.185</span> <span class="string">–login</span></span><br><span class="line"><span class="string">注意：在双向认证过程中，必须保证incoming和outgoing的账号密码都正确！！！</span></span><br><span class="line"></span><br><span class="line"><span class="string">六、</span> <span class="string">绑定多个incoming账号</span></span><br><span class="line"><span class="number">6.1</span><span class="string">为一个target创建多个incoming和outgoing账号</span></span><br><span class="line"><span class="string">(1)再创建两个账号</span></span><br><span class="line"><span class="string">tgtadm</span> <span class="string">--lld</span> <span class="string">iscsi</span> <span class="string">--mode</span> <span class="string">account</span> <span class="string">--op</span> <span class="string">new</span> <span class="string">--user</span> <span class="string">chenbin</span> <span class="string">--password</span> <span class="string">chenbin123</span></span><br><span class="line"><span class="string">tgtadm</span> <span class="string">--lld</span> <span class="string">iscsi</span> <span class="string">--mode</span> <span class="string">account</span> <span class="string">--op</span> <span class="string">new</span> <span class="string">--user</span> <span class="string">out_chenbin</span> <span class="string">--password</span> <span class="string">out_chenbin123</span></span><br><span class="line"><span class="string">创建后我们看看有几个账号了？</span></span><br><span class="line"><span class="string">[root@iscsiB</span> <span class="string">~]#</span> <span class="string">tgtadm</span> <span class="string">--lld</span> <span class="string">iscsi</span> <span class="string">--mode</span> <span class="string">account</span> <span class="string">--op</span> <span class="string">show</span></span><br><span class="line"><span class="attr">Account list:</span></span><br><span class="line">        <span class="string">out_chenbin</span></span><br><span class="line">        <span class="string">chenbin</span></span><br><span class="line">        <span class="string">out_redhat</span></span><br><span class="line"><span class="string">redhat</span></span><br><span class="line"> <span class="string">(2)将这两个账号分别绑定到目前这个target</span></span><br><span class="line"><span class="string">[root@iscsiB</span> <span class="string">~]#</span> <span class="string">tgtadm</span> <span class="string">--lld</span> <span class="string">iscsi</span> <span class="string">--mode</span> <span class="string">account</span> <span class="string">--op</span> <span class="string">bind</span> <span class="string">--tid</span> <span class="number">1</span> <span class="string">--user</span> <span class="string">chenbin</span></span><br><span class="line"><span class="string">[root@iscsiB</span> <span class="string">~]#</span> <span class="string">tgt-admin</span> <span class="string">--show</span></span><br><span class="line"><span class="attr">Target 1:</span> <span class="string">1qn.2012-12:disk0</span></span><br><span class="line">    <span class="attr">System information:</span></span><br><span class="line">        <span class="attr">Driver:</span> <span class="string">iscsi</span></span><br><span class="line">        <span class="attr">State:</span> <span class="string">ready</span></span><br><span class="line">    <span class="attr">I_T nexus information:</span></span><br><span class="line">    <span class="attr">LUN information:</span></span><br><span class="line">        <span class="attr">LUN:</span> <span class="number">0</span></span><br><span class="line">            <span class="attr">Type:</span> <span class="string">controller</span></span><br><span class="line">            <span class="attr">SCSI ID:</span> <span class="string">IET</span>     <span class="number">00010000</span></span><br><span class="line">            <span class="attr">SCSI SN:</span> <span class="string">beaf10</span></span><br><span class="line">            <span class="attr">Size:</span> <span class="number">0</span> <span class="string">MB,</span> <span class="attr">Block size:</span> <span class="number">1</span></span><br><span class="line">            <span class="attr">Online:</span> <span class="literal">Yes</span></span><br><span class="line">            <span class="attr">Removable media:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Prevent removal:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Readonly:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Backing store type:</span> <span class="literal">null</span></span><br><span class="line">            <span class="attr">Backing store path:</span> <span class="string">None</span></span><br><span class="line">            <span class="string">Backing</span> <span class="string">store</span> <span class="string">flags:</span> </span><br><span class="line">        <span class="attr">LUN:</span> <span class="number">1</span></span><br><span class="line">            <span class="attr">Type:</span> <span class="string">disk</span></span><br><span class="line">            <span class="attr">SCSI ID:</span> <span class="string">IET</span>     <span class="number">00010001</span></span><br><span class="line">            <span class="attr">SCSI SN:</span> <span class="string">beaf11</span></span><br><span class="line">            <span class="attr">Size:</span> <span class="number">10737</span> <span class="string">MB,</span> <span class="attr">Block size:</span> <span class="number">512</span></span><br><span class="line">            <span class="attr">Online:</span> <span class="literal">Yes</span></span><br><span class="line">            <span class="attr">Removable media:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Prevent removal:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Readonly:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Backing store type:</span> <span class="string">rdwr</span></span><br><span class="line">            <span class="attr">Backing store path:</span> <span class="string">/dev/sdb</span></span><br><span class="line">            <span class="string">Backing</span> <span class="string">store</span> <span class="string">flags:</span> </span><br><span class="line">        <span class="attr">LUN:</span> <span class="number">2</span></span><br><span class="line">            <span class="attr">Type:</span> <span class="string">disk</span></span><br><span class="line">            <span class="attr">SCSI ID:</span> <span class="string">IET</span>     <span class="number">00010002</span></span><br><span class="line">            <span class="attr">SCSI SN:</span> <span class="string">beaf12</span></span><br><span class="line">            <span class="attr">Size:</span> <span class="number">5369</span> <span class="string">MB,</span> <span class="attr">Block size:</span> <span class="number">512</span></span><br><span class="line">            <span class="attr">Online:</span> <span class="literal">Yes</span></span><br><span class="line">            <span class="attr">Removable media:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Prevent removal:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Readonly:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Backing store type:</span> <span class="string">rdwr</span></span><br><span class="line">            <span class="attr">Backing store path:</span> <span class="string">/dev/sdc</span></span><br><span class="line">            <span class="string">Backing</span> <span class="string">store</span> <span class="string">flags:</span> </span><br><span class="line">    <span class="attr">Account information:</span></span><br><span class="line">        <span class="string">redhat</span></span><br><span class="line">        <span class="string">chenbin</span></span><br><span class="line">        <span class="string">out_redhat</span> <span class="string">(outgoing)</span></span><br><span class="line">    <span class="attr">ACL information:</span></span><br><span class="line">        <span class="string">ALL</span></span><br><span class="line"><span class="string">再绑定一个incoming账号没有问题，我们再绑定一个outgoing账号试试</span></span><br><span class="line"><span class="string">[root@iscsiB</span> <span class="string">~]#</span> <span class="string">tgtadm</span> <span class="string">--lld</span> <span class="string">iscsi</span> <span class="string">--mode</span> <span class="string">account</span> <span class="string">--op</span> <span class="string">bind</span> <span class="string">--tid</span> <span class="number">1</span> <span class="string">--user</span> <span class="string">out_chenbin</span> <span class="string">--outgoing</span></span><br><span class="line"><span class="attr">tgtadm:</span> <span class="string">this</span> <span class="string">target</span> <span class="string">already</span> <span class="string">has</span> <span class="string">an</span> <span class="string">outgoing</span> <span class="string">account</span></span><br><span class="line"><span class="string">我们会发现，tgtadm会提示，已经有一个outgoing账号。综上所述，对于一个target，可以绑定多个incoming账号，但是outgoing账号只能绑定一个。也就是说，对于不同initiator端，我们可以设置不同的incoming账号；但是所有的initiator端的outcoming账号必须是一致的。（以上结论只针对某个特定的target）</span></span><br><span class="line"><span class="number">6.2</span><span class="string">.解绑定和删除账号</span></span><br><span class="line"><span class="string">(1)解绑定incoming账号chenbin</span></span><br><span class="line"><span class="string">[root@iscsiB</span> <span class="string">~]#</span> <span class="string">tgtadm</span> <span class="string">--lld</span> <span class="string">iscsi</span> <span class="string">--mode</span> <span class="string">account</span> <span class="string">--op</span> <span class="string">unbind</span> <span class="string">--tid</span> <span class="number">1</span> <span class="string">--user</span> <span class="string">chenbin</span></span><br><span class="line"><span class="string">(2)解绑定outgoing账号out_redhat</span></span><br><span class="line"><span class="string">[root@iscsiB</span> <span class="string">~]#</span> <span class="string">tgtadm</span> <span class="string">--lld</span> <span class="string">iscsi</span> <span class="string">--mode</span> <span class="string">account</span> <span class="string">--op</span> <span class="string">unbind</span> <span class="string">--tid</span> <span class="number">1</span> <span class="string">--user</span> <span class="string">out_redhat</span> <span class="string">--outgoing</span></span><br><span class="line"><span class="string">[root@iscsiB</span> <span class="string">~]#</span> <span class="string">tgt-admin</span> <span class="string">-s</span></span><br><span class="line"><span class="attr">Target 1:</span> <span class="string">1qn.2012-12:disk0</span></span><br><span class="line">    <span class="attr">System information:</span></span><br><span class="line">        <span class="attr">Driver:</span> <span class="string">iscsi</span></span><br><span class="line">        <span class="attr">State:</span> <span class="string">ready</span></span><br><span class="line">    <span class="attr">I_T nexus information:</span></span><br><span class="line">    <span class="attr">LUN information:</span></span><br><span class="line">        <span class="attr">LUN:</span> <span class="number">0</span></span><br><span class="line">            <span class="attr">Type:</span> <span class="string">controller</span></span><br><span class="line">            <span class="attr">SCSI ID:</span> <span class="string">IET</span>     <span class="number">00010000</span></span><br><span class="line">            <span class="attr">SCSI SN:</span> <span class="string">beaf10</span></span><br><span class="line">            <span class="attr">Size:</span> <span class="number">0</span> <span class="string">MB,</span> <span class="attr">Block size:</span> <span class="number">1</span></span><br><span class="line">            <span class="attr">Online:</span> <span class="literal">Yes</span></span><br><span class="line">            <span class="attr">Removable media:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Prevent removal:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Readonly:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Backing store type:</span> <span class="literal">null</span></span><br><span class="line">            <span class="attr">Backing store path:</span> <span class="string">None</span></span><br><span class="line">            <span class="string">Backing</span> <span class="string">store</span> <span class="string">flags:</span> </span><br><span class="line">        <span class="attr">LUN:</span> <span class="number">1</span></span><br><span class="line">            <span class="attr">Type:</span> <span class="string">disk</span></span><br><span class="line">            <span class="attr">SCSI ID:</span> <span class="string">IET</span>     <span class="number">00010001</span></span><br><span class="line">            <span class="attr">SCSI SN:</span> <span class="string">beaf11</span></span><br><span class="line">            <span class="attr">Size:</span> <span class="number">10737</span> <span class="string">MB,</span> <span class="attr">Block size:</span> <span class="number">512</span></span><br><span class="line">            <span class="attr">Online:</span> <span class="literal">Yes</span></span><br><span class="line">            <span class="attr">Removable media:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Prevent removal:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Readonly:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Backing store type:</span> <span class="string">rdwr</span></span><br><span class="line">            <span class="attr">Backing store path:</span> <span class="string">/dev/sdb</span></span><br><span class="line">            <span class="string">Backing</span> <span class="string">store</span> <span class="string">flags:</span> </span><br><span class="line">        <span class="attr">LUN:</span> <span class="number">2</span></span><br><span class="line">            <span class="attr">Type:</span> <span class="string">disk</span></span><br><span class="line">            <span class="attr">SCSI ID:</span> <span class="string">IET</span>     <span class="number">00010002</span></span><br><span class="line">            <span class="attr">SCSI SN:</span> <span class="string">beaf12</span></span><br><span class="line">            <span class="attr">Size:</span> <span class="number">5369</span> <span class="string">MB,</span> <span class="attr">Block size:</span> <span class="number">512</span></span><br><span class="line">            <span class="attr">Online:</span> <span class="literal">Yes</span></span><br><span class="line">            <span class="attr">Removable media:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Prevent removal:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Readonly:</span> <span class="literal">No</span></span><br><span class="line">            <span class="attr">Backing store type:</span> <span class="string">rdwr</span></span><br><span class="line">            <span class="attr">Backing store path:</span> <span class="string">/dev/sdc</span></span><br><span class="line">            <span class="string">Backing</span> <span class="string">store</span> <span class="string">flags:</span> </span><br><span class="line">    <span class="attr">Account information:</span></span><br><span class="line">        <span class="string">redhat</span></span><br><span class="line">    <span class="attr">ACL information:</span></span><br><span class="line">        <span class="string">ALL</span></span><br><span class="line"><span class="string">我们看到，只剩下一个账号了</span></span><br><span class="line"><span class="string">(3)删除一个账号</span></span><br><span class="line"><span class="string">[root@iscsiB</span> <span class="string">~]#</span> <span class="string">tgtadm</span> <span class="string">--lld</span> <span class="string">iscsi</span> <span class="string">--mode</span> <span class="string">account</span> <span class="string">--op</span> <span class="string">delete</span> <span class="string">--user</span> <span class="string">chenbin</span></span><br><span class="line"><span class="string">[root@iscsiB</span> <span class="string">~]#</span> <span class="string">tgtadm</span> <span class="string">--lld</span> <span class="string">iscsi</span> <span class="string">--mode</span> <span class="string">account</span> <span class="string">--op</span> <span class="string">show</span></span><br><span class="line"><span class="attr">Account list:</span></span><br><span class="line">    <span class="string">out_chenbin</span></span><br><span class="line">    <span class="string">out_redhat</span></span><br><span class="line"><span class="string">redhat</span></span><br><span class="line"></span><br><span class="line"><span class="string">七、</span> <span class="string">几种特殊情况的处理</span></span><br><span class="line"><span class="string">如果target端口未绑定任何账号，则initiator端无论是否开启CHAP验证，无论是否设置里用户名密码</span> <span class="string">都不会进行验证</span></span><br><span class="line"><span class="string">如果target端绑定了incoming账号或者outgoing账号，则initiator端口必须开启CHAP验证，并设置好账号和密码，否则不能login</span></span><br><span class="line"><span class="string">如果target端口绑定了incoming账号，没有绑定outgoing账号，但是initiator端口开启了CHAP认证，并设置了incoming和outgoing账号，则无法login（因为无法通过initiator认证）</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="008-targets-conf"><a href="#008-targets-conf" class="headerlink" title="008-targets.conf"></a>008-targets.conf</h1><figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">https://www.cnblogs.com/wuchanming/p/<span class="number">4019660</span>.html</span><br><span class="line">https://blog.csdn.net/sinchb/article/details/<span class="number">8433994</span></span><br><span class="line"></span><br><span class="line">事实上，除了 backing-<span class="keyword">store</span> 之外，在这个配置文件当中还有一些比较特别的参数可以讨论看看 (man tgt-admin)：</span><br><span class="line">backing-<span class="keyword">store</span> (虚拟的装置), direct-<span class="keyword">store</span> (实际的装置)： 设定装置时，如果你的整颗磁盘是全部被拿来当 iSCSI 分享之用，那么才能够使用 direct-<span class="keyword">store</span> 。不过，根据网络上的其他文件， 似乎说明这个设定值有点危险的样子。所以，基本上还是建议单纯使用模拟的 backing-<span class="keyword">store</span> 较佳。例如鸟哥的简单案例中，就通通使用 backing-<span class="keyword">store</span> 而已</span><br><span class="line">initiator-address (用户端地址)： 如果你想要限制能够使用这个 <span class="keyword">target</span> 的客户端来源，才需要填写这个设定值。基本上，不用设定它 (代表所有人都能使用的意思)， 因为我们后来会使用 iptables 来规范可以联机的客户端嘛！</span><br><span class="line">incominguser (用户账号密码设定)： 如果除了来源 IP 的限制之外，你还想要让使用者输入账密才能使用你的 iSCSI <span class="keyword">target</span> 的话，那么就加用这个设定项目。 此设定后面接两个参数，分别是账号与密码啰。</span><br><span class="line">write-cache [off|on] (是否使用快取)： 在预设的情况下，tgtd 会使用快取来增快速度。不过，这样可能会有遗失数据的风险。所以，如果你的数据比较重要的话， 或许不要使用快取，直接存取装置会比较妥当一些。</span><br><span class="line">上面的设定值要怎么用呢？现在，假设你的环境中，仅允许 <span class="number">192.168</span>.<span class="number">100.0</span>/<span class="number">24</span> 这个网段可以存取 iSCSI <span class="keyword">target</span>，而且存取时需要帐密分别为 vuser, vpasswd ，此外，不要使用快取，那么原本的配置文件之外，还得要加上这样的参数才行 (基本上，使用上述的设定即可，底下的设定是多加测试用的，不需要填入你的设定中)。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root<span class="title">@www</span> ~]# vim /etc/tgt/targets.conf </span><br><span class="line">&lt;<span class="keyword">target</span> iqn.<span class="number">2014</span><span class="number">-10</span>.net.vlnb:vdisk&gt; </span><br><span class="line">　　backing-<span class="keyword">store</span> /home/iscsi/disk<span class="number">1</span>.img </span><br><span class="line">　　backing-<span class="keyword">store</span> /dev/sda<span class="number">7</span> </span><br><span class="line">　　backing-<span class="keyword">store</span> /dev/server/iscs<span class="keyword">i01</span></span><br><span class="line"> 　 initiator-address <span class="number">192.168</span>.<span class="number">100.0</span>/<span class="number">24</span></span><br><span class="line">   incominguser vbirduser vbirdpasswd </span><br><span class="line">   write-cache off </span><br><span class="line">&lt;/<span class="keyword">target</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;/<span class="keyword">target</span>&gt;这样的配置，backing-<span class="keyword">store</span>的顺序决定了lun号码的顺序，上面的配置中/dev/sdb<span class="number">1</span>会是Lun<span class="number">1</span>，/dev/sdc会是lun<span class="number">2</span>。</span><br><span class="line">若想要为每个逻辑设备指定想要指定的lun号码，需要将每个backing-<span class="keyword">store</span>封装在<span class="keyword">target</span>中并独立指定lun号码。</span><br><span class="line">#include /etc/tgt/temp/*.conf</span><br><span class="line"><span class="keyword">default</span>-driver iscsi</span><br><span class="line">&lt;<span class="keyword">target</span> iqn.<span class="number">2017</span><span class="number">-03</span>.com.longshuai:test.disk<span class="number">1</span>&gt;</span><br><span class="line">        &lt;backing-<span class="keyword">store</span> /dev/sdb<span class="number">1</span>&gt;</span><br><span class="line">              lun <span class="number">5</span></span><br><span class="line">        &lt;/backing-<span class="keyword">store</span>&gt;</span><br><span class="line">        &lt;backing-<span class="keyword">store</span> /dev/sdc&gt;</span><br><span class="line">              lun <span class="number">6</span></span><br><span class="line">        &lt;/backing-<span class="keyword">store</span>&gt;</span><br><span class="line">        incominguser &lt;incoming_username&gt; &lt;PASSWORD&gt;</span><br><span class="line">        outgoinguser &lt;outgoing_username&gt; &lt;PASSWORD&gt; </span><br><span class="line">        initiator-address <span class="number">192.168</span>.<span class="number">100.0</span>/<span class="number">24</span></span><br><span class="line">&lt;/<span class="keyword">target</span>&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">启动 iSCSI <span class="keyword">target</span> 以及观察相关端口口与磁盘信息</span><br><span class="line">再来则是启动、开机启动，以及观察 iSCSI <span class="keyword">target</span> 所启动的埠口啰：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/etc/iscsi/iscsid.conf：主要的配置文件，用来连结到 iSCSI <span class="keyword">target</span> 的设定；</span><br><span class="line"></span><br><span class="line">initiator 的实际设定</span><br><span class="line">首先，我们得要知道 <span class="keyword">target</span> 提供了啥咚咚啊，因此，理论上，不论是 <span class="keyword">target</span> 还是 initiator 都应该是要我们管理的机器才对。 而现在我们知道 <span class="keyword">target</span> 其实有设定账号与密码的，所以底下我们就得要修改一下 iscsid.conf 的内容才行。</span><br><span class="line">修改 /etc/iscsi/iscsid.conf 内容，并启动 iscsi</span><br><span class="line">这个档案的修改很简单，因为里面的参数大多已经预设做的不错了，所以只要填写 <span class="keyword">target</span> 登入时所需要的帐密即可。 修改的地方有两个，一个是侦测时 (discovery) 可能会用到的帐密，一个是联机时 (node) 会用到的帐密：</span><br><span class="line">[root<span class="title">@clientlinux</span> ~]# vim /etc/iscsi/iscsid.conf</span><br><span class="line">node.session.auth.username = vbirduser &lt;==在 <span class="keyword">target</span> 时设定的 </span><br><span class="line">node.session.auth.password = vbirdpasswd &lt;==约在 <span class="number">53</span>, <span class="number">54</span> 行 </span><br><span class="line">discovery.sendtargets.auth.username = vbirduser &lt;==约在 <span class="number">67</span>, <span class="number">68</span> 行 </span><br><span class="line">discovery.sendtargets.auth.password = vbirdpasswd </span><br><span class="line">[root<span class="title">@clientlinux</span> ~]# chkconfig iscsid on </span><br><span class="line">[root<span class="title">@clientlinux</span> ~]# chkconfig iscsi on</span><br></pre></td></tr></table></figure>
+
+<h1 id="009-issci延时放大"><a href="#009-issci延时放大" class="headerlink" title="009-issci延时放大"></a>009-issci延时放大</h1><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">issci延时放大</span><br><span class="line">两个卷比一个卷平均时延多了1ms，四个卷比一个时延多了4ms。</span><br><span class="line">前端指tgt之前的io栈</span><br><span class="line"></span><br><span class="line">iptables -nL|wc -l </span><br><span class="line">发现iptable中的rule有数万条之多，且绝大多数是垃圾，清理垃圾之后，性能测试正常，包括iscsi本地大块写时延放大、多个卷随机写时延放大等问题。</span><br><span class="line">为何虚机（应该是迁移导致）会残留这么多rule，</span><br><span class="line"></span><br><span class="line">两个卷比一个卷平均时延多了1ms，四个卷比一个时延多了4ms。</span><br><span class="line">前端指tgt之前的io栈</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">问题所在：issci客户端所在的计算节点存在大量iptable的rule会导致该问题</span><br><span class="line"></span><br><span class="line">iptables导入导出</span><br><span class="line">导出：</span><br><span class="line">iptables-save &gt; iptables.bak</span><br><span class="line"></span><br><span class="line">导入：</span><br><span class="line">iptables-restore &lt; iptables.bak</span><br><span class="line"></span><br><span class="line">如何判断iptables有残留：</span><br><span class="line">这个是实体机中看到的虚机网卡，</span><br><span class="line"></span><br><span class="line">就会创建带有6396244相关chain和rules</span><br><span class="line">iptables -N neutron-openvswi-of5afefd0-f等等</span><br><span class="line">（neutron-openvswi-of5afefd0-f是iptables -nL中查询出来的）</span><br><span class="line"></span><br><span class="line">现在48上有</span><br><span class="line">iptables -N neutron-openvswi-of52a694e-a</span><br><span class="line">我差了一下网卡，没有带52a694e名字的网卡</span><br><span class="line"></span><br><span class="line">解决：（重启防火墙）</span><br><span class="line">解决重启iptables（防火墙）：</span><br><span class="line">service iptables status    # 查看iptables状态</span><br><span class="line">service iptables restart   # iptables服务重启</span><br><span class="line">service iptables stop      # iptables服务禁用</span><br><span class="line"></span><br><span class="line">为啥计算节点需要开防火墙：</span><br><span class="line">当前网络模式下 是通过iptables实现虚机安全组功能的</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">如果想清空的话，先执行</span><br><span class="line">/sbin/iptables -P INPUT ACCEPT</span><br><span class="line">然后执行</span><br><span class="line">/sbin/iptables -F</span><br><span class="line">通过iptables -L 看到如下信息</span><br><span class="line">Chain INPUT (policy DROP 0 packets, 0 bytes)  （注意 是DROP）</span><br><span class="line">执行/sbin/iptables -F就肯定立马断开连接</span><br><span class="line">当执行了</span><br><span class="line">/sbin/iptables -P INPUT ACCEPT</span><br><span class="line">再次通过iptables -L看信息的话就是</span><br><span class="line">Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)</span><br><span class="line">所以现在是可以安全使用</span><br><span class="line">/sbin/iptables -F了</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">查看现在iptables规则：</span><br><span class="line">iptables -L -n -v</span><br><span class="line">Bash</span><br><span class="line">清空配置：</span><br><span class="line">iptables -F #清楚规则链中已有的条目；使用iptables -F 要小心，搞不好，你就马上同服务器断开连接了</span><br><span class="line">iptables -X #删除没有用户配置文件相关的chain</span><br><span class="line">iptables -Z #清空规则链中的数据包计算器和字节计数器；</span><br></pre></td></tr></table></figure>
+
+<h1 id="010-lsscsi-t"><a href="#010-lsscsi-t" class="headerlink" title="010-lsscsi -t"></a>010-lsscsi -t</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//sg.danny.cz/scsi/lsscsi.html#mozTocId944699</span></span><br><span class="line">lsscsi  -t</span><br><span class="line">[<span class="number">25</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">1</span>]   disk    iqn<span class="number">.2019</span><span class="number">-01.</span>com.suning:storage.snbs.test001,t,<span class="number">0x1</span>  /dev/sdc </span><br><span class="line">[<span class="number">87</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>]   storage iqn<span class="number">.2019</span><span class="number">-01.</span>com.suning:storage.snbs.test001-link001,t,<span class="number">0x1</span>  -        </span><br><span class="line">[<span class="number">87</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">1</span>]   disk    iqn<span class="number">.2019</span><span class="number">-01.</span>com.suning:storage.snbs.test001-link001,t,<span class="number">0x1</span>  /dev/sdd</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+      
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-iscsi/" title="BlockStorage-iscsi">https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-iscsi/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/BlockStorage-iscsi/" rel="tag"># BlockStorage-iscsi</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-kvm/" rel="prev" title="BlockStorage-kvm">
+      <i class="fa fa-chevron-left"></i> BlockStorage-kvm
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-iozone/" rel="next" title="BlockStorage-iozone">
+      BlockStorage-iozone <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#001-常用接口："><span class="nav-text">001-常用接口：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#002-超时设置："><span class="nav-text">002-超时设置：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#003-更换tgtd端口："><span class="nav-text">003-更换tgtd端口：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#004-iscsi的客户端守护进程："><span class="nav-text">004-iscsi的客户端守护进程：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#005-iscsi安装："><span class="nav-text">005-iscsi安装：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#006-tgtadm结果注释："><span class="nav-text">006-tgtadm结果注释：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#007-iSCSICHAP认证不完全攻略："><span class="nav-text">007-iSCSICHAP认证不完全攻略：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#008-targets-conf"><span class="nav-text">008-targets.conf</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#009-issci延时放大"><span class="nav-text">009-issci延时放大</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#010-lsscsi-t"><span class="nav-text">010-lsscsi -t</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">What hurts more, the pain of hard work or the pain of regret?</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">34:51</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

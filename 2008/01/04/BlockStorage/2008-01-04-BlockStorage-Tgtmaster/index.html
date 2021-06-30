@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="BlockStorage-tgtmaster">
+<meta property="og:url" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-Tgtmaster/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2008-01-04T10:37:19.000Z">
+<meta property="article:modified_time" content="2021-02-12T03:53:19.049Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="BlockStorage-tgtmaster">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-Tgtmaster/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>BlockStorage-tgtmaster | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">嘻嘻嘻嘻嘻嘻</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-Tgtmaster/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="What hurts more, the pain of hard work or the pain of regret?">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          BlockStorage-tgtmaster
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2008-01-04 18:37:19" itemprop="dateCreated datePublished" datetime="2008-01-04T18:37:19+08:00">2008-01-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-02-12 11:53:19" itemprop="dateModified" datetime="2021-02-12T11:53:19+08:00">2021-02-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BlockStorage/" itemprop="url" rel="index"><span itemprop="name">BlockStorage</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>14k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>13 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+# 001-tgtmaster理解：
+
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> tgtMaster全挂了到启动之间，这段时间启动的tgtd需要重启，其他不需要</span><br><span class="line"><span class="number">2.</span> tgtd只有再加LUN，重启，切换，切回等时候才会需要gateway信息</span><br><span class="line"><span class="number">3.</span> tgtd会判断TgtMaster分配的gateway信息 </span><br><span class="line">(</span><br><span class="line">读写的时候不会判断这个gateway是否正常是吧？</span><br><span class="line">a.读写时候是被动判断，读写请求超时了，会认为这个gateway异常</span><br><span class="line">b. 现在tgtd读超时<span class="number">60</span>s，写超时<span class="number">100</span>s就会触发了切gateway</span><br><span class="line">c. 不影响重试的，切换过程中，读写操作不会返回报错，一直重试，等切换完成后，会向新的gateway发送数据）</span><br></pre></td></tr></table></figure>
+
+<h1 id="002-超时优化："><a href="#002-超时优化：" class="headerlink" title="002-超时优化："></a>002-超时优化：</h1><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">1.超时接口：</span><br><span class="line">http://10.37.2.19:8888/sys/iscsi?ops=timeout&amp;type=readretry&amp;duration=864000</span><br><span class="line"></span><br><span class="line">duration为时间,单位s，其中recovery和reconnect需要10的倍数</span><br><span class="line">除了switch类型 duration可以设置&gt;=0，其他的都&gt;0</span><br><span class="line">--------------------------------------------------------------------------------</span><br><span class="line">--------------------------------------------------------------------------------</span><br><span class="line">type有：</span><br><span class="line">read 读超时   默认60s         </span><br><span class="line">write 写超时  默认60s</span><br><span class="line">解释：写超时时间设置成60s，60s后还未收到gateway的反馈，认为gateway有问题，会切换gateway，这边60s指一次操作请求的超时时间</span><br><span class="line">--------------------------------------------------------------------------------</span><br><span class="line">readretry 读重试超时  默认86400【平时你测试只要设置成10分钟就行，不然重试太久日志受不了】</span><br><span class="line">writeretry 写重试超时 默认86400【平时你测试只要设置成10分钟就行，不然重试太久日志受不了】</span><br><span class="line">解释：默认重试1天时间，当有可重试的错误码过来立马重试，重试1天时间，这个只对可重试成功的错误码有用</span><br><span class="line">--------------------------------------------------------------------------------</span><br><span class="line">switch 切换等待时间   默认0        </span><br><span class="line">异常导致触发gateway切换，gateway上可能还有io，tgtd等待设置等待一段时间切换gateway</span><br><span class="line">--------------------------------------------------------------------------------</span><br><span class="line">recovery 切回等待时间   默认120s            </span><br><span class="line">解释：gateway恢复之后，上面的卷等待多长时间切回到原gateway</span><br><span class="line">--------------------------------------------------------------------------------</span><br><span class="line">reconnect 重连等待时间  默认60s       </span><br><span class="line">解释：某个时间段gateway都失效，卷在tgtd里状态是fault（2），隔多长时间去重连，三个gateway异常不会出现io错误。可能跳零。链接成功io恢复</span><br><span class="line">curl -s "http://127.0.0.1:8888/tgtmaster/volume/status?pretty=y"</span><br><span class="line"></span><br><span class="line">2.接口还支持指定tgt修改（tgt为指定的tgt节点）</span><br><span class="line">http://10.37.2.19:8888/sys/iscsi?ops=timeout&amp;type=readretry&amp;duration=864000&amp;pretty=y&amp;tgt=10.37.2.19</span><br><span class="line"></span><br><span class="line">3.查询超时的接口</span><br><span class="line">查询所有的：</span><br><span class="line">http://10.37.2.19:8888/sys/iscsi?ops=timeout&amp;type=show&amp;pretty=y</span><br><span class="line">查询指定的：</span><br><span class="line">http://10.37.2.19:8888/sys/iscsi?ops=timeout&amp;type=show&amp;pretty=y&amp;tgt=10.37.2.19</span><br><span class="line"></span><br><span class="line">4.测试建议：</span><br><span class="line">1.停所有gateway</span><br><span class="line">2.停两个chunkserver（不同zone中的）</span><br><span class="line">3.测试可重试的错误码和不可重试的错误码</span><br></pre></td></tr></table></figure>
+
+<h1 id="003-gateway注册"><a href="#003-gateway注册" class="headerlink" title="003-gateway注册"></a>003-gateway注册</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">功能变更：</span><br><span class="line"><span class="number">1</span>、启动的时候可以不用配置etcd参数，tgtd上报心跳给tgtmaster，gateway默认有master就有tgtmaster，gateway也会上报心跳给tgtmaster</span><br><span class="line"><span class="number">2</span>、tgtmater不选主</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span>注册gateway：</span><br><span class="line">curl -X PUT <span class="string">"http://10.37.2.19:8888/tgtmaster/register/gateway?pretty=y&amp;gateway=10.37.2.20:8585:8686"</span></span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>注销gateway：</span><br><span class="line">curl -X DELETE <span class="string">"http://10.37.2.19:8888/tgtmaster/register/gateway?pretty=y&amp;gateway=10.37.2.19:8585:8686"</span></span><br><span class="line"></span><br><span class="line">注：</span><br><span class="line"><span class="number">1.</span>参数gateway有两个端口，第一个端口（<span class="number">8585</span>）表示gateway的tcp监听端口，第二个端口表示gateway的restful端口（<span class="number">8686</span>）</span><br><span class="line"><span class="number">2.</span>在注册/注销gateway后需要查看各个tgtmaster的信息是否一致</span><br><span class="line">curl -X PUT http:<span class="comment">//10.37.2.19:8888/tgtmaster/gatewaymap?pretty=y</span></span><br><span class="line">curl -X PUT http:<span class="comment">//10.37.2.19:8888/tgtmaster/tgtmap?pretty=y</span></span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>测试建议</span><br><span class="line">tgtmaster的所有功能需要做回归测试。</span><br><span class="line">重点测试gateway的切换</span><br></pre></td></tr></table></figure>
+
+<h1 id="004-设置卷到固定gateway"><a href="#004-设置卷到固定gateway" class="headerlink" title="004-设置卷到固定gateway"></a>004-设置卷到固定gateway</h1><figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.设置卷到固定的gateway（在所有tgtmater上设置，同时开同时关）【调试接口】</span><br><span class="line">curl -<span class="meta">X</span> <span class="meta">PUT</span> <span class="string">"http://127.0.0.1:8888/sys/debug/fixedmode?gateway=10.238.161.4:8585"</span></span><br><span class="line">curl -<span class="meta">X</span> <span class="meta">DELETE</span> <span class="string">"http://127.0.0.1:8888/sys/debug/fixedmode"</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="005-一写多读"><a href="#005-一写多读" class="headerlink" title="005-一写多读"></a>005-一写多读</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br></pre></td><td class="code"><pre><span class="line">开发建议：</span><br><span class="line">测试步骤：</span><br><span class="line"><span class="number">1</span>、创建卷vol1</span><br><span class="line"><span class="number">2</span>、在tgt1节点中将vol1 加入lun，成功</span><br><span class="line"><span class="number">3</span>、在tgt2节点中将vol1加入lun，成功</span><br><span class="line"><span class="number">4</span>、对tgt1节点的卷lun进行读写io，无异常</span><br><span class="line"><span class="number">5</span>、对tgt2节点的卷lun进行读io，无异常</span><br><span class="line"></span><br><span class="line">测试案例：</span><br><span class="line"><span class="number">1.</span>裸卷</span><br><span class="line">裸卷test001加入<span class="number">160.1</span>的客户端</span><br><span class="line">step1：dd <span class="keyword">if</span>=/dev/zero of=/dev/sdc bs=<span class="number">1</span>M count=<span class="number">100</span></span><br><span class="line">step2：dd <span class="keyword">if</span>=/dev/sdc of=/opt/<span class="number">100</span>M.dd bs=<span class="number">1</span>M count=<span class="number">100</span></span><br><span class="line">[<span class="symbol">root@</span>xgto01n010244025044 snbs]# md5sum /opt/<span class="number">100</span>M.dd </span><br><span class="line"><span class="number">2f</span>282b84e7e608d5852449ed940bfc51  /opt/<span class="number">100</span>M.dd</span><br><span class="line"></span><br><span class="line">裸卷test001加入<span class="number">160.2</span>的客户端</span><br><span class="line">curl <span class="string">"http://10.238.161.1:8888/sys/iscsi?name=test001&amp;ops=add_lun"</span></span><br><span class="line">[<span class="symbol">root@</span>xgto01n010244025048 peace]# curl <span class="string">"http://10.238.161.1:8888/sys/iscsi?name=test001&amp;ops=add_lun&amp;tgt=10.238.160.2"</span></span><br><span class="line">&#123;<span class="string">"Result"</span>:<span class="string">"success"</span>,<span class="string">"ip"</span>:<span class="string">"10.238.160.2"</span>,<span class="string">"iqn"</span>:<span class="string">"iqn.2019-01.com.suning:storage.snbs.test001"</span>&#125;</span><br><span class="line">iscsiadm --mode discovery --type sendtargets --portal <span class="number">10.238</span><span class="number">.160</span><span class="number">.2</span>:<span class="number">3261</span></span><br><span class="line">iscsiadm -m node --targetname iqn<span class="number">.2019</span><span class="number">-01.</span>com.suning:storage.snbs.test001 --portal <span class="number">10.238</span><span class="number">.160</span><span class="number">.2</span>:<span class="number">3261</span> --login</span><br><span class="line"></span><br><span class="line">读<span class="number">160.2</span>上的test001</span><br><span class="line">dd <span class="keyword">if</span>=/dev/sdc of=/opt/<span class="number">100</span>M.dd bs=<span class="number">1</span>M count=<span class="number">100</span></span><br><span class="line">[<span class="symbol">root@</span>xgto01n010244025048 peace]#  md5sum /opt/<span class="number">100</span>M.dd</span><br><span class="line"><span class="number">2f</span>282b84e7e608d5852449ed940bfc51  /opt/<span class="number">100</span>M.dd</span><br><span class="line">md5一致</span><br><span class="line"></span><br><span class="line">写<span class="number">160.2</span>上的test001【可写】</span><br><span class="line">dd <span class="keyword">if</span>=/dev/zero of=/dev/sdc bs=<span class="number">1</span>M count=<span class="number">200</span></span><br><span class="line">读<span class="number">160.2</span>的test001</span><br><span class="line">dd <span class="keyword">if</span>=/dev/sdc of=/opt/<span class="number">200</span>M.dd bs=<span class="number">1</span>M count=<span class="number">200</span></span><br><span class="line">[<span class="symbol">root@</span>xgto01n010244025048 peace]#  md5sum /opt/<span class="number">200</span>M.dd</span><br><span class="line"><span class="number">3566</span>de3a97906edb98d004d6b947ae9b  /opt/<span class="number">200</span>M.dd</span><br><span class="line"></span><br><span class="line">读<span class="number">160.1</span>上的test001</span><br><span class="line">[<span class="symbol">root@</span>xgto01n010244025044 snbs]# dd <span class="keyword">if</span>=/dev/sdc of=/opt/<span class="number">200</span>M.dd bs=<span class="number">1</span>M count=<span class="number">200</span></span><br><span class="line"><span class="number">200</span>+<span class="number">0</span> records <span class="keyword">in</span></span><br><span class="line"><span class="number">200</span>+<span class="number">0</span> records <span class="keyword">out</span></span><br><span class="line"><span class="number">209715200</span> bytes (<span class="number">210</span> MB) copied, <span class="number">1.16143</span> s, <span class="number">181</span> MB/s</span><br><span class="line">[<span class="symbol">root@</span>xgto01n010244025044 snbs]#  md5sum /opt/<span class="number">200</span>M.dd</span><br><span class="line"><span class="number">3566</span>de3a97906edb98d004d6b947ae9b  /opt/<span class="number">200</span>M.dd</span><br><span class="line"></span><br><span class="line">写<span class="number">160.1</span>上test001</span><br><span class="line">dd <span class="keyword">if</span>=/dev/zero of=/dev/sdc bs=<span class="number">1</span>M count=<span class="number">300</span></span><br><span class="line">读<span class="number">160.1</span>的test001</span><br><span class="line">dd <span class="keyword">if</span>=/dev/sdc of=/opt/<span class="number">300</span>M.dd bs=<span class="number">1</span>M count=<span class="number">300</span></span><br><span class="line">[<span class="symbol">root@</span>xgto01n010244025044 snbs]# dd <span class="keyword">if</span>=/dev/sdc of=/opt/<span class="number">300</span>M.dd bs=<span class="number">1</span>M count=<span class="number">300</span></span><br><span class="line">[<span class="symbol">root@</span>xgto01n010244025044 snbs]# md5sum /opt/<span class="number">300</span>M.dd</span><br><span class="line"><span class="number">0</span>d97a9cd8bbd7ce75a2a76bb06258915  /opt/<span class="number">300</span>M.dd</span><br><span class="line">读<span class="number">160.2</span>的test001</span><br><span class="line">[<span class="symbol">root@</span>xgto01n010244025048 peace]# dd <span class="keyword">if</span>=/dev/sdc of=/opt/<span class="number">300</span>M.dd bs=<span class="number">1</span>M count=<span class="number">300</span></span><br><span class="line">[<span class="symbol">root@</span>xgto01n010244025048 peace]# md5sum /opt/<span class="number">300</span>M.dd</span><br><span class="line"><span class="number">0</span>d97a9cd8bbd7ce75a2a76bb06258915  /opt/<span class="number">300</span>M.dd</span><br><span class="line"></span><br><span class="line">结论：可以重复加lun，都是可写可读的，未做保护</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>文件系统</span><br><span class="line">读<span class="number">160.1</span>上的test001挂载/mnt/test001</span><br><span class="line">读<span class="number">160.2</span>上的test001挂载/mnt/test002</span><br><span class="line"></span><br><span class="line">进去<span class="number">160.1</span>进行写发现卡住</span><br><span class="line">进去<span class="number">160.2</span>进行cd 发现卡住</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>虚机迁移（带数据盘） <span class="number">100</span>G数据盘</span><br><span class="line">冷迁移：</span><br><span class="line">nova migrate a0d8cbe7<span class="number">-07</span>a4<span class="number">-4691</span>-bb0b<span class="number">-8</span>dd5b85d32ef xgto01n010244025044.sncloud.com</span><br><span class="line">nova resize-confirm a0d8cbe7<span class="number">-07</span>a4<span class="number">-4691</span>-bb0b<span class="number">-8</span>dd5b85d32ef </span><br><span class="line"></span><br><span class="line">迁移前后md5值校验ok（验收报告有截图）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">热迁前数据脚本准备一直写数据：</span><br><span class="line">[<span class="symbol">root@</span>snbs-boot<span class="number">-162</span> opt]# cat <span class="number">1.</span>sh </span><br><span class="line">mkdir -p /opt/test</span><br><span class="line">mkdir -p /mnt/snbs/test</span><br><span class="line">j=<span class="number">0</span></span><br><span class="line"><span class="keyword">for</span>((i=<span class="number">0</span>;i&lt;=<span class="number">100</span>;))</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">	let j=j+<span class="number">1</span></span><br><span class="line">	cp /opt/<span class="number">1.</span>txt /opt/test/$&#123;j&#125;</span><br><span class="line">   	cp /opt/<span class="number">1.</span>txt /mnt/snbs/test/$&#123;j&#125;</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">[<span class="symbol">root@</span>snbs-boot<span class="number">-162</span> opt]# du -sh <span class="number">1.</span>txt </span><br><span class="line"><span class="number">200</span>M	<span class="number">1.</span>txt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">热迁：</span><br><span class="line">nova live-migration a0d8cbe7<span class="number">-07</span>a4<span class="number">-4691</span>-bb0b<span class="number">-8</span>dd5b85d32ef xgto01n010244025055.sncloud.com</span><br><span class="line"></span><br><span class="line">迁移成功</span><br><span class="line"></span><br><span class="line">热迁：nova live-migration vmUUID hostName 其中hostName查看命令和冷迁相同</span><br><span class="line">疏散：nova host-evacuate --target_host newHostname oldHostname</span><br><span class="line">疏散功能用于计算节点宕机后 将源节点的所有虚机疏散到目标节点【newHostname是目标节点 oldHostname是宕机节点】</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">扩容：</span><br><span class="line">扩数据盘：</span><br><span class="line">cinder extend <span class="number">936e2</span>c54-e1dc<span class="number">-4517</span><span class="number">-8</span>d16-a2052b341806 <span class="number">200</span> 该命令不区分是否处于挂载状态【非挂载状态下 就是冷的；挂载状态下 就是热的】</span><br><span class="line">扩系统盘：</span><br><span class="line">cinder extend <span class="number">6f</span>4e9b16<span class="number">-0</span>dac<span class="number">-4</span>a0a-bc25<span class="number">-2</span>d1120d071c7 <span class="number">100</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">快照：【这版本没有集成快照回滚功能】</span><br><span class="line">cinder snapshot-create --force <span class="literal">true</span> --name XXX(快照名字) --description XXX(描述)  volumeUUID 当卷处于挂载状态时 进行快照 需要添加--force参数</span><br><span class="line"></span><br><span class="line">cinder snapshot-create --force <span class="literal">true</span> --name XXX(快照名字) --description XXX(描述)  volumeUUID</span><br><span class="line"></span><br><span class="line">系统盘打快照：</span><br><span class="line">cinder snapshot-create --force <span class="literal">true</span> --name <span class="number">6f</span>4e9b16<span class="number">-0</span>dac<span class="number">-4</span>a0a-bc25<span class="number">-2</span>d1120d071c7-snap --description <span class="number">162.202</span>  <span class="number">6f</span>4e9b16<span class="number">-0</span>dac<span class="number">-4</span>a0a-bc25<span class="number">-2</span>d1120d071c7</span><br><span class="line"><span class="number">96182</span>d4a<span class="number">-167</span>c<span class="number">-47</span>b2<span class="number">-9</span>a40<span class="number">-8595</span>dc25005d</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">数据盘打快照：</span><br><span class="line">cinder snapshot-create --force <span class="literal">true</span> --name <span class="number">936e2</span>c54-e1dc<span class="number">-4517</span><span class="number">-8</span>d16-a2052b341806-snap --description <span class="number">162.202</span>  <span class="number">936e2</span>c54-e1dc<span class="number">-4517</span><span class="number">-8</span>d16-a2052b341806</span><br><span class="line"><span class="number">11664</span>a6a-b42c<span class="number">-4078</span>-abd0-f8433c74d166</span><br><span class="line"></span><br><span class="line">恢复快照：</span><br><span class="line">curl -X POST <span class="string">"http://127.0.0.1:8686/region/pool/vol/snapshot?volname=6f4e9b16-0dac-4a0a-bc25-2d1120d071c7&amp;snapname=96182d4a-167c-47b2-9a40-8595dc25005d"</span></span><br><span class="line">curl -X POST <span class="string">"http://127.0.0.1:8686/region/pool/vol/snapshot?volname=936e2c54-e1dc-4517-8d16-a2052b341806&amp;snapname=11664a6a-b42c-4078-abd0-f8433c74d166"</span></span><br><span class="line"></span><br><span class="line">启动虚机校验快照：</span><br><span class="line">ok</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">一写多读测试完成：</span><br><span class="line"><span class="number">1.</span>裸卷可行，多tgtd加lun都可读可写</span><br><span class="line"><span class="number">2.</span>挂载文件系统出现，两边数据不能同步</span><br><span class="line"><span class="number">3.</span>openstack虚机冷热迁移、扩容、快照正常</span><br><span class="line"><span class="number">4.</span>openstack这版本没有集成快照回滚功能</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> 影响功能</span><br><span class="line">openstack热迁移需要实现在迁移目标节点上的tgt上先无感的加LUN，完成迁移后在源节点上的tgt无感的删除LUN。原tgt实现增加/删除LUN方案存在以下几个问题：</span><br><span class="line"><span class="number">1.</span> 不删除源节点上LUN的情况下，在迁移目标节点上加LUN会失败</span><br><span class="line"><span class="number">2.</span> 加LUN时gateway上会清一次卷的元数据，导致热迁移过程中会出现短暂的IO挂起。</span><br><span class="line"><span class="number">3.</span> 卷切换gateway操作是由tgt独立判断和执行，在热迁移过程中，源节点卷发生切换gateway，导致源节点与目标节点上信息不同步。</span><br><span class="line"><span class="number">4.</span> 删除源节点上LUN时，会主动清理gateway上元数据，导致业务IO会出现短暂挂起</span><br><span class="line"><span class="number">2.</span> 测试建议</span><br><span class="line">同步升级IscsiServer与tgtd到最新版本，并假设迁移源节点IP地址为A，目标节点IP地址为B</span><br><span class="line"><span class="number">1.</span> 在A上加LUN，通过tgtadm查询gateway信息，该LUN的switchable状态为<span class="number">1</span>，并且gateway上会加载元数据</span><br><span class="line"><span class="number">2.</span> 在B上重复加LUN，A, B机器上分别通过tgtadm查询gateway信息，currentGW相同，且switchable同时为<span class="number">0</span>，同时gateway上不会清理和重新加载元数据</span><br><span class="line"><span class="number">3.</span> 在A上删除LUN，B机器上通过tgtadm查询gateway信息，该LUN的switchable状态恢复<span class="number">1</span>，gateway上不会清理元数据</span><br><span class="line">Switchable开关测试：</span><br><span class="line"><span class="number">1.</span> 在上述第<span class="number">2</span>步的基础上，</span><br><span class="line">a) preferGW和currentGW不同，此时preferGW网络、功能正常，由于switchable为<span class="number">0</span>，不会触发切回功能</span><br><span class="line">b) preferGW和currentGW相同，此时preferGW进行kill掉，在A上进行一些读写操作，此时卷不会切换成其他gateway</span><br><span class="line"><span class="number">2.</span> 在上述第<span class="number">1</span>、<span class="number">3</span>步基础上，</span><br><span class="line">a) preferGW和currentGW不同，此时preferGW网络、功能正常，由于switchable为<span class="number">1</span>，会触发切回功能</span><br><span class="line">b) preferGW和currentGW相同，此时preferGW进行kill掉，进行一些读写操作，由于switchable为<span class="number">1</span>，此时卷会切换成其他gateway</span><br><span class="line"><span class="number">3.</span> 接口文档</span><br><span class="line"><span class="number">1.</span> 加LUN和删LUN的约定需要指定tgt的IP地址：</span><br><span class="line">a) 加LUN http:<span class="comment">//127.0.0.1:8888/sys/iscsi?name=test1&amp;ops=add_lun&amp;tgt=10.37.2.19</span></span><br><span class="line">b) 删LUN http:<span class="comment">//127.0.0.1:8888/sys/iscsi?name=test1&amp;ops=del_lun&amp;tgt=10.37.2.19</span></span><br><span class="line"><span class="number">2.</span> switchable开关接口（适用于异常情况、调试、测试）：</span><br><span class="line">a) 开启switchable http:<span class="comment">//127.0.0.1:8888/sys/iscsi?name=test1&amp;ops=switchable_lun&amp;flag=on</span></span><br><span class="line">b) 关闭switchable http:<span class="comment">//127.0.0.1:8888/sys/iscsi?name=test1&amp;ops=switchable_lun&amp;flag=off</span></span><br><span class="line"><span class="number">3.</span> 查询卷状态接口变更：</span><br><span class="line">restful查询 http:<span class="comment">//127.0.0.1:8888/tgtmaster/volume/status</span></span><br><span class="line">tgtadm查询 tgtadm --lld iscsi --op gateway --mode target</span><br><span class="line">在原有基础上，增加switchable字段：</span><br><span class="line"><span class="number">1</span>为可以触发切换、切回gateway操作</span><br><span class="line"><span class="number">0</span>为不会触发切换、切回gateway操作</span><br><span class="line"><span class="number">4.</span> 自测报告</span><br><span class="line">根据测试建议操作，符合预期结果</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="006-tgtmaster调度iscsi命令："><a href="#006-tgtmaster调度iscsi命令：" class="headerlink" title="006-tgtmaster调度iscsi命令："></a>006-tgtmaster调度iscsi命令：</h1><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>将卷加入默认iqn</span><br><span class="line">curl  "http://10.238.161.1:8888/sys/iscsi?name=vol-name&amp;ops=add_lun"</span><br><span class="line">返回解析</span><br><span class="line"><span class="number">1</span>）<span class="number">200</span>                                                                  -</span><br><span class="line"><span class="number">2</span>）<span class="number">500</span>及 &#123;"error":"Error iscsi is nil"&#125;                      </span><br><span class="line"><span class="comment">--失败.检查iscsiserver进程中的MasterIP</span></span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>删lun</span><br><span class="line">curl  "http://10.238.161.1:8888/sys/iscsi?name=vol-name&amp;ops=del_lun"</span><br><span class="line"></span><br><span class="line">指定节点删除lun：</span><br><span class="line">curl  "http://10.238.161.1:8888/sys/iscsi?name=vol-name&amp;ops=del_lun&amp;tgt=tgtd-ip"</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>查询lun</span><br><span class="line">curl  "http://10.242.180.207:8888/sys/iscsi?name=vol-name&amp;ops=get_lun" </span><br><span class="line"></span><br><span class="line"><span class="number">4.</span>查询所有卷的iqn及对应的tgt</span><br><span class="line">curl "http://10.242.180.207:8888/sys/iscsi?name=vol-name&amp;ops=show&amp;pretty=y"</span><br><span class="line"></span><br><span class="line"><span class="number">6.</span>删除指定iqn</span><br><span class="line">curl  "http://10.242.180.207:8888/sys/iscsi?iqn=iqn.2019-01.com.suning:storage.snbs.dev500&amp;ops=del_iqn"   </span><br><span class="line"></span><br><span class="line"><span class="number">7.</span>将卷加入指定iqn（iqn已存在的情况下）</span><br><span class="line">curl  "http://10.242.180.207:8888/sys/iscsi?name=dev600&amp;ops=add_lun&amp;iqn=iqn.2019-01.com.suning:storage.snbs.dev100"</span><br><span class="line"></span><br><span class="line"><span class="number">8.</span>将卷加入指定tgtd</span><br><span class="line">curl  "http://10.242.180.207:8888/sys/iscsi?name=dev600&amp;ops=add_lun&amp;tgt=tgtd-ip"地址(不要端口号)"</span><br><span class="line"></span><br><span class="line">9.将卷迁移到指定的iscsi.（可以在加指定的iqn）   ---有bug</span><br><span class="line">curl  "http://<span class="number">10.242</span><span class="number">.180</span><span class="number">.207</span>:<span class="number">8888</span>/sys/iscsi?<span class="type">name</span>=dev500&amp;ops=mov_lun&amp;iscsi=<span class="number">10.37</span><span class="number">.2</span><span class="number">.19</span>"</span><br><span class="line"></span><br><span class="line">10.扩容卷</span><br><span class="line">curl  "http://<span class="number">10.238</span><span class="number">.161</span><span class="number">.1</span>:<span class="number">8888</span>/sys/iscsi?<span class="type">name</span>=vol-<span class="type">name</span>&amp;ops=expand_lun"</span><br><span class="line"></span><br><span class="line">11.查询lun容量：</span><br><span class="line">http://127.0.0.1:8888/sys/iscsi?name=xxx&amp;ops=get_lun</span><br></pre></td></tr></table></figure>
+
+<h1 id="006-tgt查询操作："><a href="#006-tgt查询操作：" class="headerlink" title="006-tgt查询操作："></a>006-tgt查询操作：</h1><figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">1.查询具体tgtserver详细信息：卷在哪个gateway上，卷在哪个tgtd上</span><br><span class="line">curl -<span class="meta">X</span> <span class="meta">PUT</span> <span class="string">"http://10.238.161.1:8888/tgtmaster/detailtgt?tgt=10.238.160.1&amp;pretty=y"</span></span><br><span class="line"><span class="string">"Info"</span>: &#123;</span><br><span class="line">    <span class="string">"IpPort"</span>: <span class="string">"10.238.160.1"</span>,</span><br><span class="line">    <span class="string">"VolumeCount"</span>: 114</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"Volumes"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"VolumeName"</span>: <span class="string">"b7d7ae66-9a23-4af9-b4f1-9998f234faf5"</span>,</span><br><span class="line">      <span class="string">"GateWay"</span>: <span class="string">"10.238.161.6:8585"</span>,</span><br><span class="line">      <span class="string">"TgtServer"</span>: <span class="string">"10.238.160.1"</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">2.查询某个卷在那个tgtserver和gateway上</span><br><span class="line"> curl -<span class="meta">X</span> <span class="meta">PUT</span> <span class="string">"http://10.238.161.1:8888/tgtmaster/volume?volname=8deeb4ea-6a94-4f6a-b141-d3577c5bdbe9&amp;pretty=y"</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"VolumeName"</span>: <span class="string">"8deeb4ea-6a94-4f6a-b141-d3577c5bdbe9"</span>,</span><br><span class="line">  <span class="string">"GateWay"</span>: <span class="string">"10.238.161.6:8585"</span>,</span><br><span class="line">  <span class="string">"TgtServer"</span>: <span class="string">"10.238.160.1"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">3.查询指定tgtd设备上的卷数量：</span><br><span class="line">curl -<span class="meta">X</span> <span class="meta">PUT</span> <span class="string">"http://10.238.161.1:8888/tgtmaster/tgt?tgt=10.238.160.1&amp;pretty=y"</span> </span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"IpPort"</span>: <span class="string">"10.238.160.1"</span>,</span><br><span class="line">  <span class="string">"VolumeCount"</span>: 114</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">4.查询所有tgtd设备，以及它们上的卷数量</span><br><span class="line">[root@xgto01n010244025044 ~]# curl -<span class="meta">X</span> <span class="meta">PUT</span> <span class="string">"http://10.238.161.1:8888/tgtmaster/tgtmap?pretty=y"</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"ServerCount"</span>: 5,</span><br><span class="line">  <span class="string">"ServerInfos"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"IpPort"</span>: <span class="string">"10.238.160.1"</span>,</span><br><span class="line">      <span class="string">"VolumeCount"</span>: 114</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"IpPort"</span>: <span class="string">"10.238.160.2"</span>,</span><br><span class="line">      <span class="string">"VolumeCount"</span>: 100</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"IpPort"</span>: <span class="string">"10.238.160.3"</span>,</span><br><span class="line">      <span class="string">"VolumeCount"</span>: 116</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"IpPort"</span>: <span class="string">"10.238.161.5"</span>,</span><br><span class="line">      <span class="string">"VolumeCount"</span>: 10</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"IpPort"</span>: <span class="string">"10.238.160.4"</span>,</span><br><span class="line">      <span class="string">"VolumeCount"</span>: 114</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">5.查看tgtd上所有卷的性能指标</span><br><span class="line">curl <span class="string">"http://10.242.180.207:8888/tgtmaster/volume/status?pretty=y"</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="string">"volumeName"</span>: <span class="string">"6ac24310-d177-41ee-a2f8-4920cab729c9"</span>,</span><br><span class="line">    <span class="string">"perferGw"</span>: <span class="string">"10.242.180.211"</span>,</span><br><span class="line">    <span class="string">"currentGw"</span>: <span class="string">"10.242.180.211"</span>,</span><br><span class="line">    <span class="string">"status"</span>: <span class="string">"0"</span>,</span><br><span class="line">    <span class="string">"readError"</span>: <span class="string">"0"</span>,</span><br><span class="line">    <span class="string">"writeError"</span>: <span class="string">"0"</span>,</span><br><span class="line">    <span class="string">"ioCnt"</span>: <span class="string">"0"</span>,</span><br><span class="line">    <span class="string">"ioTotal"</span>: <span class="string">"51395"</span>,</span><br><span class="line">    <span class="string">"readIops"</span>: <span class="string">"0"</span>,</span><br><span class="line">    <span class="string">"readKBps"</span>: <span class="string">"0"</span>,</span><br><span class="line">    <span class="string">"readDelayAvg"</span>: <span class="string">"0"</span>,</span><br><span class="line">    <span class="string">"writeIops"</span>: <span class="string">"0"</span>,</span><br><span class="line">    <span class="string">"writeKBps"</span>: <span class="string">"1"</span>,</span><br><span class="line">    <span class="string">"writeDelayAvg"</span>: <span class="string">"7"</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">normal 0</span><br><span class="line">fault 2</span><br><span class="line">switch 3</span><br></pre></td></tr></table></figure>
+
+<h1 id="007-gateway查询操作："><a href="#007-gateway查询操作：" class="headerlink" title="007-gateway查询操作："></a>007-gateway查询操作：</h1><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">说明：</span><br><span class="line">gateway异常后，有读写的卷立马切换到其他gateway，没有的读写的卷不切换。gateway恢复之后其他gateway需要<span class="number">2</span>分钟左右才能恢复到原有gateway，不是立马切换。（gateway之间是有通信的）</span><br><span class="line"><span class="number">1</span>.查询所有gateway上的卷个数</span><br><span class="line">[root@xgto01n010244025044 <span class="symbol">~]# curl -X PUT "http</span>:<span class="comment">//10.242.180.207:8888/tgtmaster/gatewaymap?pretty=y"</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"ServerCount"</span>: <span class="number">3</span>,</span><br><span class="line">  <span class="string">"ServerInfos"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"IpPort"</span>: <span class="string">"10.242.180.212:8585"</span>,</span><br><span class="line">      <span class="string">"VolumeCount"</span>: <span class="number">3</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"IpPort"</span>: <span class="string">"10.242.180.211:8585"</span>,</span><br><span class="line">      <span class="string">"VolumeCount"</span>: <span class="number">5</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"IpPort"</span>: <span class="string">"10.242.180.210:8585"</span>,</span><br><span class="line">      <span class="string">"VolumeCount"</span>: <span class="number">3</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>.查询具体某一个gateway上的卷个数</span><br><span class="line">[root@xgto01n010244025044 <span class="symbol">~]# curl -X PUT "http</span>:<span class="comment">//10.242.180.207:8888/tgtmaster/gateway?gw=10.242.180.210:8585&amp;pretty=y"</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"IpPort"</span>: <span class="string">"10.242.180.210:8585"</span>,</span><br><span class="line">  <span class="string">"VolumeCount"</span>: <span class="number">3</span></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="number">3</span>.查询具体某一个gateway详细信息（打印详细卷名和tgtd地址）</span><br><span class="line">[root@xgto01n010244025044 <span class="symbol">~]# curl -X PUT "http</span>:<span class="comment">//10.242.180.207:8888/tgtmaster/detailgateway?gw=10.242.180.210:8585&amp;pretty=y"</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"Info"</span>: &#123;</span><br><span class="line">    <span class="string">"IpPort"</span>: <span class="string">"10.242.180.210:8585"</span>,</span><br><span class="line">    <span class="string">"VolumeCount"</span>: <span class="number">3</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"Volumes"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"VolumeName"</span>: <span class="string">"23f6c766-fc09-4c71-b677-165af735fc09"</span>,</span><br><span class="line">      <span class="string">"GateWay"</span>: <span class="string">"10.242.180.210:8585"</span>,</span><br><span class="line">      <span class="string">"TgtServer"</span>: <span class="string">"10.27.244.148"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"VolumeName"</span>: <span class="string">"b31e79b8-fcba-4d44-957b-12a246708bff"</span>,</span><br><span class="line">      <span class="string">"GateWay"</span>: <span class="string">"10.242.180.210:8585"</span>,</span><br><span class="line">      <span class="string">"TgtServer"</span>: <span class="string">"10.27.244.153"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"VolumeName"</span>: <span class="string">"m1116t3"</span>,</span><br><span class="line">      <span class="string">"GateWay"</span>: <span class="string">"10.242.180.210:8585"</span>,</span><br><span class="line">      <span class="string">"TgtServer"</span>: <span class="string">"10.242.231.65"</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="008-查询所有卷的iqn及对应的tgt"><a href="#008-查询所有卷的iqn及对应的tgt" class="headerlink" title="008-查询所有卷的iqn及对应的tgt:"></a>008-查询所有卷的iqn及对应的tgt:</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">curl "http://10.242.180.207:8888/sys/iscsi?name=vol-name&amp;ops=<span class="keyword">show</span>&amp;pretty=y<span class="string">"</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">  "</span>Iscsi<span class="string">": [</span></span><br><span class="line"><span class="string">    &#123;</span></span><br><span class="line"><span class="string">      "</span>Ip<span class="string">": "</span><span class="number">10.27</span><span class="number">.244</span><span class="number">.153</span><span class="string">",</span></span><br><span class="line"><span class="string">      "</span><span class="keyword">Status</span><span class="string">": 0,  #0正常，1不在线</span></span><br><span class="line"><span class="string">      "</span><span class="keyword">Names</span><span class="string">": [</span></span><br><span class="line"><span class="string">    &#123;</span></span><br><span class="line"><span class="string">          "</span>VolName<span class="string">": "</span>d5077c65<span class="number">-4</span>b2b<span class="number">-4</span>a44<span class="number">-9</span>a1f<span class="number">-8</span>f26a7c13fed<span class="string">",</span></span><br><span class="line"><span class="string">          "</span>LunId<span class="string">": 1,</span></span><br><span class="line"><span class="string">          "</span>Iqn<span class="string">": "</span>iqn<span class="number">.2019</span><span class="number">-01.</span>com.suning:storage.snbs.d5077c65<span class="number">-4</span>b2b<span class="number">-4</span>a44<span class="number">-9</span>a1f<span class="number">-8</span>f26a7c13fed<span class="string">",</span></span><br><span class="line"><span class="string">          "</span>Tid<span class="string">": 1</span></span><br><span class="line"><span class="string">        &#125;,</span></span><br><span class="line"><span class="string">    &#123;</span></span><br><span class="line"><span class="string">          "</span>VolName<span class="string">": "</span>b31e79b8-fcba<span class="number">-4</span>d44<span class="number">-957</span>b<span class="number">-12</span>a246708bff<span class="string">",</span></span><br><span class="line"><span class="string">          "</span>LunId<span class="string">": 1,</span></span><br><span class="line"><span class="string">          "</span>Iqn<span class="string">": "</span>iqn<span class="number">.2019</span><span class="number">-01.</span>com.suning:storage.snbs.b31e79b8-fcba<span class="number">-4</span>d44<span class="number">-957</span>b<span class="number">-12</span>a246708bff<span class="string">",</span></span><br><span class="line"><span class="string">          "</span>Tid<span class="string">": 3</span></span><br><span class="line"><span class="string">        &#125;,</span></span><br><span class="line"><span class="string">    &#123;</span></span><br><span class="line"><span class="string">          "</span>VolName<span class="string">": "</span><span class="number">6</span>ac24310-d177<span class="number">-41</span>ee-a2f8<span class="number">-4920</span>cab729c9<span class="string">",</span></span><br><span class="line"><span class="string">          "</span>LunId<span class="string">": 1,</span></span><br><span class="line"><span class="string">          "</span>Iqn<span class="string">": "</span>iqn<span class="number">.2019</span><span class="number">-01.</span>com.suning:storage.snbs<span class="number">.6</span>ac24310-d177<span class="number">-41</span>ee-a2f8<span class="number">-4920</span>cab729c9<span class="string">",</span></span><br><span class="line"><span class="string">          "</span>Tid<span class="string">": 4</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">      ]</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">  "</span>Tgt<span class="string">": [</span></span><br><span class="line"><span class="string">    &#123;</span></span><br><span class="line"><span class="string">      "</span>mation<span class="string">": [</span></span><br><span class="line"><span class="string">    &#123;</span></span><br><span class="line"><span class="string">          "</span>ip<span class="string">": "</span>IP Address: <span class="number">10.27</span><span class="number">.244</span><span class="number">.153</span><span class="string">",</span></span><br><span class="line"><span class="string">          "</span>iqn<span class="string">": "</span>Initiator: iqn<span class="number">.2008</span><span class="number">-11.</span>org.linux-kvm:bd934d8f<span class="number">-0</span>ccd<span class="number">-49</span>db<span class="number">-899</span>a<span class="number">-3</span>b9ec01e614a <span class="keyword">alias</span>: <span class="keyword">none</span><span class="string">"</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">      ],</span></span><br><span class="line"><span class="string">      "</span>iqn<span class="string">": "</span>iqn<span class="number">.2019</span><span class="number">-01.</span>com.suning:storage.snbs.d5077c65<span class="number">-4</span>b2b<span class="number">-4</span>a44<span class="number">-9</span>a1f<span class="number">-8</span>f26a7c13fed<span class="string">"</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">    &#123;</span></span><br><span class="line"><span class="string">      "</span>mation<span class="string">": [</span></span><br><span class="line"><span class="string">    &#123;</span></span><br><span class="line"><span class="string">          "</span>ip<span class="string">": "</span>IP Address: <span class="number">10.27</span><span class="number">.244</span><span class="number">.153</span><span class="string">",</span></span><br><span class="line"><span class="string">          "</span>iqn<span class="string">": "</span>Initiator: iqn<span class="number">.2008</span><span class="number">-11.</span>org.linux-kvm:bd934d8f<span class="number">-0</span>ccd<span class="number">-49</span>db<span class="number">-899</span>a<span class="number">-3</span>b9ec01e614a <span class="keyword">alias</span>: <span class="keyword">none</span><span class="string">"</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">      ],</span></span><br><span class="line"><span class="string">      "</span>iqn<span class="string">": "</span>iqn<span class="number">.2019</span><span class="number">-01.</span>com.suning:storage.snbs.b31e79b8-fcba<span class="number">-4</span>d44<span class="number">-957</span>b<span class="number">-12</span>a246708bff<span class="string">"</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">  ]</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+      
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-Tgtmaster/" title="BlockStorage-tgtmaster">https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-Tgtmaster/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/BlockStorage-tgtmaster/" rel="tag"># BlockStorage-tgtmaster</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-VM/" rel="prev" title="创建虚机">
+      <i class="fa fa-chevron-left"></i> 创建虚机
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-Master/" rel="next" title="BlockStorage-Master">
+      BlockStorage-Master <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#002-超时优化："><span class="nav-text">002-超时优化：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#003-gateway注册"><span class="nav-text">003-gateway注册</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#004-设置卷到固定gateway"><span class="nav-text">004-设置卷到固定gateway</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#005-一写多读"><span class="nav-text">005-一写多读</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#006-tgtmaster调度iscsi命令："><span class="nav-text">006-tgtmaster调度iscsi命令：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#006-tgt查询操作："><span class="nav-text">006-tgt查询操作：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#007-gateway查询操作："><span class="nav-text">007-gateway查询操作：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#008-查询所有卷的iqn及对应的tgt"><span class="nav-text">008-查询所有卷的iqn及对应的tgt:</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">What hurts more, the pain of hard work or the pain of regret?</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">34:51</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

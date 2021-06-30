@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="BlockStorage-Gateway">
+<meta property="og:url" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-Gateway/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-Gateway/E:%5C%E8%AE%B0%E5%BD%95%5Cimg%5C1585134520722.png">
+<meta property="article:published_time" content="2008-01-04T10:37:19.000Z">
+<meta property="article:modified_time" content="2021-02-12T03:47:11.869Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="BlockStorage-Gateway">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-Gateway/E:%5C%E8%AE%B0%E5%BD%95%5Cimg%5C1585134520722.png">
+
+<link rel="canonical" href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-Gateway/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>BlockStorage-Gateway | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">嘻嘻嘻嘻嘻嘻</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-Gateway/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="What hurts more, the pain of hard work or the pain of regret?">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          BlockStorage-Gateway
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2008-01-04 18:37:19" itemprop="dateCreated datePublished" datetime="2008-01-04T18:37:19+08:00">2008-01-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-02-12 11:47:11" itemprop="dateModified" datetime="2021-02-12T11:47:11+08:00">2021-02-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BlockStorage/" itemprop="url" rel="index"><span itemprop="name">BlockStorage</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>23k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>21 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">池三副本，卷三副本</span><br><span class="line">池只有三副本，卷有两副本和三副本</span><br><span class="line">若是卷未指定副本数，采用池的副本数</span><br><span class="line">若是卷指定副本数，采用卷的副本数</span><br><span class="line">常用接口都走gateway</span><br></pre></td></tr></table></figure>
+
+<h1 id="001-拓扑接口："><a href="#001-拓扑接口：" class="headerlink" title="001-拓扑接口："></a>001-拓扑接口：</h1><figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">1.创建region：</span><br><span class="line">curl -<span class="meta">X</span> <span class="meta">PUT</span> <span class="string">"http://127.0.0.1:8686/region?regionid=region1"</span></span><br><span class="line"></span><br><span class="line">2.删除region：</span><br><span class="line">curl -<span class="meta">X</span> <span class="meta">DELETE</span> <span class="string">"http://127.0.0.1:8686/region?regionid=region1"</span></span><br><span class="line"></span><br><span class="line">3.创建zone：</span><br><span class="line">curl -<span class="meta">X</span> <span class="meta">PUT</span> <span class="string">"http://127.0.0.1:8686/region/zone?regionid=region1&amp;zoneid=zone1"</span></span><br><span class="line"></span><br><span class="line">4.删除zone：</span><br><span class="line">curl -<span class="meta">X</span> <span class="meta">DELETE</span> <span class="string">"http://127.0.0.1:8686/region/zone?regionid=region1&amp;zoneid=zone1"</span></span><br><span class="line"></span><br><span class="line">5.创建node：</span><br><span class="line">curl -<span class="meta">X</span> <span class="meta">PUT</span> <span class="string">"http://127.0.0.1:8686/region/zone/dev?regionid=region1&amp;zoneid=zone1&amp;nodeips=127.0.0.1:9595,10.242.4.92:9595"</span></span><br><span class="line"></span><br><span class="line">6.删除node：（删除node前需要先将节点数据迁移走，之后才能从zone剔除节点）</span><br><span class="line">curl -<span class="meta">X</span> <span class="meta">DELETE</span> <span class="string">"http://10.242.231.123:8686/region/zone/dev?regionid=region-tt&amp;zoneid=zone-tt1&amp;ipport=10.242.231.120:9595&amp;type=migrate"</span></span><br><span class="line">【迁移数据需要手动经过多轮，每次确认是否需要第二次，需要到迁出节点看是否还有extent，原卷上面有克隆的卷第一轮暂时不会迁移】</span><br><span class="line"></span><br><span class="line">curl -<span class="meta">X</span> <span class="meta">DELETE</span> <span class="string">"http://10.242.231.123:8686/region/zone/dev?regionid=region-tt&amp;zoneid=zone-tt1&amp;ipport=10.242.231.120:9595&amp;type=cancel"</span></span><br><span class="line">curl -<span class="meta">X</span> <span class="meta">DELETE</span> <span class="string">"http://10.242.231.123:8686/region/zone/dev?regionid=region-tt&amp;zoneid=zone-tt1&amp;ipport=10.242.231.120:9595&amp;type=delete"</span></span><br><span class="line"></span><br><span class="line">参数：</span><br><span class="line">regionid：region 的名称</span><br><span class="line">zoneid ：zone名称</span><br><span class="line">ipport  ：node ip，port</span><br><span class="line">type ：值有<span class="string">"migrate"</span> <span class="string">"cancel"</span> <span class="string">"delete"</span></span><br><span class="line"><span class="string">"migrate"</span> ： 表示迁移数据，可以在老extent上读写，不能新建extent</span><br><span class="line"><span class="string">"cancel"</span> ：表示取消迁移，节点继续用，不能删；准备迁移的取消任务，在迁移的要迁移完，迁移过的不再动</span><br><span class="line"><span class="string">"delete"</span> ：表示删除节点，盘中有数据前不能删节点</span><br><span class="line"></span><br><span class="line">7.创建pool</span><br><span class="line">curl -<span class="meta">X</span> <span class="meta">PUT</span> <span class="string">"http://127.0.0.1:8686/pool?poolname=SNPOOL001&amp;regionid=region1&amp;replica=3"</span></span><br><span class="line"></span><br><span class="line">8.删除pool</span><br><span class="line">curl -<span class="meta">X</span> <span class="meta">DELETE</span> <span class="string">"http://127.0.0.1:8686/pool?poolname=SNPOOL001"</span></span><br><span class="line"></span><br><span class="line">9.将zone分配到pool</span><br><span class="line">curl -<span class="meta">X</span> <span class="meta">PUT</span> <span class="string">"http://127.0.0.1:8686/pool/zone?poolname=SNPOOL001&amp;regionid=region1&amp;zoneids=zone1,zone2"</span></span><br><span class="line"></span><br><span class="line">10.将zone从pool删除</span><br><span class="line">curl -<span class="meta">X</span> <span class="meta">DELETE</span> <span class="string">"http://127.0.0.1:8686/pool/zone?poolname=SNPOOL001&amp;regionid=region1&amp;zoneids=zone1,zone2"</span></span><br><span class="line"></span><br><span class="line">11.查看region信息</span><br><span class="line">curl -<span class="meta">X</span> GET <span class="string">"http://127.0.0.1:8686/region?regionid=region1&amp;pretty=y"</span></span><br><span class="line"></span><br><span class="line">12、查看有所有池的信息</span><br><span class="line">范围查询pool</span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/pool/list?marker=SN&amp;prefix=SN&amp;pretty=y"</span></span><br><span class="line">#pool列表</span><br><span class="line">curl -<span class="meta">X</span> GET <span class="string">"http://127.0.0.1:8686/pool/list?pretty=y"</span> </span><br><span class="line">&#123;</span><br><span class="line"><span class="string">"Pools"</span>: [&#123;</span><br><span class="line"><span class="string">"poolname"</span>: <span class="string">"pool-tt"</span>,</span><br><span class="line"><span class="string">"createtime"</span>: <span class="string">"2019-08-02 17:50:25"</span>,</span><br><span class="line"><span class="string">"regionid"</span>: <span class="string">"region-tt"</span>, </span><br><span class="line"><span class="string">"rebalancetime"</span>: <span class="string">"22:15"</span>, #设置的定时均衡时间</span><br><span class="line"><span class="string">"rebalanceswitch"</span>: 1, #设置的定时均衡开关，非0即为开</span><br><span class="line"><span class="string">"faultdomainnum"</span>: 5,</span><br><span class="line"><span class="string">"node_active_num"</span>: 5,</span><br><span class="line"><span class="string">"node_num"</span>: 5,</span><br><span class="line"><span class="string">"volume_num"</span>: 16,</span><br><span class="line"><span class="string">"total_byte"</span>: 4949320663040,</span><br><span class="line"><span class="string">"free_byte"</span>: 2508957155328,</span><br><span class="line"><span class="string">"used_byte"</span>: 2440363507712</span><br><span class="line">&#125; ]&#125;</span><br><span class="line"></span><br><span class="line">13.查询某个池的信息</span><br><span class="line">curl -<span class="meta">X</span> GET <span class="string">"http://127.0.0.1:8686/pool?poolname=pool-tt&amp;pretty=y"</span> #pool基本信息</span><br><span class="line"></span><br><span class="line">14.查看pool下zone、节点</span><br><span class="line">curl -<span class="meta">X</span> GET <span class="string">"http://127.0.0.1:8686/pool/info?poolname=SNPOOL001&amp;pretty=y"</span> </span><br><span class="line">#节点在线、zone信息</span><br></pre></td></tr></table></figure>
+
+<h1 id="002-池相关："><a href="#002-池相关：" class="headerlink" title="002-池相关："></a>002-池相关：</h1><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="string">.资源池信息</span></span><br><span class="line"><span class="string">curl</span> <span class="string">"http://10.242.231.121:8686/pool?pretty=y&amp;poolname=pool-tt"</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="attr">"poolname":</span> <span class="string">"pool-tt"</span><span class="string">,</span></span><br><span class="line"><span class="attr">"createtime":</span> <span class="string">"2019-08-02 17:50:25"</span><span class="string">,</span></span><br><span class="line"><span class="attr">"regionid":</span> <span class="string">"region-tt"</span><span class="string">,</span></span><br><span class="line"><span class="attr">"rebalancetime":</span> <span class="string">"19:15"</span><span class="string">,</span>  <span class="comment">#定时均衡时间，支持分钟级别</span></span><br><span class="line"><span class="attr">"rebalanceswitch":</span> <span class="number">1</span><span class="string">,</span>  <span class="comment">#非0即为打开</span></span><br><span class="line"><span class="attr">"faultdomainnum":</span> <span class="number">6</span><span class="string">,</span> <span class="comment">#故障域，zone的个数</span></span><br><span class="line"><span class="attr">"node_active_num":</span> <span class="number">5</span><span class="string">,</span></span><br><span class="line"><span class="attr">"node_num":</span> <span class="number">5</span><span class="string">,</span></span><br><span class="line"><span class="attr">"volume_num":</span> <span class="number">16</span><span class="string">,</span></span><br><span class="line"><span class="attr">"total_byte":</span> <span class="number">4949320663040</span><span class="string">,</span></span><br><span class="line"><span class="attr">"free_byte":</span> <span class="number">2648694587392</span><span class="string">,</span></span><br><span class="line"><span class="attr">"used_byte":</span> <span class="number">2300626075648</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="number">2</span><span class="string">.池的状态查询（不是实时的）</span></span><br><span class="line"><span class="string">curl</span> <span class="string">"http://10.242.231.65:8686/pool/status?pretty=y"</span> </span><br><span class="line"><span class="string">[&#123;</span></span><br><span class="line"><span class="attr">"PoolName":</span> <span class="string">"pool-tt"</span><span class="string">,</span></span><br><span class="line"><span class="attr">"Region":</span> <span class="string">"region-tt"</span><span class="string">,</span></span><br><span class="line"><span class="attr">"TotalMigrateExtentCount":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line"><span class="attr">"PrepareMigrateExtentCount":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line"><span class="attr">"MigratingExtentCount":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line"><span class="attr">"PrepareRepairExtentCount":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line"><span class="attr">"RepairingExtentCount":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line"><span class="attr">"TotalExtentCount":</span> <span class="number">3216</span><span class="string">,</span></span><br><span class="line"><span class="attr">"DowngradeExtentCount":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line"><span class="attr">"UnwriteExtentCount":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line"><span class="attr">"UnavailableExtentCount":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line"><span class="attr">"DowngradeVolume":</span> <span class="string">[],</span></span><br><span class="line"><span class="attr">"UnwriteVolume":</span> <span class="string">[],</span></span><br><span class="line"><span class="attr">"UnavailableVolume":</span> <span class="string">[vol001,vol002]</span></span><br><span class="line"><span class="string">&#125;]</span></span><br><span class="line"><span class="string">TotalMigrateExtentCount：所有需要迁移的chunk/Extent个数</span></span><br><span class="line"><span class="string">PrepareMigrateExtentCount：准备迁移的Extent个数</span></span><br><span class="line"><span class="string">MigratingExtentCount：正在迁移的Extent个数</span></span><br><span class="line"><span class="string">PrepareRepairExtentCount：准备修复的Extent个数</span></span><br><span class="line"><span class="string">RepairingExtentCount：正在修复的Extent个数</span></span><br><span class="line"><span class="string">TotalExtentCount：目前总创建的Extent个数</span></span><br><span class="line"><span class="string">DowngradeExtentCount：降级的Extent个数，健康副本数大于一半</span></span><br><span class="line"><span class="string">UnwriteExtentCount：不可写的Extent个数，健康副本数小于1半</span></span><br><span class="line"><span class="string">UnavailableExtentCount：不可用的Extent个数，无健康副本</span></span><br><span class="line"><span class="string">DowngradeVolume：降级的卷</span></span><br><span class="line"><span class="string">UnwriteVolume：不可写的卷</span></span><br><span class="line"><span class="string">UnavailableVolume：不可用的卷</span></span><br><span class="line"><span class="string">迁移成功可以通过做计算得出：迁移成功的=总共的-准备迁移的-正在迁移的</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="003-卷相关"><a href="#003-卷相关" class="headerlink" title="003-卷相关:"></a>003-卷相关:</h1><figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">1.创建卷</span><br><span class="line">curl -<span class="meta">X</span> <span class="meta">PUT</span> <span class="string">"http://127.0.01:8686/region/pool/vol?pool=SNPOOL001&amp;volume=test1&amp;size=102400000"</span></span><br><span class="line">size：卷大小，单位：字节byte</span><br><span class="line">repnum：副本数</span><br><span class="line"></span><br><span class="line">2.扩容卷</span><br><span class="line">curl -<span class="meta">X</span> POST <span class="string">"http://127.0.01:8686/region/pool/vol?volume=test1&amp;size=204800000"</span></span><br><span class="line"></span><br><span class="line">3.查询卷</span><br><span class="line">curl -<span class="meta">X</span> GET <span class="string">"http://127.0.01:8686/region/pool/vol?volume=test1-c1&amp;pretty=y"</span></span><br><span class="line">卷查询结果解释：</span><br><span class="line">&#123;</span><br><span class="line"><span class="string">"FileName"</span>: <span class="string">"test1-c1"</span>, //卷名称</span><br><span class="line"><span class="string">"Prefix"</span>: <span class="string">"000000000010c8ec"</span>, //卷的UUID</span><br><span class="line"><span class="string">"Size"</span>: 107374182400,  //卷大小</span><br><span class="line"><span class="string">"Provisioning"</span>: <span class="string">"thin"</span>,</span><br><span class="line"><span class="string">"Creation_Time"</span>: <span class="string">"2019-08-01 09:43:44"</span>, //创建时间</span><br><span class="line"><span class="string">"Copies"</span>: 3,    //副本数</span><br><span class="line"><span class="string">"Type"</span>: <span class="string">"linkclone"</span>,  //卷类型：有linkclone、fullclone、snap、origin</span><br><span class="line"><span class="string">"Parent"</span>: <span class="string">"ttest1"</span>,  //父卷</span><br><span class="line"><span class="string">"Pool"</span>: <span class="string">"pool-tt"</span>,  //所属资源池</span><br><span class="line"><span class="string">"Ref"</span>: 0,  //是否被引用，若有则无法删除卷</span><br><span class="line"><span class="string">"Status"</span>: 1, //0表示正常；1表示正在执行中；2表示执行失败</span><br><span class="line"><span class="string">"Index"</span>: 0,  </span><br><span class="line"><span class="string">"ReadOnly"</span>: false  //是否只读</span><br><span class="line"><span class="string">"RDBW"</span>: 0, //read kbps ，读每秒流量带宽</span><br><span class="line"><span class="string">"RDQps"</span>: 0, //read iops ，读每秒次数</span><br><span class="line"><span class="string">"WRBW"</span>: 0, //write kbps ，写每秒流量带宽</span><br><span class="line"><span class="string">"WRQps"</span>: 0 //write iops ，写每秒次数</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">4.删除卷</span><br><span class="line">curl -<span class="meta">X</span> <span class="meta">DELETE</span> <span class="string">"http://127.0.01:8686/region/pool/vol?volume=test1&amp;pretty=y"</span></span><br><span class="line"></span><br><span class="line">5.资源池中所有卷查询</span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/region/pool?pretty=y"</span></span><br><span class="line"></span><br><span class="line">查询池里面有多少卷</span><br><span class="line">curl -<span class="meta">X</span> GET <span class="string">"http://127.0.0.1:8787/pool/info?poolname=pool-openstack&amp;pretty=y"</span></span><br><span class="line">curl -<span class="meta">X</span> GET <span class="string">"http://127.0.0.1:8787/pool?poolname=pool-openstack&amp;pretty=y"</span></span><br><span class="line">6.查询单个卷</span><br><span class="line">curl <span class="string">"http://127.0.01:8686/region/pool/vol?volume=9907d48b-a33c-42db-a24d-683ac0b5622a&amp;pretty=y"</span></span><br><span class="line"></span><br><span class="line">卷名前缀匹配查询</span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/region/pool?pretty=y&amp;prefix=m11"</span></span><br><span class="line">查询前1000个卷，不加max-keys默认显示100个卷</span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/region/pool?pretty=y&amp;max-keys=1000"</span></span><br><span class="line"></span><br><span class="line">查询1000个卷以后的卷</span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/region/pool?pretty=y&amp;max-keys=1000&amp;marker=YWPtest7"</span></span><br><span class="line"></span><br><span class="line">7.创建链接克隆</span><br><span class="line">可以不加newname，支持默认的</span><br><span class="line">curl -<span class="meta">X</span> <span class="meta">PUT</span> <span class="string">"http://127.0.0.1:8686/region/pool/vol/snapshot?volname=dev100&amp;newname=c400&amp;type=linkclone"</span></span><br><span class="line"></span><br><span class="line">8.创建独立克隆（异步；可以不加newname，支持默认的）</span><br><span class="line">curl -<span class="meta">X</span> <span class="meta">PUT</span> <span class="string">"http://127.0.0.1:8686/region/pool/vol/snapshot?poolname=store&amp;volname=dev100&amp;newname=f300&amp;type=fullclone"</span></span><br><span class="line"></span><br><span class="line">9.查询独立克隆进度</span><br><span class="line"> curl -<span class="meta">X</span> GET <span class="string">"http://127.0.0.1:8686/region/pool/vol/snapshot?newname=v4v001-fullclone-001&amp;type=fullclone&amp;volname=v4v001"</span></span><br><span class="line"></span><br><span class="line">10.创建快照（可以不加newname，支持默认的）</span><br><span class="line">curl -<span class="meta">X</span> <span class="meta">PUT</span> <span class="string">"http://127.0.0.1:8686/region/pool/vol/snapshot?volname=dev100&amp;newname=s300&amp;type=snap"</span></span><br><span class="line"></span><br><span class="line">10.查看快照恢复进度</span><br><span class="line">curl -<span class="meta">X</span> POST  <span class="string">"http://127.0.0.1:8686/region/pool/vol/snapshot?volname=936e2c54-e1dc-4517-8d16-a2052b341806&amp;progress=1"</span></span><br><span class="line"></span><br><span class="line">11.快照恢复</span><br><span class="line">curl -<span class="meta">X</span> POST <span class="string">"http://127.0.0.1:8686/region/pool/vol/snapshot?volname=dev100&amp;snapname=c300"</span></span><br><span class="line"></span><br><span class="line">12.断开关系链-异步</span><br><span class="line">curl -<span class="meta">X</span> <span class="meta">PUT</span> <span class="string">"http://127.0.0.1:8686/region/pool/vol/snapshot?volname=dev100-c1&amp;type=unlink"</span></span><br><span class="line">注：将linkclone变为独立克隆，断链后可以删除父卷；快照克隆结束后手动将新克隆出来的卷加到lun里面</span><br><span class="line"></span><br><span class="line">13.查询断链进度</span><br><span class="line">curl -<span class="meta">X</span> GET <span class="string">"http://127.0.0.1:8686/region/pool/vol/snapshot?volname=c100-10&amp;type=unlink"</span></span><br><span class="line">curl -<span class="meta">X</span> GET <span class="string">"http://127.0.0.1:8686/region/pool/vol/snapshot?volname=v4v001-linkclone-003&amp;type=unlink&amp;newname=v4v001-linkclone-003"</span></span><br><span class="line"></span><br><span class="line">14.创建镜像卷-异步（在系统卷上创建一个系统自定义名的独立克隆）</span><br><span class="line">curl -<span class="meta">X</span> <span class="meta">PUT</span> <span class="string">"http://127.0.0.1:8686/region/pool/vol/fullclone?volname=dev300"</span></span><br><span class="line">&#123;<span class="string">"newname"</span>:<span class="string">"dev300-1-f"</span>&#125;</span><br><span class="line"></span><br><span class="line">15.镜像克隆卷进度查询</span><br><span class="line">curl -<span class="meta">X</span> GET <span class="string">"http://127.0.0.1:8686/region/pool/vol/snapshot?volname=dev300&amp;newname=dev300-1-f&amp;type=fullclone"</span></span><br><span class="line"></span><br><span class="line">16.镜像卷上建链接克隆卷：（在特殊的独立克隆上创建链接克隆）</span><br><span class="line">curl -<span class="meta">X</span> <span class="meta">PUT</span> <span class="string">"http://127.0.0.1:8686/region/pool/vol/snapshot?volname=dev300&amp;origin=fullclone&amp;newname=dev300-lc1&amp;type=linkclone"</span></span><br><span class="line"></span><br><span class="line">http://10.238.161.6:8686/region/pool/vol/snapshot?volname=f97c04a7-8208-419f-9e19-43a1a9c51921<span class="variable">&amp;newname</span>=3fb8b90b-c20e-494f-8286-5e4de58f9e65<span class="variable">&amp;type</span>=linkclone<span class="variable">&amp;origin</span>=fullclone</span><br></pre></td></tr></table></figure>
+
+<h1 id="004-迁移均衡："><a href="#004-迁移均衡：" class="headerlink" title="004-迁移均衡："></a>004-迁移均衡：</h1><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>.定时均衡设置(资源池)</span><br><span class="line">curl -X POST <span class="string">"http://127.0.0.1:8686/pool?poolname=pool1&amp;retime=03:00&amp;switch=1"</span></span><br><span class="line"></span><br><span class="line"><span class="number">2</span>.手动均衡命令</span><br><span class="line">curl  <span class="string">"http://127.0.0.1:8686/rebalance"</span></span><br><span class="line">一般返回<span class="number">200</span>及&#123;<span class="string">"result"</span>:<span class="string">"Success"</span>&#125;</span><br><span class="line">均衡也需要均衡多轮，是自动的多轮</span><br><span class="line">可以设置每轮均衡数<span class="literal">master</span>参数里面设置：migratebatch</span><br><span class="line"></span><br><span class="line"><span class="number">3</span>.取消迁移</span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/cancelmigrate?poolname=pool-tt&amp;pretty=y"</span> -v</span><br></pre></td></tr></table></figure>
+
+<h1 id="005-监控相关："><a href="#005-监控相关：" class="headerlink" title="005-监控相关："></a>005-监控相关：</h1><figure class="highlight smalltalk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>查看节点信息</span><br><span class="line">curl <span class="comment">"http://10.242.180.212:8686/dev/info?ipport=10.242.180.208:9595&amp;pretty=y"</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">"ExtentCount"</span>: <span class="number">1157</span>,</span><br><span class="line"><span class="comment">"Free"</span>: <span class="number">709026119680</span>,</span><br><span class="line"><span class="comment">"Online"</span>: <span class="keyword">true</span>,</span><br><span class="line"><span class="comment">"RegionID"</span>: <span class="comment">"region-openstack"</span>,</span><br><span class="line"><span class="comment">"Total"</span>: <span class="number">1073599217664</span>,</span><br><span class="line"><span class="comment">"Used"</span>: <span class="number">364573097984</span>,</span><br><span class="line"><span class="comment">"ZoneID"</span>: <span class="comment">"zone1"</span>,</span><br><span class="line"><span class="comment">"ipport"</span>: <span class="comment">"10.242.180.208:9595"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>分配到该<span class="type">Gateway</span>上的卷信息，每个<span class="type">Gateway</span>都不一样</span><br><span class="line">curl <span class="comment">"http://127.0.0.1:8686/snbs/volume/info?pretty=y"</span></span><br><span class="line">注：<span class="number">10</span>s汇总统计一次</span><br><span class="line">[</span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">"name"</span>: <span class="comment">"m0929mfc1"</span>,</span><br><span class="line"><span class="comment">"size"</span>: <span class="number">107374182400</span>,</span><br><span class="line"><span class="comment">"Type"</span>: <span class="comment">"linkclone"</span>,</span><br><span class="line"><span class="comment">"poolName"</span>: <span class="comment">"pool-tt"</span>,</span><br><span class="line"><span class="comment">"createTime"</span>: <span class="comment">"0001-01-01T00:00:00Z"</span>,</span><br><span class="line"><span class="comment">"status"</span>: <span class="number">0</span>,</span><br><span class="line"><span class="comment">"readerr"</span>: <span class="number">0</span>,</span><br><span class="line"><span class="comment">"readiops"</span>: <span class="number">0</span>,</span><br><span class="line"><span class="comment">"readkbps"</span>: <span class="number">0</span>,</span><br><span class="line"><span class="comment">"readdelay"</span>: <span class="number">0</span>,</span><br><span class="line"><span class="comment">"writeerr"</span>: <span class="number">0</span>,</span><br><span class="line"><span class="comment">"writeiops"</span>: <span class="number">7</span>,</span><br><span class="line"><span class="comment">"writekbps"</span>: <span class="number">1752</span>,</span><br><span class="line"><span class="comment">"writedelay"</span>: <span class="number">38</span>,</span><br><span class="line"><span class="comment">"readCa"</span>: <span class="comment">"off"</span>,</span><br><span class="line"><span class="comment">"writeCa"</span>: <span class="comment">"off"</span></span><br><span class="line">&#125;</span><br><span class="line">]</span><br><span class="line">上面接口的卷汇总到<span class="type">TgtMaster</span>中的访问方式：  curl <span class="comment">"http://10.242.180.207:8888/tgtmaster/volume/status?pretty=y"</span></span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>累计<span class="type">I</span>/<span class="type">O</span>数和<span class="type">Kb</span>数，读取一次清零的接口（<span class="type">SNBSP</span>中查卷读写<span class="type">IOPS</span>、带宽）</span><br><span class="line">curl <span class="comment">"http://10.242.180.210:8686/snbs/volume/info/reg?pretty=y"</span></span><br><span class="line">[</span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">"name"</span>: <span class="comment">"m1016t1"</span>,</span><br><span class="line"><span class="comment">"poolName"</span>: <span class="comment">"pool-tt"</span>,</span><br><span class="line"><span class="comment">"readioreg"</span>: <span class="number">0</span>,#读取数据量，单位kb</span><br><span class="line"><span class="comment">"readkbreg"</span>: <span class="number">0</span>,<span class="symbol">#io</span>操作次数</span><br><span class="line"><span class="comment">"readdelayreg"</span>: <span class="number">0</span>,#读取平均时延</span><br><span class="line"><span class="comment">"writeioreg"</span>: <span class="number">122784</span>, </span><br><span class="line"><span class="comment">"writekbreg"</span>: <span class="number">491136</span>,</span><br><span class="line"><span class="comment">"writedelayreg"</span>: <span class="number">7</span></span><br><span class="line">&#125;</span><br><span class="line">]</span><br><span class="line">注：上次访问该接口到本次访问期间累加的数据，每请求一次清零</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">4.</span>设置<span class="type">QoS</span></span><br><span class="line">curl <span class="comment">"http://127.0.0.1:8686/snbs/volume/qos/QosSet?volname=dev300&amp;readiops=2000&amp;readkbps=2000&amp;active=on"</span></span><br><span class="line">注：</span><br><span class="line">volname ：必填</span><br><span class="line">readiops、readkbps、writeiops、writekbps：这几个参数可以任选一个或者多个。</span><br><span class="line">active=on/off  ：必填</span><br><span class="line"></span><br><span class="line"><span class="number">5.</span>查询设置的卷信息</span><br><span class="line">curl <span class="comment">"http://10.242.180.212:8686/region/pool/vol?pretty=y&amp;volume=dev300"</span></span><br><span class="line"> </span><br><span class="line"><span class="number">6.</span><span class="type">IOModel</span>接口增加操作模式识别和extent操作次数统计</span><br><span class="line">curl <span class="comment">"http://10.242.180.212:8686/snbs/volume/IOModel?pretty=y"</span></span><br><span class="line">[</span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">"name"</span>: <span class="comment">"test002"</span>,</span><br><span class="line"><span class="comment">"size"</span>: <span class="number">107374182400</span>,</span><br><span class="line"><span class="comment">"readiops"</span>: <span class="number">125</span>,</span><br><span class="line"><span class="comment">"readkbps"</span>: <span class="number">14386</span>,</span><br><span class="line"><span class="comment">"readdelay"</span>: <span class="number">25</span>,</span><br><span class="line"><span class="comment">"readdelaydis"</span>: <span class="comment">"DelayDis(ms) (0,4]ms:44 (4,8]ms:68 (8,12]ms:137 (12,16]ms:188 (16,20]ms:147 (20,30]ms:279 (30,...]ms:388 "</span>,</span><br><span class="line"><span class="comment">"readblockdis"</span>: <span class="comment">"BlockDis(KB) (0,4]KB:0 (4,16]KB:317 (16,64]KB:0 (64,128]KB:298 (128,256]KB:307 (256,512]KB:329 (512,...]KB:0 "</span>,</span><br><span class="line"><span class="comment">"readavgdis"</span>: <span class="comment">"AvgDelay:25 (ms) AvgBlock:114 (KB) Total data:143860 (KB) Mode: rand"</span>,</span><br><span class="line"><span class="symbol">#AvgDelay</span> 平均时延 <span class="type">AvgBlock</span>平均块大小 <span class="type">Total</span> data读/写总大小 <span class="type">Mode</span>操作时顺序还是随机</span><br><span class="line"><span class="comment">"readextenthis"</span>: [<span class="symbol">#writeextenthis</span> 对<span class="type">Extent</span>进行写操作最多的<span class="number">10</span>个纪录，<span class="type">ExtentLba</span>时extent对应的<span class="type">LBA</span>值，hit是操作的次数</span><br><span class="line"><span class="comment">"ExtentLba: 23622320128, hit: 10"</span>,</span><br><span class="line"><span class="comment">"ExtentLba: 81067507712, hit: 9"</span>,</span><br><span class="line"><span class="comment">"ExtentLba: 104421392384, hit: 9"</span>,</span><br><span class="line"><span class="comment">"ExtentLba: 67645734912, hit: 9"</span>,</span><br><span class="line"><span class="comment">"ExtentLba: 1342177280, hit: 8"</span>,</span><br><span class="line"><span class="comment">"ExtentLba: 103616086016, hit: 8"</span>,</span><br><span class="line"><span class="comment">"ExtentLba: 33822867456, hit: 8"</span>,</span><br><span class="line"><span class="comment">"ExtentLba: 21743271936, hit: 8"</span>,</span><br><span class="line"><span class="comment">"ExtentLba: 76235669504, hit: 7"</span>,</span><br><span class="line"><span class="comment">"ExtentLba: 76772540416, hit: 7"</span></span><br><span class="line">],</span><br><span class="line"><span class="comment">"writeiops"</span>: <span class="number">53</span>,</span><br><span class="line"><span class="comment">"writekbps"</span>: <span class="number">6189</span>,</span><br><span class="line"><span class="comment">"writedelay"</span>: <span class="number">12</span>,</span><br><span class="line"><span class="comment">"writedelaydis"</span>: <span class="comment">"DelayDis(ms) (0,4]ms:3 (4,8]ms:141 (8,12]ms:176 (12,16]ms:111 (16,20]ms:51 (20,30]ms:39 (30,...]ms:17 "</span>,</span><br><span class="line"><span class="comment">"writeblockdis"</span>: <span class="comment">"BlockDis(KB) (0,4]KB:0 (4,16]KB:146 (16,64]KB:0 (64,128]KB:118 (128,256]KB:128 (256,512]KB:146 (512,...]KB:0 "</span>,</span><br><span class="line"><span class="comment">"writeavgdis"</span>: <span class="comment">"AvgDelay:12 (ms) AvgBlock:115 (KB) Total data:61896 (KB) Mode: rand"</span>,</span><br><span class="line"><span class="comment">"writeextenthis"</span>: [</span><br><span class="line"><span class="comment">"ExtentLba: 18253611008, hit: 6"</span>,</span><br><span class="line"><span class="comment">"ExtentLba: 3758096384, hit: 5"</span>,</span><br><span class="line"><span class="comment">"ExtentLba: 66840428544, hit: 5"</span>,</span><br><span class="line"><span class="comment">"ExtentLba: 77577846784, hit: 5"</span>,</span><br><span class="line"><span class="comment">"ExtentLba: 46170898432, hit: 5"</span>,</span><br><span class="line"><span class="comment">"ExtentLba: 4026531840, hit: 5"</span>,</span><br><span class="line"><span class="comment">"ExtentLba: 103884521472, hit: 4"</span>,</span><br><span class="line"><span class="comment">"ExtentLba: 77309411328, hit: 4"</span>,</span><br><span class="line"><span class="comment">"ExtentLba: 9932111872, hit: 4"</span>,</span><br><span class="line"><span class="comment">"ExtentLba: 46707769344, hit: 4"</span></span><br><span class="line">]</span><br><span class="line">&#125;,</span><br><span class="line"></span><br><span class="line">注:</span><br><span class="line"><span class="type">AvgDelay</span> ：平均时延 </span><br><span class="line"><span class="type">AvgBlock</span>：平均块大小</span><br><span class="line"><span class="type">Total</span> data：读/写总大小 </span><br><span class="line"><span class="type">Mode</span>：操作时顺序还是随机</span><br><span class="line">writeextenthis：对<span class="type">Extent</span>进行写操作最多的<span class="number">10</span>个纪录，</span><br><span class="line"><span class="type">ExtentLba</span>：extent对应的<span class="type">LBA</span>值，hit是操作的次数</span><br></pre></td></tr></table></figure>
+
+<h1 id="006-调试接口："><a href="#006-调试接口：" class="headerlink" title="006-调试接口："></a>006-调试接口：</h1><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>调试接口</span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/snbs/debug/stat?name=SNBS000&amp;type=dump"</span></span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>查看gateway的<span class="built_in">io</span>情况</span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/snbs/debug/stat?name=SNBS004&amp;type=iodelayon"</span></span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/snbs/debug/stat?name=SNBS004&amp;type=iodelayoff"</span></span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>打开日志级别接口</span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/snbs/debug/stat?name=SNBS000&amp;type=logon"</span></span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/snbs/debug/stat?name=SNBS000&amp;type=logoff"</span></span><br><span class="line"></span><br><span class="line"><span class="number">4.</span>三副本的一致性检查(日志中显示结果)</span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/snbs/debug/stat?name=volxxx&amp;type=dcon"</span>  </span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/snbs/debug/stat?name=volxxx&amp;type=dcoff"</span></span><br><span class="line">注：没法校验数据的正确性,只能校验seq id是否一致</span><br><span class="line"></span><br><span class="line"><span class="number">5.</span>设置gateway链接数</span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/snbs/volume/SetConnNum?connNum=256"</span></span><br><span class="line"></span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/snbs/debug/stat?type=allchunkid"</span>                                 <span class="comment">---------获取所有故障extent的序列号信息</span></span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/snbs/debug/stat?type=chunkid&amp;chunkid=xxxxx"</span>        <span class="comment">---------获取指定extent的序列号信息</span></span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/snbs/debug/stat?type=updateseqnum&amp;chunkid=xxxxxx"</span>   <span class="comment">---------更新指定序列号信息</span></span><br><span class="line"></span><br><span class="line"><span class="number">6.</span>server.GATEWAYARC打印概率调整：</span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/log?p=0.4"</span></span><br><span class="line">表示<span class="number">40</span>%的概率打印</span><br><span class="line">只要在<span class="number">0</span>~<span class="number">1</span>之间就可以，默认万分之一</span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/log?p=0.01"</span></span><br><span class="line"></span><br><span class="line"><span class="number">7.</span>查询所有卷所有的序列号不一致的chunkid信息</span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/snbs/debug/stat?type=allchunkid"</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="string">"ckunkid"</span>: <span class="string">"00000000009896890000063e"</span>,</span><br><span class="line">    <span class="string">"status"</span>: <span class="number">3</span>,</span><br><span class="line">    <span class="string">"repsn"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">"ckaddr"</span>: <span class="string">"10.238.161.1:9595"</span>,</span><br><span class="line">        <span class="string">"sn"</span>: <span class="number">0</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">"ckaddr"</span>: <span class="string">"10.238.161.5:9595"</span>,</span><br><span class="line">        <span class="string">"sn"</span>: <span class="number">0</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">"ckaddr"</span>: <span class="string">"10.238.161.4:9595"</span>,</span><br><span class="line">        <span class="string">"sn"</span>: <span class="number">0</span></span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">status</span>:</span><br><span class="line">CpInvalid  = <span class="number">0</span> </span><br><span class="line">CpNormal   = <span class="number">1</span> 这个是正常，其他都是不正常状态</span><br><span class="line">CpDegrade  = <span class="number">2</span></span><br><span class="line">CpFault    = <span class="number">3</span> 从chunkserver没加载到序列号</span><br><span class="line">CpOffline  = <span class="number">4</span></span><br><span class="line">CpRollback = <span class="number">5</span></span><br><span class="line"></span><br><span class="line"><span class="number">8.</span>查询指定卷指定chunkid的信息</span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/snbs/debug/stat?type=chunkid&amp;chunkid=xxxx&amp;name=xxx"</span>    </span><br><span class="line">[root@host102442551 Speed]# curl <span class="string">"http://127.0.0.1:8686/snbs/debug/stat?type=chunkid&amp;chunkid=000000000098968300000298&amp;name=v4v001&amp;pretty=y"</span></span><br><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="string">"ckunkid"</span>: <span class="string">"000000000098968300000298"</span>,</span><br><span class="line">    <span class="string">"status"</span>: <span class="number">3</span>,</span><br><span class="line">    <span class="string">"repsn"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">"ckaddr"</span>: <span class="string">"10.238.161.5:9595"</span>,</span><br><span class="line">        <span class="string">"sn"</span>: <span class="number">0</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">"ckaddr"</span>: <span class="string">"10.238.161.3:9595"</span>,</span><br><span class="line">        <span class="string">"sn"</span>: <span class="number">0</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">"ckaddr"</span>: <span class="string">"10.238.161.2:9595"</span>,</span><br><span class="line">        <span class="string">"sn"</span>: <span class="number">0</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br><span class="line"><span class="built_in">status</span>:</span><br><span class="line">CpInvalid  = <span class="number">0</span> </span><br><span class="line">CpNormal   = <span class="number">1</span> 这个是正常，其他都是不正常状态</span><br><span class="line">CpDegrade  = <span class="number">2</span></span><br><span class="line">CpFault    = <span class="number">3</span> 从chunkserver没加载到序列号</span><br><span class="line">CpOffline  = <span class="number">4</span></span><br><span class="line">CpRollback = <span class="number">5</span></span><br><span class="line"></span><br><span class="line"><span class="number">9.</span>更新指定序列号信息,chunkserver修复序列号后需要更新到gateway(当出现三个副本序列号不一致时，chunkserver进行修复，修复一个ckid，就调用,通知gateway重新加载下序列号)</span><br><span class="line">适用场景：出现序列号异常，fullcheck也解决不了，人为介入的时候使用</span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/snbs/debug/stat?type=updateseqnum&amp;chunkid=xxxxxx"</span>  </span><br><span class="line"></span><br><span class="line"><span class="number">10.</span>提前知道chunkid,直接去chunkserver读取数据,每次都是读取<span class="number">4</span>k数据</span><br><span class="line">陈玉强 <span class="number">2020</span><span class="number">-02</span><span class="number">-08</span> <span class="number">14</span>:<span class="number">48</span>:<span class="number">13</span></span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/snbs/debug/stat?name=f2b99567-1422-4b27-98a5-0361e09c8d4b&amp;type=chunkdata&amp;ctbl=00000000011bd05b00000000&amp;file=/cyq/datafile2&amp;lba=0"</span></span><br><span class="line">name<span class="comment">---卷名字</span></span><br><span class="line"><span class="built_in">type</span> <span class="comment">---操作类型</span></span><br><span class="line">ctbl<span class="comment">----读取哪个chunkid</span></span><br><span class="line">file <span class="comment">----保存数据的文件（绝对路径）</span></span><br><span class="line">lba <span class="comment">----字节，相对于ctbl指定chunkid的偏移地址</span></span><br><span class="line">如果ctbl=xxxxx，lba=<span class="number">4096.</span>这个lba就是在读取ctbl这个chunkid内，从<span class="number">4096</span>字节开始的<span class="number">4</span>k长度的数据。</span><br><span class="line">因为三个副本读出来所有最后是<span class="number">12</span>k</span><br><span class="line"></span><br><span class="line"><span class="number">11.</span>设置流控（每个gateway都要执行)</span><br><span class="line">陈玉强：</span><br><span class="line"><span class="number">1.</span>流控现在默认值太低，领导让提高。我是做个版本给你，还是你用curl命令临时修改？？</span><br><span class="line"><span class="number">2.</span>嗯，现在流控阀值很低，内存积压达默认到<span class="number">1</span>GB就会对<span class="built_in">io</span>流控。需要调大默认值。。。。我改到版本里面，你可以选择换版本或者不换版本情况下使用curl命令@王俊凯</span><br><span class="line"></span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/snbs/debug/config?opc=DownSpeed&amp;arg=MemUsageLow&amp;value=3072000"</span> <span class="comment">----------流控取消阈值   单位都是KB</span></span><br><span class="line"></span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/snbs/debug/config?opc=DownSpeed&amp;arg=MemUsageHigh3&amp;value=4096000 "</span><span class="comment">----------三级流控阈值</span></span><br><span class="line"></span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/snbs/debug/config?opc=DownSpeed&amp;arg=MemUsageHigh2&amp;value=5120000"</span><span class="comment">----------二级流控阈值</span></span><br><span class="line"></span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/snbs/debug/config?opc=DownSpeed&amp;arg=MemUsageHigh1&amp;value=6144000"</span><span class="comment">----------一级流控阈值</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="007-超时重试："><a href="#007-超时重试：" class="headerlink" title="007-超时重试："></a>007-超时重试：</h1><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">提示下：</span></span><br><span class="line"><span class="number">1</span><span class="string">.要模拟两个chunkserver错误,这个是在gateway节点，模拟chunkserver的错误,模拟一个不顶用,这两个chunkserver要不同zone</span></span><br><span class="line"><span class="number">2</span><span class="string">.错误码后端存储错误分成两种：可重试能成功/不需要重试重试了也不会成功，观察日志里面错误</span></span><br><span class="line"><span class="number">3.</span><span class="string">tgt来判断是否需要重试，tgtd需要根据黄涛贻给的超时时间设置，为了可重试能成功可以一直重试</span></span><br><span class="line"><span class="string">linux</span> <span class="string">超时命令，添加系统配置文件，加lun自动设置</span></span><br><span class="line"></span><br><span class="line"><span class="string">（需要在相应的gateway上执行）</span></span><br><span class="line"><span class="number">1</span><span class="string">.设置这个chuankserver的写错误码为1024，该错误需要错误重试</span></span><br><span class="line"><span class="string">curl</span> <span class="string">"http://127.0.0.1:8686/snbs/debug/config?opc=addErrIp&amp;ip=10.238.161.1:9595&amp;errcode=1024"</span></span><br><span class="line"></span><br><span class="line"><span class="string">取消这个chuankserver的错误码</span></span><br><span class="line"><span class="string">curl</span> <span class="string">"http://127.0.0.1:8686/snbs/debug/config?opc=delErrIp&amp;ip=10.238.161.1:9595"</span>                  </span><br><span class="line"></span><br><span class="line"><span class="string">下面这些错误码是不需要重试的：（重试也不会成功的）(这写错误码是chunkserver的)</span></span><br><span class="line"><span class="attr">ErrChecksum:</span> <span class="number">102016</span></span><br><span class="line"><span class="attr">ErrWriteDataShort:</span> <span class="number">102021</span></span><br><span class="line"><span class="attr">ErrReadDataShort:</span> <span class="number">102020</span></span><br><span class="line"><span class="attr">ErrReadSegmentShort:</span> <span class="number">102022</span></span><br><span class="line"><span class="attr">ErrLegalSegmentID:</span> <span class="number">102025</span></span><br><span class="line"><span class="attr">ErrLegalSegmentOff:</span> <span class="number">102026</span></span><br><span class="line"><span class="attr">ErrExtentIDTooLong:</span> <span class="number">101003</span></span><br><span class="line"><span class="attr">ErrCloneExtentIDExist:</span> <span class="number">101004</span></span><br><span class="line"><span class="attr">ErrExtentCloned:</span> <span class="number">101005</span></span><br><span class="line"><span class="attr">ErrBadExtentPos:</span> <span class="number">101006</span></span><br><span class="line"><span class="attr">ErrExtentNodeIsNull:</span> <span class="number">101008</span></span><br><span class="line"><span class="attr">ErrBadOffset2:</span> <span class="number">101010</span></span><br><span class="line"><span class="attr">ErrBadOffset3:</span> <span class="number">101011</span></span><br><span class="line"><span class="string">可以重试成功：除了上面那些错误码都可以重试成功</span></span><br><span class="line"><span class="string">例如错误码：1</span></span><br><span class="line"></span><br><span class="line"><span class="number">2</span><span class="string">.设置ip这个chunkserver的写时延为duration</span> <span class="string">毫秒</span>   </span><br><span class="line"><span class="string">curl</span> <span class="string">"http://127.0.0.1:8686/snbs/debug/config?opc=addDelayIp&amp;ip=10.238.161.1:9595&amp;duration=600"</span>  </span><br><span class="line"></span><br><span class="line"><span class="string">取消ip这个chuankserver的写时延</span></span><br><span class="line"><span class="string">curl</span> <span class="string">"http://127.0.0.1:8686/snbs/debug/config?opc=delDelayIp&amp;ip=10.238.161.1:9595"</span></span><br><span class="line"></span><br><span class="line"><span class="number">3</span><span class="string">.这个可以打印当前你模拟了哪些错误，在对应gateway日志中查看</span></span><br><span class="line"><span class="string">curl</span> <span class="string">"http://127.0.0.1:8686/snbs/debug/config?opc=csIoDebug"</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="008-读缓存"><a href="#008-读缓存" class="headerlink" title="008-读缓存"></a>008-读缓存</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">涉及模块：gateway</span><br><span class="line">使用盘：ssd或者hhd</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-Gateway/E:%5C%E8%AE%B0%E5%BD%95%5Cimg%5C1585134520722.png" alt="1585134520722"></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">理解：</span><br><span class="line"><span class="number">1.</span>gateway读缓存中blk的大小为<span class="number">256</span>k</span><br><span class="line"><span class="number">2.</span>blk中有bh和stat，bh是记录数据位置，stat就是记录位信息以及访问次数和访问量，判断是否是热度</span><br><span class="line"><span class="number">3.</span>一个用户来<span class="number">64</span>k来读请求，会判断这<span class="number">64</span>k是否在bh上，如果都在那就从缓存读出来，如果不全在，就从chunkserver读。</span><br><span class="line"><span class="number">4.</span>一个用户<span class="number">1</span>m（大于<span class="number">256</span>k）来读请求，分切割成多个<span class="number">256</span>k，如果都在就从缓存读出来。</span><br><span class="line"><span class="number">5.</span>热数据怎么变冷：如果该数据访问次数变少，该数据在ssd上不会主动删除，而是热度衰减成<span class="number">0</span>，但是如果有新的热数据来了会选择热度为<span class="number">0</span>的先删除。<span class="number">1</span>小时候的blk会被衰减完</span><br><span class="line"><span class="number">6.</span>一个用户<span class="number">16</span>k来读，<span class="number">16</span>k成为热点，会缓存<span class="number">256</span>k的壳子以及壳子中<span class="number">16</span>k数据，<span class="number">256</span>k<span class="number">-16</span>k的数据未缓存，只有实际热点了才会缓存。</span><br><span class="line">所以说看到blk都缓存了，但是命中率还不是很高，说明只缓存了一个壳子，实际数据没缓存</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">测试：ssd500G</span><br><span class="line"><span class="number">1.</span>一个卷<span class="number">400</span>g都成了读缓存，性能</span><br><span class="line"><span class="number">2.</span>一个卷<span class="number">600</span>g，只能有<span class="number">500</span>G的缓存，性能</span><br><span class="line"><span class="number">3.</span>vdbench range方式读成热度，查看range是否存在在ssd盘上</span><br></pre></td></tr></table></figure>
+
+<p>接口：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>启动模块时增加-CaDev=sdxx 指定缓存磁盘参数（注意supervisor改配置文件需要重启）</span><br><span class="line">./server -log_dir=/tmp/gateway Gateway -CaDev=sdxx -masterip=<span class="number">10.37</span><span class="number">.2</span><span class="number">.18</span> -masterport=<span class="number">9393</span> -etcdip=<span class="number">10.37</span><span class="number">.2</span><span class="number">.18</span> -etcdport=<span class="number">2379</span> -ip=<span class="number">10.243</span><span class="number">.80</span><span class="number">.22</span> -port=<span class="number">8585</span>            </span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>开启卷是否读缓存：</span><br><span class="line">【开启读缓存：有些参数不设置，就是默认】</span><br><span class="line">curl -X PUT <span class="string">"http://127.0.0.1:8686/snbs/volume/CacheModify?volname=test001&amp;cacheonoff=on&amp;hotcycle=xx&amp;statcycle=xx&amp;hotstatpolicy=xx&amp;hotthreshold=xx"</span></span><br><span class="line"></span><br><span class="line">【关闭读缓存】</span><br><span class="line">curl -X PUT <span class="string">"http://127.0.0.1:8686/snbs/volume/CacheModify?volname=test001&amp;cacheonoff=off"</span></span><br><span class="line"></span><br><span class="line">volname   		--卷名</span><br><span class="line">cacheonoff  	--缓存开关 on：打开 off：关闭</span><br><span class="line">hotcycle     	--热度衰减周期  ，单位：秒  （默认<span class="number">420</span>秒）    <span class="comment">//建议保持默认</span></span><br><span class="line">statcycle    	--统计周期，单位：秒  （默认<span class="number">300</span>秒）            <span class="comment">//建议保持默认</span></span><br><span class="line">hotstatpolicy   --热度统计策略，<span class="number">0</span>：按次统计，<span class="number">1</span>：按流量统计  （默认按次统计）    <span class="comment">//建议保持默认</span></span><br><span class="line">hotthreshold   	--热度门限值，单位：次   （默认<span class="number">16</span>次）     <span class="comment">//根据卷做调整</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">举例：</span><br><span class="line">curl -X PUT <span class="string">"http://127.0.0.1:8686/snbs/volume/CacheModify?volname=test001&amp;cacheonoff=on&amp;hotcycle=420&amp;statcycle=300&amp;hotstatpolicy=0&amp;hotthreshold=16"</span></span><br><span class="line"></span><br><span class="line">curl -X PUT <span class="string">"http://127.0.0.1:8686/snbs/volume/CacheModify?volname=test001&amp;cacheonoff=on&amp;hotthreshold=1"</span></span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>gateway读缓存的热插拔（不需要人为手动格式化，使用过的也不用）</span><br><span class="line">sdxxx盘作为读缓存插入gateway进程</span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/snbs/debug/Cache?ops=ssd&amp;ssdname=sdxxx&amp;onoff=on"</span>  </span><br><span class="line"></span><br><span class="line">sdxxx盘拔出gateway进程</span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/snbs/debug/Cache?ops=ssd&amp;ssdname=sdxxx&amp;onoff=off"</span></span><br><span class="line"></span><br><span class="line"><span class="number">4.</span>查看卷的缓存命中情况(直接返回）</span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/snbs/debug/CacheHit?pretty=y"</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="string">"name"</span>: <span class="string">"test011"</span>,</span><br><span class="line">    <span class="string">"readioin"</span>: <span class="number">22314500</span>,</span><br><span class="line">    <span class="string">"readioout"</span>: <span class="number">22314500</span>,</span><br><span class="line">    <span class="string">"readiohit"</span>: <span class="number">12896568</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">日志也会打印：</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-03</span> <span class="number">13</span>:<span class="number">46</span>:<span class="number">23.878</span> [I <span class="number">02556</span> gatewaycli.go:<span class="number">709</span>] volume:test011 Prefix:<span class="number">00000000005</span>d1425 Vc:<span class="number">0xc44441eb40</span>  #说明卷打开了</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-03</span> <span class="number">13</span>:<span class="number">46</span>:<span class="number">23.878</span> [I <span class="number">02556</span> readcache.go:<span class="number">2002</span>] Prefix:<span class="number">00000000005</span>d1425 Vc:<span class="number">0xc44441eb40</span> BlkMap:<span class="number">116335</span> VcRefCnt:<span class="number">1</span> DelFlag:<span class="number">0</span></span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-03</span> <span class="number">13</span>:<span class="number">46</span>:<span class="number">23.878</span> [I <span class="number">02556</span> readcache.go:<span class="number">2003</span>] VcReadIOIn:<span class="number">4579901</span> VcReadIOOut:<span class="number">4579901</span> VcReadIOHit:<span class="number">0</span> VcReadIOTotalIn:<span class="number">4579901</span> VcReadIOTotalOut:<span class="number">4579901</span></span><br><span class="line">#表示命中<span class="number">0</span>个</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-03</span> <span class="number">13</span>:<span class="number">46</span>:<span class="number">23.878</span> [I <span class="number">02556</span> readcache.go:<span class="number">2005</span>] VcWriteIOTotalIn:<span class="number">0</span> VcWriteIOTotalOut:<span class="number">0</span> VcUpdateIOTotalIn:<span class="number">12</span> VcUpdateIOTotalOut:<span class="number">12</span></span><br><span class="line"></span><br><span class="line">VcReadIOIn:<span class="number">22314500</span>          -------当前一个小时内读请求个数</span><br><span class="line">VcReadIOOut:<span class="number">22314500</span>      -------当前一个小时内读请求完成个数</span><br><span class="line">VcReadIOHit:<span class="number">12896568</span>      -------当前一个小时内读请求缓存命中个数</span><br><span class="line">VcReadIOTotalIn:<span class="number">22314500</span>    -------总的读请求个数</span><br><span class="line">VcReadIOTotalOut:<span class="number">22314500</span>  -------总的读请求完成个数</span><br><span class="line"></span><br><span class="line"><span class="number">5.</span>设置卷到固定的gateway（在所有tgtmater上设置，同时开同时关）</span><br><span class="line">curl -X PUT <span class="string">"http://127.0.0.1:8888/sys/debug/fixedmode?gateway=10.238.161.4:8585"</span></span><br><span class="line">curl -X DELETE <span class="string">"http://127.0.0.1:8888/sys/debug/fixedmode"</span></span><br><span class="line"></span><br><span class="line"><span class="number">6.</span>查看卷上所有blk情况，是否在ssd中缓存，blk的热度等信息</span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/snbs/debug/CacheDump?volname=test014"</span></span><br><span class="line"></span><br><span class="line">[<span class="symbol">root@</span>host102442549 Gateway]# curl <span class="string">"http://127.0.0.1:8686/snbs/debug/CacheDump?volname=v4v010&amp;pretty=y"</span></span><br><span class="line">[</span><br><span class="line">  <span class="string">"SSD BLK NUM :2643detail:"</span>,</span><br><span class="line">  <span class="string">"5--10GB  BLK NUM:120per:4%"</span>,</span><br><span class="line">  <span class="string">"70--75GB  BLK NUM:107per:4%"</span>,</span><br><span class="line">  <span class="string">"85--90GB  BLK NUM:119per:4%"</span>,</span><br><span class="line">  <span class="string">"80--85GB  BLK NUM:137per:5%"</span>,</span><br><span class="line">  <span class="string">"30--35GB  BLK NUM:144per:5%"</span>,</span><br><span class="line">  <span class="string">"10--15GB  BLK NUM:138per:5%"</span>,</span><br><span class="line">  <span class="string">"90--95GB  BLK NUM:157per:5%"</span>,</span><br><span class="line">  <span class="string">"40--45GB  BLK NUM:130per:4%"</span>,</span><br><span class="line">  <span class="string">"45--50GB  BLK NUM:140per:5%"</span>,</span><br><span class="line">  <span class="string">"55--60GB  BLK NUM:138per:5%"</span>,</span><br><span class="line">  <span class="string">"65--70GB  BLK NUM:129per:4%"</span>,</span><br><span class="line">  <span class="string">"50--55GB  BLK NUM:138per:5%"</span>,</span><br><span class="line">  <span class="string">"0--5GB  BLK NUM:142per:5%"</span>,</span><br><span class="line">  <span class="string">"60--65GB  BLK NUM:125per:4%"</span>,</span><br><span class="line">  <span class="string">"20--25GB  BLK NUM:144per:5%"</span>,</span><br><span class="line">  <span class="string">"15--20GB  BLK NUM:115per:4%"</span>,</span><br><span class="line">  <span class="string">"25--30GB  BLK NUM:124per:4%"</span>,</span><br><span class="line">  <span class="string">"95--100GB  BLK NUM:145per:5%"</span>,</span><br><span class="line">  <span class="string">"35--40GB  BLK NUM:135per:5%"</span>,</span><br><span class="line">  <span class="string">"75--80GB  BLK NUM:116per:4%"</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">在log中看，很多信息：</span><br><span class="line">blk id : <span class="number">12942</span> offset : <span class="number">3392667648</span> hot : <span class="number">0</span></span><br><span class="line">disk:name:sdc1 PullOut:<span class="number">0</span> UsedBlkCnt:<span class="number">163499</span> DiskStatus:<span class="number">2000</span> RunFlag:<span class="number">0</span> RecycleRunFlag:<span class="number">0</span> LoadOffset:<span class="number">2097152</span> BhPage:<span class="number">102265</span> DirtyList:<span class="number">0</span> FreeList:<span class="number">1063682</span></span><br><span class="line">UsedBlkCnt:<span class="number">163499</span></span><br><span class="line">FreeList:<span class="number">1063682</span></span><br><span class="line">-两个加起来是磁盘能占用的总blk数，*<span class="number">256</span>k</span><br><span class="line"></span><br><span class="line"><span class="number">7.</span></span><br><span class="line">curl <span class="string">"http://10.242.180.212:8686/region/pool/vol?pretty=y=&amp;volume=v4v010"</span> -v</span><br><span class="line"><span class="string">"BHC"</span>` <span class="comment">//blk热度值有效周期</span></span><br><span class="line"><span class="string">"BSC"</span>` <span class="comment">//blk热度统计周期</span></span><br><span class="line"><span class="string">"HSP"</span>` <span class="comment">//热度统计策略</span></span><br><span class="line"><span class="string">"HT"</span>`  <span class="comment">//热度阀值</span></span><br><span class="line"><span class="string">"CF"</span>`  <span class="comment">//0:关闭缓存功能，1：缓存功能打开</span></span><br><span class="line">WR <span class="comment">//写打开的数量</span></span><br><span class="line">RD <span class="comment">//读打开的数量</span></span><br><span class="line">就是gateway 打开了几次</span><br></pre></td></tr></table></figure>
+
+<h1 id="009-租约"><a href="#009-租约" class="headerlink" title="009-租约"></a>009-租约</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">网上关于租约机制的解释：</span><br><span class="line">	在租约期限内，客户端可以保证其缓存中的数据是最新的。同时，租约可以容忍各种非拜占庭式失效（机器崩溃、网络分割等）。如果客户端崩溃或者网络中断，服务器只需要等待其租约过期就可以进行修改操作。如果服务器出错丢失了所有客户端的信息，它只需要知道租约的最长期限，就可以在这个期限之后安全的修改数据。与回调方式相比，服务器只需记住还拥有租约的客户端即可。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">和开发（金鑫、陈玉强）交流的理解：</span><br><span class="line">	租约的目的：确保只有一个gateway打开某一个卷，gateway每次打开卷都需要到master查下；没有租约的话只能保证某个卷分配给某一个gateway，但是不能保证这个卷可以在不同的gateway上打开；租约是gateway上的卷和主master建立租约。</span><br><span class="line"><span class="number">1.</span>gateway是客户端，master是服务端</span><br><span class="line"><span class="number">2.</span>gateway不再续约，超时租约的期限就会过期；</span><br><span class="line"><span class="number">3.</span>master如果<span class="number">30</span>s（一次<span class="number">10</span>s，共<span class="number">3</span>次收不到gateway的心跳认为是租约过期）</span><br><span class="line"><span class="number">4.</span>gateway每上报一次master，master就会帮gateway续约<span class="number">10</span>s</span><br><span class="line"><span class="number">5.</span>客户端gateway出现崩溃或者网络中断，master（服务器）只需要等待其租约过期就可以进行修改操作；gateway恢复之后重新续租</span><br><span class="line">【上面的修改：master（服务端）清空gateway上加载的卷的打开记录，gateway恢复正常，重新加载重新续约；】</span><br><span class="line">gateway只和主master签订租约，master操作etcd</span><br><span class="line"></span><br><span class="line">涉及场景：分带io和没io</span><br><span class="line"><span class="number">1.</span>有io的，gateway异常，卷带着租约一起切换gateway</span><br><span class="line"><span class="number">2.</span>没有io</span><br><span class="line">gateway异常，<span class="number">30</span>s后恢复gateway，租约失效，如果<span class="number">30</span>s有io访问该卷会重新和master建立租约。</span><br><span class="line">gateway异常，<span class="number">30</span>s内恢复gateway，<span class="number">30</span>s内有io，gateway才去建立租约，mster发现租约已存在，返回之前未失效的租约，然后该卷续约。</span><br><span class="line">gateway异常，<span class="number">30</span>s内恢复gateway，<span class="number">30</span>s内没io，gateway未去建立租约，mster过了<span class="number">30</span>s租约失效。</span><br><span class="line">gateway异常，<span class="number">30</span>s内恢复gateway，<span class="number">30</span>s后有io，gateway才去建立租约，mster创建新的租约，返回新租约，然后该卷重新续约。（和上一条合并测试）</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="010-模拟seq不一致"><a href="#010-模拟seq不一致" class="headerlink" title="010-模拟seq不一致"></a>010-模拟seq不一致</h1><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">主要目的：测试seq回滚</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span>测试接口：不能重复设置</span><br><span class="line">http://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8686</span>/snbs/<span class="keyword">debug</span>/<span class="keyword">drop</span>?<span class="type">name</span>=test1&amp;probability=<span class="number">0</span>&amp;<span class="type">record</span>=<span class="number">150</span></span><br><span class="line"><span class="type">name</span> 			卷名</span><br><span class="line">probability 	丢弃概率，取值范围[<span class="number">0</span>, <span class="number">100</span>]，其中<span class="number">0</span>为关闭，其他为打开</span><br><span class="line"><span class="type">record</span> 			纪录最近多少条 默认<span class="number">100</span>条，最大<span class="number">1000</span>（打开时候设置）</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>seq理解：</span><br><span class="line"><span class="number">887</span> 这种不会触发回滚seq ，触发chunkserver自修复</span><br><span class="line"><span class="number">889</span> 这种才会触发<span class="number">9</span>回滚到<span class="number">8</span></span><br><span class="line"></span><br><span class="line"><span class="number">1</span>、正常的流程是gateway串行的严格递增<span class="number">1</span>的发往chunkserver</span><br><span class="line"><span class="number">2</span>、seq从<span class="number">0</span> 到无穷大</span><br><span class="line"><span class="number">3</span>、seq可能出现不连续的，这样chunkserver会触发修复</span><br><span class="line"></span><br><span class="line">举例：</span><br><span class="line">打开：(在卷所在gateway上执行）</span><br><span class="line">curl "http://10.238.161.6:8686/snbs/debug/drop?name=test001&amp;probability=50&amp;record=1000"</span><br><span class="line"></span><br><span class="line">关闭：curl "http://10.238.161.6:8686/snbs/debug/drop?name=test001&amp;probability=0"</span><br><span class="line">关闭返回：</span><br><span class="line">&#123;</span><br><span class="line">        "ChunkId": "0000000000155d3c000000f0",</span><br><span class="line">        "Sn": <span class="number">289833</span>,</span><br><span class="line">        "PkgSn": <span class="number">289834</span>,</span><br><span class="line">        "Success": [</span><br><span class="line">            "10.238.161.1:9595"</span><br><span class="line">        ],</span><br><span class="line">        "Fail": [</span><br><span class="line">            "10.238.161.4:9595",</span><br><span class="line">            "10.238.161.5:9595"</span><br><span class="line">        ],</span><br><span class="line">        "Result": <span class="number">3</span>,</span><br><span class="line">        "StartTime": "2019-11-29 14:50:50.251",</span><br><span class="line">        "EndTime": "2019-11-29 14:50:50.426"</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">注释：</span><br><span class="line">result是指<span class="number">3</span>个副本，回滚操作成功的数量</span><br><span class="line"><span class="number">10.238</span><span class="number">.161</span><span class="number">.4</span>:<span class="number">9595</span>",</span><br><span class="line">"<span class="number">10.238</span><span class="number">.161</span><span class="number">.5</span>:<span class="number">9595</span>"</span><br><span class="line">这两个的seq是289833</span><br><span class="line"></span><br><span class="line">"<span class="number">10.238</span><span class="number">.161</span><span class="number">.1</span>:<span class="number">9595</span>"</span><br><span class="line">seq是289833</span><br></pre></td></tr></table></figure>
+
+<h1 id="011-理解克隆"><a href="#011-理解克隆" class="headerlink" title="011-理解克隆"></a>011-理解克隆</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>、独立克隆是完全拷贝实际数据，生成新的extent指向新数据。</span><br><span class="line"><span class="number">2</span>、链接克隆+快照是拷贝chunkserver元数据，seq一起拷贝，生成新的extent指向父卷数据。</span><br><span class="line">【元数据是指chunkserver的索引hdb，hdb指向磁盘具体位置】</span><br></pre></td></tr></table></figure>
+
+<h1 id="012-gateway反馈序号缺失chunkid到master进行修复功能"><a href="#012-gateway反馈序号缺失chunkid到master进行修复功能" class="headerlink" title="012-gateway反馈序号缺失chunkid到master进行修复功能"></a>012-gateway反馈序号缺失chunkid到master进行修复功能</h1><p>gateway上报异常chunk到master</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">陈玉强场景：</span><br><span class="line">存在一个chunkserver、全部io写错误，gateway将错误chunkid上报，master修复，一段时间后将chunkserver的io恢复正常</span><br><span class="line">存在一个chunkserver、部分io写错误，gateway将错误错误chunkid上报，master修复，一段时间后将chunkserver的io恢复正常</span><br><span class="line">存在多个chunkserver、全部io写错误，gateway将错误错误chunkid上报，master修复，一段时间后将chunkserver的io恢复正常</span><br><span class="line">存在多个chunkserver、部分io写错误，gateway将错误错误chunkid上报，master修复，一段时间后将chunkserver的io恢复正常</span><br><span class="line">@王俊凯</span><br><span class="line"></span><br><span class="line">金鑫：</span><br><span class="line">Gateway异常上报Master：</span><br><span class="line"><span class="number">1</span>、查询chunkserver上面上报的异常extent</span><br><span class="line">curl -X GET <span class="string">"http://127.0.0.1:8787/snbs/abnormalchunk?chunkserver=10.37.2.19:9191&amp;pretty=y"</span></span><br><span class="line"><span class="number">2</span>、查询gateway上报的chunk数量与分布：</span><br><span class="line">curl -X GET http:<span class="comment">//127.0.0.1:8787/snbs/abnormalchunk?gateway=10.37.2.19:8686&amp;pretty=y</span></span><br><span class="line"><span class="number">3</span>、触发chunkserver开始修复</span><br><span class="line">curl –X PUT http:<span class="comment">//127.0.0.1:8787/snbs/abnormalchunk?chunkserver=10.37.2.19:9191&amp;opt=fix&amp;pretty=y</span></span><br><span class="line"><span class="number">4</span>、取消chunkserver上报的extent</span><br><span class="line">curl –X PUT http:<span class="comment">//127.0.0.1:8787/snbs/abnormalchunk?chunkserver=10.37.2.19:9191&amp;opt=destroy&amp;pretty=y</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">黄涛贻</span><br><span class="line">Gateway 模拟部分extent异常：</span><br><span class="line"><span class="number">1.</span> 设置部分extent报错比例</span><br><span class="line">http:<span class="comment">//10.37.2.20:8686/snbs/debug/config?opc=setErrPct&amp;percent=9</span></span><br><span class="line"><span class="number">2.</span> 设置部分extent延时比例</span><br><span class="line">http:<span class="comment">//10.37.2.20:8686/snbs/debug/config?opc=setDelayPct&amp;percent=9</span></span><br><span class="line">percent取值范围[<span class="number">0</span>, <span class="number">9</span>]，默认值为<span class="number">0</span>，<span class="number">0</span>为全部模拟，<span class="number">1</span>模拟<span class="number">10</span>%extent，<span class="number">2</span>模拟<span class="number">20</span>%extent，以此类推</span><br><span class="line">先设置错误模拟，再设置错误比例（延时模拟同）</span><br><span class="line">删除所有的错误模拟，错误比例自动置零（延时模拟同）</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+      
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-Gateway/" title="BlockStorage-Gateway">https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-Gateway/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/BlockStorage-Gateway/" rel="tag"># BlockStorage-Gateway</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-Master/" rel="prev" title="BlockStorage-Master">
+      <i class="fa fa-chevron-left"></i> BlockStorage-Master
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-ETCD/" rel="next" title="BlockStorage-ETCD">
+      BlockStorage-ETCD <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#001-拓扑接口："><span class="nav-text">001-拓扑接口：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#002-池相关："><span class="nav-text">002-池相关：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#003-卷相关"><span class="nav-text">003-卷相关:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#004-迁移均衡："><span class="nav-text">004-迁移均衡：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#005-监控相关："><span class="nav-text">005-监控相关：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#006-调试接口："><span class="nav-text">006-调试接口：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#007-超时重试："><span class="nav-text">007-超时重试：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#008-读缓存"><span class="nav-text">008-读缓存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#009-租约"><span class="nav-text">009-租约</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#010-模拟seq不一致"><span class="nav-text">010-模拟seq不一致</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#011-理解克隆"><span class="nav-text">011-理解克隆</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#012-gateway反馈序号缺失chunkid到master进行修复功能"><span class="nav-text">012-gateway反馈序号缺失chunkid到master进行修复功能</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">What hurts more, the pain of hard work or the pain of regret?</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">34:51</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

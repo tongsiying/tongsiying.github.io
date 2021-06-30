@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="python-Paramiko">
+<meta property="og:url" content="https://tongsiying.github.io/2008/01/04/python/2008-01-04-python-paramiko/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/425762/201601/425762-20160103100859651-138631517.png">
+<meta property="article:published_time" content="2008-01-04T10:37:19.000Z">
+<meta property="article:modified_time" content="2021-02-17T09:24:38.852Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="python-Paramiko">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images2015.cnblogs.com/blog/425762/201601/425762-20160103100859651-138631517.png">
+
+<link rel="canonical" href="https://tongsiying.github.io/2008/01/04/python/2008-01-04-python-paramiko/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>python-Paramiko | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">嘻嘻嘻嘻嘻嘻</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2008/01/04/python/2008-01-04-python-paramiko/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="What hurts more, the pain of hard work or the pain of regret?">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          python-Paramiko
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2008-01-04 18:37:19" itemprop="dateCreated datePublished" datetime="2008-01-04T18:37:19+08:00">2008-01-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-02-17 17:24:38" itemprop="dateModified" datetime="2021-02-17T17:24:38+08:00">2021-02-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>19k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>17 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+<h1 id="Python模块之paramiko"><a href="#Python模块之paramiko" class="headerlink" title="Python模块之paramiko"></a><a href="https://www.cnblogs.com/python-nameless/p/6855804.html" target="_blank" rel="noopener external nofollow noreferrer">Python模块之paramiko</a></h1><p><strong>Paramiko</strong></p>
+<p>　　paramiko模块，基于SSH用于连接远程服务器并执行相关操作。</p>
+<p>一、安装</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 <span class="keyword">install</span> paramiko</span><br></pre></td></tr></table></figure>
+
+<p>二、使用</p>
+<p><strong>SSHClient</strong></p>
+<p>用于连接远程服务器并执行基本命令</p>
+<p><strong>基于用户名密码连接：</strong></p>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import paramiko</span><br><span class="line">   </span><br><span class="line"><span class="meta"># 创建SSH对象</span></span><br><span class="line">ssh = paramiko.SSHClient()</span><br><span class="line"><span class="meta"># 允许连接不在know_hosts文件中的主机</span></span><br><span class="line">ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())</span><br><span class="line"><span class="meta"># 连接服务器</span></span><br><span class="line">ssh.connect(hostname=<span class="string">'c1.salt.com'</span>, port=<span class="number">22</span>, username=<span class="string">'wupeiqi'</span>, password=<span class="string">'123'</span>)</span><br><span class="line">   </span><br><span class="line"><span class="meta"># 执行命令</span></span><br><span class="line"><span class="keyword">stdin</span>, <span class="keyword">stdout</span>, <span class="keyword">stderr</span> = ssh.exec_command(<span class="string">'ls'</span>)</span><br><span class="line"><span class="meta"># 获取命令结果</span></span><br><span class="line">result = <span class="keyword">stdout</span>.read()</span><br><span class="line">   </span><br><span class="line"><span class="meta"># 关闭连接</span></span><br><span class="line">ssh.close()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import paramiko</span><br><span class="line"></span><br><span class="line">transport = paramiko.Transport((<span class="string">'hostname'</span>, <span class="number">22</span>))</span><br><span class="line">transport.connect(username=<span class="string">'wupeiqi'</span>, password=<span class="string">'123'</span>)</span><br><span class="line"></span><br><span class="line">ssh = paramiko.SSHClient()</span><br><span class="line">ssh._transport = transport</span><br><span class="line"></span><br><span class="line"><span class="built_in">stdin</span>, <span class="built_in">stdout</span>, <span class="built_in">stderr</span> = ssh.exec_command(<span class="string">'df'</span>)</span><br><span class="line"><span class="built_in">print</span> <span class="built_in">stdout</span>.<span class="built_in">read</span>()</span><br><span class="line"></span><br><span class="line">transport.<span class="built_in">close</span>()</span><br><span class="line"></span><br><span class="line">SSHClient 封装 Transport</span><br></pre></td></tr></table></figure>
+
+<p><strong>基于公钥密钥连接：</strong></p>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import paramiko</span><br><span class="line">  </span><br><span class="line">private_key = paramiko.RSAKey.from_private_key_file(<span class="string">'/home/auto/.ssh/id_rsa'</span>)</span><br><span class="line">  </span><br><span class="line"><span class="meta"># 创建SSH对象</span></span><br><span class="line">ssh = paramiko.SSHClient()</span><br><span class="line"><span class="meta"># 允许连接不在know_hosts文件中的主机</span></span><br><span class="line">ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())</span><br><span class="line"><span class="meta"># 连接服务器</span></span><br><span class="line">ssh.connect(hostname=<span class="string">'c1.salt.com'</span>, port=<span class="number">22</span>, username=<span class="string">'wupeiqi'</span>, key=private_key)</span><br><span class="line">  </span><br><span class="line"><span class="meta"># 执行命令</span></span><br><span class="line"><span class="keyword">stdin</span>, <span class="keyword">stdout</span>, <span class="keyword">stderr</span> = ssh.exec_command(<span class="string">'df'</span>)</span><br><span class="line"><span class="meta"># 获取命令结果</span></span><br><span class="line">result = <span class="keyword">stdout</span>.read()</span><br><span class="line">  </span><br><span class="line"><span class="meta"># 关闭连接</span></span><br><span class="line">ssh.close()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import paramiko</span><br><span class="line"></span><br><span class="line">private_key = paramiko.<span class="module-access"><span class="module"><span class="identifier">RSAKey</span>.</span></span>from<span class="constructor">_private_key_file('<span class="operator">/</span><span class="params">home</span><span class="operator">/</span><span class="params">auto</span><span class="operator">/</span>.<span class="params">ssh</span><span class="operator">/</span><span class="params">id_rsa</span>')</span></span><br><span class="line"></span><br><span class="line">transport = paramiko.<span class="constructor">Transport(('<span class="params">hostname</span>', 22)</span>)</span><br><span class="line">transport.connect(username='wupeiqi', pkey=private_key)</span><br><span class="line"></span><br><span class="line">ssh = paramiko.<span class="constructor">SSHClient()</span></span><br><span class="line">ssh._transport = transport</span><br><span class="line"></span><br><span class="line">stdin, stdout, stderr = ssh.exec<span class="constructor">_command('<span class="params">df</span>')</span></span><br><span class="line"></span><br><span class="line">transport.close<span class="literal">()</span></span><br><span class="line"></span><br><span class="line">SSHClient 封装 Transport</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">import</span> paramiko</span><br><span class="line"><span class="keyword">from</span> io <span class="keyword">import</span> StringIO</span><br><span class="line"></span><br><span class="line">key_str = <span class="string">"""-----BEGIN RSA PRIVATE KEY-----</span></span><br><span class="line"><span class="string">MIIEpQIBAAKCAQEAq7gLsqYArAFco02/55IgNg0r7NXOtEM3qXpb/dabJ5Uyky/8</span></span><br><span class="line"><span class="string">NEHhFiQ7deHIRIuTW5Zb0kD6h6EBbVlUMBmwJrC2oSzySLU1w+ZNfH0PE6W6fans</span></span><br><span class="line"><span class="string">H80whhuc/YgP+fjiO+VR/gFcqib8Rll5UfYzf5H8uuOnDeIXGCVgyHQSmt8if1+e</span></span><br><span class="line"><span class="string">7hn1MVO1Lrm9Fco8ABI7dyv8/ZEwoSfh2C9rGYgA58LT1FkBRkOePbHD43xNfAYC</span></span><br><span class="line"><span class="string">tfLvz6LErMnwdOW4sNMEWWAWv1fsTB35PAm5CazfKzmam9n5IQXhmUNcNvmaZtvP</span></span><br><span class="line"><span class="string">c4f4g59mdsaWNtNaY96UjOfx83Om86gmdkKcnwIDAQABAoIBAQCnDBGFJuv8aA7A</span></span><br><span class="line"><span class="string">ZkBLe+GN815JtOyye7lIS1n2I7En3oImoUWNaJEYwwJ8+LmjxMwDCtAkR0XwbvY+</span></span><br><span class="line"><span class="string">c+nsKPEtkjb3sAu6I148RmwWsGncSRqUaJrljOypaW9dS+GO4Ujjz3/lw1lrxSUh</span></span><br><span class="line"><span class="string">IqVc0E7kyRW8kP3QCaNBwArYteHreZFFp6XmtKMtXaEA3saJYILxaaXlYkoRi4k8</span></span><br><span class="line"><span class="string">S2/K8aw3ZMR4tDCOfB4o47JaeiA/e185RK3A+mLn9xTDhTdZqTQpv17/YRPcgmwz</span></span><br><span class="line"><span class="string">zu30fhVXQT/SuI0sO+bzCO4YGoEwoBX718AWhdLJFoFq1B7k2ZEzXTAtjEXQEWm6</span></span><br><span class="line"><span class="string">01ndU/jhAasdfasdasdfasdfa3eraszxqwefasdfadasdffsFIfAsjQb4HdkmHuC</span></span><br><span class="line"><span class="string">OeJrJOd+CYvdEeqJJNnF6AbHyYHIECkj0Qq1kEfLOEsqzd5nDbtkKBte6M1trbjl</span></span><br><span class="line"><span class="string">HtJ2Yb8w6o/q/6Sbj7wf/cW3LIYEdeVCjScozVcQ9R83ea05J+QOAr4nAoGBAMaq</span></span><br><span class="line"><span class="string">UzLJfLNWZ5Qosmir2oHStFlZpxspax/ln7DlWLW4wPB4YJalSVovF2Buo8hr8X65</span></span><br><span class="line"><span class="string">lnPiE41M+G0Z7icEXiFyDBFDCtzx0x/RmaBokLathrFtI81UCx4gQPLaSVNMlvQA</span></span><br><span class="line"><span class="string">539GsubSrO4LpHRNGg/weZ6EqQOXvHvkUkm2bDDJAoGATytFNxen6GtC0ZT3SRQM</span></span><br><span class="line"><span class="string">WYfasdf3xbtuykmnluiofasd2sfmjnljkt7khghmghdasSDFGQfgaFoKfaawoYeH</span></span><br><span class="line"><span class="string">C2XasVUsVviBn8kPSLSVBPX4JUfQmA6h8HsajeVahxN1U9e0nYJ0sYDQFUMTS2t8</span></span><br><span class="line"><span class="string">RT57+WK/0ONwTWHdu+KnaJECgYEAid/ta8LQC3p82iNAZkpWlGDSD2yb/8rH8NQg</span></span><br><span class="line"><span class="string">9tjEryFwrbMtfX9qn+8srx06B796U3OjifstjJQNmVI0qNlsJpQK8fPwVxRxbJS/</span></span><br><span class="line"><span class="string">pMbNICrf3sUa4sZgDOFfkeuSlgACh4cVIozDXlR59Z8Y3CoiW0uObEgvMDIfenAj</span></span><br><span class="line"><span class="string">98pl3ZkCgYEAj/UCSni0dwX4pnKNPm6LUgiS7QvIgM3H9piyt8aipQuzBi5LUKWw</span></span><br><span class="line"><span class="string">DlQC4Zb73nHgdREtQYYXTu7p27Bl0Gizz1sW2eSgxFU8eTh+ucfVwOXKAXKU5SeI</span></span><br><span class="line"><span class="string">+MbuBfUYQ4if2N/BXn47+/ecf3A4KgB37Le5SbLDddwCNxGlBzbpBa0=</span></span><br><span class="line"><span class="string">-----END RSA PRIVATE KEY-----"""</span></span><br><span class="line"></span><br><span class="line">private_key = paramiko.RSAKey(file_obj=StringIO(key_str))</span><br><span class="line">transport = paramiko.Transport((<span class="string">'10.0.1.40'</span>, <span class="number">22</span>))</span><br><span class="line">transport.connect(username=<span class="string">'wupeiqi'</span>, pkey=private_key)</span><br><span class="line"></span><br><span class="line">ssh = paramiko.SSHClient()</span><br><span class="line">ssh._transport = transport</span><br><span class="line"></span><br><span class="line">stdin, stdout, stderr = ssh.exec_command(<span class="string">'df'</span>)</span><br><span class="line">result = stdout.read()</span><br><span class="line"></span><br><span class="line">transport.close()</span><br><span class="line"></span><br><span class="line">print(result)</span><br><span class="line"></span><br><span class="line">基于私钥字符进行连接</span><br></pre></td></tr></table></figure>
+
+<p><strong>SFTPClient</strong></p>
+<p>用于连接远程服务器并执行上传下载</p>
+<p><strong>基于用户名密码上传下载：</strong></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> paramiko</span><br><span class="line">  </span><br><span class="line">transport = paramiko.Transport((<span class="string">'hostname'</span>,<span class="number">22</span>))</span><br><span class="line">transport.<span class="keyword">connect</span>(username=<span class="string">'wupeiqi'</span>,<span class="keyword">password</span>=<span class="string">'123'</span>)</span><br><span class="line">  </span><br><span class="line">sftp = paramiko.SFTPClient.from_transport(transport)</span><br><span class="line"># 将<span class="keyword">location</span>.py 上传至服务器 /tmp/test.py</span><br><span class="line">sftp.put(<span class="string">'/tmp/location.py'</span>, <span class="string">'/tmp/test.py'</span>)</span><br><span class="line"># 将remove_path 下载到本地 local_path</span><br><span class="line">sftp.<span class="keyword">get</span>(<span class="string">'remove_path'</span>, <span class="string">'local_path'</span>)</span><br><span class="line">  </span><br><span class="line">transport.<span class="keyword">close</span>()</span><br></pre></td></tr></table></figure>
+
+<p><strong>基于公钥密钥上传下载：</strong></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import paramiko</span><br><span class="line">  </span><br><span class="line">private_key = paramiko.RSAKey.from_private_key_file(<span class="string">'/home/auto/.ssh/id_rsa'</span>)</span><br><span class="line">  </span><br><span class="line">transport = paramiko.Transport((<span class="string">'hostname'</span>, 22))</span><br><span class="line">transport.connect(<span class="attribute">username</span>=<span class="string">'wupeiqi'</span>, <span class="attribute">pkey</span>=private_key )</span><br><span class="line">  </span><br><span class="line">sftp = paramiko.SFTPClient.from_transport(transport)</span><br><span class="line"><span class="comment"># 将location.py 上传至服务器 /tmp/test.py</span></span><br><span class="line">sftp.put(<span class="string">'/tmp/location.py'</span>, <span class="string">'/tmp/test.py'</span>)</span><br><span class="line"><span class="comment"># 将remove_path 下载到本地 local_path</span></span><br><span class="line">sftp.<span class="builtin-name">get</span>(<span class="string">'remove_path'</span>, <span class="string">'local_path'</span>)</span><br><span class="line">  </span><br><span class="line">transport.close()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight monkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env python</span></span><br><span class="line"><span class="meta"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> paramiko</span><br><span class="line"><span class="keyword">import</span> uuid</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SSHConnection</span>(<span class="title">object</span>):</span></span><br><span class="line"></span><br><span class="line">    def __init__(<span class="built_in">self</span>, host=<span class="comment">'172.16.103.191', port=22, username='wupeiqi',pwd='123'):</span></span><br><span class="line">        <span class="built_in">self</span>.host = host</span><br><span class="line">        <span class="built_in">self</span>.port = port</span><br><span class="line">        <span class="built_in">self</span>.username = username</span><br><span class="line">        <span class="built_in">self</span>.pwd = pwd</span><br><span class="line">        <span class="built_in">self</span>.__k = None</span><br><span class="line"></span><br><span class="line">    def create_file(<span class="built_in">self</span>):</span><br><span class="line">        file_name = str(uuid.uuid4())</span><br><span class="line">        with open(file_name,<span class="comment">'w') as f:</span></span><br><span class="line">            f.write(<span class="comment">'sb')</span></span><br><span class="line">        <span class="keyword">return</span> file_name</span><br><span class="line"></span><br><span class="line">    def run(<span class="built_in">self</span>):</span><br><span class="line">        <span class="built_in">self</span>.connect()</span><br><span class="line">        <span class="built_in">self</span>.upload(<span class="comment">'/home/wupeiqi/tttttttttttt.py')</span></span><br><span class="line">        <span class="built_in">self</span>.rename(<span class="comment">'/home/wupeiqi/tttttttttttt.py', '/home/wupeiqi/ooooooooo.py)</span></span><br><span class="line">        <span class="built_in">self</span>.close()</span><br><span class="line"></span><br><span class="line">    def connect(<span class="built_in">self</span>):</span><br><span class="line">        transport = paramiko.Transport((<span class="built_in">self</span>.host,<span class="built_in">self</span>.port))</span><br><span class="line">        transport.connect(username=<span class="built_in">self</span>.username,password=<span class="built_in">self</span>.pwd)</span><br><span class="line">        <span class="built_in">self</span>.__transport = transport</span><br><span class="line"></span><br><span class="line">    def close(<span class="built_in">self</span>):</span><br><span class="line"></span><br><span class="line">        <span class="built_in">self</span>.__transport.close()</span><br><span class="line"></span><br><span class="line">    def upload(<span class="built_in">self</span>,target_path):</span><br><span class="line"><span class="meta">        # 连接，上传</span></span><br><span class="line">        file_name = <span class="built_in">self</span>.create_file()</span><br><span class="line"></span><br><span class="line">        sftp = paramiko.SFTPClient.from_transport(<span class="built_in">self</span>.__transport)</span><br><span class="line"><span class="meta">        # 将location.py 上传至服务器 /tmp/test.py</span></span><br><span class="line">        sftp.put(file_name, target_path)</span><br><span class="line"></span><br><span class="line">    def rename(<span class="built_in">self</span>, old_path, new_path):</span><br><span class="line"></span><br><span class="line">        ssh = paramiko.SSHClient()</span><br><span class="line">        ssh._transport = <span class="built_in">self</span>.__transport</span><br><span class="line"><span class="meta">        # 执行命令</span></span><br><span class="line">        cmd = <span class="string">"mv %s %s"</span> % (old_path, new_path,)</span><br><span class="line">        stdin, stdout, stderr = ssh.exec_command(cmd)</span><br><span class="line"><span class="meta">        # 获取命令结果</span></span><br><span class="line">        result = stdout.read()</span><br><span class="line"></span><br><span class="line">    def cmd(<span class="built_in">self</span>, command):</span><br><span class="line">        ssh = paramiko.SSHClient()</span><br><span class="line">        ssh._transport = <span class="built_in">self</span>.__transport</span><br><span class="line"><span class="meta">        # 执行命令</span></span><br><span class="line">        stdin, stdout, stderr = ssh.exec_command(command)</span><br><span class="line"><span class="meta">        # 获取命令结果</span></span><br><span class="line">        result = stdout.read()</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ha = SSHConnection()</span><br><span class="line">ha.run()</span><br><span class="line"></span><br><span class="line">Demo</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># 对于更多限制命令，需要在系统中设置</span></span><br><span class="line"><span class="meta-keyword">/etc/</span>sudoers</span><br><span class="line">  </span><br><span class="line">Defaults    requiretty</span><br><span class="line"><span class="symbol">Defaults:</span>cmdb    !requiretty</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">import paramiko</span><br><span class="line">import uuid</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SSHConnection</span>(<span class="title">object</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(<span class="keyword">self</span>, host=<span class="string">'192.168.11.61'</span>, port=<span class="number">22</span>, username=<span class="string">'alex'</span>,pwd=<span class="string">'alex3714'</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        <span class="keyword">self</span>.host = host</span><br><span class="line">        <span class="keyword">self</span>.port = port</span><br><span class="line">        <span class="keyword">self</span>.username = username</span><br><span class="line">        <span class="keyword">self</span>.pwd = pwd</span><br><span class="line">        <span class="keyword">self</span>.__k = None</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        <span class="keyword">self</span>.connect()</span><br><span class="line">        pass</span><br><span class="line">        <span class="keyword">self</span>.close()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">connect</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        transport = paramiko.Transport((<span class="keyword">self</span>.host,<span class="keyword">self</span>.port))</span><br><span class="line">        transport.connect(username=<span class="keyword">self</span>.username,password=<span class="keyword">self</span>.pwd)</span><br><span class="line">        <span class="keyword">self</span>.__transport = transport</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">close</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        <span class="keyword">self</span>.__transport.close()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">cmd</span><span class="params">(<span class="keyword">self</span>, command)</span></span><span class="symbol">:</span></span><br><span class="line">        ssh = paramiko.SSHClient()</span><br><span class="line">        ssh._transport = <span class="keyword">self</span>.__transport</span><br><span class="line">        <span class="comment"># 执行命令</span></span><br><span class="line">        stdin, stdout, stderr = ssh.exec_command(command)</span><br><span class="line">        <span class="comment"># 获取命令结果</span></span><br><span class="line">        result = stdout.read()</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">upload</span><span class="params">(<span class="keyword">self</span>,local_path, target_path)</span></span><span class="symbol">:</span></span><br><span class="line">        <span class="comment"># 连接，上传</span></span><br><span class="line">        sftp = paramiko.SFTPClient.from_transport(<span class="keyword">self</span>.__transport)</span><br><span class="line">        <span class="comment"># 将location.py 上传至服务器 /tmp/test.py</span></span><br><span class="line">        sftp.put(local_path, target_path)</span><br><span class="line"></span><br><span class="line">ssh = SSHConnection()</span><br><span class="line">ssh.connect()</span><br><span class="line">r1 = ssh.cmd(<span class="string">'df'</span>)</span><br><span class="line">ssh.upload(<span class="string">'s2.py'</span>, <span class="string">"/home/alex/s7.py"</span>)</span><br><span class="line">ssh.close()</span><br><span class="line"></span><br><span class="line">Demo</span><br></pre></td></tr></table></figure>
+
+<p><strong>堡垒机</strong></p>
+<p><img src="https://images2015.cnblogs.com/blog/425762/201601/425762-20160103100859651-138631517.png" alt="img"></p>
+<p>堡垒机执行流程：</p>
+<ol>
+<li>管理员为用户在服务器上创建账号（将公钥放置服务器，或者使用用户名密码）</li>
+<li>用户登陆堡垒机，输入堡垒机用户名密码，现实当前用户管理的服务器列表</li>
+<li>用户选择服务器，并自动登陆</li>
+<li>执行操作并同时将用户操作记录</li>
+</ol>
+<p><em>注：配置.brashrc实现ssh登陆后自动执行脚本，如：/usr/bin/python /home/wupeiqi/menu.py</em></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> create_engine, and_, or_, func, Table</span><br><span class="line"><span class="keyword">from</span> sqlalchemy.ext.declarative <span class="keyword">import</span> declarative_base</span><br><span class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> Column, Integer, String, ForeignKey, UniqueConstraint, DateTime</span><br><span class="line"><span class="keyword">from</span> sqlalchemy.orm <span class="keyword">import</span> sessionmaker, relationship</span><br><span class="line"></span><br><span class="line">Base = declarative_base()  <span class="comment"># 生成一个SqlORM 基类</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Host</span><span class="params">(Base)</span>:</span></span><br><span class="line">    __tablename__ = <span class="string">'host'</span></span><br><span class="line">    id = Column(Integer, primary_key=<span class="literal">True</span>, autoincrement=<span class="literal">True</span>)</span><br><span class="line">    hostname = Column(String(<span class="number">64</span>), unique=<span class="literal">True</span>, nullable=<span class="literal">False</span>)</span><br><span class="line">    ip_addr = Column(String(<span class="number">128</span>), unique=<span class="literal">True</span>, nullable=<span class="literal">False</span>)</span><br><span class="line">    port = Column(Integer, default=<span class="number">22</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HostUser</span><span class="params">(Base)</span>:</span></span><br><span class="line">    __tablename__ = <span class="string">'host_user'</span></span><br><span class="line">    id = Column(Integer, primary_key=<span class="literal">True</span>, autoincrement=<span class="literal">True</span>)</span><br><span class="line">    username = Column(String(<span class="number">64</span>), unique=<span class="literal">True</span>, nullable=<span class="literal">False</span>)</span><br><span class="line">    AuthTypes = [</span><br><span class="line">        (<span class="string">'p'</span>, <span class="string">'SSH/Password'</span>),</span><br><span class="line">        (<span class="string">'r'</span>, <span class="string">'SSH/KEY'</span>),</span><br><span class="line">    ]</span><br><span class="line">    auth_type = Column(String(<span class="number">16</span>))</span><br><span class="line">    cert = Column(String(<span class="number">255</span>))</span><br><span class="line"></span><br><span class="line">    host_id = Column(Integer, ForeignKey(<span class="string">'host.id'</span>))</span><br><span class="line"></span><br><span class="line">    __table_args__ = (</span><br><span class="line">        UniqueConstraint(<span class="string">'host_id'</span>, <span class="string">'username'</span>, name=<span class="string">'_host_username_uc'</span>),</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Group</span><span class="params">(Base)</span>:</span></span><br><span class="line">    __tablename__ = <span class="string">'group'</span></span><br><span class="line">    id = Column(Integer, primary_key=<span class="literal">True</span>, autoincrement=<span class="literal">True</span>)</span><br><span class="line">    name = Column(String(<span class="number">64</span>), unique=<span class="literal">True</span>, nullable=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserProfile</span><span class="params">(Base)</span>:</span></span><br><span class="line">    __tablename__ = <span class="string">'user_profile'</span></span><br><span class="line">    id = Column(Integer, primary_key=<span class="literal">True</span>, autoincrement=<span class="literal">True</span>)</span><br><span class="line">    username = Column(String(<span class="number">64</span>), unique=<span class="literal">True</span>, nullable=<span class="literal">False</span>)</span><br><span class="line">    password = Column(String(<span class="number">255</span>), nullable=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Group2UserProfile</span><span class="params">(Base)</span>:</span></span><br><span class="line">    __tablename__ = <span class="string">'group_2_user_profile'</span></span><br><span class="line">    id = Column(Integer, primary_key=<span class="literal">True</span>, autoincrement=<span class="literal">True</span>)</span><br><span class="line">    user_profile_id = Column(Integer, ForeignKey(<span class="string">'user_profile.id'</span>))</span><br><span class="line">    group_id = Column(Integer, ForeignKey(<span class="string">'group.id'</span>))</span><br><span class="line">    __table_args__ = (</span><br><span class="line">        UniqueConstraint(<span class="string">'user_profile_id'</span>, <span class="string">'group_id'</span>, name=<span class="string">'ux_user_group'</span>),</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Group2HostUser</span><span class="params">(Base)</span>:</span></span><br><span class="line">    __tablename__ = <span class="string">'group_2_host_user'</span></span><br><span class="line">    id = Column(Integer, primary_key=<span class="literal">True</span>, autoincrement=<span class="literal">True</span>)</span><br><span class="line">    host_user_id = Column(Integer, ForeignKey(<span class="string">'host_user.id'</span>))</span><br><span class="line">    group_id = Column(Integer, ForeignKey(<span class="string">'group.id'</span>))</span><br><span class="line">    __table_args__ = (</span><br><span class="line">        UniqueConstraint(<span class="string">'group_id'</span>, <span class="string">'host_user_id'</span>, name=<span class="string">'ux_group_host_user'</span>),</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserProfile2HostUser</span><span class="params">(Base)</span>:</span></span><br><span class="line">    __tablename__ = <span class="string">'user_profile_2_host_user'</span></span><br><span class="line">    id = Column(Integer, primary_key=<span class="literal">True</span>, autoincrement=<span class="literal">True</span>)</span><br><span class="line">    host_user_id = Column(Integer, ForeignKey(<span class="string">'host_user.id'</span>))</span><br><span class="line">    user_profile_id = Column(Integer, ForeignKey(<span class="string">'user_profile.id'</span>))</span><br><span class="line">    __table_args__ = (</span><br><span class="line">        UniqueConstraint(<span class="string">'user_profile_id'</span>, <span class="string">'host_user_id'</span>, name=<span class="string">'ux_user_host_user'</span>),</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AuditLog</span><span class="params">(Base)</span>:</span></span><br><span class="line">    __tablename__ = <span class="string">'audit_log'</span></span><br><span class="line">    id = Column(Integer, primary_key=<span class="literal">True</span>, autoincrement=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    action_choices2 = [</span><br><span class="line">        (<span class="string">u'cmd'</span>, <span class="string">u'CMD'</span>),</span><br><span class="line">        (<span class="string">u'login'</span>, <span class="string">u'Login'</span>),</span><br><span class="line">        (<span class="string">u'logout'</span>, <span class="string">u'Logout'</span>),</span><br><span class="line">    ]</span><br><span class="line">    action_type = Column(String(<span class="number">16</span>))</span><br><span class="line">    cmd = Column(String(<span class="number">255</span>))</span><br><span class="line">    date = Column(DateTime)</span><br><span class="line">    user_profile_id = Column(Integer, ForeignKey(<span class="string">'user_profile.id'</span>))</span><br><span class="line">    host_user_id = Column(Integer, ForeignKey(<span class="string">'host_user.id'</span>))</span><br><span class="line"></span><br><span class="line">表结构示例</span><br></pre></td></tr></table></figure>
+
+<p><strong>实现过程</strong></p>
+<p>1、前戏</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> paramiko</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> select</span><br><span class="line"><span class="keyword">import</span> getpass</span><br><span class="line"> </span><br><span class="line">tran = paramiko.Transport((<span class="string">'10.211.55.4'</span>, <span class="number">22</span>,))</span><br><span class="line">tran.start_client()</span><br><span class="line">tran.auth_password(<span class="string">'wupeiqi'</span>, <span class="string">'123'</span>)</span><br><span class="line"> </span><br><span class="line"># 打开一个通道</span><br><span class="line">chan = tran.open_session()</span><br><span class="line"># 获取一个终端</span><br><span class="line">chan.get_pty()</span><br><span class="line"># 激活器</span><br><span class="line">chan.invoke_shell()</span><br><span class="line"> </span><br><span class="line">#########</span><br><span class="line"># 利用sys.stdin,肆意妄为执行操作</span><br><span class="line"># 用户在终端输入内容，并将内容发送至远程服务器</span><br><span class="line"># 远程服务器执行命令，并将结果返回</span><br><span class="line"># 用户终端显示内容</span><br><span class="line">#########</span><br><span class="line"> </span><br><span class="line">chan.close()</span><br><span class="line">tran.close()</span><br></pre></td></tr></table></figure>
+
+<p>2、肆意妄为（一）</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> paramiko</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">select</span></span><br><span class="line"><span class="keyword">import</span> getpass</span><br><span class="line">from paramiko.py3compat <span class="keyword">import</span> u</span><br><span class="line"> </span><br><span class="line">tran = paramiko.Transport((<span class="string">'10.211.55.4'</span>, <span class="number">22</span>,))</span><br><span class="line">tran.start_client()</span><br><span class="line">tran.auth_password(<span class="string">'wupeiqi'</span>, <span class="string">'123'</span>)</span><br><span class="line"> </span><br><span class="line"># 打开一个通道</span><br><span class="line"><span class="keyword">chan</span> = tran.open_session()</span><br><span class="line"># 获取一个终端</span><br><span class="line"><span class="keyword">chan</span>.get_pty()</span><br><span class="line"># 激活器</span><br><span class="line"><span class="keyword">chan</span>.invoke_shell()</span><br><span class="line"> </span><br><span class="line">while True:</span><br><span class="line">    # 监视用户输入和服务器返回数据</span><br><span class="line">    # sys.stdin 处理用户输入</span><br><span class="line">    # <span class="keyword">chan</span> 是之前创建的通道，用于接收服务器返回信息</span><br><span class="line">    readable, writeable, error = <span class="keyword">select</span>.<span class="keyword">select</span>([<span class="keyword">chan</span>, sys.stdin, ],[],[],<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">chan</span> in readable:</span><br><span class="line">        try:</span><br><span class="line">            x = u(<span class="keyword">chan</span>.recv(<span class="number">1024</span>))</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">len</span>(x) == <span class="number">0</span>:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">'\r\n*** EOF\r\n'</span>)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            sys.stdout.write(x)</span><br><span class="line">            sys.stdout.flush()</span><br><span class="line">        except socket.timeout:</span><br><span class="line">            pass</span><br><span class="line">    <span class="keyword">if</span> sys.stdin in readable:</span><br><span class="line">        inp = sys.stdin.readline()</span><br><span class="line">        <span class="keyword">chan</span>.sendall(inp)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">chan</span>.<span class="built_in">close</span>()</span><br><span class="line">tran.<span class="built_in">close</span>()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env python</span><br><span class="line"># -*- coding:utf<span class="number">-8</span> -*-</span><br><span class="line"></span><br><span class="line">import paramiko</span><br><span class="line">import sys</span><br><span class="line">import <span class="built_in">os</span></span><br><span class="line">import socket</span><br><span class="line">import <span class="built_in">select</span></span><br><span class="line">import getpass</span><br><span class="line">from paramiko.py3compat import u</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">default_username = getpass.getuser()</span><br><span class="line">username = <span class="built_in">input</span>(<span class="string">'Username [%s]: '</span> % default_username)</span><br><span class="line"><span class="keyword">if</span> <span class="built_in">len</span>(username) == <span class="number">0</span>:</span><br><span class="line">    username = default_username</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">hostname = <span class="built_in">input</span>(<span class="string">'Hostname: '</span>)</span><br><span class="line"><span class="keyword">if</span> <span class="built_in">len</span>(hostname) == <span class="number">0</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">'*** Hostname required.'</span>)</span><br><span class="line">    sys.<span class="built_in">exit</span>(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">tran = paramiko.Transport((hostname, <span class="number">22</span>,))</span><br><span class="line">tran.start_client()</span><br><span class="line"></span><br><span class="line">default_auth = <span class="string">"p"</span></span><br><span class="line">auth = <span class="built_in">input</span>(<span class="string">'Auth by (p)assword or (r)sa key[%s] '</span> % default_auth)</span><br><span class="line"><span class="keyword">if</span> <span class="built_in">len</span>(auth) == <span class="number">0</span>:</span><br><span class="line">    auth = default_auth</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> auth == <span class="string">'r'</span>:</span><br><span class="line">    default_path = <span class="built_in">os</span>.<span class="built_in">path</span>.join(<span class="built_in">os</span>.environ[<span class="string">'HOME'</span>], <span class="string">'.ssh'</span>, <span class="string">'id_rsa'</span>)</span><br><span class="line">    <span class="built_in">path</span> = <span class="built_in">input</span>(<span class="string">'RSA key [%s]: '</span> % default_path)</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(<span class="built_in">path</span>) == <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">path</span> = default_path</span><br><span class="line">    try:</span><br><span class="line">        key = paramiko.RSAKey.from_private_key_file(<span class="built_in">path</span>)</span><br><span class="line">    except paramiko.PasswordRequiredException:</span><br><span class="line">        password = getpass.getpass(<span class="string">'RSA key password: '</span>)</span><br><span class="line">        key = paramiko.RSAKey.from_private_key_file(<span class="built_in">path</span>, password)</span><br><span class="line">    tran.auth_publickey(username, key)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    pw = getpass.getpass(<span class="string">'Password for %s@%s: '</span> % (username, hostname))</span><br><span class="line">    tran.auth_password(username, pw)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 打开一个通道</span><br><span class="line">chan = tran.open_session()</span><br><span class="line"># 获取一个终端</span><br><span class="line">chan.get_pty()</span><br><span class="line"># 激活器</span><br><span class="line">chan.invoke_shell()</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> True:</span><br><span class="line">    # 监视用户输入和服务器返回数据</span><br><span class="line">    # sys.<span class="built_in">stdin</span> 处理用户输入</span><br><span class="line">    # chan 是之前创建的通道，用于接收服务器返回信息</span><br><span class="line">    readable, writeable, <span class="built_in">error</span> = <span class="built_in">select</span>.<span class="built_in">select</span>([chan, sys.<span class="built_in">stdin</span>, ],[],[],<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">if</span> chan <span class="keyword">in</span> readable:</span><br><span class="line">        try:</span><br><span class="line">            x = u(chan.recv(<span class="number">1024</span>))</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">len</span>(x) == <span class="number">0</span>:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">'\r\n*** EOF\r\n'</span>)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            sys.<span class="built_in">stdout</span>.<span class="built_in">write</span>(x)</span><br><span class="line">            sys.<span class="built_in">stdout</span>.<span class="built_in">flush</span>()</span><br><span class="line">        except socket.timeout:</span><br><span class="line">            pass</span><br><span class="line">    <span class="keyword">if</span> sys.<span class="built_in">stdin</span> <span class="keyword">in</span> readable:</span><br><span class="line">        inp = sys.<span class="built_in">stdin</span>.readline()</span><br><span class="line">        chan.sendall(inp)</span><br><span class="line"></span><br><span class="line">chan.<span class="built_in">close</span>()</span><br><span class="line">tran.<span class="built_in">close</span>()</span><br><span class="line"></span><br><span class="line">完整示例（一）</span><br></pre></td></tr></table></figure>
+
+<p>3、肆意妄为（二）</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">import paramiko</span><br><span class="line">import sys</span><br><span class="line">import os</span><br><span class="line">import <span class="built_in">socket</span></span><br><span class="line">import select</span><br><span class="line">import getpass</span><br><span class="line">import termios</span><br><span class="line">import tty</span><br><span class="line"><span class="built_in">from</span> paramiko.py3compat import u</span><br><span class="line"> </span><br><span class="line">tran = paramiko.Transport((<span class="string">'10.211.55.4'</span>, <span class="number">22</span>,))</span><br><span class="line">tran.start_client()</span><br><span class="line">tran.auth_password(<span class="string">'wupeiqi'</span>, <span class="string">'123'</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 打开一个通道</span></span><br><span class="line">chan = tran.open_session()</span><br><span class="line"><span class="comment"># 获取一个终端</span></span><br><span class="line">chan.get_pty()</span><br><span class="line"><span class="comment"># 激活器</span></span><br><span class="line">chan.invoke_shell()</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 获取原tty属性</span></span><br><span class="line">oldtty = termios.tcgetattr(sys.<span class="keyword">stdin</span>)</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="comment"># 为tty设置新属性</span></span><br><span class="line">    <span class="comment"># 默认当前tty设备属性：</span></span><br><span class="line">    <span class="comment">#   输入一行回车，执行</span></span><br><span class="line">    <span class="comment">#   CTRL+C 进程退出，遇到特殊字符，特殊处理。</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment"># 这是为原始模式，不认识所有特殊符号</span></span><br><span class="line">    <span class="comment"># 放置特殊字符应用在当前终端，如此设置，将所有的用户输入均发送到远程服务器</span></span><br><span class="line">    tty.setraw(sys.<span class="keyword">stdin</span>.fileno())</span><br><span class="line">    chan.settimeout(<span class="number">0.0</span>)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">while</span> True:</span><br><span class="line">        <span class="comment"># 监视 用户输入 和 远程服务器返回数据（socket）</span></span><br><span class="line">        <span class="comment"># 阻塞，直到句柄可读</span></span><br><span class="line">        r, w, e = select.select([chan, sys.<span class="keyword">stdin</span>], [], [], <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">if</span> chan <span class="keyword">in</span> r:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                x = u(chan.recv(<span class="number">1024</span>))</span><br><span class="line">                <span class="keyword">if</span> <span class="built_in">len</span>(x) == <span class="number">0</span>:</span><br><span class="line">                    print(<span class="string">'\r\n*** EOF\r\n'</span>)</span><br><span class="line">                    break</span><br><span class="line">                sys.<span class="keyword">stdout</span>.<span class="built_in">write</span>(x)</span><br><span class="line">                sys.<span class="keyword">stdout</span>.flush()</span><br><span class="line">            except <span class="built_in">socket</span>.timeout:</span><br><span class="line">                pass</span><br><span class="line">        <span class="keyword">if</span> sys.<span class="keyword">stdin</span> <span class="keyword">in</span> r:</span><br><span class="line">            x = sys.<span class="keyword">stdin</span>.<span class="built_in">read</span>(<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">len</span>(x) == <span class="number">0</span>:</span><br><span class="line">                break</span><br><span class="line">            chan.<span class="built_in">send</span>(x)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    <span class="comment"># 重新设置终端属性</span></span><br><span class="line">    termios.tcsetattr(sys.<span class="keyword">stdin</span>, termios.TCSADRAIN, oldtty)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">chan.<span class="built_in">close</span>()</span><br><span class="line">tran.<span class="built_in">close</span>()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="attr">import</span> <span class="string">paramiko</span></span><br><span class="line"><span class="attr">import</span> <span class="string">sys</span></span><br><span class="line"><span class="attr">import</span> <span class="string">os</span></span><br><span class="line"><span class="attr">import</span> <span class="string">socket</span></span><br><span class="line"><span class="attr">import</span> <span class="string">getpass</span></span><br><span class="line"><span class="attr">import</span> <span class="string">termios</span></span><br><span class="line"><span class="attr">import</span> <span class="string">tty</span></span><br><span class="line"><span class="attr">import</span> <span class="string">select</span></span><br><span class="line"><span class="attr">from</span> <span class="string">paramiko.py3compat import u</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attr">def</span> <span class="string">interactive_shell(chan):</span></span><br><span class="line"><span class="comment">    # 获取原tty属性</span></span><br><span class="line">    <span class="attr">oldtty</span> = <span class="string">termios.tcgetattr(sys.stdin)</span></span><br><span class="line">    <span class="attr">try</span>:<span class="string"></span></span><br><span class="line"><span class="comment">        # 为tty设置新属性</span></span><br><span class="line"><span class="comment">        # 默认当前tty设备属性：</span></span><br><span class="line"><span class="comment">        #   输入一行回车，执行</span></span><br><span class="line"><span class="comment">        #   CTRL+C 进程退出，遇到特殊字符，特殊处理。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">        # 这是为原始模式，不认识所有特殊符号</span></span><br><span class="line"><span class="comment">        # 放置特殊字符应用在当前终端，如此设置，将所有的用户输入均发送到远程服务器</span></span><br><span class="line">        <span class="attr">tty.setraw(sys.stdin.fileno())</span></span><br><span class="line">        <span class="attr">tty.setcbreak(sys.stdin.fileno())</span></span><br><span class="line">        <span class="attr">chan.settimeout(0.0)</span></span><br><span class="line">        <span class="attr">while</span> <span class="string">True:</span></span><br><span class="line">            <span class="meta">r,</span> <span class="string">w, e = select.select([chan, sys.stdin], [], [])</span></span><br><span class="line">            <span class="attr">if</span> <span class="string">chan in r:</span></span><br><span class="line">                <span class="attr">try</span>:<span class="string"></span></span><br><span class="line">                    <span class="attr">x</span> = <span class="string">u(chan.recv(1024))</span></span><br><span class="line">                    <span class="attr">if</span> <span class="string">len(x) == 0:</span></span><br><span class="line">                        <span class="meta">sys.stdout.write('\r\n***</span> <span class="string">EOF\r\n')</span></span><br><span class="line">                        <span class="attr">break</span></span><br><span class="line">                    <span class="attr">sys.stdout.write(x)</span></span><br><span class="line">                    <span class="attr">sys.stdout.flush()</span></span><br><span class="line">                <span class="attr">except</span> <span class="string">socket.timeout:</span></span><br><span class="line">                    <span class="attr">pass</span></span><br><span class="line">            <span class="attr">if</span> <span class="string">sys.stdin in r:</span></span><br><span class="line">                <span class="attr">x</span> = <span class="string">sys.stdin.read(1)</span></span><br><span class="line">                <span class="attr">if</span> <span class="string">len(x) == 0:</span></span><br><span class="line">                    <span class="attr">break</span></span><br><span class="line">                <span class="attr">chan.send(x)</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">finally</span>:<span class="string"></span></span><br><span class="line"><span class="comment">        # 重新设置终端属性</span></span><br><span class="line">        <span class="meta">termios.tcsetattr(sys.stdin,</span> <span class="string">termios.TCSADRAIN, oldtty)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attr">def</span> <span class="string">run():</span></span><br><span class="line">    <span class="attr">hostname</span> = <span class="string">input('请输入主机名: ')</span></span><br><span class="line">    <span class="attr">tran</span> = <span class="string">paramiko.Transport((hostname, 22,))</span></span><br><span class="line">    <span class="attr">tran.start_client()</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">username</span> = <span class="string">input('请输入用户名: ')</span></span><br><span class="line">    <span class="attr">auth</span> = <span class="string">input('请输入密码进行验证(p) 或 (r)sa Key进行验证?')</span></span><br><span class="line">    <span class="attr">if</span> <span class="string">auth == 'r':</span></span><br><span class="line">        <span class="attr">path</span> = <span class="string">input('请输入RSA key 路径: ')</span></span><br><span class="line">        <span class="attr">try</span>:<span class="string"></span></span><br><span class="line">            <span class="attr">key</span> = <span class="string">paramiko.RSAKey.from_private_key_file(path)</span></span><br><span class="line">        <span class="attr">except</span> <span class="string">paramiko.PasswordRequiredException:</span></span><br><span class="line">            <span class="attr">password</span> = <span class="string">getpass.getpass('RSA key password: ')</span></span><br><span class="line">            <span class="attr">key</span> = <span class="string">paramiko.RSAKey.from_private_key_file(path, password)</span></span><br><span class="line">        <span class="meta">tran.auth_publickey(username,</span> <span class="string">key)</span></span><br><span class="line">    <span class="attr">else</span>:<span class="string"></span></span><br><span class="line">        <span class="attr">pw</span> = <span class="string">getpass.getpass('请输入密码 %s@%s: ' % (username, hostname))</span></span><br><span class="line">        <span class="meta">tran.auth_password(username,</span> <span class="string">pw)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">    # 打开一个通道</span></span><br><span class="line">    <span class="attr">chan</span> = <span class="string">tran.open_session()</span></span><br><span class="line"><span class="comment">    # 获取一个终端</span></span><br><span class="line">    <span class="attr">chan.get_pty()</span></span><br><span class="line"><span class="comment">    # 激活器</span></span><br><span class="line">    <span class="attr">chan.invoke_shell()</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">interactive_shell(chan)</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">chan.close()</span></span><br><span class="line">    <span class="attr">tran.close()</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attr">if</span> <span class="string">__name__ == '__main__':</span></span><br><span class="line">    <span class="attr">run()</span></span><br><span class="line"></span><br><span class="line"><span class="attr">基于Passwd或者RSA进行登陆操作</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> paramiko</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> getpass</span><br><span class="line"><span class="keyword">import</span> termios</span><br><span class="line"><span class="keyword">import</span> tty</span><br><span class="line"><span class="keyword">import</span> select</span><br><span class="line"><span class="keyword">from</span> paramiko.py3compat <span class="keyword">import</span> u</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">interactive_shell</span><span class="params">(chan)</span>:</span></span><br><span class="line">    <span class="comment"># 获取原tty属性</span></span><br><span class="line">    oldtty = termios.tcgetattr(sys.stdin)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 为tty设置新属性</span></span><br><span class="line">        <span class="comment"># 默认当前tty设备属性：</span></span><br><span class="line">        <span class="comment"># 输入一行回车，执行</span></span><br><span class="line">        <span class="comment"># CTRL+C 进程退出，遇到特殊字符，特殊处理。</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 这是为原始模式，不认识所有特殊符号</span></span><br><span class="line">        <span class="comment"># 放置特殊字符应用在当前终端，如此设置，将所有的用户输入均发送到远程服务器</span></span><br><span class="line">        tty.setraw(sys.stdin.fileno())</span><br><span class="line">        tty.setcbreak(sys.stdin.fileno())</span><br><span class="line">        chan.settimeout(<span class="number">0.0</span>)</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            r, w, e = select.select([chan, sys.stdin], [], [])</span><br><span class="line">            <span class="keyword">if</span> chan <span class="keyword">in</span> r:</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    x = u(chan.recv(<span class="number">1024</span>))</span><br><span class="line">                    <span class="keyword">if</span> len(x) == <span class="number">0</span>:</span><br><span class="line">                        sys.stdout.write(<span class="string">'\r\n*** EOF\r\n'</span>)</span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line">                    sys.stdout.write(x)</span><br><span class="line">                    sys.stdout.flush()</span><br><span class="line">                <span class="keyword">except</span> socket.timeout:</span><br><span class="line">                    <span class="keyword">pass</span></span><br><span class="line">            <span class="keyword">if</span> sys.stdin <span class="keyword">in</span> r:</span><br><span class="line">                x = sys.stdin.read(<span class="number">1</span>)</span><br><span class="line">                <span class="keyword">if</span> len(x) == <span class="number">0</span>:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                chan.send(x)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        <span class="comment"># 重新设置终端属性</span></span><br><span class="line">        termios.tcsetattr(sys.stdin, termios.TCSADRAIN, oldtty)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">()</span>:</span></span><br><span class="line">    db_dict = &#123;</span><br><span class="line">        <span class="string">'c1.salt.com'</span>: &#123;</span><br><span class="line">            <span class="string">'root'</span>: &#123;<span class="string">'user'</span>: <span class="string">'root'</span>, <span class="string">'auth'</span>: <span class="string">'r'</span>, <span class="string">"cert"</span>: <span class="string">'key路径'</span>&#125;,</span><br><span class="line">            <span class="string">'alex'</span>: &#123;<span class="string">'user'</span>: <span class="string">'alex'</span>, <span class="string">'auth'</span>: <span class="string">'p'</span>, <span class="string">"cert"</span>: <span class="string">'密码'</span>&#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">'c2.salt.com'</span>: &#123;</span><br><span class="line">            <span class="string">'alex'</span>: &#123;<span class="string">'user'</span>: <span class="string">'alex'</span>, <span class="string">'auth'</span>: <span class="string">'p'</span>, <span class="string">"cert"</span>: <span class="string">'密码'</span>&#125;,</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> db_dict.keys():</span><br><span class="line">        print(row)</span><br><span class="line"></span><br><span class="line">    hostname = input(<span class="string">'请选择主机: '</span>)</span><br><span class="line">    tran = paramiko.Transport((hostname, <span class="number">22</span>,))</span><br><span class="line">    tran.start_client()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> db_dict[hostname].keys():</span><br><span class="line">        print(item)</span><br><span class="line"></span><br><span class="line">    username = input(<span class="string">'请输入用户: '</span>)</span><br><span class="line"></span><br><span class="line">    user_dict = db_dict[hostname][username]</span><br><span class="line">    <span class="keyword">if</span> username[<span class="string">'auth'</span>] == <span class="string">'r'</span>:</span><br><span class="line">        key = paramiko.RSAKey.from_private_key_file(user_dict[<span class="string">'cert'</span>])</span><br><span class="line">        tran.auth_publickey(username, key)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        pw = user_dict[<span class="string">'cert'</span>]</span><br><span class="line">        tran.auth_password(username, pw)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 打开一个通道</span></span><br><span class="line">    chan = tran.open_session()</span><br><span class="line">    <span class="comment"># 获取一个终端</span></span><br><span class="line">    chan.get_pty()</span><br><span class="line">    <span class="comment"># 激活器</span></span><br><span class="line">    chan.invoke_shell()</span><br><span class="line"></span><br><span class="line">    interactive_shell(chan)</span><br><span class="line"></span><br><span class="line">    chan.close()</span><br><span class="line">    tran.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    run()</span><br><span class="line"></span><br><span class="line">提示用户选择主机和用户</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> paramiko</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> getpass</span><br><span class="line"><span class="keyword">import</span> termios</span><br><span class="line"><span class="keyword">import</span> tty</span><br><span class="line"><span class="keyword">import</span> select</span><br><span class="line"><span class="keyword">from</span> paramiko.py3compat <span class="keyword">import</span> u</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">interactive_shell</span><span class="params">(chan)</span>:</span></span><br><span class="line">    <span class="comment"># 获取原tty属性</span></span><br><span class="line">    oldtty = termios.tcgetattr(sys.stdin)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 为tty设置新属性</span></span><br><span class="line">        <span class="comment"># 默认当前tty设备属性：</span></span><br><span class="line">        <span class="comment"># 输入一行回车，执行</span></span><br><span class="line">        <span class="comment"># CTRL+C 进程退出，遇到特殊字符，特殊处理。</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 这是为原始模式，不认识所有特殊符号</span></span><br><span class="line">        <span class="comment"># 放置特殊字符应用在当前终端，如此设置，将所有的用户输入均发送到远程服务器</span></span><br><span class="line">        tty.setraw(sys.stdin.fileno())</span><br><span class="line">        tty.setcbreak(sys.stdin.fileno())</span><br><span class="line">        chan.settimeout(<span class="number">0.0</span>)</span><br><span class="line"></span><br><span class="line">        log = open(<span class="string">'handle.log'</span>, <span class="string">'a+'</span>, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">        flag = <span class="literal">False</span></span><br><span class="line">        temp_list = []</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            r, w, e = select.select([chan, sys.stdin], [], [])</span><br><span class="line">            <span class="keyword">if</span> chan <span class="keyword">in</span> r:</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    x = u(chan.recv(<span class="number">1024</span>))</span><br><span class="line">                    <span class="keyword">if</span> len(x) == <span class="number">0</span>:</span><br><span class="line">                        sys.stdout.write(<span class="string">'\r\n*** EOF\r\n'</span>)</span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line">                    <span class="comment"># 如果用户上一次点击的是tab键，则获取返回的内容写入在记录中</span></span><br><span class="line">                    <span class="keyword">if</span> flag:</span><br><span class="line">                        <span class="keyword">if</span> x.startswith(<span class="string">'\r\n'</span>):</span><br><span class="line">                            <span class="keyword">pass</span></span><br><span class="line">                        <span class="keyword">else</span>:</span><br><span class="line">                            temp_list.append(x)</span><br><span class="line">                        flag = <span class="literal">False</span></span><br><span class="line">                    sys.stdout.write(x)</span><br><span class="line">                    sys.stdout.flush()</span><br><span class="line">                <span class="keyword">except</span> socket.timeout:</span><br><span class="line">                    <span class="keyword">pass</span></span><br><span class="line">            <span class="keyword">if</span> sys.stdin <span class="keyword">in</span> r:</span><br><span class="line">                <span class="comment"># 读取用户在终端数据每一个字符</span></span><br><span class="line">                x = sys.stdin.read(<span class="number">1</span>)</span><br><span class="line">                <span class="keyword">if</span> len(x) == <span class="number">0</span>:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                <span class="comment"># 如果用户点击TAB键</span></span><br><span class="line">                <span class="keyword">if</span> x == <span class="string">'\t'</span>:</span><br><span class="line">                    flag = <span class="literal">True</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="comment"># 未点击TAB键，则将每个操作字符记录添加到列表中，以便之后写入文件</span></span><br><span class="line">                    temp_list.append(x)</span><br><span class="line"></span><br><span class="line">                <span class="comment"># 如果用户敲回车，则将操作记录写入文件</span></span><br><span class="line">                <span class="keyword">if</span> x == <span class="string">'\r'</span>:</span><br><span class="line">                    log.write(<span class="string">''</span>.join(temp_list))</span><br><span class="line">                    log.flush()</span><br><span class="line">                    temp_list.clear()</span><br><span class="line">                chan.send(x)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        <span class="comment"># 重新设置终端属性</span></span><br><span class="line">        termios.tcsetattr(sys.stdin, termios.TCSADRAIN, oldtty)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">()</span>:</span></span><br><span class="line">    db_dict = &#123;</span><br><span class="line">        <span class="string">'c1.salt.com'</span>: &#123;</span><br><span class="line">            <span class="string">'root'</span>: &#123;<span class="string">'user'</span>: <span class="string">'root'</span>, <span class="string">'auth'</span>: <span class="string">'r'</span>, <span class="string">"cert"</span>: <span class="string">'key路径'</span>&#125;,</span><br><span class="line">            <span class="string">'alex'</span>: &#123;<span class="string">'user'</span>: <span class="string">'alex'</span>, <span class="string">'auth'</span>: <span class="string">'p'</span>, <span class="string">"cert"</span>: <span class="string">'密码'</span>&#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">'c2.salt.com'</span>: &#123;</span><br><span class="line">            <span class="string">'root'</span>: &#123;<span class="string">'user'</span>: <span class="string">'root'</span>, <span class="string">'auth'</span>: <span class="string">'r'</span>, <span class="string">"cert"</span>: <span class="string">'key路径'</span>&#125;,</span><br><span class="line">            <span class="string">'alex'</span>: &#123;<span class="string">'user'</span>: <span class="string">'alex'</span>, <span class="string">'auth'</span>: <span class="string">'p'</span>, <span class="string">"cert"</span>: <span class="string">'密码'</span>&#125;,</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> db_dict.keys():</span><br><span class="line">        print(row)</span><br><span class="line"></span><br><span class="line">    hostname = input(<span class="string">'请选择主机: '</span>)</span><br><span class="line">    tran = paramiko.Transport((hostname, <span class="number">22</span>,))</span><br><span class="line">    tran.start_client()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> db_dict[hostname].keys():</span><br><span class="line">        print(item)</span><br><span class="line"></span><br><span class="line">    username = input(<span class="string">'请输入用户: '</span>)</span><br><span class="line"></span><br><span class="line">    user_dict = db_dict[hostname][username]</span><br><span class="line">    <span class="keyword">if</span> username[<span class="string">'auth'</span>] == <span class="string">'r'</span>:</span><br><span class="line">        key = paramiko.RSAKey.from_private_key_file(user_dict[<span class="string">'cert'</span>])</span><br><span class="line">        tran.auth_publickey(username, key)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        pw = user_dict[<span class="string">'cert'</span>]</span><br><span class="line">        tran.auth_password(username, pw)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 打开一个通道</span></span><br><span class="line">    chan = tran.open_session()</span><br><span class="line">    <span class="comment"># 获取一个终端</span></span><br><span class="line">    chan.get_pty()</span><br><span class="line">    <span class="comment"># 激活器</span></span><br><span class="line">    chan.invoke_shell()</span><br><span class="line"></span><br><span class="line">    interactive_shell(chan)</span><br><span class="line"></span><br><span class="line">    chan.close()</span><br><span class="line">    tran.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    run()</span><br><span class="line"></span><br><span class="line">提示用户选择主机和用户（记录操作日志）</span><br></pre></td></tr></table></figure>
+
+<p><em>更多参见：paramoko源码 <a href="https://github.com/paramiko/paramiko" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/paramiko/paramiko</a></em> </p>
+<p><em>武沛齐：<a href="http://www.cnblogs.com/wupeiqi/p/5699254.html" target="_blank" rel="noopener external nofollow noreferrer">http://www.cnblogs.com/wupeiqi/p/5699254.html</a></em></p>
+<p><strong>Alex堡垒机：<a href="http://www.cnblogs.com/alex3714/articles/5286889.html" target="_blank" rel="noopener external nofollow noreferrer">http://www.cnblogs.com/alex3714/articles/5286889.html</a></strong></p>
+
+    </div>
+
+    
+    
+    
+      
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2008/01/04/python/2008-01-04-python-paramiko/" title="python-Paramiko">https://tongsiying.github.io/2008/01/04/python/2008-01-04-python-paramiko/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python-Paramiko/" rel="tag"># python-Paramiko</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2008/01/04/self/2007-01-17-plan-2021/" rel="prev" title="2021-plan">
+      <i class="fa fa-chevron-left"></i> 2021-plan
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2008/01/04/python/2008-01-04-python-draft/" rel="next" title="python-draft">
+      python-draft <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Python模块之paramiko"><span class="nav-text">Python模块之paramiko</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">What hurts more, the pain of hard work or the pain of regret?</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">34:51</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

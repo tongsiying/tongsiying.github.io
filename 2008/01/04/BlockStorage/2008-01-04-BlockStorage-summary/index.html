@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="BlockStorage-summary">
+<meta property="og:url" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1585810563062.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1585810563062.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1586251793175.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1586251793175.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1585811701841.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1585811828238.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1585811828238.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1585811896052.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1585811896052.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1585811923108.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1585811923108.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1585811966301.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1585811966301.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1585811992326.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1585811992326.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1584929216035-1585213121100.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1584929216035-1585213121100.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1584929259238-1585213190198.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1584929259238-1585213190198.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1584929273426-1585213203412.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1584929273426-1585213203412.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1584929291895-1585213213271.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1584929291895-1585213213271.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1584929314961-1585213218391.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1584929314961-1585213218391.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1584929329671-1585213222519.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1584929329671-1585213222519.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1584929352155-1585213226362.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1584929352155-1585213226362.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1584929367305-1585213229996.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1584929367305-1585213229996.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1584929415481-1585213233537.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1584929415481-1585213233537.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1584929468585-1585213236130.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1584929468585-1585213236130.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1584929482117-1585213239003.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1584929482117-1585213239003.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1584929499524-1585213241008.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1584929499524-1585213241008.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1584929512899-1585213243916.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1584929512899-1585213243916.png">
+<meta property="article:published_time" content="2008-01-04T10:37:19.000Z">
+<meta property="article:modified_time" content="2021-02-15T07:57:58.646Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="BlockStorage-summary">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1585810563062.png">
+
+<link rel="canonical" href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>BlockStorage-summary | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">嘻嘻嘻嘻嘻嘻</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="What hurts more, the pain of hard work or the pain of regret?">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          BlockStorage-summary
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2008-01-04 18:37:19" itemprop="dateCreated datePublished" datetime="2008-01-04T18:37:19+08:00">2008-01-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-02-15 15:57:58" itemprop="dateModified" datetime="2021-02-15T15:57:58+08:00">2021-02-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BlockStorage/" itemprop="url" rel="index"><span itemprop="name">BlockStorage</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>19k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>17 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="comment">//www.cnblogs.com/wuchanming/p/4893789.html</span></span><br><span class="line">https:<span class="comment">//blog.51cto.com/yangdonglin/1246369</span></span><br><span class="line">https:<span class="comment">//blog.51cto.com/ixdba/526452</span></span><br><span class="line">https:<span class="comment">//blog.csdn.net/willinux20130812/article/details/45769471</span></span><br><span class="line"></span><br><span class="line">http:<span class="comment">//www.mamicode.com/info-detail-1543374.html</span></span><br><span class="line">http:<span class="comment">//www.zhetao.com/content275</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ll 查看ll /lib/modules/<span class="number">3.10</span><span class="number">.0</span><span class="number">-693.25</span><span class="number">.4</span>.el7.x86_64/build</span><br><span class="line">[<span class="symbol">root@</span>block-storage10 <span class="number">3.10</span><span class="number">.0</span><span class="number">-693.25</span><span class="number">.4</span>.el7.x86_64]# ll /lib/modules/<span class="number">3.10</span><span class="number">.0</span><span class="number">-693.25</span><span class="number">.4</span>.el7.x86_64/build</span><br><span class="line">lrwxrwxrwx <span class="number">1</span> root root <span class="number">43</span> Jun <span class="number">20</span>  <span class="number">2018</span> /lib/modules/<span class="number">3.10</span><span class="number">.0</span><span class="number">-693.25</span><span class="number">.4</span>.el7.x86_64/build -&gt; /usr/src/kernels/<span class="number">3.10</span><span class="number">.0</span><span class="number">-693.25</span><span class="number">.4</span>.el7.x86_64</span><br><span class="line"></span><br><span class="line">openstack：</span><br><span class="line">丁毅(<span class="number">18119690</span>) <span class="number">2019</span><span class="number">-04</span><span class="number">-15</span> <span class="number">16</span>:<span class="number">05</span>:<span class="number">10</span></span><br><span class="line">https:<span class="comment">//github.com/huaweistorage/FusionStorage_OpenStack_Driver</span></span><br><span class="line">丁毅(<span class="number">18119690</span>) <span class="number">2019</span><span class="number">-04</span><span class="number">-15</span> <span class="number">16</span>:<span class="number">05</span>:<span class="number">26</span></span><br><span class="line">https:<span class="comment">//docs.openstack.org/mitaka/config-reference/block-storage/drivers/</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">http:<span class="comment">//dy.163.com/v2/article/detail/E278D02S05119IE4.html</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="001-介绍"><a href="#001-介绍" class="headerlink" title="001-介绍"></a>001-介绍</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">国内 Ceph 厂家一直存在重UI、重功能、而轻稳定性、轻性能的不良倾向，过分依赖Ceph开源社区，甚至无</span><br><span class="line">法对Ceph优缺点有一个深入的认识，自然无从改进Ceph的稳定性和性能面临的问题。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">1</span>）块存储目前在苏宁可归纳为两类使用场景：传统的IOE环境中的商用块存储和云计算环境中的本地块存储。其中IOE环境中使用富士通、IBM等外部高端存储，云计算环境中使用X86服务器的本地磁盘存储。云计算是集团IT基础架构发展方向，云计算环境中的块存储是苏宁存储平台优化的重点；</span><br><span class="line"><span class="number">2</span>）为虚机、容器、数据库提供后端高可靠、高性能、高可用的分布式块存储，解决虚拟化（系统盘、数据盘）使用本地存储+RAID5，不支持跨节点高可用问题；</span><br><span class="line"><span class="number">3</span>）系统盘在线热迁移，业务几乎无中断，影响小；有状态应用数据盘，数据不再迁移，速度更快，解决由于资源争抢、热点打散、负载均衡，需要进行虚机迁移,速度慢，业务中断的问题；</span><br><span class="line"><span class="number">4</span>）计算和存储分离，资源分配更加合理,存储性能和容量能够单独规划、单独扩容，解决分配资源时，调度算法维度过多，资源碎片，服务器中SSD磁盘利用率和IO使用率低的问题；</span><br><span class="line"><span class="number">5</span>）不需要数据库级备份，新机器重新挂载数据盘即可恢复，时间短；使用快照可以快速恢复到任意时间点</span><br><span class="line">，解决数据库备份方式单一，目前只支持数据库级备份，备份rpo、rto长的问题；</span><br><span class="line"><span class="number">6</span>）应用数据盘容量可以纵向调整在线弹性扩容，支持精简配置，根据业务使用情况动态分配空间，解决数据库需要扩磁盘，部分宿主机无可用空间扩容。</span><br><span class="line"></span><br><span class="line">各类存储适合的应用</span><br><span class="line"><span class="number">1</span>、块存储：适合数据库应用，需要裸盘，且iscsi协议效率较高；</span><br><span class="line"><span class="number">2</span>、文件存储：数据共享容易，利于跨平台文件共享；</span><br><span class="line"><span class="number">3</span>、对象存储：适合为云盘供应商提供底层支撑，静态网站托管，云备份和容灾，视频监控的存储以及构建海量存储资源池；</span><br><span class="line"></span><br><span class="line">工作不一样，master是管理元数据的，gateway是对外api和缓存作用</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">https:</span><span class="comment">//help.aliyun.com/document_detail/25382.html?spm=a2c4g.11186623.6.777.14ef227ccytzi6</span></span><br><span class="line">阿里</span><br><span class="line">谁是全球最快SSD云盘？<span class="number">5</span>款主流云厂商SSD云盘性能测试 </span><br><span class="line"><span class="symbol">https:</span><span class="comment">//www.sohu.com/a/219636624_695023</span></span><br></pre></td></tr></table></figure>
+
+<p>SNBS的特点</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">我们的快照用的cow还是row</span><br><span class="line">陈玉强</span><br><span class="line">row</span><br><span class="line"></span><br><span class="line">我们的QoS流控用的什么算法？令牌桶吗@陈玉强 @格瓦斯 @金鑫</span><br><span class="line">是的</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">哪些请求可以拿到令牌 </span><br><span class="line">陈玉强(<span class="number">18101378</span>) <span class="number">2020</span><span class="number">-04</span><span class="number">-07</span> <span class="number">15</span>:<span class="number">50</span>:<span class="number">23</span> </span><br><span class="line">所有请求都要来拿令牌，如果令牌足够，就把请求放过，如果令牌不够就把请求挂载桶的等待list上，等来了一批新令牌优先给等待list上的请求 </span><br><span class="line">王老吉(<span class="number">17112231</span>) <span class="number">2020</span><span class="number">-04</span><span class="number">-07</span> <span class="number">15</span>:<span class="number">51</span>:<span class="number">18</span> </span><br><span class="line">了解了 排队等放行 </span><br><span class="line">陈玉强(<span class="number">18101378</span>) <span class="number">2020</span><span class="number">-04</span><span class="number">-07</span> <span class="number">15</span>:<span class="number">51</span>:<span class="number">32</span> </span><br><span class="line">对 </span><br><span class="line">王老吉(<span class="number">17112231</span>) <span class="number">2020</span><span class="number">-04</span><span class="number">-07</span> <span class="number">15</span>:<span class="number">51</span>:<span class="number">46</span> </span><br><span class="line">是否放行取决于令牌够不够 </span><br><span class="line">王老吉(<span class="number">17112231</span>) <span class="number">2020</span><span class="number">-04</span><span class="number">-07</span> <span class="number">15</span>:<span class="number">51</span>:<span class="number">56</span> </span><br><span class="line">但还有一个问题 所有的请求都可以排队吗 </span><br><span class="line">王老吉(<span class="number">17112231</span>) <span class="number">2020</span><span class="number">-04</span><span class="number">-07</span> <span class="number">15</span>:<span class="number">52</span>:<span class="number">01</span> </span><br><span class="line">还是说你们会筛选 </span><br><span class="line">陈玉强(<span class="number">18101378</span>) <span class="number">2020</span><span class="number">-04</span><span class="number">-07</span> <span class="number">15</span>:<span class="number">52</span>:<span class="number">29</span> </span><br><span class="line">所有的 </span><br><span class="line">陈玉强(<span class="number">18101378</span>) <span class="number">2020</span><span class="number">-04</span><span class="number">-07</span> <span class="number">15</span>:<span class="number">52</span>:<span class="number">49</span> </span><br><span class="line">只有读写请求，没逼得 </span><br><span class="line">陈玉强(<span class="number">18101378</span>) <span class="number">2020</span><span class="number">-04</span><span class="number">-07</span> <span class="number">15</span>:<span class="number">52</span>:<span class="number">51</span> </span><br><span class="line">别的 </span><br><span class="line">王老吉(<span class="number">17112231</span>) <span class="number">2020</span><span class="number">-04</span><span class="number">-07</span> <span class="number">15</span>:<span class="number">52</span>:<span class="number">57</span> </span><br><span class="line">ok</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="002-网络架构"><a href="#002-网络架构" class="headerlink" title="002-网络架构"></a>002-网络架构</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>openstack的【业务网（万兆）+存储网（对接snbs的万兆） 合设】、管理网（千兆）</span><br><span class="line">snbs走access</span><br><span class="line"></span><br><span class="line">@全体成员 跟数据中心和CTO沟通的情况如下：</span><br><span class="line"><span class="number">1</span>、计算节点业务网和存储网分离的方式，需要考虑增加网卡、布线、扎线、增加交换机，机柜资源、虚机的重启等一系列的操作，结合业内互联网厂商的使用模式，所以暂不采用此方案；</span><br><span class="line"><span class="number">2</span>、计算节点上的业务网和存储网公用万兆网卡，对应的交换机端口配置为trunk模式，OpenStack需要修改ovs支持，请宫旭飞安排周三前验证确认并评估工作量；</span><br><span class="line"><span class="number">3</span>、存储节点万兆网卡对应的交换机端口配置为access模式，可以与计算节点的存储网通信；</span><br><span class="line"><span class="number">4</span>、计算节点上的业务网和存储网是否分离，视后续应用模型，是否带宽是瓶颈再讨论；</span><br><span class="line"><span class="number">5</span>、测试在资源允许的情况下，可以考虑对两种方案都进行验证；</span><br><span class="line"></span><br><span class="line">郭靓 <span class="number">2019</span><span class="number">-08</span><span class="number">-30</span> <span class="number">16</span>:<span class="number">32</span>:<span class="number">04</span></span><br><span class="line">第一步就是这几台机器的万兆网卡接的交换机口找网络的配置成trunk动态聚合</span><br><span class="line">第二步就是万兆交换机要上联汇聚并透传这些环境的vlan</span><br><span class="line">目前看新港sit pre pst环境还不是都能相互通信</span><br><span class="line">只能先接一个环境的来测</span><br><span class="line">王星童 <span class="number">2019</span><span class="number">-08</span><span class="number">-30</span> <span class="number">16</span>:<span class="number">32</span>:<span class="number">44</span></span><br><span class="line">那就选pst环境测</span><br><span class="line">王星童 <span class="number">2019</span><span class="number">-08</span><span class="number">-30</span> <span class="number">16</span>:<span class="number">33</span>:<span class="number">00</span></span><br><span class="line">我的万兆能通pst环境嘛？</span><br><span class="line">郭靓 <span class="number">2019</span><span class="number">-08</span><span class="number">-30</span> <span class="number">16</span>:<span class="number">33</span>:<span class="number">05</span></span><br><span class="line">还有就是 最好不要直接上现网环境 比较还在测试阶段</span><br><span class="line">你们可以先模拟测试 比如建一个环境先跑起来</span><br><span class="line">郭靓 <span class="number">2019</span><span class="number">-08</span><span class="number">-30</span> <span class="number">16</span>:<span class="number">33</span>:<span class="number">16</span></span><br><span class="line">环境互通得问网络那边了</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">openstack 侧：</span><br><span class="line">iscsi客户端服务端节点：</span><br><span class="line">郭总，这两台机器，王星童还需要配置一个存储网络，之前这个机器是接了<span class="number">6</span>跟线的，一组千兆管理网，配置动态access，一组万兆业务网，配置动态access，一组千兆业务网，配置trunk。目前看这两台服务器只接了四根线，另外两个网口也需要接线和配置</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">涉及网络磁盘</span><br><span class="line">网络：</span><br><span class="line"><span class="number">1.</span>openstack的【业务网（万兆）+存储网（对接snbs的万兆） 合设】、管理网（千兆）</span><br><span class="line"><span class="number">2.</span>snbs走access</span><br><span class="line"><span class="number">3.</span>两个万兆做bond（存储sit）</span><br><span class="line">[<span class="symbol">root@</span>host102438014 ~]# cat /etc/sysconfig/network-scripts/ifcfg-bond0 </span><br><span class="line">DEVICE=<span class="string">"bond0"</span></span><br><span class="line">BOOTPROTO=<span class="string">"none"</span></span><br><span class="line">ONBOOT=<span class="string">"yes"</span></span><br><span class="line">TYPE=Bond</span><br><span class="line">BONDING_OPTS=<span class="string">"mode=4 miimon=100 xmit_hash_policy=layer3+4"</span></span><br><span class="line">IPADDR=<span class="number">10.243</span><span class="number">.80</span><span class="number">.14</span></span><br><span class="line">GATEWAY=<span class="number">10.243</span><span class="number">.80</span><span class="number">.254</span></span><br><span class="line">NETMASK=<span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span></span><br><span class="line"></span><br><span class="line">所有存储节点也需要关闭swap：</span><br><span class="line"><span class="number">1.</span>关闭swap：【KiB Swap都是<span class="number">0</span>】</span><br><span class="line">可以执行命令刷新一次SWAP（将SWAP里的数据转储回内存，并清空SWAP里的数据）</span><br><span class="line">swapoff -a</span><br><span class="line">sysctl -p  (执行这个使其生效，不用重启)</span><br><span class="line"></span><br><span class="line">[<span class="symbol">root@</span>host102442549 peace]# top</span><br><span class="line">top - <span class="number">16</span>:<span class="number">55</span>:<span class="number">39</span> up <span class="number">99</span> days, <span class="number">23</span>:<span class="number">57</span>, <span class="number">10</span> users,  load average: <span class="number">3.26</span>, <span class="number">4.35</span>, <span class="number">4.49</span></span><br><span class="line">Tasks: <span class="number">423</span> total,   <span class="number">1</span> running, <span class="number">422</span> sleeping,   <span class="number">0</span> stopped,   <span class="number">0</span> zombie</span><br><span class="line">%Cpu(s):  <span class="number">1.8</span> us,  <span class="number">0.7</span> sy,  <span class="number">0.0</span> ni, <span class="number">90.6</span> id,  <span class="number">7.0</span> wa,  <span class="number">0.0</span> hi,  <span class="number">0.0</span> si,  <span class="number">0.0</span> st</span><br><span class="line">KiB Mem : <span class="number">13173758</span>+total,   <span class="number">527136</span> free, <span class="number">14635356</span> used, <span class="number">11657509</span>+buff/cache</span><br><span class="line">KiB Swap:        <span class="number">0</span> total,        <span class="number">0</span> free,        <span class="number">0</span> used. <span class="number">11307603</span>+avail Mem </span><br><span class="line"></span><br><span class="line">所有chunkserver节点需要关闭硬盘写缓存（Write Cache）：</span><br><span class="line">http:<span class="comment">//ilinuxkernel.com/?p=897</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">openstack+pcp+snbs：</span><br><span class="line"><span class="number">1</span>、pcp建虚机是串行的，每台之间有个<span class="number">5</span>s钟的间隔</span><br><span class="line"><span class="number">2</span>、这个虚机挂了个数据盘 根据fiaas的逻辑 挂数据盘时 先要ping通虚机 只有虚机网络通了之后才挂数据盘，虚机网络通 需要经历虚机系统启动 中间还有个cloud-init读取配置时间(<span class="number">120</span>秒)</span><br><span class="line"><span class="number">3</span>、PCP目前优先指的是SNBS容量不够的情况下，调用本地</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">存储节点：</span><br><span class="line"><span class="number">1.2019</span><span class="number">.12</span>月之前压测环境是带raid <span class="number">0</span>的，WT模式</span><br><span class="line"><span class="number">2.2019</span><span class="number">.12</span>月之后压测环境去除raid <span class="number">0</span>，WB模式</span><br><span class="line">对比下来WT性能好于WB模式，现阶段需要解决WB性能问题</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">建在块存储的虚机：</span><br><span class="line"><span class="number">1.</span>关闭<span class="keyword">swap</span>：</span><br><span class="line">可以执行命令刷新一次<span class="keyword">SWAP</span>（将<span class="keyword">SWAP</span>里的数据转储回内存，并清空<span class="keyword">SWAP</span>里的数据）</span><br><span class="line">swapoff -a</span><br><span class="line">sysctl -p  (执行这个使其生效，不用重启)</span><br><span class="line"> </span><br><span class="line"><span class="number">2.</span>关闭ps -ef | egrep <span class="string">"sendmail|postdrop"</span></span><br><span class="line">上面都会刷内存</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">通过修改iscsi源码，可以实现不停业务扩容。在存储后端扩容块设备，然后在iscsi端通过重新扫描磁盘，块设备的容量更新成扩容后的容量</span><br><span class="line"></span><br><span class="line">块应用场景：</span><br><span class="line"><span class="number">1</span>、 申请云硬盘（快照可选）最小<span class="number">10</span>G，<span class="number">10</span>G递增</span><br><span class="line">需要用户填写内容：</span><br><span class="line">空间、性能类型、计费模式（按量、包年包月）、名称、创建方式（备份创建、快照创建）</span><br><span class="line"></span><br><span class="line">内部流程一：</span><br><span class="line"><span class="number">1</span>）根据性能类型选择存储池</span><br><span class="line"><span class="number">2</span>）在符合的存储池创建指定大小的卷<span class="number">1</span></span><br><span class="line"><span class="number">3</span>）创建target；（是否在安装时完成）</span><br><span class="line"><span class="number">4</span>）把卷<span class="number">1</span>添加到target； </span><br><span class="line"><span class="number">5</span>）设置target访问控制策略（所有/指定IP/IP段的initiator）；（是否在安装时完成，界面可编辑修改）</span><br><span class="line"></span><br><span class="line">内部流程二：</span><br><span class="line">a)提前在各个存储池创建一批固定规格的精简卷，同时提前完成流程一中<span class="number">3</span>）<span class="number">5</span>）</span><br><span class="line">b)按照用户申请时，选择未使用的卷(卷空间&gt;=申请空间，超过的空间进行缩容)</span><br><span class="line"></span><br><span class="line">其他流程（客户端操作）：</span><br><span class="line">设置CHAP认证用户名和密码，单向/双向； </span><br><span class="line">挂载后可以进行分区、格式化创建文件系统，挂载分区</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">刚才短会主要内容：</span><br><span class="line"><span class="number">1</span>、集群状态管理、维护。</span><br><span class="line"><span class="number">2</span>、整理修复、均衡、回收等功能，使用场景、测试用例、实现细节等</span><br><span class="line"><span class="number">3</span>、模块启动参数配置文件调研</span><br><span class="line"><span class="number">4</span>、文件权限相关功能，类似于文件系统，调研、字段预留</span><br><span class="line"><span class="number">5</span>、后面要兼容文件存储</span><br><span class="line"><span class="number">6</span>、深入挖掘事物序列号的用法</span><br><span class="line"><span class="number">7</span>、数据修复场景表格及对应的测试用例</span><br><span class="line"><span class="number">8</span>、回收流程与master配合，master起管理调度作用</span><br><span class="line"><span class="number">9</span>、主要模块分工情况，金鑫---master，朱晓伟---chunkserver，陈玉强---iscsi、gateway。后续主要工作内容、方向</span><br></pre></td></tr></table></figure>
+
+<h1 id="003-理解"><a href="#003-理解" class="headerlink" title="003-理解"></a>003-理解</h1><figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">*master主要负责分配节点(目的：控制修复和均衡),master之间没有数据通信,但是相互之间是通过etcd来同步的，master本身数据存在内存中</span></span><br><span class="line"><span class="comment">*zone1、zone2、zone3之间是三副本，zone1、zone2、zone3数据是一致的。超过3个zone，exten副本数是分布在任意三个zone上的</span></span><br><span class="line"><span class="comment">*单个节点异常是无法创建克隆的，因为克隆是在本节点克隆，如果本节点异常了，该节点的克隆会失败</span></span><br><span class="line"><span class="comment">*嗯。读写数据块&gt; 16k,会自动关闭读缓存。否则打开读缓存</span></span><br><span class="line"><span class="comment">*gateway 所有extent信息master提供给gateway，</span></span><br><span class="line">loaction;extent信息（位置在哪个节点上），缓存的也是位置信息（主要是master给的）</span><br><span class="line"><span class="literal">inf</span>信息 seq，chunkserver给的，（gateway主动来要的）主要是读和写</span><br><span class="line"><span class="comment">*克隆和快照过程中chunkserver异常导致只有两个副本的存在</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">支持精简配置（thin），当用户对卷进行写操作时，系统才分配实际物理空间如果用户申请<span class="number">1</span>T，并不是真正预留<span class="number">1</span>T的空间给用户，而是用多少分配多少</span><br><span class="line">支持精简配置（thin），当用户对卷进行写操作时，系统才分配实际物理空间，用多少分配多少（百度的解释）</span><br><span class="line"></span><br><span class="line">创建链接克隆卷？</span><br><span class="line">创建链接克隆卷可以理解为从快照创建卷</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="003-升级顺序"><a href="#003-升级顺序" class="headerlink" title="003-升级顺序"></a>003-升级顺序</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">----------------------------- SNBS升级流程 ------------------------------</span><br><span class="line"><span class="number">1.</span>gateway和chunkserver顺序：先起chunkserver再起gateway</span><br><span class="line">原因：gateway异常，这个gateway上卷切换到正常gateway上。如果异常的gateway恢复之后，卷切换回来，切换回过程中要去chunkserver加载元数据，发现chunkserver异常，就判定元数据缺失，可能就会引起修复</span><br><span class="line"><span class="number">2.</span>iscsiserver最后起</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="002-虚机环境："><a href="#002-虚机环境：" class="headerlink" title="002-虚机环境："></a>002-虚机环境：</h1><table>
+<thead>
+<tr>
+<th>DEV环境（测试)</th>
+<th>登录方式</th>
+<th>DEV环境（测试)</th>
+<th>登录方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>10.242.180.207</td>
+<td>root/suning@123</td>
+<td>10.242.208.65</td>
+<td>root/suning@123</td>
+</tr>
+<tr>
+<td>10.242.180.208</td>
+<td>root/suning@123</td>
+<td>10.242.231.120</td>
+<td>root/suning@123</td>
+</tr>
+<tr>
+<td>10.242.180.209</td>
+<td>root/suning@123</td>
+<td>10.242.231.121</td>
+<td>root/suning@123</td>
+</tr>
+<tr>
+<td>10.242.180.210</td>
+<td>root/suning@123</td>
+<td>10.242.231.122</td>
+<td>root/suning@123</td>
+</tr>
+<tr>
+<td>10.242.180.211</td>
+<td>root/suning@123</td>
+<td>10.242.231.123</td>
+<td>root/suning@123</td>
+</tr>
+<tr>
+<td>10.242.180.212</td>
+<td>root/suning@123</td>
+<td>10.242.231.65</td>
+<td>root/suning@123</td>
+</tr>
+</tbody></table>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">6</span>台虚机配置：</span><br><span class="line"><span class="number">1.</span>数据盘共<span class="number">3</span>个：</span><br><span class="line">	<span class="number">2</span>个数据盘 <span class="number">500</span>g（裸盘，不要挂载目录）</span><br><span class="line">	<span class="number">1</span>个数据盘 <span class="number">100</span>g（<span class="number">100</span>GB的 /mnt/data）</span><br><span class="line">	etcd元数据<span class="number">80</span>g</span><br><span class="line"><span class="number">2.</span>opt   <span class="number">30</span>g</span><br><span class="line"><span class="number">3.</span>最好申请<span class="number">6</span>台，没有<span class="number">6</span>台先申请<span class="number">3</span>台</span><br><span class="line">	<span class="number">4</span>C8G</span><br><span class="line">	系统：centos7<span class="number">.3</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="003-压测环境："><a href="#003-压测环境：" class="headerlink" title="003-压测环境："></a>003-压测环境：</h1><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>压测环境（测试）</th>
+<th>登录方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td>10.238.161.1</td>
+<td>root/123$%^yhn</td>
+</tr>
+<tr>
+<td></td>
+<td>10.238.161.2</td>
+<td>root/123$%^yhn</td>
+</tr>
+<tr>
+<td></td>
+<td>10.238.161.3</td>
+<td>root/123$%^yhn</td>
+</tr>
+<tr>
+<td>snbs</td>
+<td>10.238.161.4</td>
+<td>root/123$%^yhn</td>
+</tr>
+<tr>
+<td></td>
+<td>10.238.161.5</td>
+<td>root/123$%^yhn</td>
+</tr>
+<tr>
+<td></td>
+<td>10.238.161.6</td>
+<td>root/123$%^yhn</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>10.238.160.1</td>
+<td>root/654321</td>
+</tr>
+<tr>
+<td></td>
+<td>10.238.160.2</td>
+<td>root/654321</td>
+</tr>
+<tr>
+<td>计算节点</td>
+<td>10.238.160.3</td>
+<td>root/654321</td>
+</tr>
+<tr>
+<td></td>
+<td>10.238.160.4</td>
+<td>root/654321</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>10.244.25.1</td>
+<td>root/654321</td>
+</tr>
+<tr>
+<td>控制节点</td>
+<td>10.244.25.2</td>
+<td>root/654321</td>
+</tr>
+<tr>
+<td></td>
+<td>10.244.25.3</td>
+<td>root/654321</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>pre环境（测试）</th>
+<th>登录方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>snbsp</td>
+<td><a href="#/monitor">http://snbspprexg.cnsuning.com</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Nginx</td>
+<td>10.242.227.143</td>
+<td>suning@123</td>
+</tr>
+<tr>
+<td></td>
+<td>10.242.227.142</td>
+<td>suning@123</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>jboss</td>
+<td>10.242.227.141</td>
+<td>suning@123</td>
+</tr>
+<tr>
+<td></td>
+<td>10.242.227.140</td>
+<td>suning@123</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>MySQL5.7</td>
+<td>10.238.147.127（主）</td>
+<td>suning@123</td>
+</tr>
+<tr>
+<td></td>
+<td>10.238.147.126（备）</td>
+<td>suning@123</td>
+</tr>
+<tr>
+<td></td>
+<td>10.238.147.125（vip）</td>
+<td></td>
+</tr>
+</tbody></table>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">存储节点</span></span><br><span class="line"><span class="string">管理</span>	</span><br><span class="line"><span class="number">10.244</span><span class="number">.25</span><span class="number">.49</span> <span class="bullet">-</span> <span class="number">54</span>	</span><br><span class="line"><span class="string">网段：10.244.25.0/25</span></span><br><span class="line"></span><br><span class="line"><span class="string">业务</span>	</span><br><span class="line"><span class="number">10.243</span><span class="number">.0</span><span class="number">.1</span><span class="number">-6</span>	</span><br><span class="line"><span class="string">业务地址段:10.243.0.1-125</span></span><br><span class="line"><span class="string">网关:126</span></span><br><span class="line"><span class="string">vlan:3600</span></span><br><span class="line"><span class="string">网关:10.243.0.126</span></span><br><span class="line"><span class="string">掩码:255.255.255.128"</span></span><br><span class="line"><span class="string">网段：10.243.0.0/25</span></span><br><span class="line"></span><br><span class="line"><span class="string">存储</span>	</span><br><span class="line"><span class="number">10.243</span><span class="number">.0</span><span class="number">.129</span><span class="number">-134</span>	</span><br><span class="line"><span class="string">存储地址段:10.243.0.129-253</span></span><br><span class="line"><span class="string">网关:254</span></span><br><span class="line"><span class="string">vlan3700</span></span><br><span class="line"><span class="string">网关:10.243.0.254</span></span><br><span class="line"><span class="string">掩码:255.255.255.128</span></span><br><span class="line"><span class="string">网段:10.243.0.128/25</span></span><br><span class="line"></span><br><span class="line"><span class="string">Bmc</span>	</span><br><span class="line"><span class="number">10.255</span><span class="number">.133</span><span class="number">.41</span><span class="number">-46</span>	</span><br><span class="line"><span class="string">BMC网关:10.255.133.254</span></span><br><span class="line"><span class="string">BMC掩码:255.255.255.0</span></span><br><span class="line"><span class="string">从1——253</span></span><br><span class="line"></span><br><span class="line"><span class="string">root/123$%^yhn</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">计算节点	</span><br><span class="line">"10<span class="selector-class">.255</span><span class="selector-class">.133</span><span class="selector-class">.40---BMC</span></span><br><span class="line">10<span class="selector-class">.244</span><span class="selector-class">.25</span><span class="selector-class">.48---</span>管理</span><br><span class="line">10<span class="selector-class">.243</span><span class="selector-class">.0</span><span class="selector-class">.8---</span>业务</span><br><span class="line">10<span class="selector-class">.243</span><span class="selector-class">.0</span><span class="selector-class">.136---</span>存储"</span><br><span class="line"></span><br><span class="line">"10<span class="selector-class">.255</span><span class="selector-class">.133</span><span class="selector-class">.39---BMC</span></span><br><span class="line">10<span class="selector-class">.244</span><span class="selector-class">.25</span><span class="selector-class">.44---</span>管理</span><br><span class="line">10<span class="selector-class">.243</span><span class="selector-class">.0</span><span class="selector-class">.7---</span>业务</span><br><span class="line">10<span class="selector-class">.243</span><span class="selector-class">.0</span><span class="selector-class">.135---</span>存储"</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">控制节点	</span><br><span class="line">"10<span class="selector-class">.255</span><span class="selector-class">.133</span><span class="selector-class">.38---BMC</span></span><br><span class="line">10<span class="selector-class">.244</span><span class="selector-class">.25</span><span class="selector-class">.3---</span>管理"</span><br><span class="line"></span><br><span class="line">"10<span class="selector-class">.255</span><span class="selector-class">.133</span><span class="selector-class">.37---BMC</span></span><br><span class="line">10<span class="selector-class">.244</span><span class="selector-class">.25</span><span class="selector-class">.2---</span>管理"</span><br><span class="line"></span><br><span class="line">"10<span class="selector-class">.255</span><span class="selector-class">.133</span><span class="selector-class">.36---BMC</span></span><br><span class="line">10<span class="selector-class">.244</span><span class="selector-class">.25</span><span class="selector-class">.1---</span>管理"</span><br><span class="line"></span><br><span class="line">654321</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">金泉洁 <span class="number">2019</span><span class="number">-01</span><span class="number">-23</span> <span class="number">16</span>:<span class="number">15</span>:<span class="number">30</span></span><br><span class="line">Inquiry Data: SEAGATE ST300MM0006     <span class="number">0003</span>S0K5BH1Y            </span><br><span class="line">Inquiry Data: SEAGATE ST300MM0048     N001S0K6G7KK            </span><br><span class="line">Inquiry Data: BTDV71730B79480BGN  INTEL SSDSC2BB480G7                     N2010112</span><br><span class="line">Inquiry Data: BTDV717301VS480BGN  INTEL SSDSC2BB480G7                     N2010112</span><br><span class="line">Inquiry Data:             ZC1753E8ST4000NM0035<span class="number">-1</span>V4107                     TN04    </span><br><span class="line">Inquiry Data:             ZC1750B6ST4000NM0035<span class="number">-1</span>V4107                     TN04    </span><br><span class="line">Inquiry Data:             ZC1758JVST4000NM0035<span class="number">-1</span>V4107                     TN04    </span><br><span class="line">Inquiry Data:             ZC17528HST4000NM0035<span class="number">-1</span>V4107                     TN04    </span><br><span class="line">Inquiry Data:             ZC1746SVST4000NM0035<span class="number">-1</span>V4107                     TN04    </span><br><span class="line">Inquiry Data:             ZC1753A8ST4000NM0035<span class="number">-1</span>V4107                     TN04    </span><br><span class="line">Inquiry Data:             ZC174GRDST4000NM0035<span class="number">-1</span>V4107                     TN04    </span><br><span class="line">Inquiry Data:             ZC174Q5MST4000NM0035<span class="number">-1</span>V4107                     TN04</span><br><span class="line"></span><br><span class="line">金鑫 <span class="number">2019</span><span class="number">-01</span><span class="number">-23</span> <span class="number">16</span>:<span class="number">15</span>:<span class="number">48</span></span><br><span class="line">这个是是什么？</span><br><span class="line">金泉洁 <span class="number">2019</span><span class="number">-01</span><span class="number">-23</span> <span class="number">16</span>:<span class="number">18</span>:<span class="number">12</span></span><br><span class="line">系统盘（SAS接口）：西数<span class="number">2</span>块 <span class="number">280</span>GB（做Raid1）</span><br><span class="line">数据盘SSD（SATA接口）：英特尔<span class="number">2</span>块 <span class="number">450</span>GB（做Raid0）</span><br><span class="line">数据盘SATA（SATA接口）：希捷<span class="number">8</span>块 <span class="number">3.6</span>TB（每块都做成了Raid0）</span><br><span class="line"></span><br><span class="line">【系统盘（SAS接口）：西数<span class="number">2</span>块 <span class="number">280</span>GB（做Raid1）这个应该是用的<span class="number">2.5</span>寸的<span class="number">10</span>Krpm SAS盘】--王坚say</span><br><span class="line"></span><br><span class="line"><span class="number">10.244</span><span class="number">.33</span><span class="number">.1</span><span class="number">-10.244</span><span class="number">.33</span><span class="number">.250</span>    <span class="number">10.244</span><span class="number">.34</span><span class="number">.1</span><span class="number">-10.244</span><span class="number">.34</span><span class="number">.250</span>新分配的；网关分别是<span class="number">10.244</span><span class="number">.33</span><span class="number">.254</span>/<span class="number">24</span> ;   <span class="number">10.244</span><span class="number">.34</span><span class="number">.254</span>/<span class="number">24</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="004-全闪环境"><a href="#004-全闪环境" class="headerlink" title="004-全闪环境"></a>004-全闪环境</h1><table>
+<thead>
+<tr>
+<th>DEV环境（测试)</th>
+<th>登录方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>10.244.208.3</td>
+<td>root/suning@123</td>
+</tr>
+<tr>
+<td>10.244.208.4</td>
+<td>root/suning@123</td>
+</tr>
+<tr>
+<td>10.244.208.5</td>
+<td>root/suning@123</td>
+</tr>
+<tr>
+<td>10.242.180.211</td>
+<td>root/suning@123</td>
+</tr>
+</tbody></table>
+<p><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1585810563062.png" alt></p>
+<img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1585810563062.png" class title="This is an example image">
+
+
+
+<h1 id="004-对接环境"><a href="#004-对接环境" class="headerlink" title="004-对接环境"></a>004-对接环境</h1><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">snbs-openstack-pcp对接环境</span><br><span class="line"><span class="number">10.243.30.1</span></span><br><span class="line"><span class="number">10.243.30.2</span></span><br><span class="line"><span class="number">10.243.30.3</span></span><br><span class="line">root/<span class="number">654321</span></span><br><span class="line"></span><br><span class="line">节点网络时断时续</span><br></pre></td></tr></table></figure>
+
+<h1 id="005-sit环境ocata8-集群"><a href="#005-sit环境ocata8-集群" class="headerlink" title="005-sit环境ocata8 集群"></a>005-sit环境ocata8 集群</h1><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>SIT环境（半生产)</th>
+<th>登录方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>snbsp</td>
+<td><a href="http://snbspsit1.cnsuning.com/" target="_blank" rel="noopener external nofollow noreferrer">http://snbspsit1.cnsuning.com</a></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>10.243.171.216（vip）</td>
+<td></td>
+</tr>
+<tr>
+<td>Nginx</td>
+<td>10.243.83.101</td>
+<td>suning@123</td>
+</tr>
+<tr>
+<td></td>
+<td>10.243.83.100</td>
+<td>suning@123</td>
+</tr>
+<tr>
+<td>jboss</td>
+<td>10.243.83.99</td>
+<td>suning@123</td>
+</tr>
+<tr>
+<td></td>
+<td>10.242.227.140</td>
+<td>suning@123</td>
+</tr>
+<tr>
+<td>MySQL5.7</td>
+<td>ip1：10.243.142.177</td>
+<td>suning@123</td>
+</tr>
+<tr>
+<td></td>
+<td>10.238.147.126（备）</td>
+<td>suning@123</td>
+</tr>
+<tr>
+<td></td>
+<td>10.238.147.125（vip）</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>读写vip：10.243.142.175</td>
+<td></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>SIT环境（半生产,谨慎操作)</th>
+<th>机架</th>
+<th>模块</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>10.243.80.13</td>
+<td>机架1</td>
+<td>master/etcd/tgtmaster</td>
+</tr>
+<tr>
+<td>10.243.80.14</td>
+<td>机架1</td>
+<td></td>
+</tr>
+<tr>
+<td>10.243.80.15</td>
+<td>机架1</td>
+<td></td>
+</tr>
+<tr>
+<td>10.243.80.16</td>
+<td>机架2</td>
+<td>master/etcd/tgtmaster</td>
+</tr>
+<tr>
+<td>10.243.80.17</td>
+<td>机架2</td>
+<td></td>
+</tr>
+<tr>
+<td>10.243.80.18</td>
+<td>机架2</td>
+<td></td>
+</tr>
+<tr>
+<td>10.243.80.19</td>
+<td>机架3</td>
+<td>master/etcd/tgtmaster</td>
+</tr>
+<tr>
+<td>10.243.80.20</td>
+<td>机架3</td>
+<td></td>
+</tr>
+<tr>
+<td>10.243.80.21</td>
+<td>机架3</td>
+<td></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>虚机IP地址</th>
+<th>物理机IP</th>
+<th align="left">镜像</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>10.237.2.32</td>
+<td>10.243.72.23</td>
+<td align="left">win_2008_32_update_securityplugin_20190524_001</td>
+</tr>
+<tr>
+<td>10.237.2.33</td>
+<td>10.243.72.80</td>
+<td align="left">win_2008_32_update_securityplugin_20190524_001</td>
+</tr>
+<tr>
+<td>10.237.2.34</td>
+<td>10.243.72.110</td>
+<td align="left">win_2012_64_update_securityplugin_20191218_stable</td>
+</tr>
+<tr>
+<td>10.237.2.35</td>
+<td>10.243.72.22</td>
+<td align="left">win_2012_64_update_securityplugin_20191218_stable</td>
+</tr>
+<tr>
+<td>10.237.2.37</td>
+<td>10.243.72.62</td>
+<td align="left">windows2016_x64 update_securityplugin_50G_20191209</td>
+</tr>
+<tr>
+<td>10.237.2.38</td>
+<td>10.243.72.27</td>
+<td align="left">windows7_Professional_x64_20190524_updateSecurityPlugin_001</td>
+</tr>
+<tr>
+<td>10.237.2.39</td>
+<td>10.243.72.110</td>
+<td align="left">windows7_Professional_x64_20190524_updateSecurityPlugin_001</td>
+</tr>
+</tbody></table>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">建了两台windows：</span><br><span class="line"></span><br><span class="line">windows <span class="number">2012</span>Server（<span class="number">64</span>bit）： <span class="number">10.237</span><span class="number">.3</span><span class="number">.83</span></span><br><span class="line">centos <span class="number">7</span>：<span class="number">10.237</span><span class="number">.3</span><span class="number">.72</span></span><br><span class="line">window <span class="number">7</span>：<span class="number">10.237</span><span class="number">.3</span><span class="number">.173</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">密码都是<span class="symbol">cloud@</span><span class="number">123</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2012</span> administrator/<span class="symbol">cloud@</span><span class="number">123</span></span><br><span class="line"><span class="number">2016</span> administrator/w5cx5WI/</span><br><span class="line"><span class="number">2008</span> administrator/w5cx5WI/</span><br><span class="line">win7 administrator/<span class="symbol">cloud@</span><span class="number">123</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="006-java开发环境"><a href="#006-java开发环境" class="headerlink" title="006-java开发环境"></a>006-java开发环境</h1><table>
+<thead>
+<tr>
+<th>java开发</th>
+<th>登录方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>10.27.38.75</td>
+<td>root/cloud@123</td>
+</tr>
+<tr>
+<td>10.27.38.76</td>
+<td>root/cloud@123</td>
+</tr>
+<tr>
+<td>10.27.38.77</td>
+<td>root/cloud@123</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>java开发</th>
+<th>登录方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>10.27.38.78</td>
+<td>root/cloud@123</td>
+</tr>
+<tr>
+<td>10.27.38.79</td>
+<td>root/cloud@123</td>
+</tr>
+</tbody></table>
+<h1 id="007-自动化环境"><a href="#007-自动化环境" class="headerlink" title="007-自动化环境"></a>007-自动化环境</h1><table>
+<thead>
+<tr>
+<th>环境</th>
+<th>登录方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>10.242.12.8</td>
+<td>root/suning@123</td>
+</tr>
+<tr>
+<td>10.242.12.9</td>
+<td>root/suning@123</td>
+</tr>
+<tr>
+<td>10.242.12.10</td>
+<td>root/suning@123</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>Robotframework</th>
+<th>系统</th>
+<th>登录方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>10.242.11.232</td>
+<td>对象存储</td>
+<td>administrator/mOQ:k03g</td>
+</tr>
+<tr>
+<td>10.242.11.233</td>
+<td>块存储</td>
+<td>administrator/Y2hC0!xc（已修改为suning@123）</td>
+</tr>
+</tbody></table>
+<p><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1586251793175.png" alt> </p>
+<img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1586251793175.png" class title="This is an example image">
+
+<h1 id="006"><a href="#006" class="headerlink" title="006-"></a>006-</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">新港给块sit扩容的<span class="number">6</span>台大盘+ssd的机器已到</span><br><span class="line">就是这批里的，<span class="number">4</span>块SSD+<span class="number">8</span>块<span class="number">4</span>Tsata</span><br><span class="line">这<span class="number">6</span>台 我们可以单独搭个独立集群 自己先测测这种硬件配置，后面等SIT上新版本后，在把这个集群拆了扩到原有<span class="symbol">SIT@</span>王星童 </span><br><span class="line">检查下机器的配置 比如是不是SAS直通的</span><br><span class="line"></span><br><span class="line"><span class="number">4</span>块SSD怎么分配</span><br><span class="line"><span class="number">1</span>个元数据缓存盘，</span><br><span class="line"><span class="number">2</span>块拿出来做chunkserver的写缓存和gateway的读缓存，（<span class="number">4</span>个<span class="number">3</span>G分区给写缓存，剩下的给gateway读缓存）</span><br><span class="line"></span><br><span class="line">考虑V2<span class="number">.2</span>版本扩容等问题，以及版本升级等问题</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">对象、块、文件系统的作用，本质区别</span><br><span class="line">容灾和备份啥区别</span><br><span class="line">数据的走向</span><br><span class="line">性能</span><br><span class="line"></span><br><span class="line">和ceph比较的区别</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="openstack"><a href="#openstack" class="headerlink" title="openstack"></a>openstack</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>背景简介</span><br><span class="line">	OpenStack是开源的云计算IaaS解决方案，当前采用的OpenStack版本是Ocata。线上部署架构中，块存储直接采用计算节点本地磁盘，底层由LVM实现块存储的生命周期管理，由libVirt实现块存储向虚拟机的挂载和卸载等操作。镜像文件直接存储在本地磁盘。</span><br><span class="line">	SNBS是由公司内部存储团队研发的集中存储系统，依托iscsi协议，实现存储的集中管理以及存储的克隆、快照、纠删码等。存储资源可以灵活扩展、统一管理，操作便捷。</span><br><span class="line">	本集成工作完成OpenStack中存储实现向SNBS的迁移，由SNBS作为OpenStack相关存储的后端实现，对OpenStack相关存储进行统一管理和运维。</span><br><span class="line">	</span><br><span class="line"><span class="number">2</span>对比分析</span><br><span class="line">环境说明：块存储及镜像均采用计算节点本地磁盘，虚拟机从镜像启动，下表列举相关功能点或问题，并从本地磁盘和集中存储两种方式进行对比分析。</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>功能\问题</th>
+<th>相关背景</th>
+<th>本地磁盘</th>
+<th>集中存储</th>
+<th>潜在问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>虚机热迁移</td>
+<td>1. 所处计算节点负载过高，部分虚机迁移至低负载计算节点2. 其他迁移需求</td>
+<td>虚机热迁移涉及虚机内存、计算节点本地系统盘以及数据盘的三部分迁移操作</td>
+<td>仅涉及到虚机内存迁移，虚机系统盘和数据盘均在集中存储</td>
+<td>内存迁移部分需要进一步优化，可最大提升虚机热迁移效能</td>
+</tr>
+<tr>
+<td>数据备份\快照</td>
+<td>对虚机系统或数据进行备份或快照</td>
+<td>备份\快照操作均在计算节点或跨计算节点，若计算节点存储资源不足，需要扩展磁盘</td>
+<td>备份\快照操作均在集中存储，存储资源可弹性管理</td>
+<td>暂无</td>
+</tr>
+<tr>
+<td>虚机启动</td>
+<td>虚机镜像启动、卷启动</td>
+<td>由于处在本地，启动速率较高</td>
+<td>由于处在集中存储，需要通过网络加载镜像卷</td>
+<td>需要对卷启动进一步辅助优化</td>
+</tr>
+<tr>
+<td>计算节点重启</td>
+<td>在一些特定问题或需求下，计算节点进行重启操作</td>
+<td>计算节点重启操作将会影响虚机运行</td>
+<td>在重启前可将虚机快速迁移至其他计算节点</td>
+<td>需要对重启的情况进行详细摸排</td>
+</tr>
+<tr>
+<td>块存储相关</td>
+<td>块存储创建、删除、挂载、卸载等生命周期管理</td>
+<td>块存储挂载可能执行在虚机所处计算节点以外的节点</td>
+<td>块存储生命周期管理操作均在集中存储</td>
+<td>需要针对集中存储侧请求无响应或其他相关问题做出合理决策</td>
+</tr>
+<tr>
+<td>存储故障</td>
+<td>线上环境存储层故障</td>
+<td>本地磁盘故障将造成计算节点或虚机无法运行，故障恢复较为缓慢</td>
+<td>集中存储提供数据备份冗余或数据恢复机制(纠删码)</td>
+<td>暂无</td>
+</tr>
+<tr>
+<td>资源占用</td>
+<td>在不同结构中，存储资源所占用的计算、内存、IO等资源</td>
+<td>块存储操作将占用所处计算节点的CPU、内存资源以及大量IO操作</td>
+<td>集中存储将存储资源剥离计算节点，计算节点</td>
+<td>暂无</td>
+</tr>
+<tr>
+<td>运维效率</td>
+<td>针对不同结构所花费的运维工作以及效率</td>
+<td>存储服务分散在各计算节点，运维精力较为分散</td>
+<td>存储资源集中管理、统一运维</td>
+<td>暂无</td>
+</tr>
+</tbody></table>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">以上表格列举出部分功能\问题对比分析点，还有其他实际问题，不再一一列举。</span><br><span class="line"></span><br><span class="line"><span class="number">3</span>相关组件</span><br><span class="line"><span class="number">3.1</span>Cinder</span><br><span class="line">	Cinder是OpenStack的Block Storage服务，负责块存储的创建、删除、挂载、卸载、快照等生命周期管理操作。Cinder可为虚机提供数据卷功能，也可作为虚机的启动卷或作为Glance服务的后端存储服务。Cinder在OpenStack以组件形式存在，以高可用、容错、可恢复为目标，并制定上层统一标准，实现对各类存储厂商的兼容，可灵活扩展和切换。</span><br><span class="line"><span class="number">3.2</span>Glance</span><br><span class="line">	Glance是OpenStack的Image服务，负责镜像Image的存储、下载以及较为灵活的编排功能，提供虚机镜像，同时Glance实现各类存储集成和兼容以及多种Image Type的支持和转换。</span><br><span class="line"><span class="number">3.3</span>Nova</span><br><span class="line">	Nova是OpenStack的核心服务，负责管理和维护云环境的计算资源，虚机的生命周期管理。具体涉及到虚机CPU、内存、磁盘、镜像、网络各类资源的管理，以及虚机创建、删除、迁移、扩展、关闭等操作。</span><br><span class="line"><span class="number">4</span>总体设计</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1585811701841.png" alt></p>
+
+
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">	Cinder组件中实现SNBS Plugin，作为Cinder与SNBS存储集群的桥梁，SNBS存储集群作为Cinder的Storage Provider。OpenStack Ocata版本中Glance可将Cinder作为Image存储后端，故在Ocata版本中，Glance与SNBS的集成实现直接交给Cinder即可，若为旧版本OpenStack，则需要在Glance中实现SNBS Plugin，作为Glance与SNBS存储集群的桥梁。Nova组件调用Glance完成镜像从远端到本地的加载，调用Cinder实现块存储的挂载\卸载等。虚机的卷启动等详细流程参见<span class="number">5.3</span>小节。</span><br><span class="line">	</span><br><span class="line"><span class="number">5</span>流程设计</span><br><span class="line"><span class="number">5.1</span>Cinder</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1585811828238.png" alt></p>
+<img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1585811828238.png" class title="This is an example image">
+
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">	Cinder API接收请求后，将相关指令消息发送到对应的<span class="built_in">Queue</span>(RabbitMQ)，Cinder Scheduler监听对应的Queue进行实际调度，筛选出合适的<span class="built_in">Volume</span>节点并发送指令消息到Queue，Cinder <span class="built_in">Volume</span>监听Queue，接收指令，通过SNBS Plugin完成指令操作。对于<span class="built_in">Volume</span>挂载到虚机，Nova <span class="built_in">volume</span>根据<span class="built_in">Volume</span> ID获取对应的Meta信息，将SNBS存储集群中具体的存储节点的块设备挂载到计算节点，再有libvirt实现<span class="built_in">Volume</span>修改VM xml，并挂载到虚机。</span><br><span class="line">	</span><br><span class="line"><span class="number">5.2</span>Glance</span><br></pre></td></tr></table></figure>
+<p><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1585811896052.png" alt></p>
+<img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1585811896052.png" class title="This is an example image">
+
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">	Glance API接收请求，由Glance Registry完成镜像的<span class="keyword">Meta</span>信息操作，由Glance Store中的SNBS <span class="keyword">Plugin</span>与SNBS存储集群通信，完成镜像文件的上传或删除。对于OpenStack Ocata版本，Glance Store可通过Cinder直接操作。</span><br><span class="line">5.3Nova</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1585811923108.png" alt></p>
+<img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1585811923108.png" class title="This is an example image">
+
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">	以Boot <span class="keyword">from</span> image(Create a new Volume)举例，Nova服务从Glance服务拉取Image文件到计算节点本地，生成启动卷，通过Cinder Client上传到SNBS存储集群，并将存储集群远端启动卷块设备挂载到计算节点本地，后从该启动卷启动虚机。</span><br><span class="line"><span class="number">6</span>功能设计</span><br><span class="line"><span class="number">6.1</span>Cinder</span><br><span class="line"><span class="number">1.</span>一期目标</span><br><span class="line">创建块存储</span><br><span class="line">删除块存储</span><br><span class="line">克隆块存储</span><br><span class="line">查询块存储</span><br><span class="line"><span class="number">2.</span>二期目标</span><br><span class="line">扩展块存储</span><br><span class="line">创建快照</span><br><span class="line">删除快照</span><br><span class="line">回滚快照</span><br><span class="line">查询快照</span><br><span class="line">QOS</span><br><span class="line"><span class="number">6.2</span>Glance</span><br><span class="line">上传镜像</span><br><span class="line">删除镜像</span><br><span class="line"><span class="number">6.3</span>Nova</span><br><span class="line">卷启动</span><br><span class="line">镜像启动(创建新卷)</span><br><span class="line">卷快照启动(创建新卷)</span><br><span class="line"><span class="number">7</span>接口设计</span><br><span class="line">请参见《块存储接口定义V3<span class="number">.0</span>》和《SNBS-接口整理》文档。</span><br><span class="line">备注：OpenStack对外API服务接口不需改变</span><br><span class="line"><span class="number">8</span>部署示例</span><br><span class="line"><span class="number">8.1</span>延续现有部署架构</span><br><span class="line">结合当前线上部署结构，部署SNBS集群后，部署结构如下：</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1585811966301.png" alt></p>
+<img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1585811966301.png" class title="This is an example image">
+
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">以上图示结构不改变当前环境部署结构，部署SNBS存储集群后，调整Controller <span class="keyword">Node</span><span class="title">和Compute</span> <span class="keyword">Node</span><span class="title">相关服务的存储配置。</span></span><br><span class="line"><span class="title">8</span>.<span class="number">2</span>优化现有部署架构</span><br><span class="line">将SNBS作为集中存储，Cinder\Glance\Nova完成与SNBS集中存储的集成，Cinder Volume可从Compute <span class="keyword">Node</span><span class="title">中去除，部署在Controller</span> <span class="keyword">Node</span><span class="title">中即可。部署结构如下：</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1585811992326.png" alt></p>
+<img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1585811992326.png" class title="This is an example image">
+
+<p>以上图示结构需要改变当前部署结构，将Cinder Volume迁移至Controller Node。</p>
+<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">正常测试是测试内存的<span class="number">2</span>倍</span><br><span class="line">比如内存是<span class="number">8</span>g，那就是测试<span class="number">16</span>g的数据</span><br><span class="line"><span class="number">16</span>g/目录数=结果*<span class="number">1024</span>*<span class="number">1024</span>=转换的结果/文件大小=结果（结果测试的文件数）</span><br></pre></td></tr></table></figure>
+
+<h2 id="文件系统准确性："><a href="#文件系统准确性：" class="headerlink" title="文件系统准确性："></a>文件系统准确性：</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line">文件系统准确性：</span><br><span class="line">见附件：file_accuracy.sh  if_accuracy.sh</span><br><span class="line">file_accuracy.sh</span><br><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line">function rand()&#123;</span><br><span class="line">    <span class="attribute">min</span>=<span class="variable">$1</span></span><br><span class="line">    <span class="attribute">max</span>=$(($2-$min+1))</span><br><span class="line">    <span class="attribute">num</span>=$(cat /proc/sys/kernel/random/uuid | cksum | awk -F <span class="string">' '</span> <span class="string">'&#123;print $1&#125;'</span>)</span><br><span class="line">    echo $((<span class="variable">$num</span>%<span class="variable">$max</span>+<span class="variable">$min</span>))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="attribute">num</span>=11</span><br><span class="line"><span class="attribute">num_txt_max</span>=10001</span><br><span class="line"><span class="keyword">for</span>((<span class="attribute">i</span>=1; i&lt;<span class="variable">$&#123;num&#125;</span>; i++));<span class="keyword">do</span></span><br><span class="line">		<span class="keyword">for</span>((<span class="attribute">j</span>=1; j&lt;<span class="variable">$&#123;num_txt_max&#125;</span>; j++));<span class="keyword">do</span></span><br><span class="line">		<span class="attribute">rnd</span>=$(rand 100000000 1000000000)</span><br><span class="line">		<span class="attribute">rnf</span>=$(rand 100000000 1000000000)</span><br><span class="line">		<span class="attribute">a</span>=`echo <span class="variable">$rnd</span><span class="variable">$rnf</span>`</span><br><span class="line">		<span class="attribute">b</span>=`echo -n <span class="string">"<span class="variable">$rnd</span><span class="variable">$rnf</span>"</span>|md5sum`</span><br><span class="line">		<span class="attribute">c</span>=`date +%s`</span><br><span class="line">		<span class="attribute">d</span>=`hostname`</span><br><span class="line">		echo -e <span class="string">"<span class="variable">$d</span>\t<span class="variable">$c</span>\t<span class="variable">$b</span>\t<span class="variable">$a</span>"</span> &gt;&gt;<span class="string">"<span class="variable">$i</span>"</span>.txt</span><br><span class="line">		done</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">if_accuracy.sh</span><br><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line"><span class="attribute">hostname1</span>=sdfspstapp04</span><br><span class="line">a=()</span><br><span class="line"><span class="attribute">a</span>=`ls *.txt`</span><br><span class="line"><span class="attribute">pid</span>=$$</span><br><span class="line"><span class="attribute">thread</span>=200</span><br><span class="line"><span class="attribute">tmp_fifo</span>=<span class="string">"/tmp/$$.fifo"</span></span><br><span class="line">mkfifo <span class="variable">$tmp_fifo</span></span><br><span class="line">exec 8&lt;&gt;<span class="variable">$tmp_fifo</span></span><br><span class="line">rm <span class="variable">$tmp_fifo</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(seq 1 <span class="variable">$thread</span>)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    echo</span><br><span class="line">done &gt;&amp;8</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> <span class="variable">$&#123;a[@]&#125;</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">        read -u8</span><br><span class="line">        &#123;</span><br><span class="line">		<span class="attribute">i</span>=0</span><br><span class="line">		b=()</span><br><span class="line">		c=()</span><br><span class="line">		<span class="attribute">b</span>=`cat <span class="variable">$&#123;item&#125;</span>|awk <span class="string">'&#123;print $5&#125;'</span>`</span><br><span class="line">		<span class="attribute">c</span>=`cat <span class="variable">$&#123;item&#125;</span>|awk <span class="string">'&#123;print $3&#125;'</span>`</span><br><span class="line">		<span class="attribute">c_txt</span>=`echo <span class="variable">$&#123;c[@]&#125;</span>`</span><br><span class="line">		<span class="keyword">for</span> item2 <span class="keyword">in</span> <span class="variable">$&#123;b[@]&#125;</span></span><br><span class="line">		<span class="keyword">do</span></span><br><span class="line">			<span class="attribute">b_md5</span>=`echo -n <span class="string">"<span class="variable">$&#123;item2&#125;</span>"</span>|md5sum|sed <span class="string">'s/ -//g'</span>`</span><br><span class="line">			list[<span class="variable">$i</span>]=<span class="variable">$b_md5</span></span><br><span class="line">			<span class="attribute">i</span>=`expr <span class="variable">$i</span> + 1`</span><br><span class="line">		done</span><br><span class="line">		<span class="attribute">list_test</span>=`echo <span class="variable">$&#123;list[@]&#125;</span>`</span><br><span class="line">		<span class="keyword">if</span> [ <span class="string">"<span class="variable">$c_txt</span>"</span> != <span class="string">"<span class="variable">$list_test</span>"</span> ];then</span><br><span class="line">                	echo <span class="variable">$item</span> &gt;&gt;error.log</span><br><span class="line">        	fi</span><br><span class="line">		<span class="attribute">first_num</span>=`cat <span class="variable">$&#123;item&#125;</span>|grep <span class="string">"<span class="variable">$hostname1</span>"</span> |awk <span class="string">'&#123;print $2&#125;'</span>|sort|uniq|head -1`</span><br><span class="line">		<span class="attribute">end_num</span>=`cat <span class="variable">$&#123;item&#125;</span> |grep <span class="string">"<span class="variable">$hostname1</span>"</span>|awk <span class="string">'&#123;print $2&#125;'</span>|sort|uniq|tail -1`	</span><br><span class="line">		<span class="attribute">D1</span>=`expr <span class="variable">$end_num</span> - <span class="variable">$first_num</span> + 1`</span><br><span class="line">		<span class="attribute">D2</span>=`cat <span class="variable">$&#123;item&#125;</span>|grep <span class="string">"<span class="variable">$hostname1</span>"</span> |awk <span class="string">'&#123;print $2&#125;'</span>|sort|uniq|wc -l`</span><br><span class="line">		<span class="keyword">if</span> [ <span class="string">"<span class="variable">$D1</span>"</span> != <span class="string">"<span class="variable">$D2</span>"</span> ];then</span><br><span class="line">                       echo <span class="variable">$item</span> &gt;&gt;error.log</span><br><span class="line">                fi</span><br><span class="line">		<span class="attribute">D3</span>=`cat 1.txt |awk <span class="string">'&#123;print $4&#125;'</span>|uniq`</span><br><span class="line">		<span class="keyword">if</span> [ <span class="string">"<span class="variable">$D3</span>"</span> != - ];then</span><br><span class="line">                       echo <span class="variable">$item</span> &gt;&gt;error.log</span><br><span class="line">                fi</span><br><span class="line">        echo <span class="string">""</span> &gt;&amp;8</span><br><span class="line">        &#125; &amp;</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">wait</span><br><span class="line">exec 8&gt;&amp;-</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="拷机模型"><a href="#拷机模型" class="headerlink" title="拷机模型"></a>拷机模型</h1><h2 id="蛙测"><a href="#蛙测" class="headerlink" title="蛙测"></a>蛙测</h2><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">HTTPPluginControl.getConnectionDefaults().timeout = <span class="number">6000000</span><span class="comment">//定义HTTP请求超时时间，单位毫秒</span></span><br><span class="line"></span><br><span class="line">这是是一连串的逻辑，超时本身可以随意设置，但是我们性能指标采集是默认<span class="number">5</span>s一次，且超过<span class="number">2</span>分钟没有数据上报就判定为异常终止任务；所以你上面这个超时违反了约束</span><br><span class="line"></span><br><span class="line">你不设置timeout，就不会超时，一直等请求返回，不设置timeout就会一直等待</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">读事先准备好文件</span><br><span class="line">追加写、读<span class="number">128</span>k（<span class="number">10</span>G文件）</span><br><span class="line"><span class="number">10</span>G*<span class="number">400</span>  <span class="number">4</span>T <span class="number">128</span>k  <span class="number">32768</span>   --<span class="number">-81920</span>文件<span class="number">82000</span></span><br><span class="line"></span><br><span class="line"><span class="number">400</span>台，轮询（线程选了这么多虚机）结束了再选下下一批</span><br><span class="line"></span><br><span class="line">计算出来，突发线程针对<span class="number">60</span>%的虚机（<span class="number">240</span>台），连续搞几把（<span class="number">3</span>遍）<span class="number">9</span>（到时候再定） 【加sleep】</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span>正常压测任务确认模型和线程数</span><br><span class="line"><span class="number">2.</span>突发压测任务确认模型和线程数</span><br><span class="line">只有正常压测任务和包含突发压测任务的读写响应延时对比</span><br><span class="line">查看蛙测的iops、时延统计</span><br><span class="line"></span><br><span class="line">注：</span><br><span class="line"><span class="number">1.</span>put 写 <span class="keyword">get</span> 读  nginx  请求若干个 高并发  同时有多少写  多少文件</span><br><span class="line"></span><br><span class="line">---------------------------------nginx-----------------------------------------------</span><br><span class="line"><span class="comment">//顺序写【201】</span></span><br><span class="line">curl -X PUT -v <span class="string">"http://10.244.30.145/seq-write?fp=/opt/seqfile.1&amp;fs=102400&amp;bs=4"</span></span><br><span class="line"><span class="comment">//追加写【201】</span></span><br><span class="line">curl -X PUT -v <span class="string">"http://10.244.30.145/append-write?fp=/opt/appendfile.1&amp;fs=1024&amp;bs=4"</span></span><br><span class="line"><span class="comment">//顺序读【200】</span></span><br><span class="line">curl -X GET -v <span class="string">"http://10.244.30.145/seq-read?fp=/opt/seqfile.1&amp;bs=4"</span></span><br><span class="line"><span class="comment">//随机读【200】</span></span><br><span class="line">curl -X GET -v <span class="string">"http://10.244.30.145/rand-read?fp=/opt/seqfile.1&amp;bs=4"</span> </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">*/<span class="number">5</span> * * * * /usr/sbin/ntpdate <span class="number">10.242</span><span class="number">.39</span><span class="number">.22</span></span><br></pre></td></tr></table></figure>
+
+<p>fio</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> test100g test200g test300g test400g test500g test600g</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">	<span class="attribute">DIR</span>=<span class="string">"/opt/vdbench/cases/fio/<span class="variable">$&#123;i&#125;</span>"</span></span><br><span class="line">	mkdir -p <span class="variable">$&#123;DIR&#125;</span>/1 <span class="variable">$&#123;DIR&#125;</span>/2 <span class="variable">$&#123;DIR&#125;</span>/3 <span class="variable">$&#123;DIR&#125;</span>/4 <span class="variable">$&#123;DIR&#125;</span>/5 <span class="variable">$&#123;DIR&#125;</span>/6 </span><br><span class="line">	cd <span class="variable">$&#123;DIR&#125;</span>/1</span><br><span class="line">	fio <span class="attribute">-direct</span>=1 <span class="attribute">-iodepth</span>=128 <span class="attribute">-rw</span>=randwrite <span class="attribute">-ioengine</span>=libaio <span class="attribute">-bs</span>=4k <span class="attribute">-size</span>=1G <span class="attribute">-numjobs</span>=1 <span class="attribute">-runtime</span>=1000 -group_reporting <span class="attribute">-filename</span>=/mnt/$&#123;i&#125;/iotest <span class="attribute">-name</span>=Rand_Write_Testing <span class="attribute">-write_bw_log</span>=rww <span class="attribute">-write_lat_log</span>=rww <span class="attribute">-write_iops_log</span>=rw &gt;&gt; <span class="variable">$&#123;DIR&#125;</span>/fio.log</span><br><span class="line">	echo <span class="string">"------------------------------------------"</span> &gt;&gt; <span class="variable">$&#123;DIR&#125;</span>/fio.log</span><br><span class="line">	cd <span class="variable">$&#123;DIR&#125;</span>/2</span><br><span class="line">	fio <span class="attribute">-direct</span>=1 <span class="attribute">-iodepth</span>=128 <span class="attribute">-rw</span>=randread <span class="attribute">-ioengine</span>=libaio <span class="attribute">-bs</span>=4k <span class="attribute">-size</span>=1G <span class="attribute">-numjobs</span>=1 <span class="attribute">-runtime</span>=1000 -group_reporting <span class="attribute">-filename</span>=/mnt/$&#123;i&#125;/iotest <span class="attribute">-name</span>=Rand_Read_Testing <span class="attribute">-write_bw_log</span>=rww <span class="attribute">-write_lat_log</span>=rww <span class="attribute">-write_iops_log</span>=rw &gt;&gt; <span class="variable">$&#123;DIR&#125;</span>/fio.log</span><br><span class="line">	echo <span class="string">"------------------------------------------"</span> &gt;&gt; <span class="variable">$&#123;DIR&#125;</span>/fio.log</span><br><span class="line">	cd <span class="variable">$&#123;DIR&#125;</span>/3</span><br><span class="line">	fio <span class="attribute">-direct</span>=1 <span class="attribute">-iodepth</span>=64 <span class="attribute">-rw</span>=write <span class="attribute">-ioengine</span>=libaio <span class="attribute">-bs</span>=1024k <span class="attribute">-size</span>=1G <span class="attribute">-numjobs</span>=1 <span class="attribute">-runtime</span>=1000 -group_reporting <span class="attribute">-filename</span>=/mnt/$&#123;i&#125;/iotest <span class="attribute">-name</span>=Write_PPS_Testinig <span class="attribute">-write_bw_log</span>=rww <span class="attribute">-write_lat_log</span>=rww <span class="attribute">-write_iops_log</span>=rw &gt;&gt; <span class="variable">$&#123;DIR&#125;</span>/fio.log</span><br><span class="line">	echo <span class="string">"------------------------------------------"</span> &gt;&gt; <span class="variable">$&#123;DIR&#125;</span>/fio.log</span><br><span class="line">	cd <span class="variable">$&#123;DIR&#125;</span>/4</span><br><span class="line">	fio <span class="attribute">-direct</span>=1 <span class="attribute">-iodepth</span>=64 <span class="attribute">-rw</span>=read <span class="attribute">-ioengine</span>=libaio <span class="attribute">-bs</span>=1024k <span class="attribute">-size</span>=1G <span class="attribute">-numjobs</span>=1 <span class="attribute">-runtime</span>=1000 -group_reporting <span class="attribute">-filename</span>=/mnt/$&#123;i&#125;/iotest <span class="attribute">-name</span>=Read_PPS_Testing <span class="attribute">-write_bw_log</span>=rww <span class="attribute">-write_lat_log</span>=rww <span class="attribute">-write_iops_log</span>=rw &gt;&gt; <span class="variable">$&#123;DIR&#125;</span>/fio.log</span><br><span class="line">	echo <span class="string">"------------------------------------------ "</span> &gt;&gt; <span class="variable">$&#123;DIR&#125;</span>/fio.log</span><br><span class="line">	cd <span class="variable">$&#123;DIR&#125;</span>/5</span><br><span class="line">	fio <span class="attribute">-direct</span>=1 <span class="attribute">-iodepth</span>=1 <span class="attribute">-rw</span>=randwrite <span class="attribute">-ioengine</span>=libaio <span class="attribute">-bs</span>=4k <span class="attribute">-size</span>=1G <span class="attribute">-numjobs</span>=1 -group_reporting <span class="attribute">-filename</span>=/mnt/$&#123;i&#125;/iotest <span class="attribute">-name</span>=Rand_Write_Latency_Testing <span class="attribute">-write_bw_log</span>=rww <span class="attribute">-write_lat_log</span>=rww <span class="attribute">-write_iops_log</span>=rw &gt;&gt; <span class="variable">$&#123;DIR&#125;</span>/fio.log</span><br><span class="line">	echo <span class="string">"------------------------------------------ "</span> &gt;&gt; <span class="variable">$&#123;DIR&#125;</span>/fio.log</span><br><span class="line">	cd <span class="variable">$&#123;DIR&#125;</span>/6</span><br><span class="line">	fio <span class="attribute">-direct</span>=1 <span class="attribute">-iodepth</span>=1 <span class="attribute">-rw</span>=randread <span class="attribute">-ioengine</span>=libaio <span class="attribute">-bs</span>=4k <span class="attribute">-size</span>=1G <span class="attribute">-numjobs</span>=1 -group_reporting <span class="attribute">-filename</span>=/mnt/$&#123;i&#125;/iotest <span class="attribute">-name</span>=Rand_Read_Latency_Testingrandwrite <span class="attribute">-ioengine</span>=libaio <span class="attribute">-bs</span>=4k <span class="attribute">-size</span>=1G <span class="attribute">-numjobs</span>=1 -group_reporting <span class="attribute">-filename</span>=/mnt/$&#123;i&#125;/iotest <span class="attribute">-name</span>=Rand_Write_Latency_Testing <span class="attribute">-write_bw_log</span>=rww <span class="attribute">-write_lat_log</span>=rww <span class="attribute">-write_iops_log</span>=rw &gt;&gt; <span class="variable">$&#123;DIR&#125;</span>/fio.log</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><h2 id="基本流程："><a href="#基本流程：" class="headerlink" title="基本流程："></a>基本流程：</h2><p><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1584929216035-1585213121100.png" alt></p>
+<img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1584929216035-1585213121100.png" class title="This is an example image">
+
+<h2 id="修复："><a href="#修复：" class="headerlink" title="修复："></a>修复：</h2><p><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1584929259238-1585213190198.png" alt></p>
+<img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1584929259238-1585213190198.png" class title="This is an example image">
+
+<p><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1584929273426-1585213203412.png" alt> </p>
+<img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1584929273426-1585213203412.png" class title="This is an example image">
+
+<h2 id="扩容："><a href="#扩容：" class="headerlink" title="扩容："></a>扩容：</h2><p><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1584929291895-1585213213271.png" alt></p>
+<img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1584929291895-1585213213271.png" class title="This is an example image">
+
+<p>离线超时设置：<br><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1584929314961-1585213218391.png" alt></p>
+<img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1584929314961-1585213218391.png" class title="This is an example image">
+
+<h2 id="数据恢复："><a href="#数据恢复：" class="headerlink" title="数据恢复："></a>数据恢复：</h2><p><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1584929329671-1585213222519.png" alt></p>
+<img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1584929329671-1585213222519.png" class title="This is an example image">
+
+<h2 id="缩容："><a href="#缩容：" class="headerlink" title="缩容："></a>缩容：</h2><p><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1584929352155-1585213226362.png" alt></p>
+<img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1584929352155-1585213226362.png" class title="This is an example image">
+
+<h2 id="挂接-iSCSI-volume-给虚机的大致流程"><a href="#挂接-iSCSI-volume-给虚机的大致流程" class="headerlink" title="挂接 iSCSI volume 给虚机的大致流程"></a>挂接 iSCSI volume 给虚机的大致流程</h2><p><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1584929367305-1585213229996.png" alt></p>
+<img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1584929367305-1585213229996.png" class title="This is an example image">
+
+<h2 id="挂接-Ceph-RBD-卷给虚机的大致交互流程"><a href="#挂接-Ceph-RBD-卷给虚机的大致交互流程" class="headerlink" title="挂接 Ceph RBD 卷给虚机的大致交互流程"></a>挂接 Ceph RBD 卷给虚机的大致交互流程</h2><p><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1584929415481-1585213233537.png" alt></p>
+<img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1584929415481-1585213233537.png" class title="This is an example image">
+
+<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">虚拟机在 OpenStack 里的在线迁移<span class="symbol">https:</span>/<span class="regexp">/blog.csdn.net/tomstrong</span>_369/article/details/<span class="number">79747286</span> ，可以了解下</span><br><span class="line">@何抗洪 @韩盛中 <span class="symbol">http:</span>/<span class="regexp">/docs.ceph.com/docs</span><span class="regexp">/mimic/rbd</span><span class="regexp">/rbd-openstack/</span>     这是ceph rbd  glance 的介绍，以及</span><br><span class="line">@王星童 ISCSI客户机及多路径的设置   <span class="symbol">https:</span>/<span class="regexp">/blog.csdn.net/huzhenwei</span><span class="regexp">/article/details</span><span class="regexp">/80690623</span></span><br><span class="line"><span class="regexp">把gateway和chunkserver的GOGC都调成100：</span></span><br></pre></td></tr></table></figure>
+<p><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1584929468585-1585213236130.png" alt></p>
+<img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1584929468585-1585213236130.png" class title="This is an example image">
+
+<p><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1584929482117-1585213239003.png" alt></p>
+<img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1584929482117-1585213239003.png" class title="This is an example image">
+
+<p><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1584929499524-1585213241008.png" alt></p>
+<img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1584929499524-1585213241008.png" class title="This is an example image">
+
+<p><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/2008-01-04-BlockStorage-summary%5C1584929512899-1585213243916.png" alt></p>
+<img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/1584929512899-1585213243916.png" class title="This is an example image">
+
+
+
+
+
+
+    </div>
+
+    
+    
+    
+      
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/" title="BlockStorage-summary">https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/BlockStorage-summary/" rel="tag"># BlockStorage-summary</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-snbsfuse/" rel="prev" title="BlockStorage-snbsfuse">
+      <i class="fa fa-chevron-left"></i> BlockStorage-snbsfuse
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-question/" rel="next" title="BlockStorage-question">
+      BlockStorage-question <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#001-介绍"><span class="nav-text">001-介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#002-网络架构"><span class="nav-text">002-网络架构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#003-理解"><span class="nav-text">003-理解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#003-升级顺序"><span class="nav-text">003-升级顺序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#002-虚机环境："><span class="nav-text">002-虚机环境：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#003-压测环境："><span class="nav-text">003-压测环境：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#004-全闪环境"><span class="nav-text">004-全闪环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#004-对接环境"><span class="nav-text">004-对接环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#005-sit环境ocata8-集群"><span class="nav-text">005-sit环境ocata8 集群</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#006-java开发环境"><span class="nav-text">006-java开发环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#007-自动化环境"><span class="nav-text">007-自动化环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#006"><span class="nav-text">006-</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#openstack"><span class="nav-text">openstack</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测试"><span class="nav-text">测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#文件系统准确性："><span class="nav-text">文件系统准确性：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#拷机模型"><span class="nav-text">拷机模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#蛙测"><span class="nav-text">蛙测</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#流程"><span class="nav-text">流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本流程："><span class="nav-text">基本流程：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修复："><span class="nav-text">修复：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩容："><span class="nav-text">扩容：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据恢复："><span class="nav-text">数据恢复：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缩容："><span class="nav-text">缩容：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#挂接-iSCSI-volume-给虚机的大致流程"><span class="nav-text">挂接 iSCSI volume 给虚机的大致流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#挂接-Ceph-RBD-卷给虚机的大致交互流程"><span class="nav-text">挂接 Ceph RBD 卷给虚机的大致交互流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其它"><span class="nav-text">其它</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">What hurts more, the pain of hard work or the pain of regret?</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">34:51</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

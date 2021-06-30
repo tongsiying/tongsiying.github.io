@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="BlockStorage-存储总结">
+<meta property="og:url" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-%E5%AD%98%E5%82%A8%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-%E5%AD%98%E5%82%A8%E6%80%BB%E7%BB%93/img/1586424878979.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-%E5%AD%98%E5%82%A8%E6%80%BB%E7%BB%93/E:%5C%E8%AE%B0%E5%BD%95%5Cimg%5C1585896317284.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-%E5%AD%98%E5%82%A8%E6%80%BB%E7%BB%93/E:%5C%E8%AE%B0%E5%BD%95%5Cimg%5Cwps29A.tmp.png">
+<meta property="article:published_time" content="2008-01-04T10:37:19.000Z">
+<meta property="article:modified_time" content="2021-02-15T08:04:00.039Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="BlockStorage-存储总结">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-%E5%AD%98%E5%82%A8%E6%80%BB%E7%BB%93/img/1586424878979.png">
+
+<link rel="canonical" href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-%E5%AD%98%E5%82%A8%E6%80%BB%E7%BB%93/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>BlockStorage-存储总结 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">嘻嘻嘻嘻嘻嘻</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-%E5%AD%98%E5%82%A8%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="What hurts more, the pain of hard work or the pain of regret?">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          BlockStorage-存储总结
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2008-01-04 18:37:19" itemprop="dateCreated datePublished" datetime="2008-01-04T18:37:19+08:00">2008-01-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-02-15 16:04:00" itemprop="dateModified" datetime="2021-02-15T16:04:00+08:00">2021-02-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BlockStorage/" itemprop="url" rel="index"><span itemprop="name">BlockStorage</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>8.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+# SNBS介绍
+
+<p>苏宁自研的块存储，简称SNBS：有些模块和GFS差不多，GFS也没开放过原码，GFS不是glusterfs，是谷歌的一个文件系统，有借鉴，但底层逻辑还是有区别的。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">snbs特点：</span><br><span class="line"><span class="number">1.</span>高性能</span><br><span class="line">	a. 以SSD设备作为缓存，充分利用SSD低延迟，高IOPS的特性</span><br><span class="line"><span class="number">2.</span>高可靠</span><br><span class="line">	a.通过多副本，保证在服务器宕机时，数据不会丢失</span><br><span class="line">	b.多副本采用强一致性写，保证数据一致性</span><br><span class="line"><span class="number">3.</span>低消耗</span><br><span class="line">	a.兼容商用x86服务器，无特殊硬件需求</span><br><span class="line">	b.存储仅占用有限的计算资源，避免额外购置存储服务器，完美适配超融合架构</span><br><span class="line"><span class="number">4.</span>横向可扩展</span><br><span class="line">	a.性能与容量同步线性扩展</span><br><span class="line">	b.单集群最大可支持<span class="number">255</span>个节点</span><br><span class="line"><span class="number">5</span>．易于集成</span><br><span class="line">	a.提供标准的isCSI接口，完整的RESTful API支持</span><br><span class="line">	b.支持KVM，VMware ESXi， XenServer等虚拟化/云平台</span><br><span class="line"></span><br><span class="line">写缓存：</span><br><span class="line">	对于大小块混合写的业务场景，在SSD Cache中可以识别出大于等于<span class="number">128</span>K的io【snbs是大于<span class="number">1</span>M】，将其Bypass直接下发到HDD，用户可以自定义大块io Bypass的SSD Cache阈值，默认大块io优先写入SSD Cache中，当达到阈值后，超出的大块IO会选择下发到HDD中。但是当HDD盘利用率也较高时，大块io仍然回到SSD Cache中。</span><br><span class="line">	通过这个方式，大块io可以同时打满HDD和SSD，能够解决以下两方面问题：</span><br><span class="line">	<span class="number">1</span>大块io访问SSD Cache会受限于SSD的带宽，影响整个集群的带宽。</span><br><span class="line">	<span class="number">2</span>大块io访问SSD Cache会增大SSD的压力大幅影响SSD上的其他小块io时延。</span><br><span class="line">	</span><br><span class="line">合并刷盘技术：</span><br><span class="line">	在XSKY产品的io栈中，离散的随机小块io会先写到SSD中，通过合并刷盘技术将离散随机小块io合并成连续大块io写入到HDD中，提升系统整体IOPS性能同时减少HDD硬盘寻道次数，降低硬盘损耗，延长硬盘使用寿命。</span><br><span class="line">	</span><br><span class="line">	 <span class="number">1.2</span><span class="number">.7</span>热卷缓存锁定对指定的卷实现专用缓存加速，避免性能瓶颈。</span><br></pre></td></tr></table></figure>
+
+<p>为啥需要自研存储？</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">	存储服务作为数据的持久保护在基础架构中很重要。其稳定性和成熟度一直是产品选型的重中之重。国内Ceph厂家一直存在重UI、重功能、而轻稳定性、轻性能的不良倾向,过分依赖Ceph开源社区,甚至无法对Ceph优缺点有一个深入的认识,自然无从改进Ceph的稳定性和性能面临的问题。</span><br><span class="line">	ceph本身也架构厚重，复杂度高</span><br><span class="line">	市面上 Ceph 分布式块存储，包括 Redhat原生Ceph 集群在实际应用中常面临以下三个方面的问题：</span><br><span class="line"><span class="number">1</span>. IO 性能较差： </span><br><span class="line">	Ceph为保证数据强一致性和掉电数据保护，较多地采用了同步落盘（同步写）策略；而 Ceph 本身缺乏一个高效的 DRAM/SSD 缓存机制；此外，随机性数据分布容易导致 IO 工作负载分布不均，在某些磁盘上出现较多 IO 而导致大时延现象甚至阻塞；</span><br><span class="line"><span class="number">2</span>. <span class="keyword">Backfilling </span>风暴： </span><br><span class="line"><span class="number">3</span> 副本策略导致在硬盘出现故障时，系统必须尽快完成数据重建。</span><br><span class="line">数据块速重建容易影响业务正常允许，也可能导致次生故障；</span><br><span class="line">【</span><br><span class="line"><span class="keyword">Backfilling</span></span><br><span class="line"><span class="keyword">含义：回填状态</span></span><br><span class="line"><span class="keyword">引起原因：这种情况一般是由于osd的离线（超过5分钟没有心跳回应），ceph找寻新的osd来替换所进行的全量数据拷贝。</span></span><br><span class="line"><span class="keyword">后果：出现这个状态一般都是确定有osd挂掉或者离线了</span></span><br><span class="line"><span class="keyword">解决方案：多数情况下ceph会自动完成数据回填，如果无法完成回填，就会进入backfill-toofull状态</span></span><br><span class="line"><span class="keyword"></span></span><br><span class="line"><span class="keyword">ackfill-toofull</span></span><br><span class="line"><span class="keyword">含义：backfilling挂起状态</span></span><br><span class="line"><span class="keyword">引起原因：通常是因为osd容量不足以回填丢失的osd引起</span></span><br><span class="line"><span class="keyword">后果：造成pool无法写入，读写卡死。</span></span><br><span class="line"><span class="keyword">解决方案：</span></span><br><span class="line"><span class="keyword">需要检查osd容量，是否有严重不平衡现象，将超量osd数据手动疏散（reweight），如果是集群nearful现象，应该尽快物理扩容</span></span><br><span class="line"><span class="keyword">紧急扩容方式（治标不治本，最好的方法还是扩展osd数量和容量）</span></span><br><span class="line"><span class="keyword">暂停osd读写；</span></span><br><span class="line"><span class="keyword">】</span></span><br><span class="line"><span class="keyword"></span></span><br><span class="line"><span class="keyword">3. </span>硬件老化以及 <span class="keyword">Bit-rot </span>等隐形数据损坏：</span><br><span class="line">与传统中高端磁盘阵列相比， Ceph 缺乏在线数据完整性校验机制，在硬件老化或出现硬盘 <span class="keyword">bit-rot </span>情形下系统可能出现崩溃现象</span><br><span class="line"><span class="keyword">Bit-rot：</span></span><br><span class="line"><span class="keyword">	</span>位衰减是指存储在存储介质中的数据的性能和完整性的缓慢恶化。它也被称为比特衰变、数据腐烂、数据衰变和静默数据损坏。</span><br><span class="line">	存储阵列供应商意识到了位衰减，他们研发产品，用以在将磁盘放进阵列之前识别磁盘上的缺陷，然后监控生产运行中的磁盘，在衰减成为一个问题之前检测到它。</span><br><span class="line">	尽管数据中的位衰减发生的频率通常很低，但它可能在遇到磨损、灰尘、其他污染物、背景辐射以及高热情况时发生率有所上涨。为了防止位衰减，管理员应定期检查存储的数据并将其与已知的副本进行比对。</span><br></pre></td></tr></table></figure>
+
+<p>因主流开源产品的存在种种不足，选择了自研道路</p>
+<table>
+<thead>
+<tr>
+<th>ceph</th>
+<th>架构厚重，复杂度高，性能不足</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>sheepdog</td>
+<td>不易扩展，性能不足</td>
+</tr>
+</tbody></table>
+<p>相较业界主流产品，高效云盘的开发周期短</p>
+<table>
+<thead>
+<tr>
+<th>Ceph块存储</th>
+<th>2011~2014</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>阿里云</td>
+<td>2009~2012</td>
+</tr>
+<tr>
+<td>AWS</td>
+<td>2003~2006</td>
+</tr>
+<tr>
+<td>SNBS</td>
+<td>2018.Q4~2019.Q4</td>
+</tr>
+</tbody></table>
+<p>与现有本地存储相比，存在如下优势</p>
+<table>
+<thead>
+<tr>
+<th>Thin-Provision</th>
+<th>按照业务实际使用分配资源</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>高可靠</td>
+<td>默认三副本，保证数据安全</td>
+</tr>
+<tr>
+<td>数据迁移</td>
+<td>无需调整数据归属，动态迁移业务</td>
+</tr>
+<tr>
+<td>易扩展</td>
+<td>集群扩容时业务无感知</td>
+</tr>
+<tr>
+<td>随机写性能高</td>
+<td>根据我司典型应用场景，对随机写做了特殊优化</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>** **</th>
+<th><strong>场景</strong></th>
+<th><strong>痛点</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>虚机迁移</td>
+<td>双十一大促后，江北易购机房，购物核心系统不满足当前调度规则需要资源打散的虚机共计3258台，占比80%</td>
+<td>迁移虚机镜像，迁移时间&gt;30分钟 数据盘大于1TB，迁移&gt;2小时； 影响业务，只能在夜间进行（一般1点以后）； 迁移完需要人工验证（业务验证时间0.5~2小时）；</td>
+</tr>
+<tr>
+<td>本地盘限制</td>
+<td>运维反馈平均1个月纵向磁盘扩容工单超过1000台虚机（DB占60%）。 空间不够需要迁移扩容的大概有30%。 部分系统同一集群宿主机无法满足扩容空间要求，需要在其他集群新建，占10%。 大型商用数据库单库容量过大，无法使用服务器本地盘来保存</td>
+<td>当数据库无法迁移需要新建数据库时，要先备份数据，再恢复数据到新机器上，花费时间长。物理机发生故障无法恢复时，只能通过备份恢复数据，耗费时间较长（小时级）；</td>
+</tr>
+<tr>
+<td>资源分配</td>
+<td>DB宿主机使用SSD硬盘，宿主机整体io使用率低 分配资源时，须考虑CPU、内存、硬盘容量、硬盘io性能等多个维度的均衡</td>
+<td>超过70%的DB宿主机io读写峰值低于5000 io读写峰值超过20000的仅占3%； 平均峰值IO使用率约31%；资源碎片（cpu平均分配率69%，存储平均分配率55%，内存分配率93.7%）；易造成io使用率不均，io使用率低或者io争抢；</td>
+</tr>
+</tbody></table>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">用途：替代云环境中的非IO敏感块存储，实现计算资源（CPU/RAM）和存储资源（Storage）硬件分离，通过网络（<span class="number">10</span>G/<span class="number">25</span>G）连接。</span><br><span class="line">优势：弹性扩容、简化调度、高可用、快速迁移、性能分级</span><br><span class="line"></span><br><span class="line">外采和自研并行</span><br><span class="line">外采短期内解决痛点问题；自研长久夯实自身能力</span><br><span class="line">SIT环境分布式块存储使用情况：</span><br><span class="line"><span class="number">6</span>节点存储集群开放申请云盘不到<span class="number">2</span>天，目前已支持<span class="number">99</span>个虚机的系统盘和数据盘，其中包括<span class="number">14</span>个数据库，业务系统使用本地盘还是云盘无感知</span><br><span class="line">包括测试卷和操作系统镜像卷，一共<span class="number">262</span>个卷，分配容量<span class="number">22610</span>GB，使用精简配置技术，实际占用<span class="number">6813</span>G，超分比<span class="number">1</span>:<span class="number">3</span>,整体IOPS <span class="number">100</span>左右</span><br><span class="line"></span><br><span class="line">针对苏宁的应用场景，性能上做了特殊优化</span><br><span class="line">测试配置：<span class="number">8</span>台X86服务器，<span class="number">4</span>台压测机，一组万兆交换机</span><br><span class="line">存储单台配置：CPU:<span class="number">2</span>*<span class="number">4114</span>，内存：≤<span class="number">128</span>GB，缓存：SSD/NVMe，数据盘：<span class="number">10</span>*<span class="number">4</span>T，网卡：<span class="number">2</span>*<span class="number">10</span>Gb</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-%E5%AD%98%E5%82%A8%E6%80%BB%E7%BB%93/img/1586424878979.png" alt="1586424878979"></p>
+<p>机器配置:</p>
+<p><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-%E5%AD%98%E5%82%A8%E6%80%BB%E7%BB%93/E:%5C%E8%AE%B0%E5%BD%95%5Cimg%5C1585896317284.png" alt="1585896317284"></p>
+<p>机器数量：</p>
+<p>6台存储服务器：</p>
+<p> 3台元数据服务器：</p>
+<p><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-%E5%AD%98%E5%82%A8%E6%80%BB%E7%BB%93/E:%5C%E8%AE%B0%E5%BD%95%5Cimg%5Cwps29A.tmp.png" alt="img"></p>
+<p>一个块存储集群内部有多个区域（region），一个region有若干个资源池（POOL），每个POOL可以有多个故障域（ZONE）。每个集群只有一组MASTER，使用ETCD存储元数据（卷信息和chunk信息）。每个ZONE有若干个chunkserver</p>
+<p>存储服务器:</p>
+<p>前期硬件准备：</p>
+<p>系统盘：600G*2  SAS  （raid1）</p>
+<p>安装模块：</p>
+<table>
+<thead>
+<tr>
+<th><strong><em>\</em>模块**</strong></th>
+<th><strong><em>\</em>磁盘使用**</strong></th>
+<th><strong><em>\</em>IP配置**</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ChunkServer</td>
+<td>数据盘：10*4T HDD  写缓存：960G SSD 读缓存：960G SSD 日志位置：系统盘</td>
+<td>IP：数据网段</td>
+</tr>
+<tr>
+<td>GateWay</td>
+<td>日志位置：系统盘</td>
+<td>IP：数据网段</td>
+</tr>
+<tr>
+<td>TgtMaster</td>
+<td>日志位置：系统盘</td>
+<td>IP：数据网段</td>
+</tr>
+<tr>
+<td>DiskCheck</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Nrpe</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>元数据服务器：</p>
+<p>系统盘：600G*2  SAS  （raid1）</p>
+<p>存储盘：960G*2  SSD  （raid1）</p>
+<p>安装模块</p>
+<table>
+<thead>
+<tr>
+<th><strong><em>\</em>模块**</strong></th>
+<th><strong><em>\</em>磁盘使用**</strong></th>
+<th><strong><em>\</em>IP配置**</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Master</td>
+<td>日志位置：系统盘</td>
+<td>IP：数据网段</td>
+</tr>
+<tr>
+<td>Etcd</td>
+<td>日志位置：系统盘存储位置：960G SSD</td>
+<td>IP：数据网段</td>
+</tr>
+</tbody></table>
+<ol>
+<li>硬盘准备：</li>
+</ol>
+<p>存储服务器：</p>
+<p> 两块600G SSD，做Raid1</p>
+<p> 其他盘全部直连</p>
+<p> 元数据服务器：</p>
+<p>两块600G  SSD，做Raid1</p>
+<p> 两块960G  SSD，做raid1</p>
+<h3 id="系统安装和基础设置"><a href="#系统安装和基础设置" class="headerlink" title="系统安装和基础设置"></a>系统安装和基础设置</h3><ol>
+<li><p>系统盘预留单独分区</p>
+<p>/opt/log   （200G）</p>
+</li>
+</ol>
+<p>l/home/snbs （100G）</p>
+<p> 其他按默认安装</p>
+<p>l元数据服务器  把960G的SSD盘挂载到/mnt/data</p>
+<ol start="2">
+<li>网络配置</li>
+</ol>
+<p>所有机器万兆网卡进行模式（mod=0），并接入存储网络</p>
+<p> 千兆网卡接入管理网络,bond</p>
+<ol start="3">
+<li>操作系统用户</li>
+</ol>
+<p>保留root用户</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">什么是块存储/对象存储/文件系统存储？</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">1</span>.对象存储：</span><br><span class="line">    也就是通常意义的键值存储，其接口就是简单的<span class="meta">GET</span>、PUT、DEL 和其他扩展，代表主要有 <span class="keyword">Swift </span>、<span class="built_in">S3</span> 以及 Gluster 等；</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">2</span>.块存储：</span><br><span class="line">    这种接口通常以 QEMU Driver 或者 Kernel Module 的方式存在，这种接口需要实现 Linux 的 <span class="keyword">Block </span>Device 的接口或者 QEMU 提供的 <span class="keyword">Block </span>Driver 接口，如 Sheepdog，AWS 的 EBS，青云的云硬盘和阿里云的盘古系统，还有 Ceph 的 RBD（RBD是Ceph面向块存储的接口）。在常见的存储中 DAS、SAN 提供的也是块存储；</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="number">3</span>.文件系统存储：</span><br><span class="line">     通常意义是支持 POSIX 接口，它跟传统的文件系统如 Ext4 是一个类型的，但区别在于分布式存储提供了并行化的能力，如 Ceph 的 CephFS (CephFS是Ceph面向文件存储的接口)，但是有时候又会把 GlusterFS ，HDFS 这种非POSIX接口的类文件存储接口归入此类。当然 NFS、NAS也是属于文件系统存储；</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ceph文章：</span><br><span class="line">https:<span class="regexp">//</span>www.cnblogs.com<span class="regexp">/zzzynx/</span>p<span class="regexp">/11010870.html</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">问你们一个我没答出来的问题：为什么私有云后端的存储都是选择分布式块存储？而不是对象或者文件。</span><br></pre></td></tr></table></figure>
+
+<h1 id="测试软件"><a href="#测试软件" class="headerlink" title="测试软件"></a>测试软件</h1><table>
+<thead>
+<tr>
+<th><strong><em>\</em>软件**</strong></th>
+<th><strong><em>\</em>版本**</strong></th>
+<th><strong><em>\</em>用途**</strong></th>
+<th><strong><em>\</em>说明**</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Vdbench</td>
+<td>50406</td>
+<td>存储性能测试</td>
+<td>Vdbench是一个专门用于帮助工程师和客户生成磁盘I/O工作负载的命令行工具，来自Orcale，下载需遵守OTN许可协议。</td>
+</tr>
+<tr>
+<td>SwingBench</td>
+<td>2.5</td>
+<td>Oracle性能测试</td>
+<td>Swingbench 是一个免费的压力测试工具, 用于Oracle 数据库11g和12c的性能基准测试。</td>
+</tr>
+<tr>
+<td>Sysbench</td>
+<td>1.0.8</td>
+<td>MySQL 功能及性能测试</td>
+<td>Sysbench是一个开源的、模块化的、跨平台的多线程性能测试工具，可以用来进行CPU、内存、磁盘I/O、线程、数据库的性能测试。</td>
+</tr>
+<tr>
+<td>CentOS</td>
+<td>7.3</td>
+<td>操作系统</td>
+<td></td>
+</tr>
+</tbody></table>
+<h1 id="苏宁分布式存储（SNBS）模块介绍"><a href="#苏宁分布式存储（SNBS）模块介绍" class="headerlink" title="苏宁分布式存储（SNBS）模块介绍"></a>苏宁分布式存储（SNBS）模块介绍</h1><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ISCSI Server：对外提供iscsi接口，因此ISCSI Server通过tgt实现iscsi的target，负责将iscsi客户端（iscsi initiator）发过来的iqn操作请求转发到对应的Getway，实现对绑定的块设备卷的操作；</span><br><span class="line">Getway：作为SNBS的数据处理网关，将ISCSI Server发过来的数据读写请求映射到块设备卷的读写逻辑处理：如果是写请求，Getway会根据对应卷操作的偏移和size，到<span class="literal">Master</span>创建chunk，并到对应的Chunkserver完成实际数据的写入；如果是读请求，Getway根据本地缓存中的元数据信息，找到对应的chunkid，并到对应的chunkserver读取数据；</span><br><span class="line"><span class="literal">Master</span>：作为SNBS大脑，负责核心元数据的存储、资源的分配、任务（均衡、修复、迁移）的调度等。核心元数据包括卷信息和chunk信息。<span class="literal">Master</span>通过etcd进行选主：<span class="literal">MASTER</span>上电时会统一发事务请求给ETCD进行选主，当主<span class="literal">Master</span>挂了后，etcd会通知其他<span class="literal">Master</span>竞争选主；</span><br><span class="line">Etcd：首先ETCD提供<span class="literal">Master</span>的数据存储；其次，ETCD还作为<span class="literal">Master</span>模块选主的仲裁。ETCD自身通过raft协议进行选主。</span><br><span class="line">Region：一个逻辑概念，不同的区域用于区分一个集群中不同的机房，目前一个集群只会存在于一个机房；</span><br><span class="line">Pool：SNBS会将一个区域中的资源划分为多个资源池，一般是依据不同的存储介质进行划分，通常分为全闪、混合、SATA3中资源池类型，以满足不同的用户对性能的要求。不同的资源池间的数据支持迁移和克隆；</span><br><span class="line">Zone：每个资源池内部有多个故障域（Zone），一个故障域可以是一个机架，一个故障域损坏不会影响整体集群的服务。块存储目前是基于副本机制实现数据的可靠性，同一个chunk的不同副本会在不同的故障域；</span><br><span class="line">Chunkserver：存储数据的服务器。SNBS的Chunkserver最大的特点就是不通过文件系统直接管理裸盘，提高了数据的读写效率，并通过追加写和元数据缓存进一步提高写性能。一个Chunkserver管理若干个裸盘</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br></pre></td><td class="code"><pre><span class="line">昨天最后一个问题问我：你觉得最合理的灾备的架构是什么样</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">我回答说：两地三中心。然后再解释了一下什么叫两地三中心。</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">然后愉快的结束</span><br><span class="line"></span><br><span class="line">陈玉强</span><br><span class="line">什么是两地三中心？</span><br><span class="line"></span><br><span class="line">格瓦斯</span><br><span class="line">现场能写出来的也就是算法类的的。就比如之前我跟陈玉强说的，来来来，小伙子，实现下多叉树平衡算法</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">本地数据中心、多活数据中心（同城）、灾备数据中心（异地）</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">同城多活考虑数据实时双写</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">异地灾备考虑数据备份</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">同城双活保证业务不断</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">异地灾备保证数据不丢</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">属于灾备级别最高的一级了</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">里面有RTO和RPO的一些指标要求</span><br><span class="line"></span><br><span class="line">陈玉强</span><br><span class="line">苏宁现在已经这么做的？还是规划准备这么做？</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">苏宁现在只做了同城的双活</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">打引号的双活</span><br><span class="line"></span><br><span class="line">格瓦斯</span><br><span class="line">苏宁去年才开始搞同城</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">苏宁的灾备还远呢</span><br><span class="line"></span><br><span class="line">格瓦斯</span><br><span class="line">对象的RTO和RPO 还都是我开始定的。分钟级</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">最高级别的灾备都是约等于<span class="number">0</span></span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">RTO和RPO</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">RTO业务中断时间 RPO数据丢失量</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">这些知识我刚入行存储就知道了 所以他们问我我基本都知道</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">问我块、对象和文件的区别</span><br><span class="line"></span><br><span class="line">格瓦斯</span><br><span class="line">RTO 那边开始说是看网络，</span><br><span class="line"></span><br><span class="line">格瓦斯</span><br><span class="line">「王老吉: 问我块、对象和文件的区别 」</span><br><span class="line"></span><br><span class="line">——————</span><br><span class="line"></span><br><span class="line">你咋回答的？</span><br><span class="line"></span><br><span class="line">陈玉强</span><br><span class="line">可以改名面试经验分享群</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">块存储是一种裸设备，通过iscsi/FC协议挂载给服务器，作为磁盘设备。本身没有文件系统这一层，适合于数据库等结构化数据的存储。</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">文件存储本身有自己的文件系统，通过CIFS/NFS等文件共享协议提供服务。适用于多服务器共享，主要用于日志的集中管理和办公共享。适合文档、音视频等非结构化数据的共享存储。</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">块存储和文件存储的本质区别就在于文件系统的位置不同</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">而对象就融合了块和文件的优点，既有块存储的高速也有文件存储的共享属性。属于更上层的存储，有自己的cpu 内存 网络和磁盘。通过开放的restful接口提供web服务，方便业务系统集成。</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">大概是这个意思</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">对象适合于文档、图片、音视频等海量非结构化数据的存储</span><br><span class="line"></span><br><span class="line">格瓦斯</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">这是我一面的时候问我的问题</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">还问了我 备份和容灾有没有区别</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">等电话了 估计要到下午</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">hr会给我打</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">很紧张</span><br><span class="line"></span><br><span class="line">格瓦斯</span><br><span class="line">我要吃多佐</span><br><span class="line"></span><br><span class="line">陈玉强</span><br><span class="line">大家想想吃啥吧</span><br><span class="line"></span><br><span class="line">陈玉强</span><br><span class="line">连吃三天</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">说实话 还是面存储我比较随意 因为我基础知识还可以的</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">我的弱项就是底层的开发流程 但是找你们恶补的也差不多了</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">足以应付</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">昨天那个技术总监 面完我之后很谦虚的说他们不专业</span><br><span class="line"></span><br><span class="line">格瓦斯</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">我跟他聊了一下我们的架构</span><br><span class="line"></span><br><span class="line">格瓦斯</span><br><span class="line">看来我要吃两顿 多佐</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">我们怎么从tgtd强绑定 到解耦tgtd 再到去tgtd（Qemu）</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">晓伟跟我说的这套好有杀伤力</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">跟他讲了下我们的日志型写缓存</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">gateway读缓存 热点缓存命中</span><br><span class="line"></span><br><span class="line">陈玉强</span><br><span class="line">以前我们面试用过这招。。面其他厂家的人，套取别人是实现细节</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">我本来还准备了ceph和glusterFS的一些东西</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">没问</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">本来我还想跟他讲讲crush算法和哈希算法</span><br><span class="line"></span><br><span class="line">格瓦斯</span><br><span class="line">碰到不会的，就挂个高薪招聘。</span><br><span class="line"></span><br><span class="line">格瓦斯</span><br><span class="line">我也干过这事。。。</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">金鑫跟我说的随机+权重我都准备好了</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">没问</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">可惜了</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">QoS我也说了 但没问我技术细节</span><br><span class="line"></span><br><span class="line">格瓦斯</span><br><span class="line">之前玩PG的时候，专门找oracle大神来问，<span class="number">15</span>年挂<span class="number">30</span>K，然后问完就没下文</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">强哥告诉我的令牌桶我已经准备好了</span><br><span class="line"></span><br><span class="line">金鑫</span><br><span class="line">你是集大成于一身啊</span><br><span class="line"></span><br><span class="line">金鑫</span><br><span class="line">不成功都难啊</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">所以吧 我感觉多去准备些技术细节相关的东西有帮助</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">这些个细节反正对面不一定完全听得懂</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">你说得出来就会唬住他</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">尤其我还是个产品</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">不是个只会UI的</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">他们还停留在UI的层面</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">架构、数据流程（怎么读、怎么写）、性能优化、稳定性优化</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">这四个方面 我觉得准备一下 就够用了</span><br><span class="line"></span><br><span class="line">格瓦斯</span><br><span class="line">昨天的是字节，阿里的怎么说？@王老吉</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">阿里的凉凉了 我估计 那天下午有个电话没接到</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">阿里打过来的</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">然后也没收到拒绝邮件</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">不会是因为我没接电话 借给我截胡了吧</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">那天在和王星童吹牛逼</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">手机振动我都没感觉到</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">下午五点多的时候</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">你们知道 张一鸣和我是同一个大学同一个专业吗</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">@全体成员</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">南开大学 微电子 估计我和他住过同一栋宿舍楼</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">万一进了字节也可以吹牛逼了</span><br><span class="line"></span><br><span class="line">王老吉</span><br><span class="line">我和创始人住过同一栋宿舍楼 去上海搞个校友群</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">独立克隆是不是除了复制元数据 还得复制数据</span><br><span class="line"></span><br><span class="line">格瓦斯</span><br><span class="line">嗯，独立克隆就是全部复制一遍了。严格来说就是复制数据了，元数据就由新的数据再构建了</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">自动化</span><br><span class="line">协议</span><br><span class="line">sql</span><br><span class="line">etcd</span><br><span class="line">redis</span><br><span class="line">网络：dns dhcp</span><br><span class="line">接口测试：</span><br><span class="line">代码：<span class="keyword">c</span> <span class="keyword">c</span>++ java</span><br><span class="line">测试工具：</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+      
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-%E5%AD%98%E5%82%A8%E6%80%BB%E7%BB%93/" title="BlockStorage-存储总结">https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-存储总结/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/BlockStorage-%E5%AD%98%E5%82%A8%E6%80%BB%E7%BB%93/" rel="tag"># BlockStorage-存储总结</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2008/01/04/Database/2007-01-17-mysql-%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" rel="prev" title="存储过程">
+      <i class="fa fa-chevron-left"></i> 存储过程
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-%E5%8A%9F%E8%83%BD/" rel="next" title="BlockStorage-功能">
+      BlockStorage-功能 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#系统安装和基础设置"><span class="nav-text">系统安装和基础设置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测试软件"><span class="nav-text">测试软件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#苏宁分布式存储（SNBS）模块介绍"><span class="nav-text">苏宁分布式存储（SNBS）模块介绍</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">What hurts more, the pain of hard work or the pain of regret?</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">34:51</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

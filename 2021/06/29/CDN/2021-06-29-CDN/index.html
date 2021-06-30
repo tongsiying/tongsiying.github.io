@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="CND">
+<meta property="og:url" content="https://tongsiying.github.io/2021/06/29/CDN/2021-06-29-CDN/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tongsiying.github.io/2021/06/29/CDN/2021-06-29-CDN/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2021-06-29-CDN%5C626983-20160116000226866-646781972.png">
+<meta property="og:image" content="https://tongsiying.github.io/2021/06/29/CDN/2021-06-29-CDN/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2021-06-29-CDN%5C626983-20160116000235772-556419781.png">
+<meta property="og:image" content="https://tongsiying.github.io/2021/06/29/CDN/2021-06-29-CDN/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2021-06-29-CDN%5CImage.png">
+<meta property="og:image" content="https://tongsiying.github.io/2021/06/29/CDN/2021-06-29-CDN/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2021-06-29-CDN%5CImage-1624016953933.png">
+<meta property="og:image" content="https://tongsiying.github.io/2021/06/29/CDN/2021-06-29-CDN/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2021-06-29-CDN%5CImage-1624016960108.png">
+<meta property="article:published_time" content="2021-06-29T10:37:19.000Z">
+<meta property="article:modified_time" content="2021-06-18T11:55:13.884Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="CDN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tongsiying.github.io/2021/06/29/CDN/2021-06-29-CDN/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2021-06-29-CDN%5C626983-20160116000226866-646781972.png">
+
+<link rel="canonical" href="https://tongsiying.github.io/2021/06/29/CDN/2021-06-29-CDN/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>CND | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">嘻嘻嘻嘻嘻嘻</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2021/06/29/CDN/2021-06-29-CDN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="What hurts more, the pain of hard work or the pain of regret?">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CND
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-29 18:37:19" itemprop="dateCreated datePublished" datetime="2021-06-29T18:37:19+08:00">2021-06-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-18 19:55:13" itemprop="dateModified" datetime="2021-06-18T19:55:13+08:00">2021-06-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CDN/" itemprop="url" rel="index"><span itemprop="name">CDN</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>16k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>15 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+<h1 id="000-ott基本流程"><a href="#000-ott基本流程" class="headerlink" title="000-ott基本流程"></a>000-ott基本流程</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">下午复习计划：</span><br><span class="line"><span class="number">1</span>、项目连续说一遍</span><br><span class="line"><span class="number">2</span>、一些问题，集中说一遍</span><br><span class="line"><span class="number">3</span>、sql语句背一下，多表查询，增删改查，数据库以及表导入导出</span><br><span class="line"><span class="number">4</span>、linu基本</span><br><span class="line"><span class="number">5</span>、计算机基本，如加路由等</span><br><span class="line"><span class="number">6</span>、dfs相关</span><br><span class="line"><span class="number">7</span>、为啥要离职</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">老模式：</span><br><span class="line">用户——RR——边缘SLB——边缘IAS——中心SLB——中心IAS</span><br><span class="line"><span class="number">1</span>、RR匹配边缘SLB</span><br><span class="line"><span class="number">2</span>、边缘SLB匹配边缘IAS</span><br><span class="line"><span class="number">3</span>、边缘IAS有内容就直接返回给用户，没有就直接到中心级联，中心没有去源站回源</span><br><span class="line"></span><br><span class="line">RR：最大带宽、最大用户数（license）</span><br><span class="line">DR采集：</span><br><span class="line">curl -i <span class="string">"http://223.85.247.163:6612/GetCDNLoadInfo"</span>            ip</span><br><span class="line">curl -i <span class="string">"http://223.85.247.163:6612/GetCDNLoadInfoAll"</span>        设备</span><br><span class="line"><span class="number">1</span>、先ip段：看客户端ip在哪个ip段，在iam上可以配置某个ip段掉某个节点</span><br><span class="line"><span class="number">1</span>节点对应<span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>——<span class="number">200.200</span><span class="number">.200</span><span class="number">.200</span></span><br><span class="line"><span class="number">2</span>节点对应<span class="number">201.201</span><span class="number">.201</span><span class="number">.201</span>——<span class="number">255.255</span><span class="number">.255</span><span class="number">.255</span></span><br><span class="line">客户端ip是<span class="number">10.10</span><span class="number">.10</span><span class="number">.10</span>对应节点<span class="number">1</span>的ip段，那掉的时候就掉到节点<span class="number">1</span>上</span><br><span class="line">比如节点<span class="number">1</span>无对应节点，返回默认节点</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>、服务类型：</span><br><span class="line">·vod</span><br><span class="line">·tvod</span><br><span class="line">·live</span><br><span class="line">·tstv</span><br><span class="line">file type：</span><br><span class="line">·<span class="number">1</span></span><br><span class="line">·<span class="number">2</span></span><br><span class="line">·<span class="number">3</span></span><br><span class="line">·<span class="number">4</span></span><br><span class="line">对应节点<span class="number">1</span>，那就返回节点<span class="number">1</span></span><br><span class="line">对应节点<span class="number">2</span>，那就返回默认节点</span><br><span class="line">没有对应节点，那就返回默认节点</span><br><span class="line"></span><br><span class="line"><span class="number">3</span>、如果服务类型都有，那就看权重</span><br><span class="line"></span><br><span class="line"><span class="number">4</span>、SLB定时反馈一个状态给RR，RR进行Dr采集</span><br><span class="line">netstate：<span class="number">1</span>正 <span class="number">0</span>异</span><br><span class="line">最大用户数</span><br><span class="line">最大带宽</span><br><span class="line">在线用户数</span><br><span class="line">使用带宽</span><br><span class="line"></span><br><span class="line">SLB：正常情况下是一个slb调度两个ias</span><br><span class="line">-vod</span><br><span class="line"><span class="number">1</span>、正常的IAS：</span><br><span class="line">内容发布的时候会根据contentid、ias的max带宽、deviceid进行一个算法（hash）到某个ias</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>、IAS：定时返回一个状态给SLB</span><br><span class="line">netstate：<span class="number">1</span>正 <span class="number">0</span>异</span><br><span class="line">最大用户数</span><br><span class="line">最大带宽</span><br><span class="line">在线用户数</span><br><span class="line">使用带宽</span><br><span class="line"></span><br><span class="line">来判断是否有该内容，又返回就给用户</span><br><span class="line"></span><br><span class="line">-频道</span><br><span class="line"><span class="number">1</span>、SLB会记录频道和对应的ias</span><br><span class="line">通过查表：</span><br><span class="line">chan1 dev1</span><br><span class="line">chan2 dev2</span><br><span class="line">chan1 dev2</span><br><span class="line">chan1同时在dev1和dev2上，chan1来第一次请求的时候会先选dev1，第二次请求的时候会选择dev2，第三次请求的时候会选择dev1以此类推</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">新模式：泰国、越南、南非</span><br><span class="line">用户——RR——边缘SLB——边缘IAS——file slb——file package——live package</span><br><span class="line"></span><br><span class="line"><span class="number">1</span>、端口</span><br><span class="line">RR：</span><br><span class="line">管理端口：<span class="number">6120</span></span><br><span class="line">服务端口：<span class="number">6060</span></span><br><span class="line"></span><br><span class="line">SLB：</span><br><span class="line">管理端口：<span class="number">6420</span></span><br><span class="line">服务端口：<span class="number">6410</span></span><br><span class="line"></span><br><span class="line">IAS：</span><br><span class="line">管理端口：<span class="number">6620</span></span><br><span class="line">服务端口：<span class="number">6610</span></span><br><span class="line"></span><br><span class="line">file package：</span><br><span class="line">管理端口：<span class="number">6920</span></span><br><span class="line">服务端口：<span class="number">6910</span></span><br><span class="line"></span><br><span class="line">live package：</span><br><span class="line">管理端口：<span class="number">6820</span></span><br><span class="line">服务端口：<span class="number">6810</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">2</span>、live package进行拉直播流、切片和转码，提供dash和hls的直播服务以及给file package提供录制分片</span><br><span class="line">file package是存储vod、录制分片（存储为mp4）。提供点播、tvod和tstv</span><br><span class="line"></span><br><span class="line">·切片器是基于nginx做的，nginx做了一个module（就是嵌入了一个我们开发的模块），其实就是一个大文件range请求，range成小文件，就等于说切成了大小一样的ts，大文件计算好请求多少个range然后带range去请求服务器大文件保存成小文件</span><br><span class="line"></span><br><span class="line">·ts转成mp4是ffmpeg开源模块做的</span><br><span class="line">mp4转成ts和dash，是jitp做的，jitp就是一个vod-module模块做的，也是开源的</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">3</span>、file package存储的都是mp4分片，有开关</span><br><span class="line"></span><br><span class="line"><span class="number">4</span>、multicast组播</span><br><span class="line">用户会请求一个单播，file package会带一个组播信息，一看这个频道是组播频道，用户就直接加入组播组</span><br><span class="line">http走公网，需要大量服务器；组播走专网，一条线就可以了，省钱，但丢包严重，组播只管发，爱收你就加入组播组；</span><br><span class="line">我们做了丢包补偿，<span class="number">10</span>%的丢包补偿，<span class="number">10</span>个udp包就会多给一个包，有什么算法，可以算出丢的那个</span><br><span class="line"></span><br><span class="line"><span class="number">5</span>、意电做了热点组播、组播N+<span class="number">1</span></span><br><span class="line">N+<span class="number">1</span>:</span><br><span class="line">两台multicas</span><br><span class="line">·发布组播频道的时候会主动哈希</span><br><span class="line">·某台multicast异常，这台multcast上的组播频道会重新哈希到另外一台正常的multicast上</span><br><span class="line">·已经有一台了，上面有组播频道，然后我这边又加了台multicast，理论上会哈希的，但是我们有时间设置，默认是晚上<span class="number">2</span>点到<span class="number">5</span>点才会哈希</span><br><span class="line">·IAMRES根据组擂设备心跳采集情况,判断组播设备是否发生状态切换(正常转异常、状态抖动、异常转正常、设备扩容)。</span><br><span class="line">当正常设备转为异常设备时,更新内存中的设备状态及哈希设备列表,生成N+<span class="number">1</span>哈希计划t_ otthashtask</span><br><span class="line"></span><br><span class="line">热点组播：意电现网是有cdn的</span><br><span class="line">·rr对于意电来说叫ctroller，agent（网关）上报某个频道的某个码率的用户数给controller，controller上会设置一个阀值，超过这个阀值就会生成组播频道，IAMCACHE定时向RR设备发起热点频道数据采集请求（默认<span class="number">5</span>分钟采集一次，WEB页面进行配置修改）</span><br><span class="line">·每次生成的组播频道默认一小时，要到一小时的时候会会重新采集，看是否还是热点频道，如果是就会再加一个小时</span><br><span class="line">·如果组播出现断流，multicast会告知iam，iam显示组播异常，当码流恢复的时候还是上报给iam的</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">缩略图：</span><br><span class="line"><span class="number">1</span>、内容通过下推或者从源站下拉的方式到缩略图节点</span><br><span class="line"><span class="number">2</span>、终端请求是从缩略图的slb的请求的不是rr</span><br><span class="line"><span class="number">3</span>、我们这边可以配置一个分片时间：如<span class="number">10</span>s一个图片，我们这边会有个t和rt，t是理论时间，rt是实际时间</span><br><span class="line"><span class="number">4</span>、终端可以根据rt来定位到准确的视频位置</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">http和tcp的区别：</span><br><span class="line"><span class="number">1</span>、TCP协议对应于传输层，而HTTP协议对应于应用层</span><br><span class="line"><span class="number">2</span>、从本质上来说，二者没有可比性。</span><br><span class="line"><span class="number">3</span>、Http协议是建立在TCP协议基础之上的，当浏览器需要从服务器获取网页数据的时候，会发出一次Http请求。Http会通过TCP建立起一个到服务器的连接通道，当本次请求需要的数据完毕后，Http会立即将TCP连接断开，这个过程是很短的。所以Htt建立起一个TCP连</span><br><span class="line"></span><br><span class="line"><span class="number">1</span>、TCP连接</span><br><span class="line">接需要经过“三次握手”：</span><br><span class="line">第一次握手：客户端发送syn包(syn=j)到服务器，并进入SYN_SEND状态，等待服务器确认；</span><br><span class="line">第二次握手：服务器收到syn包，必须确认客户的SYN（ack=j+<span class="number">1</span>），同时自己也发送一个SYN包（syn=k），即SYN+ACK包，此时服务器进入SYN_RECV状态；</span><br><span class="line">第三次握手：客户端收到服务器的SYN＋ACK包，向服务器发送确认包ACK(ack=k+<span class="number">1</span>)，此包发送完毕，客户端和服务器进入ESTABLISHED状态，完成三次握手。</span><br><span class="line">     握手过程中传送的包里不包含数据，三次握手完毕后，客户端与服务器才正式开始传送数据。理想状态下，TCP连接一旦建立，在通信双方中的任何一方主动关闭连 接之前，TCP 连接都将被一直保持下去。断开连接时服务器和客户端均可以主动发起断开TCP连接的请求，断开过程需要经过“四次握手”（过程就不细写 了，就是服务器和客户端交互，最终确定断开）p连接是一种短连接，是一种无状态的连接。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">通俗描述<span class="number">3</span>次握手就是</span><br><span class="line"><span class="number">1</span>、A对B说：我的序号是x，我要向你请求连接；（第一次握手，发送SYN包，然后进入SYN-SEND状态）</span><br><span class="line"><span class="number">2</span>、B听到之后对A说：我的序号是y，期待你下一句序号是x+<span class="number">1</span>的话（意思就是收到了序号为x的话，即ack=x+<span class="number">1</span>），同意建立连接。（第<span class="number">3</span>、二次握手，发送ACK-SYN包，然后进入SYN-RCVD状态）</span><br><span class="line"><span class="number">4</span>、A听到B说同意建立连接之后，对A说：与确认你同意与我连接（ack=y+<span class="number">1</span>,ACK=<span class="number">1</span>,seq=x+<span class="number">1</span>）。（第三次握手，A已进入ESTABLISHED状态）</span><br><span class="line"><span class="number">5</span>、B听到A的确认之后，也进入ESTABLISHED状态。</span><br><span class="line"></span><br><span class="line">描述四次挥手就是：</span><br><span class="line"><span class="number">1</span>、A与B交谈结束之后，A要结束此次会话，对B说：我要关闭连接了（seq=u,FIN=<span class="number">1</span>）。（第一次挥手，A进入FIN-WAIT<span class="number">-1</span>）</span><br><span class="line"><span class="number">2</span>、B收到A的消息后说：确认，你要关闭连接了。（seq=v,ack=u+<span class="number">1</span>,ACK=<span class="number">1</span>）（第二次挥手，B进入CLOSE-WAIT）</span><br><span class="line"><span class="number">3</span>、A收到B的确认后,等了一段时间，因为B可能还有话要对他说。（此时A进入FIN-WAIT<span class="number">-2</span>）</span><br><span class="line"><span class="number">4</span>、B说完了他要说的话（只是可能还有话说）之后，对A说，我要关闭连接了。（seq=w, ack=u+<span class="number">1</span>,FIN=<span class="number">1</span>，ACK=<span class="number">1</span>）(第三次挥手)</span><br><span class="line"><span class="number">5</span>、A收到B要结束连接的消息后说：已收到你要关闭连接的消息。（seq=u+<span class="number">1</span>,ack=w+<span class="number">1</span>,ACK=<span class="number">1</span>）(第四次挥手，然后A进入CLOSED)</span><br><span class="line"><span class="number">6</span>、B收到A的确认后，也进入CLOSED。</span><br></pre></td></tr></table></figure>
+
+
+
+
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">负载均衡：</span><br><span class="line">IP负载均衡</span><br><span class="line">网络地址转换(NAT)负载均衡工作在传输层，对数据包中的IP地址和端口进行修改，从而达到转发的目的，称为四层负载均衡。</span><br><span class="line">NAT服务器（前端服务器）必须作为实际服务器（后端服务器）的网关，否则数据包被转发后将一去不返。</span><br><span class="line"></span><br><span class="line">能狭义地理解为分配给所有实际服务器一样多的工作量，因为多台服务器的承载能力各不相同，这可能体现在硬件配置、网络带宽的差异，也可能因为某台服务器身兼多职，我们所说的“均衡”，也就是希望所有服务器都不要过载，并且能够最大程序地发挥作用。</span><br><span class="line"></span><br><span class="line">一、http重定向</span><br><span class="line">当http代理（比如浏览器）向web服务器请求某个URL后，web服务器可以通过http响应头信息中的Location标记来返回一个新的URL。这意味着HTTP代理需要继续请求这个新的URL，完成自动跳转。</span><br><span class="line"></span><br><span class="line">性能缺陷：</span><br><span class="line"><span class="number">1</span>、吞吐率限制</span><br><span class="line">主站点服务器的吞吐率平均分配到了被转移的服务器。现假设使用RR（Round Robin）调度策略，子服务器的最大吞吐率为<span class="number">1000</span>reqs/s，那么主服务器的吞吐率要达到<span class="number">3000</span>reqs/s才能完全发挥三台子服务器的作用，那么如果有<span class="number">100</span>台子服务器，那么主服务器的吞吐率可想而知得有大？相反，如果主服务的最大吞吐率为<span class="number">6000</span>reqs/s，那么平均分配到子服务器的吞吐率为<span class="number">2000</span>reqs/s，而现子服务器的最大吞吐率为<span class="number">1000</span>reqs/s，因此就得增加子服务器的数量，增加到<span class="number">6</span>个才能满足。</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>、重定向访问深度不同</span><br><span class="line">有的重定向一个静态页面，有的重定向相比复杂的动态页面，那么实际服务器的负载差异是不可预料的，而主站服务器却一无所知。因此整站使用重定向方法做负载均衡不太好。</span><br><span class="line">我们需要权衡转移请求的开销和处理实际请求的开销，前者相对于后者越小，那么重定向的意义就越大，例如下载。你可以去很多镜像下载网站试下，会发现基本下载都使用了Location做了重定向。</span><br><span class="line"></span><br><span class="line">扩容频道怎么办：频道需要重建，multicast会自动重新哈希</span><br><span class="line"></span><br><span class="line">dfs看下：</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">测试策略：</span><br><span class="line"><span class="number">1</span>、测试策略描述了软件开发过程中进行测试方法，用来告诉测试过程中所有可能的参与者，测试活动应该如何进行。</span><br><span class="line"><span class="number">2</span>、其中主要会包括测试目标，测试新功能的方法，测试项目的时间和资源，以及测试环境等等。</span><br><span class="line"><span class="number">3</span>、除此以外，测试策略应该描述测试过程中存在哪些风险，以及如何能够规避或者降低这些风险。</span><br><span class="line"><span class="number">4</span>、同时，测试策略也会提到测试的级别，哪些测试应该被执行，入口出口条件是什么。</span><br><span class="line"></span><br><span class="line">创建测试策略时候我们可以参考各种需求文档和设计文档。</span><br><span class="line">一般来说，测试策略在结构上可以包括以下一些要点：</span><br><span class="line">（<span class="number">1</span>）测试级别：常见的测试级别有单元测试，集成测试和系统测试。大部分的测试组织里面，单元测试由开发负责，而集成测试和系统测试由测试部门或者质量保证部门负责。</span><br><span class="line">（<span class="number">2</span>）角色与职责：需要在测试策略里面明确定义各个角色，以及该角色的职责。比如项目经理，测试组长，测试工程师…</span><br><span class="line">（<span class="number">3</span>）环境需求：这一点非常重要，它将描述测试时需要的系统环境，包括软硬件以及网络环境等等。在澄清环境需求的时候，测试组织可以识别出资源方面的风险。</span><br><span class="line">（<span class="number">4</span>）风险分析：影响测试过程的风险都应该尽早被识别出来，而且必须有相应的解决办法以便消除或者减轻这些风险。</span><br><span class="line">（<span class="number">5</span>）测试进度：测试进度将会评估完成测试所需要的时间。在设定进度的时候，首先需要明确测试范围，然后根据测试资源的多少来制定能被各方面认可的测试进度计划。做一个非常准确的进度计划是困难的事情，因为测试过程中充满了各种不确定性，所以一般计划者需要考虑增加一定的buffer。当然，制定进度计划的时候可以参考已有的项目的数据。如果是一个全新的软件项目，专家认为将初始计划的时间翻倍比较靠谱！</span><br><span class="line">（<span class="number">6</span>）回归测试方法：回归测试用来保证之前fix bug的代码不会影响软件的其他部分，这样需要我们选择已经执行过的测试用例重新运行。测试人员需要找到一个方法来确定哪些测试用例应该在回归测试中运行，用例不能太多，因为资源有限，用例也不能太少，否则会达不到必须的测试强度。不过，如果测试部门对待测系统以及软件架构非常了解的话，就比较容易找到合适的回归测试集合。</span><br><span class="line">（<span class="number">7</span>）测试范围：这个没啥好说的，就是你要测试的内容，可能是某些模块，可能是某些指标，比如功能，性能，易用性…</span><br><span class="line">（<span class="number">8</span>）测试优先级：测试范围内的东西不会都是一样重要的，加上测试资源各种有限，所以为测试排定优先级是十分的必要。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">1</span>）根据动态测试在软件开发过程中所处的阶段和作用分为</span><br><span class="line">－单元测试</span><br><span class="line">－集成测试</span><br><span class="line">－系统测试</span><br><span class="line">－验收测试（Alpha、Beta、用户验收、运营验收、功能验收）</span><br><span class="line">－回归测试 </span><br><span class="line"></span><br><span class="line"><span class="number">2</span>）从是否关心软件内部结构和具体实现的角度划分　　</span><br><span class="line">－白盒测试</span><br><span class="line">－黑盒测试</span><br><span class="line">－灰盒测试</span><br><span class="line">黑盒测试分为功能测试和性能测试：</span><br><span class="line">－功能测试（function testing），是黑盒测试的一方面，它检查实际软件的功能是否符合用户的需求。</span><br><span class="line">包括逻辑功能测试（logic function testing）</span><br><span class="line">界面测试（UI testing）UI=User Interface</span><br><span class="line">易用性测试（usability testing）：是指从软件使用的合理性和方便性等角度对软件系统进行检查，来发现软件中不方便用户使用的地方。</span><br><span class="line">兼容性测试（compatibility testing）：包括硬件兼容性测试和软件兼容性测试</span><br><span class="line"></span><br><span class="line">－性能测试（performance testing）软件的性能主要有时间性能和空间性能两种</span><br><span class="line">时间性能：主要指软件的一个具体事务的响应时间（respond time）。</span><br><span class="line">空间性能：主要指软件运行时所消耗的系统资源。</span><br><span class="line"></span><br><span class="line">软件性能测试分为：</span><br><span class="line">一般性能测试：指的是让被测系统在正常的软硬件环境下运行，不向其施加任何压力的性能测试。</span><br><span class="line">稳定性测试也叫可靠性测试（reliability testing）：是指连续运行被测系统检查系统运行时的稳定程度。</span><br><span class="line">负载测试（load testing）：是指让被测系统在其能忍受的压力的极限范围之内连续运行，来测试系统的稳定性。</span><br><span class="line">压力测试（stress testing）：是指持续不断的给被测系统增加压力，直到将被测系统压垮为止，用来测试系统所能承受的最大压力。</span><br><span class="line"></span><br><span class="line">－其他测试类型：</span><br><span class="line">回归测试（regression testing）是指对软件的新的版本测试时，重复执行上一个版本测试时的用例。</span><br><span class="line">冒烟测试（smoke testing），是指在对一个新版本进行大规模的测试之前，先验证一下软件的基本功能是否实现，是否具备可测性。</span><br><span class="line">随机测试（random testing），是指测试中所有的输入数据都是随机生成的，其目的是模拟用户的真实操作，并发现一些边缘性的错误。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">linux基础：</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">sql</span>基础：</span><br></pre></td></tr></table></figure>
+
+<h1 id="001-shell脚本"><a href="#001-shell脚本" class="headerlink" title="001-shell脚本"></a>001-shell脚本</h1><p>mkdir_path.sh</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment">#set information of source IAS and local IAS</span></span><br><span class="line"><span class="comment">#source_root=/mnt/zxdfs/ottcache/vod/</span></span><br><span class="line">local_root=/mnt/zxdfs/ottcache/vod/</span><br><span class="line"><span class="comment">#china mobile cp is 000000000000</span></span><br><span class="line">cp=cellc</span><br><span class="line"></span><br><span class="line">start_time=18</span><br><span class="line">end_time=23</span><br><span class="line"></span><br><span class="line"><span class="comment">#set log path</span></span><br><span class="line">log_path=`<span class="built_in">pwd</span>`</span><br><span class="line">Mkdir_log=<span class="string">"log_path/logs/mkdir_<span class="variable">$1</span>.log"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> Mkdir path ()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">#judge whether file exist or not</span></span><br><span class="line">    <span class="keyword">if</span> [ ! -f <span class="string">"1"</span> ]; <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"ContentId file not exists"</span></span><br><span class="line">        <span class="built_in">exit</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>    [ ! -d <span class="string">"<span class="variable">$log_path</span>/logs"</span> ]; <span class="keyword">then</span></span><br><span class="line">        mkdir -p <span class="variable">$log_path</span>/logs</span><br><span class="line"></span><br><span class="line">        <span class="comment">#read file by lines</span></span><br><span class="line">        cat <span class="variable">$1</span> | <span class="keyword">while</span> <span class="built_in">read</span> line; <span class="keyword">do</span></span><br><span class="line">    <span class="comment">#start copy in free time</span></span><br><span class="line">        <span class="keyword">while</span> ((1));<span class="keyword">do</span></span><br><span class="line">            hour=`date <span class="string">"+%H"</span>`</span><br><span class="line">            <span class="keyword">if</span> [ <span class="variable">$hour</span> -gt <span class="variable">$start_time</span> -a <span class="variable">$hour</span> -lt <span class="variable">$end_time</span> ];<span class="keyword">then</span></span><br><span class="line">            <span class="built_in">echo</span> <span class="string">"<span class="variable">$1</span>"</span> copy wait.......now is busy time<span class="string">"&gt;&gt;<span class="variable">$Mkdir_log</span></span></span><br><span class="line"><span class="string">            sleep 60</span></span><br><span class="line"><span class="string">        else</span></span><br><span class="line"><span class="string">            cid=<span class="variable">$line</span></span></span><br><span class="line"><span class="string">            md5=`echo -n "</span><span class="variable">$cid</span><span class="string">" | md5sum`</span></span><br><span class="line"><span class="string">            dir1=<span class="variable">$&#123;md5:29:2&#125;</span></span></span><br><span class="line"><span class="string">            dir2=<span class="variable">$&#123;md5:31:1&#125;</span></span></span><br><span class="line"><span class="string">            md5_cid=<span class="variable">$&#123;md5:0:32&#125;</span></span></span><br><span class="line"><span class="string">            Local_Path=<span class="variable">$&#123;local_root&#125;</span><span class="variable">$&#123;cp&#125;</span>/<span class="variable">$(dir2)</span>/<span class="variable">$&#123;dir1&#125;</span>/</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">            if [ ! -d "</span><span class="variable">$Local_Path</span><span class="string">" ]; then</span></span><br><span class="line"><span class="string">                #directory doesn't exist and make it</span></span><br><span class="line"><span class="string">                mkdir -p "</span><span class="variable">$Local_path</span><span class="string">"</span></span><br><span class="line"><span class="string">            fi</span></span><br><span class="line"><span class="string">            </span></span><br><span class="line"><span class="string">            #judge whether mkdir successful</span></span><br><span class="line"><span class="string">            if [ -d "</span><span class="variable">$Local_Path</span><span class="string">" ];then</span></span><br><span class="line"><span class="string">                echo "</span><span class="variable">$cid</span> mkdir success ====== path:<span class="variable">$Local_Path</span><span class="string">" &gt;&gt; <span class="variable">$Mkdir_log</span></span></span><br><span class="line"><span class="string">            else</span></span><br><span class="line"><span class="string">                echo "</span><span class="variable">$cid</span> mkdir failed<span class="string">" &gt;&gt; <span class="variable">$Mkdir_log</span></span></span><br><span class="line"><span class="string">            fi</span></span><br><span class="line"><span class="string">            sleep 1</span></span><br><span class="line"><span class="string">            break</span></span><br><span class="line"><span class="string">        fi</span></span><br><span class="line"><span class="string">    done</span></span><br><span class="line"><span class="string">done</span></span><br><span class="line"><span class="string">echo "</span><span class="variable">$1</span> mkdir over .....<span class="string">" &gt;&gt; <span class="variable">$Mkdir_log</span></span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Mkdir_path <span class="variable">$1</span></span></span><br><span class="line"><span class="string">exit</span></span><br></pre></td></tr></table></figure>
+
+<p>split.sh</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/bin/shif [ ! -f "$1" ];then    echo "$1 not exit..please check"    exitelse    echo "start to split $1"    split -l $2 $1 $1echo "split success"fiexit    </span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment">#!/usr/bin/expect -f</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#set information of source IAS and loacal IAS</span></span><br><span class="line">source_root=/mnt/zxdfs/ottcache/vod/</span><br><span class="line">local_root=/mnt/zxdfs/ottcache/vod/</span><br><span class="line"><span class="comment">#china mobile cp is 000000</span></span><br><span class="line">cp=cellc</span><br><span class="line"></span><br><span class="line">IP=80.80.30.73</span><br><span class="line">Usename=root</span><br><span class="line">password=ZTE@uss400</span><br><span class="line">limit_rate=100000</span><br><span class="line">start_time=18</span><br><span class="line">end_time=23</span><br><span class="line"><span class="keyword">function</span> Copy_files ()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">#judge whether file exist or not</span></span><br><span class="line">    <span class="keyword">if</span> [ ! -f <span class="string">"<span class="variable">$1</span>"</span> ];<span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"ContentId file not exists"</span></span><br><span class="line">        <span class="built_in">exit</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    <span class="comment">#set log path</span></span><br><span class="line">    log_path=`<span class="built_in">pwd</span>`</span><br><span class="line">    mkdir -p <span class="variable">$log_path</span>/logs</span><br><span class="line">    Copy_log=<span class="string">"<span class="variable">$log_path</span>/logs/copy_<span class="variable">$1</span>.log"</span></span><br><span class="line">    <span class="comment">#read file by lines</span></span><br><span class="line">    cat <span class="variable">$1</span> | <span class="keyword">while</span> <span class="built_in">read</span> line;<span class="keyword">do</span></span><br><span class="line">        <span class="comment">#start copy in free time</span></span><br><span class="line">        <span class="keyword">while</span> ((1));<span class="keyword">do</span></span><br><span class="line">                hour=`date <span class="string">"+%H"</span>`</span><br><span class="line">            <span class="keyword">if</span> [ <span class="variable">$hour</span> -gt <span class="variable">$start_time</span> -a <span class="variable">$hour</span> -lt <span class="variable">$end_time</span> ];</span><br><span class="line">                <span class="built_in">echo</span> <span class="string">"<span class="variable">$1</span> copy wait.....now is busy time"</span> &gt;&gt;<span class="variable">$Copy_log</span></span><br><span class="line">                sleep 60</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                cid=<span class="variable">$line</span></span><br><span class="line">                md5=`<span class="built_in">echo</span> -n <span class="string">"<span class="variable">$cid</span>"</span> | md5sum`</span><br><span class="line">                dir1=<span class="variable">$&#123;md5:29:2&#125;</span></span><br><span class="line">                dir2=<span class="variable">$&#123;md5:31:1&#125;</span></span><br><span class="line">                md5_cid=<span class="variable">$&#123;md5:0:32&#125;</span></span><br><span class="line">                <span class="comment">#get content path</span></span><br><span class="line">                Source_path=<span class="variable">$&#123;source_root&#125;</span><span class="variable">$&#123;cp&#125;</span>/<span class="variable">$&#123;dir2&#125;</span>/<span class="variable">$&#123;dir1&#125;</span>/<span class="variable">$&#123;md5_cid&#125;</span></span><br><span class="line">                Local_path=<span class="variable">$&#123;local_root&#125;</span><span class="variable">$&#123;cp&#125;</span>/<span class="variable">$&#123;dir2&#125;</span>/<span class="variable">$&#123;dir1&#125;</span></span><br><span class="line">                <span class="comment">#if [ -d $Local_path ];then</span></span><br><span class="line">                    <span class="comment">#this cid is a hls file</span></span><br><span class="line">                    source_file=<span class="variable">$Source_path</span></span><br><span class="line">                    local_file=<span class="variable">$&#123;local_root&#125;</span><span class="variable">$&#123;cp&#125;</span>/<span class="variable">$&#123;dir2&#125;</span>/<span class="variable">$&#123;dir1&#125;</span>/<span class="variable">$&#123;md5_cid&#125;</span></span><br><span class="line">                            <span class="comment">#else</span></span><br><span class="line">                                    <span class="comment">#this cid is a hpd file</span></span><br><span class="line">                                    <span class="comment">#source_file=$&#123;Source_path&#125;.hpd</span></span><br><span class="line">                                    <span class="comment">#local_file=$&#123;local_root&#125;$&#123;cp&#125;/$&#123;dir2&#125;/$&#123;dir1&#125;/$&#123;md5_cid&#125;</span></span><br><span class="line">                            <span class="comment">#fi</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> [ ! -d <span class="variable">$Local_path</span> ];<span class="keyword">then</span></span><br><span class="line">                    <span class="comment">#directory doesn't exist and make it</span></span><br><span class="line">                    mkdir -p <span class="string">"<span class="variable">$Local_path</span>"</span></span><br><span class="line">                <span class="keyword">fi</span></span><br><span class="line">                <span class="comment">#start copy</span></span><br><span class="line">                <span class="built_in">echo</span> <span class="string">"start copy files....."</span></span><br><span class="line">                ./expect.sh <span class="variable">$username</span> <span class="variable">$IP</span> <span class="variable">$source_file</span> <span class="variable">$Local_path</span> <span class="variable">$password</span> <span class="variable">$limit_rate</span></span><br><span class="line">                <span class="comment">#judge whether copy successful</span></span><br><span class="line">                <span class="keyword">if</span> [ -d <span class="string">"<span class="variable">$local_file</span>"</span> -o -f <span class="string">"<span class="variable">$local_file</span>"</span> ];<span class="keyword">then</span></span><br><span class="line">                    <span class="built_in">echo</span> <span class="string">"<span class="variable">$cid</span> copy success========== path:<span class="variable">$Local_path</span><span class="variable">$&#123;md5_cid&#125;</span>"</span> &gt;&gt;<span class="variable">$copy_log</span></span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    <span class="built_in">echo</span> <span class="string">"<span class="variable">$cid</span> copy failed"</span> &gt;&gt;<span class="variable">$copy_log</span></span><br><span class="line">                <span class="keyword">fi</span></span><br><span class="line">                sleep 1</span><br><span class="line">                <span class="built_in">break</span></span><br><span class="line">            <span class="keyword">fi</span></span><br><span class="line">        <span class="keyword">done</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$1</span> copy over....."</span>&gt;&gt;<span class="variable">$copy_log</span></span><br><span class="line">&#125;</span><br><span class="line">Copy_files <span class="variable">$1</span></span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">连接给<span class="number">100</span>台虚机登录，在/目录下创建new文件夹</span><br><span class="line"></span><br><span class="line">shell脚本通过expect脚本实现自动输入密码（使用expect）</span><br><span class="line"></span><br><span class="line">背景：在远程文件下载时，需要输入对方的服务器密码，shell不支持交互输入内容，可以用下面两种方式实现</span><br><span class="line"> </span><br><span class="line">一.在shell脚本中嵌入expect来实现密码输入</span><br><span class="line">expect是一个自动交互功能的工具。expect是开了一个子进程，通过spawn来执行shell脚本，监测到脚本的返回结果，通过expect判断要进行的交互输入内容（send）</span><br><span class="line"><span class="number">1.</span>安装expect </span><br><span class="line">需要先安装tcl：apt-get install tcl</span><br><span class="line">apt-get install expect</span><br><span class="line"> </span><br><span class="line"><span class="number">2.</span>expect使用</span><br><span class="line"><span class="number">2.1</span>一个简单的输入密码操作</span><br><span class="line"><span class="comment">#！/usr/bin/expect</span></span><br><span class="line"><span class="keyword">set</span> timeout <span class="number">100</span></span><br><span class="line"><span class="keyword">set</span> password <span class="string">"123456"</span></span><br><span class="line">spawn sudo rm -rf zzlogic</span><br><span class="line">expect <span class="string">"root123456"</span></span><br><span class="line">send <span class="string">"$password\n"</span></span><br><span class="line">interact</span><br><span class="line">说明：</span><br><span class="line">第一行#！/usr/bin/expect表示使用expect的shell交互模式</span><br><span class="line"><span class="keyword">set</span>是对变量password赋值</span><br><span class="line"><span class="keyword">set</span> timeout <span class="number">100</span>：设置超时时间为<span class="number">100</span>秒，如果要执行的shell命令很长可以设置超时时间长一些。expect超过超时时间没有监测到要找的字符串，则不执行，默认timeout为<span class="number">10</span>秒</span><br><span class="line">spawn在expect下执行shell脚本</span><br><span class="line">expect对通过spawn执行的shell脚本的返回进行判断，是否包含“”中的字段</span><br><span class="line">send：如果expect监测到了包含的字符串，将输入send中的内容，\n相当于回车</span><br><span class="line">interact：退出expect返回终端，可以继续输入，否则将一直在expect不能退出到终端</span><br><span class="line"> </span><br><span class="line"><span class="number">2.2</span>expect的命令行参数</span><br><span class="line">[<span class="keyword">lindex</span> $argv n]获得index为n的参数（index从<span class="number">0</span>开始计算）</span><br><span class="line">$argc为命令行参数的个数</span><br><span class="line">[<span class="keyword">lrange</span> $argv <span class="number">0</span> <span class="number">0</span>]表示第一个参数</span><br><span class="line">[<span class="keyword">lrange</span> $argv <span class="number">0</span> <span class="number">3</span>]表示第<span class="number">1</span>到第<span class="number">3</span>个参数</span><br><span class="line"> </span><br><span class="line">例如scp_service.sh文件，可以./scp_service.sh -rm来执行，这时是赋值了一个参数</span><br><span class="line"><span class="keyword">set</span> option  [<span class="keyword">lindex</span> $argv <span class="number">0</span>]（获得第一个参数存到变量option中，参数是的index是从<span class="number">0</span>开始计算的）</span><br><span class="line"> </span><br><span class="line"><span class="number">2.3</span><span class="keyword">if</span>...elif...else...</span><br><span class="line">expect支持<span class="keyword">if</span>语句，</span><br><span class="line"><span class="keyword">if</span> &#123;条件<span class="number">1</span>&#125; &#123;</span><br><span class="line">     条件<span class="number">1</span>执行语句</span><br><span class="line">&#125; elif &#123;条件<span class="number">2</span>&#125; &#123;</span><br><span class="line">     条件<span class="number">2</span>执行语句</span><br><span class="line">&#125; else &#123;</span><br><span class="line">     其他情况执行语句</span><br><span class="line">&#125;</span><br><span class="line">说明：</span><br><span class="line"><span class="number">1.</span><span class="keyword">if</span>的条件用&#123;&#125;来包含条件</span><br><span class="line"><span class="number">2.</span><span class="keyword">if</span>和后面的&#123;&#125;必须有空格隔开</span><br><span class="line"><span class="number">3.</span>两个花括号之间必须有空格隔开，比如<span class="keyword">if</span> &#123;&#125; &#123;&#125;，否则会报错 expect:extra characters <span class="keyword">after</span> <span class="keyword">close</span>-brace</span><br><span class="line"><span class="number">3.</span>使用&#123;来衔接下一行，所以<span class="keyword">if</span>的条件后需要加左花括号&#123;</span><br><span class="line"><span class="number">4.</span>else不能单独放一行，所以else要跟在&#125;后面</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/06/29/CDN/2021-06-29-CDN/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2021-06-29-CDN%5C626983-20160116000226866-646781972.png" alt="626983-20160116000226866-646781972"></p>
+<p>2.4 expect {}，多行期望，匹配到哪条执行哪条背景：有时执行shell后预期结果是不固定的，有可能是询问是yes/no，有可能是去输入密码，所以可以用expect{}花括号内放多行语句，从上至下匹配，匹配到哪个expect执行哪句。</p>
+<p> <strong>3.shell中调用expect来实现登录</strong>我是通过在shell脚本中执行expect脚本的方式来实现的。当然可以将shell中定义的一些变量传递给expect脚本作为参数输入。可以见我下图调用的一个例子</p>
+<p><img src="/2021/06/29/CDN/2021-06-29-CDN/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2021-06-29-CDN%5C626983-20160116000235772-556419781.png" alt="626983-20160116000235772-556419781"></p>
+<p>明：经过这次尝试些expect，给我的感觉是expect对格式的要求比较高，比如花括号之间必须有空格啊之类的，所以如果有报错，大家可以仔细观察一下是不是语法格式错误了。</p>
+<p> 二.在远程服务器上配置ssh信任这个我暂时没有试，网上有很多教程，感觉长期的话应该比写expect方便，但是我觉得写脚本的话还是最好不要总去操作其他地方，所以这里我就用expect自己来写的（当然也是想练习一下写expect）</p>
+<h1 id="002-测试流程"><a href="#002-测试流程" class="headerlink" title="002-测试流程"></a>002-测试流程</h1><p><img src="/2021/06/29/CDN/2021-06-29-CDN/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2021-06-29-CDN%5CImage.png" alt="Image"></p>
+<p><img src="/2021/06/29/CDN/2021-06-29-CDN/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2021-06-29-CDN%5CImage-1624016953933.png" alt="Image"></p>
+<p><img src="/2021/06/29/CDN/2021-06-29-CDN/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2021-06-29-CDN%5CImage-1624016960108.png" alt="Image"></p>
+<h1 id="003-遇到的面试问题"><a href="#003-遇到的面试问题" class="headerlink" title="003-遇到的面试问题"></a>003-遇到的面试问题</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">苏宁面试：</span><br><span class="line"><span class="number">1</span>、http和tcp的区别</span><br><span class="line"><span class="number">2</span>、为什么离职</span><br><span class="line"></span><br><span class="line">苏宁外包：</span><br><span class="line"><span class="number">1</span>、多表联查</span><br><span class="line"><span class="number">2</span>、monkey</span><br><span class="line"><span class="number">3</span>、冒烟测试（smoke testing）：是指在对一个新版本进行大规模的测试之前，先验证一下软件的基本功能是否实现，是否具备可测性。</span><br><span class="line"></span><br><span class="line">中软面试：</span><br><span class="line"><span class="number">1</span>、测试策略</span><br><span class="line"><span class="number">2</span>、脚本，写了哪些脚本举例</span><br><span class="line"><span class="number">3</span>、具体怎么测试</span><br><span class="line"><span class="number">4</span>、为什么离职</span><br></pre></td></tr></table></figure>
+
+<h1 id="切片器、jitp、组播普及"><a href="#切片器、jitp、组播普及" class="headerlink" title="切片器、jitp、组播普及"></a>切片器、jitp、组播普及</h1><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">切片器是基于nginx做的，nginx做了一个<span class="keyword">module</span>（就是嵌入了一个我们开发的模块），其实就是一个大文件<span class="built_in">range</span>请求，<span class="built_in">range</span>成小文件，就等于说切成了大小一样的ts，大文件计算好请求多少个<span class="built_in">range</span>然后带<span class="built_in">range</span>去请求服务器大文件保存成小文件</span><br><span class="line"></span><br><span class="line">ts转成mp4是ffmpeg开源模块做的</span><br><span class="line"></span><br><span class="line">mp4转成ts和dash，是jitp做的，jitp就是一个vod-<span class="keyword">module</span>模块做的，也是开源的</span><br><span class="line"></span><br><span class="line">nginx一般获取静态文件也就是本地就有的文件,高并发远优于tomcat,一般作为前台门户用;因内是触发式服务,处理请求只是取决于内存大小,高并发可以支持上百万级别的并发服务; </span><br><span class="line">tomat可以动态生成文件并提供服务,一般作为后台使用,它是顺序处理方式的处理方式,一个个的处理，索引并不支持高并发，十几万的样子</span><br><span class="line"></span><br><span class="line">tomcat录制就是解决动态生成文件问题，你想下，时移跟回看m3u8都是根据时间动态生成</span><br><span class="line"></span><br><span class="line">nginx作为门户提供本地文件，缓存功能可以快速服务</span><br><span class="line"></span><br><span class="line">http走公网，需要大量服务器；组播走专网，一条线就可以了，省钱，但丢包严重，组播只管发，爱收你就加入组播组；</span><br></pre></td></tr></table></figure>
+
+<h1 id="IAMMGR热点组播播功能、及组播N-1功能的大致业务流程"><a href="#IAMMGR热点组播播功能、及组播N-1功能的大致业务流程" class="headerlink" title="IAMMGR热点组播播功能、及组播N+1功能的大致业务流程"></a>IAMMGR热点组播播功能、及组播N+1功能的大致业务流程</h1><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">标题:于哥---</span> <span class="string">IAMMGR热点组播播功能、及组播N+1功能的大致业务流程</span></span><br><span class="line"><span class="string">以下为IAMCR热点组播功能、及组播N+1功能的大致业务流程说明,作为测试参考,内部细节以实际测试为准。</span></span><br><span class="line"><span class="string">一、Live</span> <span class="string">Multicast</span> <span class="string">N+1功能说明:</span></span><br><span class="line"><span class="string">主要功能:</span></span><br><span class="line"><span class="string">组播设备心跳监测、</span></span><br><span class="line"><span class="string">组播设备切换及恢复(正常转异常、超时异常、状态防抖、异常恢复正常、MAER全清接口)</span></span><br><span class="line"><span class="string">MABR单播频道哈希迁移、</span></span><br><span class="line"><span class="string">子码率组播计划自动重建(组播IP及端口按地址段自动分配)、</span></span><br><span class="line"><span class="string">异常恢复在指定时间段内回迁、</span></span><br><span class="line"><span class="string">WEB频道手动哈希创建。</span></span><br><span class="line"></span><br><span class="line"><span class="string">大致业务流程:</span></span><br><span class="line"><span class="number">1</span><span class="string">.</span> <span class="string">IAMWEBR页面资源树增删改</span> <span class="string">Livemulticastl设备,触发</span> <span class="string">IAMREST设备列表自动同步v_livemulticast</span></span><br><span class="line"><span class="number">2</span><span class="string">.</span> <span class="string">IAMRES定时向U2M设备发送心跳请求,U2M设备返回心跳响应(含设备状态</span> <span class="string">statel以及自身频道表的记录数mabrnum)</span></span><br><span class="line"><span class="string">IAMRES收到心跳响应后,更新</span> <span class="string">IAMRES内存中的设备状态,同时更新数据库中的设备状态state:0-异常,1-正常。</span></span><br><span class="line"><span class="string">t_ottheartstate</span></span><br><span class="line"><span class="number">3</span><span class="string">.</span> <span class="string">IAMRES根据组擂设备心跳采集情况,判断组播设备是否发生状态切换(正常转异常、状态抖动、异常转正常、设备扩容)。</span></span><br><span class="line"><span class="string">当正常设备转为异常设备时,更新内存中的设备状态及哈希设备列表,生成N+1哈希计划t_</span> <span class="string">otthashtask。</span></span><br><span class="line"></span><br><span class="line"><span class="string">当异常设备转为正常设备时,如果心跳响应中的频道记录数不为0,则</span> <span class="string">IAMRES首先触发待恢复设备的频道全清</span> <span class="string">t_mabrclntask。</span></span><br><span class="line"><span class="string">待该组播设备返回的心跳响应状态正常且頻道记录数为0后，IAMRES再将其设备状态切换为正常,更新内存中的设备状态及哈希设备列表,生成N+1哈希计划</span></span><br><span class="line"><span class="string">t_otthashtask</span></span><br><span class="line"><span class="number">4.</span><span class="string">IAMRES定时扫描哈希计划,发送哈希计划请求给IAMTV,同时将异常设备的组播地址记录在禁用列表中</span> <span class="string">t_mabrforbid</span></span><br><span class="line"><span class="number">5</span><span class="string">.</span> <span class="string">IAMTV收到哈希计划请求,生成全量单擂频道的哈希任务</span> <span class="string">t_hashmabrtask。</span></span><br><span class="line"><span class="string">IAMTV扫描单播频道哈希任务下发给工</span> <span class="string">IAMRES,</span> <span class="string">IAMRES调用哈希算出接口计算出目标设备ID并返回给</span> <span class="string">IAMTV</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">6.</span><span class="string">IATv根据频道哈希结果,剔除不需要重建的频道,只生成需要迁移的频道创建任务t_</span> <span class="string">mabrchantask。</span></span><br><span class="line"><span class="string">同时记录需要迁移的组播计划t_hashcastplan\t_hashcastinfo(只迁移待组播的和组播中的）</span></span><br><span class="line"><span class="number">7.</span><span class="string">IAMTV定时扫描频道创建任务t_mabrchantask,下发给IASI。由IAMSI将频道创建请求下发给u2m设备。</span></span><br><span class="line"><span class="string">U2M设备返回频道创建结果及频道子码率列表。</span></span><br><span class="line"></span><br><span class="line"><span class="number">8.</span><span class="string">IAMTV根据频道创建结果</span> <span class="string">t_mabrchannel\t_chanbitrate,来生成对应子码率的组播计划重建任务t_multicastplan(组播地址及端口重新获取)。</span></span><br><span class="line"><span class="string">如果频道为迁出,则同时对已迁出频道的U2M设备下发对应channelid的频道删除任务t_marchantask</span></span><br><span class="line"><span class="number">9.</span><span class="string">IAMT描组播计划t_</span> <span class="string">multicast1an,经IAMSI下发组播计划设置任务给U2M设备,U2M设备返回组播计划设置任务响应。</span></span><br><span class="line"><span class="number">10.</span><span class="string">U2M设备向IAMSI上报组播启动结果及停止结果。</span></span><br><span class="line"><span class="string">IAMTV安照组播启停结果及时更新组擂MAP列表t_multicastlist,由IAMNI向IAMWEB发送频道列表变更通知。</span></span><br><span class="line"><span class="string">IAMWEB将MABR频道数据同步给RR设备及U2M设备。</span></span><br><span class="line"><span class="string">MAP列表同步记录可在WEB页面--&gt;场景化配置向导--&gt;配置下发查询页面中进行查询</span></span><br><span class="line"></span><br><span class="line"><span class="number">11.</span><span class="string">IAMTV将MABR迁移失败的单播频道和组播计刘记录在t_iamalarm</span></span><br><span class="line"></span><br><span class="line"><span class="number">12</span><span class="string">.总结</span></span><br><span class="line"><span class="string">N+1功能全流程主要IAM表:</span></span><br><span class="line"><span class="string">v_livemulticast==&gt;t_ottearstate==&gt;t_otthashtask==&gt;t_hashmabrtask(t_mabrforbid)==&gt;t_mabrchantask(t_hashcastplan\t_hashcastinfo)==&gt;t_mabrchanel</span></span><br><span class="line"><span class="string">(t_chanbitrate\t_iamalarm)==&gt;t_multicastplan(multicastinfo\t_iamalarm)==&gt;t_multicastlistm=&gt;结束</span></span><br><span class="line"></span><br><span class="line"><span class="string">N+1功能全流程主更IAM日志:</span></span><br><span class="line"><span class="string">心跳及哈希倒换流程：zxtool</span> <span class="string">send</span> <span class="number">226</span> <span class="number">65535</span><span class="string">;tail</span> <span class="string">-f</span> <span class="string">iamres.iam.log|grep</span> <span class="string">-E</span> <span class="string">"HashSwith"</span><span class="string">;</span></span><br><span class="line"><span class="string">频道及组播计划下发：tail</span> <span class="string">-f</span> <span class="string">si.iam.log;</span></span><br><span class="line"><span class="string">组播MAP列表同步通知：tail</span> <span class="string">-f</span> <span class="string">iamni.iam.log;</span></span><br><span class="line"></span><br><span class="line"><span class="string">二、LiveMulticast</span> <span class="string">MABR热点码率组播功能说明：</span></span><br><span class="line"><span class="string">主要功能：</span></span><br><span class="line"><span class="string">频道热点码率采集。</span></span><br><span class="line"><span class="string">热点组播计划生成。</span></span><br><span class="line"><span class="string">组播地址及端口自动分配</span></span><br><span class="line"></span><br><span class="line"><span class="string">大致业务流程：</span></span><br><span class="line"><span class="number">1.</span><span class="string">IAMWEB页面创建MABR单播频道t_mabrchannel(t_chanbitrate)。</span></span><br><span class="line"><span class="string">U2M设备在频道创建成功时，向IAMSI上报频道子码率列表。</span></span><br><span class="line"><span class="string">IAMSI按照频道子码率bandwidth进行排序，生成子码率序号bandid，入库。</span></span><br><span class="line"><span class="string">IAMWEB在频道MAP列表同步时，将子码率号bandid、子码率区间bandmin、bandmax，同步给RR设备和U2M设备。</span></span><br><span class="line"></span><br><span class="line"><span class="number">2</span><span class="string">.用户请求单播频道，Agent将频道子码率bandwidth的在线用户数通过心跳接口上报RR。</span></span><br><span class="line"></span><br><span class="line"><span class="number">3</span><span class="string">、RR将各频道子码率的在线用户数，按照在在码率序号bandid（子码率区间bandmin、bandmax）作累加、统计。</span></span><br><span class="line"></span><br><span class="line"><span class="number">4</span><span class="string">、IAMCACHE定时向RR设备发起热点频道数据采集请求（默认5分钟采集一次，WEB页面进行配置修改）。</span></span><br><span class="line"></span><br><span class="line"><span class="number">5</span><span class="string">、RR将热点频道子码率数据返回给IAMCACHE。</span></span><br><span class="line"></span><br><span class="line"><span class="number">6</span><span class="string">、IAMCACHE将热点频道子码率列表入库t_mabrhotchan。</span></span><br><span class="line"> </span><br><span class="line"><span class="number">7.</span><span class="string">IAM定时处理热点频道数据t_mabrhotchan,按照子码率序号</span> <span class="string">bandid,生成对应应子码率bandwidth的热点组播计划t_multicastplan(t_</span> <span class="string">multicastfo)</span></span><br><span class="line"><span class="string">默认每2分钟定时处理一次,通过</span> <span class="string">Crontab定时任务进行修改。</span></span><br><span class="line"><span class="string">(1)热点组播地址及端口按照MABR组播地址段</span> <span class="string">t_mabrippool自动分配(跳过禁用组播IP),热点组播计划时长默认1个小时,页面可配。</span></span><br><span class="line"><span class="string">组播地址获取规则:</span></span><br><span class="line"><span class="string">按IP段最大优先的顺序,遍历IP地址段,获取IP</span></span><br><span class="line"><span class="string">若IP可用不冲突,则循环遍历使用IP,对端口仅作自动加1。</span></span><br><span class="line"><span class="string">若IP不足,则遍历端口寻找可用的ip:port,如果ip:port不足,则返回失败。</span></span><br><span class="line"><span class="string">(2)IAM时按照时间半衰减的规则,在生成热点组播计划时校验是否存在对应时间段的冲突的组播计划:如果60分钟内存在冲突的组播计划,则校验30分钟内是否存在冲突,否则校验15分钟内是否存在冲突,如果依旧冲突则认为组播计划已存在,不生成热点组播</span></span><br><span class="line"><span class="string">如果存在冲突的组播计划，则检查冲突的组播计划是否即将结束，如即将结束则自动修改组播计划，延长其组播时间。</span></span><br><span class="line"><span class="string">如果不存在时间冲突的组播计划,则生成新的热点组播计划。</span></span><br><span class="line"><span class="string">(3)对于DASH热点组播和MSS热点组播,会首先生成音频组播循环计划,再生成对应热点码率的视频组播单次计划。音频组播计划按频道唯一。</span></span><br><span class="line"><span class="string">对于HLS热点组播，直接生成对应热点码率的视频组播单次计划。</span></span><br><span class="line"><span class="number">8.</span><span class="string">IAMTV时扫描组播计划t_</span> <span class="string">multicastplan,经IAMSI下组描计划设置任务,U2M设备返回组播计划设置任务响应。</span></span><br><span class="line"><span class="number">9.</span><span class="string">U2M设备向</span> <span class="string">IAMSI上报组播启动结果及停止结果。</span></span><br><span class="line"><span class="string">IAMTV按照组播启停结果及时更新组播MAP列表</span> <span class="string">t_multicastlist,由IAMNII向</span> <span class="string">IAMWEB发送频道列表变更通知。</span></span><br><span class="line"><span class="string">IAMWEB将MABR频道数据同步给RR设备及U2M备。</span></span><br><span class="line"><span class="string">MAP列表同步记录可在WB页面-&gt;场景化配置向导一配置下发查询页面中进行查询</span></span><br><span class="line"></span><br><span class="line"><span class="number">10</span><span class="string">.总结</span></span><br><span class="line"><span class="string">热点组播功能全流程主要IAM表:</span></span><br><span class="line"><span class="string">t_mabrhotchan=(t_multicastplan(t_multicastinfo\t_mabrippool\t_chanbitrate)==&gt;t_multicastlist==&gt;结束</span></span><br><span class="line"><span class="string">热点组播功能全流程主要IAM日志：</span></span><br><span class="line"><span class="string">MABR热点码率采集:</span> <span class="string">zxtool</span> <span class="string">send</span> <span class="number">242</span> <span class="number">65535</span><span class="string">;tall</span> <span class="string">-f</span> <span class="string">cache.iam.log|</span> <span class="string">grep</span> <span class="string">-E“Hotchan";</span></span><br><span class="line"><span class="string">频道及组播计划下发:tail</span> <span class="string">-fS1.1am,1og</span></span><br><span class="line"><span class="string">组播AP列表同步通知:tai1-f1amn1.iam.1og</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+      
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2021/06/29/CDN/2021-06-29-CDN/" title="CND">https://tongsiying.github.io/2021/06/29/CDN/2021-06-29-CDN/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CDN/" rel="tag"># CDN</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/29/self/2021-06-29-games/" rel="prev" title="games">
+      <i class="fa fa-chevron-left"></i> games
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#000-ott基本流程"><span class="nav-text">000-ott基本流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#001-shell脚本"><span class="nav-text">001-shell脚本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#002-测试流程"><span class="nav-text">002-测试流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#003-遇到的面试问题"><span class="nav-text">003-遇到的面试问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#切片器、jitp、组播普及"><span class="nav-text">切片器、jitp、组播普及</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IAMMGR热点组播播功能、及组播N-1功能的大致业务流程"><span class="nav-text">IAMMGR热点组播播功能、及组播N+1功能的大致业务流程</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">What hurts more, the pain of hard work or the pain of regret?</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">34:51</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

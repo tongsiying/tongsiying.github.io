@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="BlockStorage-fio">
+<meta property="og:url" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-fio/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2008-01-04T10:37:19.000Z">
+<meta property="article:modified_time" content="2021-02-15T08:46:58.093Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="BlockStorage-tools">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-fio/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>BlockStorage-fio | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">嘻嘻嘻嘻嘻嘻</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-fio/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="What hurts more, the pain of hard work or the pain of regret?">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          BlockStorage-fio
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2008-01-04 18:37:19" itemprop="dateCreated datePublished" datetime="2008-01-04T18:37:19+08:00">2008-01-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-02-15 16:46:58" itemprop="dateModified" datetime="2021-02-15T16:46:58+08:00">2021-02-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BlockStorage/" itemprop="url" rel="index"><span itemprop="name">BlockStorage</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>16k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>15 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+<h1 id="一、安装"><a href="#一、安装" class="headerlink" title="一、安装"></a>一、安装</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">一、安装</span><br><span class="line">http:<span class="comment">//freshmeat.sourceforge.net/projects/fio上下载fio-2.1.10.tar.gz，版本包见附件</span></span><br><span class="line">解压</span><br><span class="line">tar  -xvf  fio<span class="number">-3.3</span>.tar.gz</span><br><span class="line">cd  fio<span class="number">-3.3</span></span><br><span class="line"></span><br><span class="line">执行命令：</span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line"></span><br><span class="line">安装libaio-devel</span><br><span class="line">yum install libaio-devel</span><br><span class="line"></span><br><span class="line">重新执行：</span><br><span class="line">#./configure</span><br><span class="line">#make</span><br><span class="line">#make install</span><br><span class="line"></span><br><span class="line">直接执行fio测试。</span><br><span class="line">#fio -ioengine=libaio -filename=fiofile -bs=<span class="number">20</span>k -direct=<span class="number">1</span> -iodepth=<span class="number">4</span> -thread -size=<span class="number">300</span>g -rw=randwrite -name=<span class="number">20</span>k_randwrite -numjobs=<span class="number">2</span> -group_reporting</span><br><span class="line">如果有报错：是因为没装libaio-devel</span><br><span class="line"></span><br><span class="line">检查libaio和rbd是否存在，存在表示已经安装了libaio和rdb，下面可以看到所有引擎</span><br><span class="line">[<span class="symbol">root@</span>ceph1 home]# fio --enghelp</span><br><span class="line">Available IO engines:</span><br><span class="line">        cpuio</span><br><span class="line">        mmap</span><br><span class="line">        sync</span><br><span class="line">        psync</span><br><span class="line">        vsync</span><br><span class="line">        pvsync</span><br><span class="line">        <span class="literal">null</span></span><br><span class="line">        net</span><br><span class="line">        netsplice</span><br><span class="line">        libaio</span><br><span class="line">        posixaio</span><br><span class="line">        falloc</span><br><span class="line">        e4defrag</span><br><span class="line">        splice</span><br><span class="line">        rbd</span><br><span class="line">        sg</span><br><span class="line">        binject</span><br></pre></td></tr></table></figure>
+
+<h1 id="二、fio引擎介绍"><a href="#二、fio引擎介绍" class="headerlink" title="二、fio引擎介绍"></a>二、fio引擎介绍</h1><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">二、fio引擎介绍</span><br><span class="line">参考网址：</span><br><span class="line"><span class="keyword">http</span>://blog.yufeng.info/archives/<span class="number">677</span></span><br><span class="line">ioengine=str</span><br><span class="line">Defines how <span class="keyword">the</span> job issues I/O. The following types are defined:</span><br><span class="line">sync</span><br><span class="line">Basic <span class="built_in">read</span>(<span class="number">2</span>) <span class="keyword">or</span> <span class="built_in">write</span>(<span class="number">2</span>) I/O. fseek(<span class="number">2</span>) is used <span class="built_in">to</span> position <span class="keyword">the</span> I/O location.</span><br><span class="line">psync</span><br><span class="line">Basic pread(<span class="number">2</span>) <span class="keyword">or</span> pwrite(<span class="number">2</span>) I/O.</span><br><span class="line">vsync</span><br><span class="line">Basic readv(<span class="number">2</span>) <span class="keyword">or</span> writev(<span class="number">2</span>) I/O. Will emulate queuing <span class="keyword">by</span> coalescing adjacents IOs <span class="keyword">into</span> <span class="keyword">a</span> single submission.</span><br><span class="line">libaio</span><br><span class="line">Linux native asynchronous I/O. This ioengine defines engine specific options.</span><br><span class="line">posixaio</span><br><span class="line">POSIX asynchronous I/O <span class="keyword">using</span> aio_read(<span class="number">3</span>) <span class="keyword">and</span> aio_write(<span class="number">3</span>).</span><br><span class="line">solarisaio</span><br><span class="line">Solaris native asynchronous I/O.</span><br><span class="line">windowsaio</span><br><span class="line">Windows native asynchronous I/O.</span><br><span class="line">mmap</span><br><span class="line">File is memory mapped <span class="keyword">with</span> mmap(<span class="number">2</span>) <span class="keyword">and</span> data copied <span class="keyword">using</span> memcpy(<span class="number">3</span>).</span><br><span class="line">splice</span><br><span class="line">splice(<span class="number">2</span>) is used <span class="built_in">to</span> transfer <span class="keyword">the</span> data <span class="keyword">and</span> vmsplice(<span class="number">2</span>) <span class="built_in">to</span> transfer data <span class="built_in">from</span> user-<span class="literal">space</span> <span class="built_in">to</span> <span class="keyword">the</span> kernel.</span><br><span class="line">syslet-rw</span><br><span class="line">Use <span class="keyword">the</span> syslet <span class="keyword">system</span> calls <span class="built_in">to</span> make regular <span class="built_in">read</span>/<span class="built_in">write</span> asynchronous.</span><br><span class="line">sg</span><br><span class="line">SCSI generic sg v3 I/O. May be either synchronous <span class="keyword">using</span> <span class="keyword">the</span> SG_IO ioctl, <span class="keyword">or</span> <span class="keyword">if</span> <span class="keyword">the</span> target is <span class="keyword">an</span> sg <span class="keyword">character</span> device, we use <span class="built_in">read</span>(<span class="number">2</span>) <span class="keyword">and</span> <span class="built_in">write</span>(<span class="number">2</span>) <span class="keyword">for</span> asynchronous I/O.</span><br><span class="line"><span class="literal">null</span></span><br><span class="line">Doesn’t transfer <span class="keyword">any</span> data, just pretends <span class="built_in">to</span>. Mainly used <span class="built_in">to</span> exercise fio itself <span class="keyword">and</span> <span class="keyword">for</span> debugging <span class="keyword">and</span> testing purposes.</span><br><span class="line">net</span><br><span class="line">Transfer over <span class="keyword">the</span> network. The protocol <span class="built_in">to</span> be used can be defined <span class="keyword">with</span> <span class="keyword">the</span> protocol parameter. Depending <span class="keyword">on</span> <span class="title">the</span> <span class="title">protocol</span>, <span class="title">filename</span>, <span class="title">hostname</span>, <span class="title">port</span>, <span class="title">or</span> <span class="title">listen</span> <span class="title">must</span> <span class="title">be</span> <span class="title">specified</span>. <span class="title">This</span> <span class="title">ioengine</span> <span class="title">defines</span> <span class="title">engine</span> <span class="title">specific</span> <span class="title">options</span>.</span><br><span class="line">netsplice</span><br><span class="line">Like net, but uses splice(<span class="number">2</span>) <span class="keyword">and</span> vmsplice(<span class="number">2</span>) <span class="built_in">to</span> map data <span class="keyword">and</span> <span class="built_in">send</span>/receive. This ioengine defines engine specific options.</span><br><span class="line">cpuio</span><br><span class="line">Doesn’t transfer <span class="keyword">any</span> data, but burns CPU cycles according <span class="built_in">to</span> cpuload <span class="keyword">and</span> cpucycles parameters.</span><br><span class="line">guasi</span><br><span class="line">The GUASI I/O engine is <span class="keyword">the</span> Generic Userspace Asynchronous Syscall Interface approach <span class="built_in">to</span> asycnronous I/O.</span><br><span class="line"></span><br><span class="line">个别中文解释：</span><br><span class="line">默认值是sync同步阻塞I/O，</span><br><span class="line">libaio是Linux的native异步I/O</span><br><span class="line">io引擎使用pync方式 </span><br><span class="line">sync:采用<span class="built_in">read</span>,<span class="built_in">write</span>,使用fseek定位读写位置。 </span><br><span class="line">psync:采用pread、pwrite进行文件读写操作 </span><br><span class="line">vsync:采用readv(<span class="number">2</span>) orwritev(<span class="number">2</span>)进行文件读写操作</span><br></pre></td></tr></table></figure>
+
+<h1 id="三、各引擎使用方法"><a href="#三、各引擎使用方法" class="headerlink" title="三、各引擎使用方法"></a>三、各引擎使用方法</h1><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line">1、fio-vsync：</span><br><span class="line">vsync:采用readv(2) orwritev(2)进行文件读写操作</span><br><span class="line">fio <span class="attribute">-filename</span>=/mnt/data/112.log <span class="attribute">-direct</span>=1 -iodepth 1 -thread <span class="attribute">-rw</span>=randread <span class="attribute">-ioengine</span>=vsync <span class="attribute">-bs</span>=4k <span class="attribute">-size</span>=1G <span class="attribute">-numjobs</span>=64 <span class="attribute">-runtime</span>=10 -group_reporting <span class="attribute">-name</span>=file</span><br><span class="line"></span><br><span class="line">2、sync:采用read,write,使用fseek定位读写位置。同步阻塞I/O，</span><br><span class="line">fio <span class="attribute">-filename</span>=/mnt/data/111.log <span class="attribute">-ioengine</span>=sync <span class="attribute">-direct</span>=1 <span class="attribute">-rw</span>=randwrite <span class="attribute">-bs</span>=8k <span class="attribute">-size</span>=1G <span class="attribute">-numjobs</span>=8 <span class="attribute">-runtime</span>=10-group_reporting <span class="attribute">-name</span>=fio_test</span><br><span class="line"></span><br><span class="line">3、psync对磁盘进行读写（lsblk），如下查出来就是/dev/vdb</span><br><span class="line">[root@host111 data]# lsblk</span><br><span class="line">NAME                       MAJ:MIN RM   SIZE RO<span class="built_in"> TYPE </span>MOUNTPOINT</span><br><span class="line">vda                        252:0    0    75G  0 disk </span><br><span class="line">├─vda1                     252:1    0   200M  0 part /boot</span><br><span class="line">└─vda2                     252:2    0  74.8G  0 part </span><br><span class="line">  ├─systemvg-swaplv (dm-0) 253:0    0    10G  0 lvm  [SWAP]</span><br><span class="line">  ├─systemvg-rootlv (dm-1) 253:1    0     8G  0 lvm  /</span><br><span class="line">  ├─systemvg-homelv (dm-2) 253:2    0     2G  0 lvm  /home</span><br><span class="line">  ├─systemvg-varlv (dm-3)  253:3    0     6G  0 lvm  /var</span><br><span class="line">  ├─systemvg-tmplv (dm-4)  253:4    0     2G  0 lvm  /tmp</span><br><span class="line">  ├─systemvg-optlv (dm-5)  253:5    0    30G  0 lvm  /opt</span><br><span class="line">  └─systemvg-usrlv (dm-6)  253:6    0    10G  0 lvm  /usr</span><br><span class="line">vdb                        252:16   0   100G  0 disk /mysql</span><br><span class="line">vdc                        252:32   0   500G  0 disk /mnt/data</span><br><span class="line"></span><br><span class="line">或者对一个文件进行写：</span><br><span class="line">fio <span class="attribute">-filename</span>=/mnt/data/112.log <span class="attribute">-direct</span>=1 -iodepth 1 -thread <span class="attribute">-rw</span>=randread <span class="attribute">-ioengine</span>=psync <span class="attribute">-bs</span>=4k <span class="attribute">-size</span>=1G <span class="attribute">-numjobs</span>=64 <span class="attribute">-runtime</span>=10 -group_reporting <span class="attribute">-name</span>=file</span><br><span class="line"></span><br><span class="line">4、posixaio：glibc POSIX asynchronous I/O using aio_read(3) <span class="keyword">and</span> aio_write(3).</span><br><span class="line">fio <span class="attribute">-name</span>=/mnt/data/11.log <span class="attribute">-direct</span>=0 <span class="attribute">-iodepth</span>=96 <span class="attribute">-rw</span>=randread <span class="attribute">-ioengine</span>=posixaio <span class="attribute">-bs</span>=4k <span class="attribute">-size</span>=1G <span class="attribute">-numjobs</span>=64 <span class="attribute">-runtime</span>=10 -group_reporting</span><br><span class="line"></span><br><span class="line">5、libaio：Linux native asynchronous I/O.Linux的native异步I/O</span><br><span class="line">fio <span class="attribute">-filename</span>=/mnt/data/112.log <span class="attribute">-direct</span>=1 -iodepth 1 -thread <span class="attribute">-rw</span>=randread <span class="attribute">-ioengine</span>=libaio <span class="attribute">-bs</span>=4k <span class="attribute">-size</span>=1G <span class="attribute">-numjobs</span>=64 <span class="attribute">-runtime</span>=10 -group_reporting <span class="attribute">-name</span>=file</span><br><span class="line"></span><br><span class="line">6、mmap：File is memory mapped with mmap(2) <span class="keyword">and</span> data copied using memcpy(3).</span><br><span class="line">fio <span class="attribute">-filename</span>=/mnt/data/112.log <span class="attribute">-direct</span>=1 -iodepth 1 -thread <span class="attribute">-rw</span>=randread <span class="attribute">-ioengine</span>=mmap <span class="attribute">-bs</span>=4k <span class="attribute">-size</span>=1G <span class="attribute">-numjobs</span>=64 <span class="attribute">-runtime</span>=10 -group_reporting <span class="attribute">-name</span>=file</span><br><span class="line"></span><br><span class="line">7、splice： splice(2) is used <span class="keyword">to</span> transfer the data <span class="keyword">and</span> vmsplice(2) <span class="keyword">to</span> transfer data <span class="keyword">from</span> user-space <span class="keyword">to</span> the kernel.</span><br><span class="line">fio <span class="attribute">-filename</span>=/mnt/data/112.log <span class="attribute">-direct</span>=1 -iodepth 1 -thread <span class="attribute">-rw</span>=randread <span class="attribute">-ioengine</span>=splice <span class="attribute">-bs</span>=4k <span class="attribute">-size</span>=1G <span class="attribute">-numjobs</span>=64 <span class="attribute">-runtime</span>=10 -group_reporting <span class="attribute">-name</span>=file</span><br><span class="line"></span><br><span class="line">8、falloc</span><br><span class="line">fio <span class="attribute">-filename</span>=/mnt/data/112.log <span class="attribute">-direct</span>=1 -iodepth 1 -thread <span class="attribute">-rw</span>=randread <span class="attribute">-ioengine</span>=falloc <span class="attribute">-bs</span>=4k <span class="attribute">-size</span>=1G <span class="attribute">-numjobs</span>=64 <span class="attribute">-runtime</span>=10 -group_reporting <span class="attribute">-name</span>=file</span><br><span class="line"></span><br><span class="line">9、pvsync：</span><br><span class="line">fio <span class="attribute">-filename</span>=/mnt/data/112.log <span class="attribute">-direct</span>=1 -iodepth 1 -thread <span class="attribute">-rw</span>=randread <span class="attribute">-ioengine</span>=pvsync <span class="attribute">-bs</span>=4k <span class="attribute">-size</span>=1G <span class="attribute">-numjobs</span>=64 <span class="attribute">-runtime</span>=10 -group_reporting <span class="attribute">-name</span>=file</span><br><span class="line"></span><br><span class="line">引擎参照：没有举例的可能执行有问题，或者是针对块存储的</span><br><span class="line">        binject:只针对block devices</span><br><span class="line">        sg:针对块</span><br><span class="line">        splice</span><br><span class="line">        e4defrag：Option inplace: missing long option name</span><br><span class="line">        falloc</span><br><span class="line">        posixaio</span><br><span class="line">        libaio</span><br><span class="line">        net：fio:<span class="built_in"> network </span>IO can<span class="string">'t be random</span></span><br><span class="line"><span class="string">        netsplice</span></span><br><span class="line"><span class="string">        null</span></span><br><span class="line"><span class="string">        sync</span></span><br><span class="line"><span class="string">        psync</span></span><br><span class="line"><span class="string">        vsync</span></span><br><span class="line"><span class="string">        pvsync</span></span><br><span class="line"><span class="string">        mmap</span></span><br><span class="line"><span class="string">        cpuio</span></span><br><span class="line"><span class="string">        syslet-rw</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">使用配置文件执行：</span></span><br><span class="line"><span class="string">参考：https://segmentfault.com/a/1190000003880571</span></span><br><span class="line"><span class="string">如下为rdb测试的配置文件：执行：fio 256k-randread.fio</span></span><br><span class="line"><span class="string">[root@host111 fio_cfg]# vi 256k-randread.fio</span></span><br><span class="line"><span class="string">[randread-256k]</span></span><br><span class="line"><span class="string">description="randread test with block size of 256k-test-poolimages1"</span></span><br><span class="line"><span class="string">ioengine=rbd</span></span><br><span class="line"><span class="string">clientname=admin</span></span><br><span class="line"><span class="string">pool=test-pool</span></span><br><span class="line"><span class="string">rbdname=test-poolimages1</span></span><br><span class="line"><span class="string">iodepth=8</span></span><br><span class="line"><span class="string">runtime=300</span></span><br><span class="line"><span class="string">rw=randread</span></span><br><span class="line"><span class="string">bs=256k</span></span><br><span class="line"><span class="string">numjobs=1</span></span><br><span class="line"><span class="string">size=5g</span></span><br><span class="line"><span class="string">#write_iops_log=write_iops</span></span><br><span class="line"><span class="string">#log_avg_msec=1000 </span></span><br><span class="line"><span class="string">#filename=/data/osd.0/1.txt</span></span><br><span class="line"><span class="string">write_bw_log=rw</span></span><br><span class="line"><span class="string">write_lat_log=rw</span></span><br><span class="line"><span class="string">write_iops_log=rw</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[randread-256k]</span></span><br><span class="line"><span class="string">description="randread test with block size of 256k-test-poolimages2"</span></span><br><span class="line"><span class="string">ioengine=rbd</span></span><br><span class="line"><span class="string">clientname=admin</span></span><br><span class="line"><span class="string">pool=test-pool</span></span><br><span class="line"><span class="string">rbdname=test-poolimages2</span></span><br><span class="line"><span class="string">iodepth=8</span></span><br><span class="line"><span class="string">runtime=300</span></span><br><span class="line"><span class="string">rw=randread</span></span><br><span class="line"><span class="string">bs=256k</span></span><br><span class="line"><span class="string">numjobs=1</span></span><br><span class="line"><span class="string">size=5g</span></span><br><span class="line"><span class="string">#write_iops_log=write_iops</span></span><br><span class="line"><span class="string">#log_avg_msec=1000 </span></span><br><span class="line"><span class="string">#filename=/data/osd.0/1.txt</span></span><br><span class="line"><span class="string">write_bw_log=rw</span></span><br><span class="line"><span class="string">write_lat_log=rw</span></span><br><span class="line"><span class="string">write_iops_log=rw</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="四、补充"><a href="#四、补充" class="headerlink" title="四、补充"></a>四、补充</h1><figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>、安装插件：</span><br><span class="line">yum install gnuplot</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>输出bw，lat和iops数据并画图</span><br><span class="line">fio安装完后自带有一个高级脚本fio_generate_plots能够根据fio输出的数据进行画图。操作流程如下：</span><br><span class="line">fio的输出日志主要包含三种：bw，lat和iops，设置这三种的参数如下：</span><br><span class="line">write_bw_log=rw</span><br><span class="line">w</span><br><span class="line">write_lat_log=rw</span><br><span class="line">w</span><br><span class="line">write_iops_log=rw</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">如：fio -filename=/mnt/data/<span class="number">112.</span><span class="keyword">log</span> -direct=<span class="number">1</span> -iodepth <span class="number">1</span> -thread -rw=randread -ioengine=libaio -bs=<span class="number">4</span>k -<span class="keyword">size</span>=<span class="number">1</span>G -numjobs=<span class="number">1</span> -runtime=<span class="number">10</span> -group_reporting -name=<span class="keyword">file</span> -write_bw_log=rww -write_lat_log=rww -write_iops_log=rw</span><br><span class="line">最后生成：</span><br><span class="line">[root@host111 fio_cfg]# <span class="keyword">ls</span></span><br><span class="line">psync         randrw.fio     read.fio  rw_iops<span class="number">.1</span>.<span class="keyword">log</span>  rww_clat<span class="number">.1</span>.<span class="keyword">log</span>  rww_slat<span class="number">.1</span>.<span class="keyword">log</span></span><br><span class="line">randread.fio  randwrite.fio  rw.fio    rww_bw<span class="number">.1</span>.<span class="keyword">log</span>   rww_lat<span class="number">.1</span>.<span class="keyword">log</span>   write.fio</span><br><span class="line">需要将$1.<span class="keyword">log</span>改为*.<span class="keyword">log</span></span><br><span class="line">[root@host111 fio_cfg]# mv rw_iops<span class="number">.1</span>.<span class="keyword">log</span> rw_iops.<span class="keyword">log</span></span><br><span class="line">[root@host111 fio_cfg]# mv rww_bw<span class="number">.1</span>.<span class="keyword">log</span> rww_bw.<span class="keyword">log</span></span><br><span class="line">[root@host111 fio_cfg]# mv rww_clat<span class="number">.1</span>.<span class="keyword">log</span> rww_clat.<span class="keyword">log</span></span><br><span class="line">[root@host111 fio_cfg]# mv rww_lat<span class="number">.1</span>.<span class="keyword">log</span> rww_lat.<span class="keyword">log</span></span><br><span class="line">[root@host111 fio_cfg]# mv rww_slat<span class="number">.1</span>.<span class="keyword">log</span> rww_slat.<span class="keyword">log</span></span><br><span class="line">[root@host111 fio_cfg]# <span class="keyword">ls</span></span><br><span class="line">psync         randrw.fio     read.fio  rw_iops.<span class="keyword">log</span>  rww_clat.<span class="keyword">log</span>  rww_slat.<span class="keyword">log</span></span><br><span class="line">randread.fio  randwrite.fio  rw.fio    rww_bw.<span class="keyword">log</span>   rww_lat.<span class="keyword">log</span>   write.fio</span><br><span class="line"></span><br><span class="line">或者使用下面脚本进行修改：</span><br><span class="line">这里需要强调的一点是，后面接的参数rw，是输出日志文件名的prefix，如最终会生成的日志文件如下：</span><br><span class="line">rw_iops.<span class="keyword">log</span></span><br><span class="line"></span><br><span class="line">rw_clat.<span class="keyword">log</span></span><br><span class="line"></span><br><span class="line">rw_slat.<span class="keyword">log</span></span><br><span class="line"></span><br><span class="line">rw_lat.<span class="keyword">log</span></span><br><span class="line"></span><br><span class="line">rw_bw.<span class="keyword">log</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">这个参数在后面画图的时候也要用到。</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> clat lat slat bw iops;<span class="keyword">do</span> mv rbd_$i<span class="number">.1</span>.<span class="keyword">log</span> rbd_$i.<span class="keyword">log</span>;done</span><br><span class="line"></span><br><span class="line"><span class="number">3</span>、画图</span><br><span class="line">前提是还需要安装好gnuplot，然后使用下面的命令即可自动画图：</span><br><span class="line">root@ubuntu:/tmp&gt; fio_generate_plots bw</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">发现没有，fio_generate_plots接受的唯一参数就是这个日志文件名的prefix。</span><br><span class="line">本例中生成的图片文件有：</span><br><span class="line">bw-bw.svg </span><br><span class="line">bw-clat.svg </span><br><span class="line">bw-iops.svg </span><br><span class="line">bw-lat.svg </span><br><span class="line">bw-slat.svg</span><br><span class="line"></span><br><span class="line">下载到本地，需要用谷歌浏览器才能打开，图片软件打不开</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="001-fio部署"><a href="#001-fio部署" class="headerlink" title="001-fio部署"></a>001-fio部署</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">http://freshmeat.sourceforge.net/projects/fio上下载fio-2.1.10.tar.gz</span><br><span class="line">解压。</span><br><span class="line"><span class="comment">#tar  -xvf  fio-3.3.tar.gz</span></span><br><span class="line"><span class="comment">#cd  fio-3.3</span></span><br><span class="line"></span><br><span class="line">执行命令：</span><br><span class="line"><span class="comment">#./configure</span></span><br><span class="line"><span class="comment">#make</span></span><br><span class="line"><span class="comment">#make install</span></span><br><span class="line"></span><br><span class="line">安装libaio-devel</span><br><span class="line">yum <span class="keyword">install</span> libaio-devel</span><br><span class="line">或者rpm -ivh *rpm <span class="comment">--force</span></span><br><span class="line"></span><br><span class="line">重新执行：</span><br><span class="line"><span class="comment">#./configure</span></span><br><span class="line"><span class="comment">#make</span></span><br><span class="line"><span class="comment">#make install</span></span><br><span class="line"></span><br><span class="line">直接执行fio测试。</span><br><span class="line"><span class="comment">#fio -ioengine=libaio -filename=fiofile -bs=20k -direct=1 -iodepth=4 -thread -size=300g -rw=randwrite -name=20k_randwrite -numjobs=2 -group_reporting</span></span><br><span class="line">如果有报错：是因为没装libaio-devel</span><br><span class="line"></span><br><span class="line">检查libaio和rbd是否存在，存在表示已经安装了libaio和rdb</span><br><span class="line">[root@ceph1 home]<span class="comment"># fio --enghelp</span></span><br><span class="line">Available IO <span class="keyword">engines</span>:</span><br><span class="line">        cpuio</span><br><span class="line">        mmap</span><br><span class="line">        <span class="keyword">sync</span></span><br><span class="line">        psync</span><br><span class="line">        vsync</span><br><span class="line">        pvsync</span><br><span class="line">        <span class="literal">null</span></span><br><span class="line">        net</span><br><span class="line">        netsplice</span><br><span class="line">        libaio</span><br><span class="line">        posixaio</span><br><span class="line">        falloc</span><br><span class="line">        e4defrag</span><br><span class="line">        splice</span><br><span class="line">        rbd</span><br><span class="line">        sg</span><br><span class="line">        binject</span><br><span class="line"></span><br><span class="line">创建一个rbd image</span><br><span class="line">rbd -p rbd <span class="keyword">create</span> <span class="comment">--size 20480 fio_test_image</span></span><br><span class="line"></span><br><span class="line">查看pool</span><br><span class="line">ceph osd lspools</span><br><span class="line">[root@ceph3 osd<span class="number">.19</span>]<span class="comment"># ceph osd lspools</span></span><br><span class="line"><span class="number">0</span> rbd,<span class="number">1</span> docker-pool,</span><br><span class="line"></span><br><span class="line">在pool中新建一个镜像：</span><br><span class="line">rbd <span class="keyword">create</span> docker-pool/docker-poolimages <span class="comment">--size 102400</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="002-fio配置文件"><a href="#002-fio配置文件" class="headerlink" title="002-fio配置文件"></a>002-fio配置文件</h1><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">胡正川给：</span><br><span class="line">fio <span class="attribute">-filename</span>=/data/osd.19/tstfile <span class="attribute">-size</span>=10G <span class="attribute">-direct</span>=1 <span class="attribute">-ioengine</span>=libaio -thread <span class="attribute">-bs</span>=4k <span class="attribute">-rw</span>=randwrite <span class="attribute">-iodepth</span>=64 <span class="attribute">-runtime</span>=300 <span class="attribute">-iodepth_batch</span>=1 <span class="attribute">-iodepth_batch_complete</span>=1 <span class="attribute">-name</span>=randwrite-iops-tst</span><br><span class="line"></span><br><span class="line">fio <span class="attribute">-ioengine</span>=libaio <span class="attribute">-bs</span>=4k <span class="attribute">-direct</span>=1 -thread <span class="attribute">-rw</span>=randwrite <span class="attribute">-size</span>=2G <span class="attribute">-directory</span>=/usr/share/nginx/html/ <span class="attribute">-name</span>=<span class="string">"4KB randwrite test"</span> <span class="attribute">-iodepth</span>=32 <span class="attribute">-runtime</span>=60</span><br><span class="line">1）IO类型</span><br><span class="line">向文件发起的IO类型。</span><br><span class="line">&lt;1&gt;<span class="attribute">readwrite</span>=str,rw=str</span><br><span class="line">read 顺序读</span><br><span class="line">write 顺序写</span><br><span class="line">randwrite 随机写</span><br><span class="line">randread 随机读</span><br><span class="line">rw,readwrite 顺序混合读写</span><br><span class="line">randrw 随机混合读写</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br></pre></td><td class="code"><pre><span class="line">fio模拟iometer</span><br><span class="line">配置文件方式：</span><br><span class="line"><span class="comment">#cat iometer-file-access-server</span></span><br><span class="line">[global]</span><br><span class="line"></span><br><span class="line"><span class="attribute">bssplit</span>=512/20:1k/20:2k/10:4k/40:8k/10</span><br><span class="line"> </span><br><span class="line"><span class="comment">#2成512B，1KB，1成2KB，4成4KB，1成8KB的小文件进行测试</span></span><br><span class="line"><span class="attribute">rw</span>=randrw</span><br><span class="line"><span class="attribute">rwmixread</span>=80 #8成读，2成写</span><br><span class="line"><span class="attribute">direct</span>=1 #不使用io设备buffer</span><br><span class="line"><span class="attribute">size</span>=4g</span><br><span class="line"><span class="attribute">numjobs</span>=16 #产生16个进程</span><br><span class="line"><span class="attribute">nrfiles</span>=8 #每1个进程生成文件数量</span><br><span class="line"><span class="attribute">ioengine</span>=libaio</span><br><span class="line"> </span><br><span class="line"><span class="comment">#IO engine，种类丰富，测试nfs，cpu，nic使用不同的引擎。</span></span><br><span class="line"><span class="attribute">directory</span>=/mnt</span><br><span class="line"><span class="comment"># IOMeter defines the server loads as the following:</span></span><br><span class="line"><span class="comment"># iodepth=1 Linear</span></span><br><span class="line"><span class="comment"># iodepth=4 Very Light</span></span><br><span class="line"><span class="comment"># iodepth=8 Light</span></span><br><span class="line"><span class="comment"># iodepth=64 Moderate</span></span><br><span class="line"><span class="comment"># iodepth=256 Heavy</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">iodepth</span>=64 #每个文件io队列长度</span><br><span class="line"><span class="attribute">lockmem</span>=1g #fio只使用1g内存进行测试</span><br><span class="line">zero_buffers 用0初始化系统buffer</span><br><span class="line"></span><br><span class="line">一般fio配置文件和参数都是支持k/m/g的标识</span><br><span class="line"></span><br><span class="line">顺序测试</span><br><span class="line">命令行方式</span><br><span class="line">fio –<span class="attribute">name</span>=iometer <span class="attribute">--rw</span>=randrw <span class="attribute">--size</span>=4096m <span class="attribute">--bssplit</span>=32K/20:64k/40:256k/20:512k/20 <span class="attribute">--direct</span>=1 <span class="attribute">--ioengine</span>=libaio <span class="attribute">--iodepth</span>=32 <span class="attribute">-directory</span>=/mnt <span class="attribute">--numjobs</span>=8 <span class="attribute">--nrfiles</span>=8 <span class="attribute">--rwmixread</span>=60 --zero_buffers</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">模拟tiobench</span><br><span class="line"></span><br><span class="line"><span class="comment"># cat tiobench-example</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[global]</span><br><span class="line"><span class="attribute">direct</span>=1</span><br><span class="line"><span class="attribute">ioengine</span>=libaio</span><br><span class="line"><span class="attribute">size</span>=512m</span><br><span class="line"><span class="attribute">bsrange</span>=4k-64k</span><br><span class="line"><span class="attribute">timeout</span>=60</span><br><span class="line"><span class="attribute">numjobs</span>=4</span><br><span class="line"></span><br><span class="line">[f1]</span><br><span class="line"><span class="attribute">rw</span>=write</span><br><span class="line"><span class="attribute">ioengine</span>=sync</span><br><span class="line"><span class="attribute">bsrange</span>=4k-4k</span><br><span class="line"><span class="attribute">timeout</span>=120</span><br><span class="line"><span class="attribute">numjobs</span>=8</span><br><span class="line"></span><br><span class="line">[f2]</span><br><span class="line">stonewall</span><br><span class="line"><span class="comment">#等待上一个任务完成再开始</span></span><br><span class="line"><span class="attribute">rw</span>=randwrite</span><br><span class="line"></span><br><span class="line">[f3]</span><br><span class="line">stonewall</span><br><span class="line"><span class="attribute">ioengine</span>=posixaio</span><br><span class="line"><span class="attribute">rw</span>=read</span><br><span class="line"></span><br><span class="line">[f4]</span><br><span class="line">stonewall</span><br><span class="line"><span class="attribute">rw</span>=randread</span><br><span class="line"></span><br><span class="line">其他参数详见help或者man page。</span><br><span class="line">每一个子选项可以根据自己的需要再次配置，这个可以使用fio来模拟多种混合io。</span><br><span class="line"></span><br><span class="line">测试CPU IO</span><br><span class="line"><span class="comment"># cat fiocpu.cfg</span></span><br><span class="line">[global]</span><br><span class="line"><span class="attribute">readwrite</span>=randrw</span><br><span class="line"><span class="attribute">name</span>=stresser</span><br><span class="line"><span class="attribute">directory</span>=/tmp</span><br><span class="line"><span class="attribute">size</span>=8G</span><br><span class="line"><span class="attribute">bssplit</span>=32K/20:64k/40:256k/20:512k/20</span><br><span class="line"><span class="attribute">nrfiles</span>=16</span><br><span class="line"><span class="attribute">fsync_on_close</span>=1</span><br><span class="line">thread</span><br><span class="line"></span><br><span class="line">[cpu0]</span><br><span class="line"><span class="attribute">ioengine</span>=cpuio</span><br><span class="line"><span class="attribute">cpuload</span>=100</span><br><span class="line"><span class="attribute">runtime</span>=300</span><br><span class="line">[cpu1]</span><br><span class="line"><span class="attribute">ioengine</span>=cpuio</span><br><span class="line"><span class="attribute">cpuload</span>=100</span><br><span class="line"><span class="attribute">runtime</span>=300</span><br><span class="line"></span><br><span class="line">测试nic IO</span><br><span class="line">测试网络</span><br><span class="line"><span class="comment"># cat fionet</span></span><br><span class="line">[global]</span><br><span class="line"><span class="attribute">ioengine</span>=net</span><br><span class="line"><span class="comment">#the below defaults to a tcp connection, add /udp at the end for udp</span></span><br><span class="line"><span class="attribute">filename</span>=localhost/8888</span><br><span class="line"><span class="attribute">bs</span>=4k</span><br><span class="line"><span class="attribute">size</span>=10g</span><br><span class="line"><span class="attribute">iodepth</span>=128</span><br><span class="line"><span class="comment">#verify=sha512</span></span><br><span class="line"><span class="comment">#支持md5 crc16 crc32 crc64 crc7 sha256 sha512</span></span><br><span class="line"></span><br><span class="line">[receiver]</span><br><span class="line"><span class="attribute">rw</span>=read</span><br><span class="line"></span><br><span class="line">[sender]</span><br><span class="line"><span class="attribute">rw</span>=write</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[receiver]</span><br><span class="line"></span><br><span class="line"><span class="attribute">rw</span>=read</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[sender]</span><br><span class="line"></span><br><span class="line"><span class="attribute">rw</span>=write</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">example output:</span><br><span class="line">$ fio <span class="attribute">--name</span>=global <span class="attribute">--rw</span>=randrw <span class="attribute">--size</span>=128m <span class="attribute">--name</span>=job1 <span class="attribute">--name</span>=job2</span><br><span class="line">job1: (<span class="attribute">g</span>=0): <span class="attribute">rw</span>=randrw, <span class="attribute">bs</span>=4K-4K/4K-4K, <span class="attribute">ioengine</span>=sync, <span class="attribute">iodepth</span>=1</span><br><span class="line">job2: (<span class="attribute">g</span>=0): <span class="attribute">rw</span>=randrw, <span class="attribute">bs</span>=4K-4K/4K-4K, <span class="attribute">ioengine</span>=sync, <span class="attribute">iodepth</span>=1</span><br><span class="line">Starting 2 processes</span><br><span class="line">Jobs: 1 (<span class="attribute">f</span>=1): [_m] [99.6% done] [516K/565K /s] [126/138 iops] [eta 00m:01s]</span><br><span class="line">job1: (<span class="attribute">groupid</span>=0, <span class="attribute">jobs</span>=1): err= 0: <span class="attribute">pid</span>=5117</span><br><span class="line">read : <span class="attribute">io</span>=65880KB, <span class="attribute">bw</span>=298486B/s, <span class="attribute">iops</span>=72, <span class="attribute">runt</span>=226011msec</span><br><span class="line">clat (usec): <span class="attribute">min</span>=119, <span class="attribute">max</span>=977960, <span class="attribute">avg</span>=13487.89, <span class="attribute">stdev</span>=37647.61</span><br><span class="line">bw (KB/s) : min= 4, max= 603, <span class="attribute">per</span>=51.98%, <span class="attribute">avg</span>=300.42, <span class="attribute">stdev</span>=113.69</span><br><span class="line">write: <span class="attribute">io</span>=65192KB, <span class="attribute">bw</span>=295368B/s, <span class="attribute">iops</span>=72, <span class="attribute">runt</span>=226011msec</span><br><span class="line">clat (usec): <span class="attribute">min</span>=10, <span class="attribute">max</span>=196312, <span class="attribute">avg</span>=219.16, <span class="attribute">stdev</span>=4909.93</span><br><span class="line">bw (KB/s) : min= 4, max= 736, <span class="attribute">per</span>=51.64%, <span class="attribute">avg</span>=295.87, <span class="attribute">stdev</span>=132.08</span><br><span class="line">cpu : <span class="attribute">usr</span>=0.05%, <span class="attribute">sys</span>=0.57%, <span class="attribute">ctx</span>=16529, <span class="attribute">majf</span>=0, <span class="attribute">minf</span>=555</span><br><span class="line">IO depths : <span class="attribute">1</span>=100.0%, <span class="attribute">2</span>=0.0%, <span class="attribute">4</span>=0.0%, <span class="attribute">8</span>=0.0%, <span class="attribute">16</span>=0.0%, <span class="attribute">32</span>=0.0%, &gt;=<span class="attribute">64</span>=0.0%</span><br><span class="line">submit : <span class="attribute">0</span>=0.0%, <span class="attribute">4</span>=100.0%, <span class="attribute">8</span>=0.0%, <span class="attribute">16</span>=0.0%, <span class="attribute">32</span>=0.0%, <span class="attribute">64</span>=0.0%, &gt;=<span class="attribute">64</span>=0.0%</span><br><span class="line">complete : <span class="attribute">0</span>=0.0%, <span class="attribute">4</span>=100.0%, <span class="attribute">8</span>=0.0%, <span class="attribute">16</span>=0.0%, <span class="attribute">32</span>=0.0%, <span class="attribute">64</span>=0.0%, &gt;=<span class="attribute">64</span>=0.0%</span><br><span class="line">issued r/w: <span class="attribute">total</span>=16470/16298, <span class="attribute">short</span>=0/0</span><br><span class="line">lat (usec): <span class="attribute">20</span>=44.48%, <span class="attribute">50</span>=4.92%, <span class="attribute">100</span>=0.21%, <span class="attribute">250</span>=0.79%, <span class="attribute">500</span>=0.07%</span><br><span class="line">lat (usec): <span class="attribute">750</span>=0.01%</span><br><span class="line">lat (msec): <span class="attribute">2</span>=0.58%, <span class="attribute">4</span>=10.53%, <span class="attribute">10</span>=33.08%, <span class="attribute">20</span>=2.33%, <span class="attribute">50</span>=0.56%</span><br><span class="line">lat (msec): <span class="attribute">100</span>=0.29%, <span class="attribute">250</span>=1.96%, <span class="attribute">500</span>=0.18%, <span class="attribute">750</span>=0.01%, <span class="attribute">1000</span>=0.01%</span><br><span class="line">job2: (<span class="attribute">groupid</span>=0, <span class="attribute">jobs</span>=1): err= 0: <span class="attribute">pid</span>=5118</span><br><span class="line">read : <span class="attribute">io</span>=65716KB, <span class="attribute">bw</span>=295669B/s, <span class="attribute">iops</span>=72, <span class="attribute">runt</span>=227596msec</span><br><span class="line">clat (usec): <span class="attribute">min</span>=118, <span class="attribute">max</span>=974169, <span class="attribute">avg</span>=13608.29, <span class="attribute">stdev</span>=38346.81</span><br><span class="line">bw (KB/s) : min= 19, max= 766, <span class="attribute">per</span>=51.65%, <span class="attribute">avg</span>=298.54, <span class="attribute">stdev</span>=122.36</span><br><span class="line">write: <span class="attribute">io</span>=65356KB, <span class="attribute">bw</span>=294049B/s, <span class="attribute">iops</span>=71, <span class="attribute">runt</span>=227596msec</span><br><span class="line">clat (usec): <span class="attribute">min</span>=9, <span class="attribute">max</span>=171343, <span class="attribute">avg</span>=229.40, <span class="attribute">stdev</span>=5166.00</span><br><span class="line">bw (KB/s) : min= 5, max= 763, <span class="attribute">per</span>=51.24%, <span class="attribute">avg</span>=293.60, <span class="attribute">stdev</span>=138.74</span><br><span class="line">cpu : <span class="attribute">usr</span>=0.07%, <span class="attribute">sys</span>=0.54%, <span class="attribute">ctx</span>=16489, <span class="attribute">majf</span>=0, <span class="attribute">minf</span>=1324</span><br><span class="line">IO depths : <span class="attribute">1</span>=100.0%, <span class="attribute">2</span>=0.0%, <span class="attribute">4</span>=0.0%, <span class="attribute">8</span>=0.0%, <span class="attribute">16</span>=0.0%, <span class="attribute">32</span>=0.0%, &gt;=<span class="attribute">64</span>=0.0%</span><br><span class="line">submit : <span class="attribute">0</span>=0.0%, <span class="attribute">4</span>=100.0%, <span class="attribute">8</span>=0.0%, <span class="attribute">16</span>=0.0%, <span class="attribute">32</span>=0.0%, <span class="attribute">64</span>=0.0%, &gt;=<span class="attribute">64</span>=0.0%</span><br><span class="line">complete : <span class="attribute">0</span>=0.0%, <span class="attribute">4</span>=100.0%, <span class="attribute">8</span>=0.0%, <span class="attribute">16</span>=0.0%, <span class="attribute">32</span>=0.0%, <span class="attribute">64</span>=0.0%, &gt;=<span class="attribute">64</span>=0.0%</span><br><span class="line">issued r/w: <span class="attribute">total</span>=16429/16339, <span class="attribute">short</span>=0/0</span><br><span class="line">lat (usec): <span class="attribute">10</span>=0.01%, <span class="attribute">20</span>=44.36%, <span class="attribute">50</span>=5.16%, <span class="attribute">100</span>=0.19%, <span class="attribute">250</span>=0.91%</span><br><span class="line">lat (usec): <span class="attribute">500</span>=0.05%, <span class="attribute">750</span>=0.02%, <span class="attribute">1000</span>=0.01%</span><br><span class="line">lat (msec): <span class="attribute">2</span>=0.64%, <span class="attribute">4</span>=10.23%, <span class="attribute">10</span>=33.26%, <span class="attribute">20</span>=2.38%, <span class="attribute">50</span>=0.41%</span><br><span class="line">lat (msec): <span class="attribute">100</span>=0.17%, <span class="attribute">250</span>=2.01%, <span class="attribute">500</span>=0.20%, <span class="attribute">750</span>=0.01%, <span class="attribute">1000</span>=0.02%</span><br><span class="line"></span><br><span class="line"><span class="builtin-name">Run</span> status<span class="built_in"> group </span>0 (all jobs):</span><br><span class="line">READ: <span class="attribute">io</span>=131596KB, <span class="attribute">aggrb</span>=578KB/s, <span class="attribute">minb</span>=295KB/s, <span class="attribute">maxb</span>=298KB/s, <span class="attribute">mint</span>=226011msec, <span class="attribute">maxt</span>=227596msec</span><br><span class="line">WRITE: <span class="attribute">io</span>=130548KB, <span class="attribute">aggrb</span>=573KB/s, <span class="attribute">minb</span>=294KB/s, <span class="attribute">maxb</span>=295KB/s, <span class="attribute">mint</span>=226011msec, <span class="attribute">maxt</span>=227596msec</span><br><span class="line"></span><br><span class="line">Disk stats (read/write):</span><br><span class="line">sdb: <span class="attribute">ios</span>=32878/8303, <span class="attribute">merge</span>=0/1095, <span class="attribute">ticks</span>=445868/20400284, <span class="attribute">in_queue</span>=20964472, <span class="attribute">util</span>=99.98%</span><br></pre></td></tr></table></figure>
+
+<p>003-安装fio图形软件</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">fio</span><br><span class="line">安装fio</span><br><span class="line">apt<span class="params">-get</span> install fio</span><br><span class="line"> </span><br><span class="line">可以把fio的输出数据自动画图的插件gnuplot</span><br><span class="line">apt<span class="params">-get</span> install gnuplot</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span>输出<span class="literal">bw</span>，lat和iops数据并画图</span><br><span class="line">fio安装完后自带有一个高级脚本fio_generate_plots能够根据fio输出的数据进行画图。操作流程如下：</span><br><span class="line"><span class="number">1.1</span>设置fio输出详细日志</span><br><span class="line">fio的输出日志主要包含三种：<span class="literal">bw</span>，lat和iops，设置这三种的参数如下：</span><br><span class="line">write_bw_log=rw</span><br><span class="line">w</span><br><span class="line">write_lat_log=rw</span><br><span class="line">w</span><br><span class="line">write_iops_log=rw</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">这里需要强调的一点是，后面接的参数rw，是输出日志文件名的prefix，如最终会生成的日志文件如下：</span><br><span class="line">rw_iops.<span class="keyword">log</span></span><br><span class="line">r</span><br><span class="line">rw_clat.<span class="keyword">log</span></span><br><span class="line">r</span><br><span class="line">rw_slat.<span class="keyword">log</span></span><br><span class="line">r</span><br><span class="line">rw_lat.<span class="keyword">log</span></span><br><span class="line">r</span><br><span class="line">rw_bw.<span class="keyword">log</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">这个参数在后面画图的时候也要用到。</span><br><span class="line">for i <span class="keyword">in</span> clat lat slat <span class="literal">bw</span> iops;<span class="keyword">do</span> mv rbd_$i.1.log rbd_$i.log;done</span><br><span class="line"><span class="number">1.2</span> 画图</span><br><span class="line">前提是还需要安装好gnuplot，然后使用下面的命令即可自动画图：</span><br><span class="line">root@ubuntu:/tmp&gt; fio_generate_plots <span class="literal">bw</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">发现没有，fio_generate_plots接受的唯一参数就是这个日志文件名的prefix。</span><br><span class="line">本例中生成的图片文件有：</span><br><span class="line"></span><br><span class="line"><span class="literal">bw</span><span class="params">-bw.svg</span> </span><br><span class="line"><span class="literal">bw</span><span class="params">-clat.svg</span> </span><br><span class="line"><span class="literal">bw</span><span class="params">-iops.svg</span> </span><br><span class="line"><span class="literal">bw</span><span class="params">-lat.svg</span> </span><br><span class="line"><span class="literal">bw</span><span class="params">-slat.svg</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="003-fio测试一致性"><a href="#003-fio测试一致性" class="headerlink" title="003-fio测试一致性"></a>003-fio测试一致性</h1><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">fio 验证数据一致性</span><br><span class="line">原创flyandwalker2016-09-19 11:26:46评论(0)1241人阅读</span><br><span class="line">Go <span class="keyword">to</span> start of metadata</span><br><span class="line">fio可以用md5, crc16,crr32等方式进行数据一致性的验证，基本的验证都是要进行的数据写完然后在进行，这个yuan yang之前已经进行了相关验证，且可行</span><br><span class="line">这次我重点验证了当机器正在进行fio时突然关机或者重启的数据一致性：</span><br><span class="line">一、这种验证方式称之为带trigger的verification–fio将当前的写状态保存到本地，随后的读可以找到相应的文件并可以确切的知道上一次写是停止到了哪里，这个验证方式有两个重要过程组成</span><br><span class="line">1.保存每个job的写状态</span><br><span class="line">2.执行trigger命令</span><br><span class="line">二、执行过程：</span><br><span class="line">1.在被测机器上创建trigger文件 ----touch /tmp/trigger-file</span><br><span class="line">2.进行fio</span><br><span class="line">可以按照以下四种方式进行：</span><br><span class="line">（1）reboot--fio <span class="attribute">--name</span>=test <span class="attribute">--filename</span>=/dev/nvme0n1 <span class="attribute">--rw</span>=write <span class="attribute">--trigger</span>=reboot <span class="attribute">--trigger-timeout</span>=60 <span class="attribute">--verify</span>=md5（如果用CRC方式进行校验需要的时间比较长）</span><br><span class="line">（2）shutdown-----fio <span class="attribute">--name</span>=test <span class="attribute">--filename</span>=/dev/nvme0n1 <span class="attribute">--rw</span>=write <span class="attribute">--trigger</span>=<span class="string">"echo 0 &gt; /sys/class/rtc/rtc0/wakealarm;echo `date '+%s' -d '+ 2 minutes'` &gt; /sys/class/rtc/rtc0/wakealarm;poweroff"</span> <span class="attribute">--trigger-timeout</span>=30 <span class="attribute">--verify</span>=md5</span><br><span class="line">（3）reboot--fio <span class="attribute">--name</span>=test <span class="attribute">--filename</span>=/dev/nvme0n1 <span class="attribute">--rw</span>=write <span class="attribute">--trigger</span>=reboot <span class="attribute">--trigger-file</span>=/tmp/trigger-file <span class="attribute">--verify</span>=md5</span><br><span class="line">（4）shutdown-----fio <span class="attribute">--name</span>=test <span class="attribute">--filename</span>=/dev/nvme0n1 <span class="attribute">--rw</span>=write <span class="attribute">--trigger</span>=<span class="string">"echo 0 &gt; /sys/class/rtc/rtc0/wakealarm;echo `date '+%s' -d '+ 2 minutes'` &gt; /sys/class/rtc/rtc0/wakealarm;poweroff"</span>  <span class="attribute">--trigger-file</span>=/tmp/trigger-file <span class="attribute">--verify</span>=md5</span><br><span class="line">3.开机后进行验证</span><br><span class="line">fio <span class="attribute">--name</span>=test <span class="attribute">--filename</span>=/dev/nvme0n1 <span class="attribute">--verify_state_load</span>=1 <span class="attribute">--rw</span>=read <span class="attribute">--verify</span>=md5</span><br><span class="line">三、重要参数</span><br><span class="line">1.--trigger-file= 创建的trigger文件路径</span><br><span class="line"> 2.<span class="attribute">--trigger-timeout</span>=t 执行fio多久后执行trigger cmd,单位是S</span><br><span class="line">3.<span class="attribute">--trigger</span>=cmd 命令可以是shut down, reboot</span><br><span class="line">4.–verify_state_load 当需要用trigger方式进行验证时，该变量设置为1，如果不设置该变量，则进行常规的fio读</span><br><span class="line">四、trigger 激活的两种方式</span><br><span class="line">1.<span class="attribute">trigger-file</span>=/tmp/trigger-file的方式，在被测机上创建一个特定的文件，如果这个文件存在，就会触发主机的reboot ,shutdown等，并且后续可以进行相应的读验证</span><br><span class="line">2.<span class="attribute">trigger-timeout</span>=t 执行fio多久后执行trigger cmd,单位是S, t秒后触发主机的reboot ,shutdown等，并且后续可以进行相应的读验证</span><br></pre></td></tr></table></figure>
+
+<h1 id="004-fio脚本（没用过，仅供参考）"><a href="#004-fio脚本（没用过，仅供参考）" class="headerlink" title="004-fio脚本（没用过，仅供参考）"></a>004-fio脚本（没用过，仅供参考）</h1><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">fio测试脚本</span><br><span class="line">    通过fio主要进行顺序读、顺序写、随机读、随机写的性能测试</span><br><span class="line"><span class="comment">#!/bin/bash  </span></span><br><span class="line">function tgt_r &#123;  </span><br><span class="line">fio <span class="attribute">-filename</span>=/rbddir1/1.txt <span class="attribute">-direct</span>=1 -iodepth 1 -thread <span class="attribute">-rw</span>=read <span class="attribute">-ioengine</span>=libaio <span class="attribute">-bs</span>=<span class="variable">$1</span> <span class="attribute">-size</span>=10G <span class="attribute">-numjobs</span>=30 <span class="attribute">-runtime</span>=300 -group_reporting <span class="attribute">-name</span>=mytest &amp;&gt;&gt; s_r_test  </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">function tgt_w &#123;  </span><br><span class="line">fio <span class="attribute">-filename</span>=/dev/vdb <span class="attribute">-direct</span>=1 -iodepth 1 -thread <span class="attribute">-rw</span>=write <span class="attribute">-ioengine</span>=libaio <span class="attribute">-bs</span>=<span class="variable">$1</span> <span class="attribute">-size</span>=10G <span class="attribute">-numjobs</span>=30 <span class="attribute">-runtime</span>=300 -group_reporting <span class="attribute">-name</span>=mytest &amp;&gt;&gt; s_w_test  </span><br><span class="line">&#125; </span><br><span class="line">  </span><br><span class="line">function tgt_rr &#123;  </span><br><span class="line">fio <span class="attribute">-directory</span>=/dev/vdb <span class="attribute">-direct</span>=1 -iodepth 1 -thread <span class="attribute">-rw</span>=randread <span class="attribute">-ioengine</span>=libaio <span class="attribute">-bs</span>=<span class="variable">$1</span> <span class="attribute">-size</span>=10G <span class="attribute">-numjobs</span>=30 <span class="attribute">-runtime</span>=300 -group_reporting <span class="attribute">-name</span>=mytest &amp;&gt;&gt; r_r_test  </span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">function tgt_rw &#123;  </span><br><span class="line">fio <span class="attribute">-filename</span>=/dev/vdb <span class="attribute">-directory</span>=/dev/vdb <span class="attribute">-direct</span>=1 -iodepth 1 -thread <span class="attribute">-rw</span>=randwrite <span class="attribute">-ioengine</span>=libaio <span class="attribute">-bs</span>=<span class="variable">$1</span> <span class="attribute">-size</span>=10G <span class="attribute">-numjobs</span>=30 <span class="attribute">-runtime</span>=300 -group_reporting <span class="attribute">-name</span>=mytest &amp;&gt;&gt; r_w_test  </span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> 4k 64k 1m  </span><br><span class="line"><span class="keyword">do</span>  </span><br><span class="line">tgt_r <span class="variable">$i</span>  </span><br><span class="line">tgt_w <span class="variable">$i</span>  </span><br><span class="line">tgt_rr <span class="variable">$i</span>  </span><br><span class="line">tgt_rw <span class="variable">$i</span>  </span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+<h1 id><a href="#" class="headerlink" title></a></h1><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>）IO类型</span><br><span class="line">向文件发起的IO类型。</span><br><span class="line">&lt;<span class="number">1</span>&gt;readwrite=str,rw=str</span><br><span class="line">read 顺序读</span><br><span class="line">write 顺序写</span><br><span class="line">randwrite 随机写</span><br><span class="line">randread 随机读</span><br><span class="line">rw,readwrite 顺序混合读写</span><br><span class="line">randrw 随机混合读写</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">fio中的I/O延迟包括三种：slat，clat，lat</span><br><span class="line">关系是 lat = slat + clat。</span><br><span class="line">slat 表示fio submit某个I/O的延迟。</span><br><span class="line">clat 表示fio complete某个I/O的延迟。</span><br><span class="line">lat 表示从fio将请求提交给内核，再到内核完成这个I/O为止所需要的时间</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">fio同时跑多个裸卷或者文件（注释numjobs为总的）</span><br><span class="line">fio --bs=<span class="number">4</span>K --iodepth=<span class="number">32</span> --rw=randrw  --rwmixread=<span class="number">80</span> --time_based --runtime=<span class="number">600</span> --direct=<span class="number">1</span> --name=test --filename=<span class="regexp">/dev/sds</span><span class="symbol">:/dev/sdt</span><span class="symbol">:/dev/sdu</span><span class="symbol">:/dev/sdv</span><span class="symbol">:/dev/sdw</span><span class="symbol">:/dev/sdx</span><span class="symbol">:/dev/sdz</span> --numjobs=<span class="number">120</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2008\01\04\BlockStorage\2008-01-04-BlockStorage-cosbeach\" rel="bookmark">BlockStorage-cosbeach</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2008\01\04\BlockStorage\2008-01-04-BlockStorage-filebench\" rel="bookmark">BlockStorage-filebench</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2008\01\04\BlockStorage\2008-01-04-BlockStorage-ftest\" rel="bookmark">BlockStorage-ftest</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2008\01\04\BlockStorage\2008-01-04-BlockStorage-iozone\" rel="bookmark">BlockStorage-iozone</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2008\01\04\BlockStorage\2008-01-04-BlockStorage-vdbench\" rel="bookmark">BlockStorage-vdbench</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-fio/" title="BlockStorage-fio">https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-fio/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/BlockStorage-tools/" rel="tag"># BlockStorage-tools</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-ftest/" rel="prev" title="BlockStorage-ftest">
+      <i class="fa fa-chevron-left"></i> BlockStorage-ftest
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-filebench/" rel="next" title="BlockStorage-filebench">
+      BlockStorage-filebench <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、安装"><span class="nav-text">一、安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、fio引擎介绍"><span class="nav-text">二、fio引擎介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、各引擎使用方法"><span class="nav-text">三、各引擎使用方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、补充"><span class="nav-text">四、补充</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#001-fio部署"><span class="nav-text">001-fio部署</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#002-fio配置文件"><span class="nav-text">002-fio配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#003-fio测试一致性"><span class="nav-text">003-fio测试一致性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#004-fio脚本（没用过，仅供参考）"><span class="nav-text">004-fio脚本（没用过，仅供参考）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#"><span class="nav-text"></span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">What hurts more, the pain of hard work or the pain of regret?</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">34:51</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

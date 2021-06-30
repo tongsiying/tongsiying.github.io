@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="BlockStorage-question">
+<meta property="og:url" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-question/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-question/2008-01-04-BlockStorage-question%5C1585558932156.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-question/1585558932156.png">
+<meta property="article:published_time" content="2008-01-04T10:37:19.000Z">
+<meta property="article:modified_time" content="2021-02-12T04:10:21.642Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="BlockStorage-question">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-question/2008-01-04-BlockStorage-question%5C1585558932156.png">
+
+<link rel="canonical" href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-question/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>BlockStorage-question | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">嘻嘻嘻嘻嘻嘻</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-question/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="What hurts more, the pain of hard work or the pain of regret?">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          BlockStorage-question
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2008-01-04 18:37:19" itemprop="dateCreated datePublished" datetime="2008-01-04T18:37:19+08:00">2008-01-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-02-12 12:10:21" itemprop="dateModified" datetime="2021-02-12T12:10:21+08:00">2021-02-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BlockStorage/" itemprop="url" rel="index"><span itemprop="name">BlockStorage</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+# 001-io错误日志打印
+
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gatewayRead  error</span><br><span class="line">gatewayWrite  error</span><br><span class="line"></span><br><span class="line">tgtd报错：</span><br><span class="line">snbs crital:</span><br></pre></td></tr></table></figure>
+
+<h1 id="002-issci延时放大"><a href="#002-issci延时放大" class="headerlink" title="002-issci延时放大"></a>002-issci延时放大</h1><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">两个卷比一个卷平均时延多了1ms，四个卷比一个时延多了4ms。</span><br><span class="line">前端指tgt之前的io栈</span><br><span class="line"></span><br><span class="line">问题所在：</span><br><span class="line">issci客户端所在的计算节点存在大量iptable的rule会导致该问题</span><br><span class="line">iptables -nL|wc -l </span><br><span class="line">发现iptable中的rule有数万条之多，且绝大多数是垃圾，清理垃圾之后，性能测试正常，包括iscsi本地大块写时延放大、多个卷随机写时延放大等问题。</span><br><span class="line"></span><br><span class="line">为何虚机会残留这么多rule？</span><br><span class="line">应该是业务虚机迁移导致，业务虚机当时有部分迁移失败</span><br><span class="line"></span><br><span class="line">iptables导入导出</span><br><span class="line">导出：</span><br><span class="line">iptables-save &gt; iptables.bak</span><br><span class="line"></span><br><span class="line">导入：</span><br><span class="line">iptables-restore &lt; iptables.bak</span><br><span class="line"></span><br><span class="line">如何判断iptables有残留：</span><br><span class="line">这个是实体机中看到的虚机网卡，</span><br><span class="line">计算节点：ip a</span><br><span class="line">4095:qbrf6396244-3b:&lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP qlen 1000</span><br><span class="line"></span><br><span class="line">就会创建带有6396244相关chain和rules</span><br><span class="line">iptables -N neutron-openvswi-of5afefd0-f等等</span><br><span class="line">（neutron-openvswi-of5afefd0-f是iptables -nL中查询出来的）</span><br><span class="line"></span><br><span class="line">解决：（重启防火墙）重启iptables</span><br><span class="line">service iptables status    # 查看iptables状态</span><br><span class="line">service iptables restart   # iptables服务重启</span><br><span class="line">service iptables stop      # iptables服务禁用</span><br><span class="line"></span><br><span class="line">为啥计算节点需要开防火墙：</span><br><span class="line">当前网络模式下 是通过iptables实现虚机安全组功能的</span><br><span class="line"></span><br><span class="line">如果想清空的话，先执行</span><br><span class="line">/sbin/iptables -P INPUT ACCEPT</span><br><span class="line">然后执行</span><br><span class="line">/sbin/iptables -F</span><br><span class="line">通过iptables -L 看到如下信息</span><br><span class="line">Chain INPUT (policy DROP 0 packets, 0 bytes)  （注意 是DROP）</span><br><span class="line">执行/sbin/iptables -F就肯定立马断开连接</span><br><span class="line">当执行了</span><br><span class="line">/sbin/iptables -P INPUT ACCEPT</span><br><span class="line">再次通过iptables -L看信息的话就是</span><br><span class="line">Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)</span><br><span class="line">所以现在是可以安全使用</span><br><span class="line">/sbin/iptables -F了</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">查看现在iptables规则：</span><br><span class="line">iptables -L -n -v</span><br><span class="line">Bash</span><br><span class="line">清空配置：</span><br><span class="line">iptables -F #清楚规则链中已有的条目；使用iptables -F 要小心，搞不好，你就马上同服务器断开连接了</span><br><span class="line">iptables -X #删除没有用户配置文件相关的chain</span><br><span class="line">iptables -Z #清空规则链中的数据包计算器和字节计数器；</span><br></pre></td></tr></table></figure>
+
+<h1 id="003-集群没空间了"><a href="#003-集群没空间了" class="headerlink" title="003-集群没空间了"></a>003-集群没空间了</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> 没有空间了</span><br><span class="line">出现场景：chunkserver中的某个磁盘没有可用空间了。一般出现于写操作，但是回收/删除/碎片整理也会触发/加剧这种异常的出现</span><br><span class="line"></span><br><span class="line">处理：</span><br><span class="line">a 首先创建extent的时候是按照空间大小来伪随机的。（可用空间小于<span class="number">16</span>G的时候不会选择这个磁盘）（master端有<span class="number">0.9</span>的阈值，已用超过<span class="number">0.9</span> 也不会往这儿新写）</span><br><span class="line">b 写操作假如已用空间大于<span class="number">95</span>%（可调） ，不接受新的写动作，直接返回空间满（直接影响gateway）</span><br><span class="line">c 磁盘上肯定会剩余一定量的空间可以进行回收和碎片整理。而这两个动作的最终目的是空余出更多的空间。</span><br><span class="line"></span><br><span class="line">最优期待：chunkserver层面，永远不会出现可用空间为<span class="number">0</span>的情况</span><br><span class="line"></span><br><span class="line">影响：某些写/创建 请求会返回空间满</span><br></pre></td></tr></table></figure>
+
+<h1 id="004-checksum错误"><a href="#004-checksum错误" class="headerlink" title="004-checksum错误"></a>004-checksum错误</h1><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">checksum 错误</span><br><span class="line">出现场景：<span class="keyword">chunkserver内部数据错误；磁盘损坏 </span> 前者是程序<span class="keyword">bug，出现必改</span></span><br><span class="line"><span class="keyword"></span></span><br><span class="line"><span class="keyword">处理：</span></span><br><span class="line"><span class="keyword">a </span>出现非磁盘损坏的一定修改<span class="keyword">bug</span></span><br><span class="line"><span class="keyword">b </span>假如出现了磁盘损坏的要进行修复。（需要再优化下）</span><br><span class="line"></span><br><span class="line">最优期待：除了磁盘损坏，永远不出现checksum 异常</span><br><span class="line"></span><br><span class="line">影响：出现错误之后 此次操作失败，相对严重，非常不希望出现</span><br></pre></td></tr></table></figure>
+
+<h1 id="005-seq不对"><a href="#005-seq不对" class="headerlink" title="005-seq不对"></a>005-seq不对</h1><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3</span> seq不对</span><br><span class="line"></span><br><span class="line">出现场景：</span><br><span class="line"><span class="keyword">a</span> 写操作没能递增过来（或者跳变）</span><br><span class="line">b 中途chunkserver停止过，包括一般<span class="built_in">kill</span>和<span class="built_in">kill</span> <span class="number">-9</span>，节点跪了等等</span><br><span class="line">c 进行迁移/均衡之后的extent刚开始写的时候</span><br><span class="line"></span><br><span class="line">处理：读写动作会进行实时修复，然后继续。假如出现所有chunkserver的seq都比较小的情况，是问题，需要定位。</span><br><span class="line">但实时修复的前提是对端存在指定的seq。b/c 不可避免。正常情况下的<span class="keyword">a</span>场景也比较少。假如出现比较多，需要查看下原因。希望gateway端的重试动作能包住</span><br><span class="line"></span><br><span class="line">最优期待：</span><br><span class="line">这种错误可以出现，但是不能影响整理流程。且同样的操作（读写同样的extent）不应该再出现异常</span><br></pre></td></tr></table></figure>
+
+<h1 id="006-超时"><a href="#006-超时" class="headerlink" title="006-超时"></a>006-超时</h1><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">4</span> 超时</span><br><span class="line">出现场景：</span><br><span class="line">a gateway到chunkserver的读写卡死。</span><br><span class="line"><span class="keyword">b </span>master创建/删除动作慢，导致超时</span><br><span class="line"></span><br><span class="line">处理：</span><br><span class="line">a出现就是<span class="keyword">bug，一定需要修改</span></span><br><span class="line"><span class="keyword">b现在超时时间是20s,设计理论不应该出现这种情况。出现就是bug。但是出现了直接影响读写，希望master做好重试动作</span></span><br><span class="line"><span class="keyword"></span></span><br><span class="line"><span class="keyword">最优期待：不出现a和b，</span></span><br><span class="line"><span class="keyword">影响：出现错误就要改，非常不希望出现</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="007-extent不存在"><a href="#007-extent不存在" class="headerlink" title="007-extent不存在"></a>007-extent不存在</h1><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">extent</span>不存在</span><br><span class="line"></span><br><span class="line">出现场景：</span><br><span class="line">a 进行了迁移/均衡，gateway元数据没有更新</span><br><span class="line"><span class="keyword">b </span><span class="keyword">bug（该存在但不存在）出现就要改</span></span><br><span class="line"><span class="keyword"></span></span><br><span class="line"><span class="keyword">处理：</span></span><br><span class="line"><span class="keyword">场景a不需要更改。gateway那边做好重试就好</span></span><br><span class="line"><span class="keyword">场景b </span>出现就是<span class="keyword">bug</span></span><br><span class="line"><span class="keyword"></span></span><br><span class="line"><span class="keyword">最优期待：可以出现这种err，但是不能影响业务。gateway能把err包裹</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="008-Gateway乱码："><a href="#008-Gateway乱码：" class="headerlink" title="008-Gateway乱码："></a>008-Gateway乱码：</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">Gateway乱码：</span><br><span class="line"></span><br><span class="line">陈玉强(<span class="number">18101378</span>) <span class="number">2019</span><span class="number">-12</span><span class="number">-20</span> <span class="number">20</span>:<span class="number">55</span>:<span class="number">25</span></span><br><span class="line">chunkserver:</span><br><span class="line">cat /mnt/snbslog/snbs/ChunkServer/server.INFO | grep -E <span class="string">"ChunkId:[^0-9]"</span></span><br><span class="line"></span><br><span class="line">gateway:</span><br><span class="line">cat /mnt/snbslog/snbs/Gateway/server.INFO | grep -E <span class="string">"ChunkId: [^0-9]"</span></span><br><span class="line">cat /mnt/snbslog/snbs/Gateway/server.INFO | grep  <span class="string">"ChunkId: UpdateChunkPos res:"</span></span><br><span class="line">cat /mnt/snbslog/snbs/Gateway/server.INFO | grep  <span class="string">"ip error"</span></span><br><span class="line">cat /mnt/snbslog/snbs/Gateway/server.INFO | grep  <span class="string">"ChunkIdCheck vol name: old chunkid:  new:"</span></span><br><span class="line">@黄涛贻 @王俊凯 @朱晓伟</span><br><span class="line">我整理了一些日志关键字，用来确定是否出了乱码问题</span><br><span class="line">黄涛贻(<span class="number">19047618</span>) <span class="number">2019</span><span class="number">-12</span><span class="number">-20</span> <span class="number">20</span>:<span class="number">56</span>:<span class="number">29</span></span><br><span class="line">master:</span><br><span class="line">cat /mnt/snbslog/snbs/Master/server.INFO | grep -E <span class="string">"Warning:volume [^0-9]"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">gateway日志打印：</span><br><span class="line"><span class="number">000</span>c5 ChunkIdCheck: <span class="literal">false</span> client.Addr <span class="number">10.238</span><span class="number">.161</span><span class="number">.2</span>:<span class="number">9595</span> ret <span class="number">101001</span> UpdateChunkPos res: chunkserver error</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-23</span> <span class="number">12</span>:<span class="number">28</span>:<span class="number">52.194</span> [I <span class="number">30208</span> replicatclient.go:<span class="number">86</span>] dev: <span class="number">0</span>bbf77c3-f15e<span class="number">-432</span>c<span class="number">-9</span>d2c-baa6302f742a ChunkId: <span class="number">000000000013</span>d7aa000000c5 PkgChunkId: A</span><br><span class="line">                                                                                                                                                <span class="number">0013</span>d7aa000000c5 ChunkIdCheck: <span class="literal">false</span> client.Addr <span class="number">10.238</span><span class="number">.161</span><span class="number">.3</span>:<span class="number">9595</span> ret <span class="number">101001</span> UpdateChunkPos res: chunkserver error</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-23</span> <span class="number">12</span>:<span class="number">28</span>:<span class="number">52.195</span> [I <span class="number">30208</span> replicatclient.go:<span class="number">86</span>] dev: <span class="number">0</span>bbf77c3-f15e<span class="number">-432</span>c<span class="number">-9</span>d2c-baa6302f742a ChunkId: <span class="number">000000000013</span>d7aa000000c5 PkgChunkId: A</span><br><span class="line">                                                                                                                                                <span class="number">0013</span>d7aa000000c5 ChunkIdCheck: <span class="literal">false</span> client.Addr <span class="number">10.238</span><span class="number">.161</span><span class="number">.3</span>:<span class="number">9595</span> ret <span class="number">101001</span> UpdateChunkPos res: chunkserver error</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-23</span> <span class="number">12</span>:<span class="number">28</span>:<span class="number">52.195</span> [I <span class="number">30208</span> replicatclient.go:<span class="number">86</span>] dev: <span class="number">0</span>bbf77c3-f15e<span class="number">-432</span>c<span class="number">-9</span>d2c-baa6302f742a ChunkId: <span class="number">000000000013</span>d7aa000000c5 PkgChunkId: A</span><br><span class="line">                                                                                                                                                <span class="number">0013</span>d7aa000000c5 ChunkIdCheck: <span class="literal">false</span> client.Addr <span class="number">10.238</span><span class="number">.161</span><span class="number">.5</span>:<span class="number">9595</span> ret <span class="number">101001</span> UpdateChunkPos res: chunkserver error</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-23</span> <span class="number">12</span>:<span class="number">28</span>:<span class="number">52.196</span> [I <span class="number">30208</span> replicatclient.go:<span class="number">86</span>] dev: <span class="number">0</span>bbf77c3-f15e<span class="number">-432</span>c<span class="number">-9</span>d2c-baa6302f742a ChunkId: <span class="number">000000000013</span>d7aa000000c5 PkgChunkId: A</span><br><span class="line">                                                                                                                                                <span class="number">0013</span>d7aa000000c5 ChunkIdCheck: <span class="literal">false</span> client.Addr <span class="number">10.238</span><span class="number">.161</span><span class="number">.2</span>:<span class="number">9595</span> ret <span class="number">101001</span> UpdateChunkPos res: chunkserver error</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-23</span> <span class="number">12</span>:<span class="number">28</span>:<span class="number">54.197</span> [I <span class="number">30208</span> replicatclient.go:<span class="number">86</span>] dev: <span class="number">0</span>bbf77c3-f15e<span class="number">-432</span>c<span class="number">-9</span>d2c-baa6302f742a ChunkId: <span class="number">000000000013</span>d7aa000000c5 PkgChunkId: A</span><br><span class="line">                                                                                                                                                <span class="number">0013</span>d7aa000000c5 ChunkIdCheck: <span class="literal">false</span> client.Addr <span class="number">10.238</span><span class="number">.161</span><span class="number">.3</span>:<span class="number">9595</span> ret <span class="number">101001</span> UpdateChunkPos res: chunkserver error</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-23</span> <span class="number">12</span>:<span class="number">28</span>:<span class="number">54.198</span> [I <span class="number">30208</span> replicatclient.go:<span class="number">86</span>] dev: <span class="number">0</span>bbf77c3-f15e<span class="number">-432</span>c<span class="number">-9</span>d2c-baa6302f742a ChunkId: <span class="number">000000000013</span>d7aa000000c5 PkgChunkId: A</span><br><span class="line">                                                                                                                                                <span class="number">0013</span>d7aa000000c5 ChunkIdCheck: <span class="literal">false</span> client.Addr <span class="number">10.238</span><span class="number">.161</span><span class="number">.3</span>:<span class="number">9595</span> ret <span class="number">101001</span> UpdateChunkPos res: chunkserver error</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-23</span> <span class="number">12</span>:<span class="number">28</span>:<span class="number">54.198</span> [I <span class="number">30208</span> replicatclient.go:<span class="number">86</span>] dev: <span class="number">0</span>bbf77c3-f15e<span class="number">-432</span>c<span class="number">-9</span>d2c-baa6302f742a ChunkId: <span class="number">000000000013</span>d7aa000000c5 PkgChunkId: A</span><br><span class="line">                                                                                                                                                <span class="number">0013</span>d7aa000000c5 ChunkIdCheck: <span class="literal">false</span> client.Addr <span class="number">10.238</span><span class="number">.161</span><span class="number">.5</span>:<span class="number">9595</span> ret <span class="number">101001</span> UpdateChunkPos res: chunkserver error</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-23</span> <span class="number">12</span>:<span class="number">28</span>:<span class="number">54.199</span> [I <span class="number">30208</span> replicatclient.go:<span class="number">86</span>] dev: <span class="number">0</span>bbf77c3-f15e<span class="number">-432</span>c<span class="number">-9</span>d2c-baa6302f742a ChunkId: <span class="number">000000000013</span>d7aa000000c5 PkgChunkId: A</span><br><span class="line">                                                                                                                                                <span class="number">0013</span>d7aa0</span><br></pre></td></tr></table></figure>
+
+<h1 id="009-checksum"><a href="#009-checksum" class="headerlink" title="009-checksum"></a>009-checksum</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">CheckSum报错：</span><br><span class="line">cat stackfile|grep -a CheckSum</span><br><span class="line"></span><br><span class="line">日志打印：</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-27</span> <span class="number">14</span>:<span class="number">32</span>:<span class="number">31.580</span> [I <span class="number">03103</span> chunkstore.go:<span class="number">183</span>] ChunkStore readBySeqno,extentid:jX00000081 ,startSeq:<span class="number">116</span>,endSeq:<span class="number">140</span>,err:CheckSum <span class="keyword">is</span> <span class="keyword">not</span> right</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-27</span> <span class="number">14</span>:<span class="number">32</span>:<span class="number">31.580</span> [I <span class="number">03103</span> chunkServerTcpImp.go:<span class="number">637</span>]  ReadFixData chunkid:<span class="number">0000000000186</span>a5800000081 ,Sn1:<span class="number">116</span>,Sn2:<span class="number">140</span>, strat:<span class="number">129</span>,end:<span class="number">257</span> ,err:%!S(<span class="built_in">string</span>=CheckSum <span class="keyword">is</span> <span class="keyword">not</span> right)</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-27</span> <span class="number">14</span>:<span class="number">32</span>:<span class="number">35.107</span> [E <span class="number">03103</span> extenttable.go:<span class="number">2245</span>] read data err CheckSum <span class="keyword">is</span> <span class="keyword">not</span> right</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-27</span> <span class="number">14</span>:<span class="number">32</span>:<span class="number">35.107</span> [I <span class="number">03103</span> extenttable.go:<span class="number">2157</span>] !!!!!!!!!!!!!!!!!! CheckSum <span class="keyword">is</span> <span class="keyword">not</span> right</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-27</span> <span class="number">14</span>:<span class="number">32</span>:<span class="number">35.107</span> [I <span class="number">03103</span> extenttable.go:<span class="number">1526</span>] readPageNV readByDataBlockHeadV error.extentID:j400000129,startSeq:<span class="number">96</span>,endSeq:<span class="number">130</span>,mbcidx:<span class="number">0</span>,error:CheckSum <span class="keyword">is</span> <span class="keyword">not</span> right</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-27</span> <span class="number">14</span>:<span class="number">32</span>:<span class="number">35.107</span> [I <span class="number">03103</span> chunkstore.go:<span class="number">183</span>] ChunkStore readBySeqno,extentid:j400000129 ,startSeq:<span class="number">96</span>,endSeq:<span class="number">130</span>,err:CheckSum <span class="keyword">is</span> <span class="keyword">not</span> right</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-27</span> <span class="number">14</span>:<span class="number">32</span>:<span class="number">35.107</span> [I <span class="number">03103</span> chunkServerTcpImp.go:<span class="number">637</span>]  ReadFixData chunkid:<span class="number">0000000000186</span>a3400000129 ,Sn1:<span class="number">96</span>,Sn2:<span class="number">130</span>, strat:<span class="number">129</span>,end:<span class="number">257</span> ,err:%!S(<span class="built_in">string</span>=CheckSum <span class="keyword">is</span> <span class="keyword">not</span> right)</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-27</span> <span class="number">14</span>:<span class="number">32</span>:<span class="number">35.611</span> [E <span class="number">03103</span> extenttable.go:<span class="number">2245</span>] read data err CheckSum <span class="keyword">is</span> <span class="keyword">not</span> right</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-27</span> <span class="number">14</span>:<span class="number">32</span>:<span class="number">35.611</span> [I <span class="number">03103</span> extenttable.go:<span class="number">2157</span>] !!!!!!!!!!!!!!!!!! CheckSum <span class="keyword">is</span> <span class="keyword">not</span> right</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-27</span> <span class="number">14</span>:<span class="number">32</span>:<span class="number">35.611</span> [I <span class="number">03103</span> extenttable.go:<span class="number">1526</span>] readPageNV readByDataBlockHeadV error.extentID:j_00000071,startSeq:<span class="number">228</span>,endSeq:<span class="number">297</span>,mbcidx:<span class="number">3</span>,error:CheckSum <span class="keyword">is</span> <span class="keyword">not</span> right</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-27</span> <span class="number">14</span>:<span class="number">32</span>:<span class="number">35.611</span> [I <span class="number">03103</span> chunkstore.go:<span class="number">183</span>] ChunkStore readBySeqno,extentid:j_00000071 ,startSeq:<span class="number">228</span>,endSeq:<span class="number">297</span>,err:CheckSum <span class="keyword">is</span> <span class="keyword">not</span> right</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-27</span> <span class="number">14</span>:<span class="number">32</span>:<span class="number">35.611</span> [I <span class="number">03103</span> chunkServerTcpImp.go:<span class="number">637</span>]  ReadFixData chunkid:<span class="number">0000000000186</span>a5f00000071 ,Sn1:<span class="number">228</span>,Sn2:<span class="number">297</span>, strat:<span class="number">903</span>,end:<span class="number">1023</span> ,err:%!S(<span class="built_in">string</span>=CheckSum <span class="keyword">is</span> <span class="keyword">not</span> right)</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-27</span> <span class="number">14</span>:<span class="number">32</span>:<span class="number">38.541</span> [E <span class="number">03103</span> extenttable.go:<span class="number">2245</span>] read data err CheckSum <span class="keyword">is</span> <span class="keyword">not</span> right</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-27</span> <span class="number">14</span>:<span class="number">32</span>:<span class="number">38.541</span> [I <span class="number">03103</span> extenttable.go:<span class="number">2157</span>] !!!!!!!!!!!!!!!!!! CheckSum <span class="keyword">is</span> <span class="keyword">not</span> right</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-27</span> <span class="number">14</span>:<span class="number">32</span>:<span class="number">38.541</span> [I <span class="number">03103</span> extenttable.go:<span class="number">1526</span>] readPageNV readByDataBlockHeadV error.extentID:j_00000071,startSeq:<span class="number">228</span>,endSeq:<span class="number">297</span>,mbcidx:<span class="number">3</span>,error:CheckSum <span class="keyword">is</span> <span class="keyword">not</span> right</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-27</span> <span class="number">14</span>:<span class="number">32</span>:<span class="number">38.541</span> [I <span class="number">03103</span> chunkstore.go:<span class="number">183</span>] ChunkStore readBySeqno,extentid:j_00000071 ,startSeq:<span class="number">228</span>,endSeq:<span class="number">297</span>,err:CheckSum <span class="keyword">is</span> <span class="keyword">not</span> right</span><br><span class="line"><span class="number">2019</span><span class="number">-12</span><span class="number">-27</span> <span class="number">14</span>:<span class="number">32</span>:<span class="number">38.541</span> [I <span class="number">03103</span> chunkServerTcpImp.go:<span class="number">637</span>]  ReadFixData chunkid:<span class="number">0000000000186</span>a5f00000071 ,Sn1:<span class="number">228</span>,Sn2:<span class="number">297</span>, strat:<span class="number">903</span>,end:<span class="number">1023</span> ,err:%!S(<span class="built_in">string</span>=CheckSum <span class="keyword">is</span> <span class="keyword">not</span> right)</span><br></pre></td></tr></table></figure>
+
+<h1 id="010-错误码"><a href="#010-错误码" class="headerlink" title="010-错误码"></a>010-错误码</h1><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">影响：gateway需要做好重试动作</span></span><br><span class="line"><span class="string">ErrExtentNotExist:</span>     <span class="number">101001</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrExtentExist:</span>        <span class="number">101002</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrExtentIDTooLong:</span>    <span class="number">101003</span><span class="string">,</span></span><br><span class="line"><span class="attr">ErrCloneExtentIDExist:</span> <span class="number">101004</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrExtentCloned:</span>       <span class="number">101005</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrBadExtentPos:</span>       <span class="number">101006</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrExtentTableFull:</span>    <span class="number">101007</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrExtentNodeIsNull:</span>   <span class="number">101008</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrBadOffset1:</span>         <span class="number">101009</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrBadOffset2:</span>         <span class="number">101010</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrBadOffset3:</span>         <span class="number">101011</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrBadBuf1:</span>            <span class="number">101012</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrBadTranseq:</span>         <span class="number">101013</span><span class="string">,</span></span><br><span class="line"><span class="string">//W/R</span></span><br><span class="line"><span class="string">ErrMbcIsNull:</span>           <span class="number">102014</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrMbcSonsIsNull:</span>       <span class="number">102015</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrChecksum:</span>            <span class="number">102016</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrRcacheIsNull:</span>        <span class="number">102017</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrDbhcacheIsNull:</span>      <span class="number">102018</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrSegmentSeqDisorder:</span>  <span class="number">102019</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrReadDataShort:</span>       <span class="number">102020</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrWriteDataShort:</span>      <span class="number">102021</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrReadSegmentShort:</span>    <span class="number">102022</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrNoSpaceLeft:</span>         <span class="number">102023</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrBadSegmentHead:</span>      <span class="number">102024</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrLegalSegmentID:</span>      <span class="number">102025</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrLegalSegmentOff:</span>     <span class="number">102026</span><span class="string">,</span></span><br><span class="line"><span class="attr">ErrSegmentRingAbNormal:</span> <span class="number">102027</span><span class="string">,</span></span><br><span class="line"><span class="string">//load</span></span><br><span class="line"><span class="string">ErrDevCapacity:</span>     <span class="number">103027</span><span class="string">,</span></span><br><span class="line"><span class="attr">ErrLoadRemovedDisk:</span> <span class="number">103028</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrSBCheckSum:</span>      <span class="number">103029</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrBadType:</span>         <span class="number">103030</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrNoLegalCP:</span>       <span class="number">103031</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrCpIsNotDirty:</span>    <span class="number">103032</span><span class="string">,</span></span><br><span class="line"><span class="string">ErrNoLegalCpExist:</span>  <span class="number">103033</span><span class="string">,</span></span><br><span class="line"><span class="string">//other</span></span><br><span class="line"><span class="attr">ErrBadRequest:</span> <span class="number">104000</span><span class="string">,</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="011-snbs设备死机"><a href="#011-snbs设备死机" class="headerlink" title="011-snbs设备死机"></a>011-snbs设备死机</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">当时的messge日志：</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-question/2008-01-04-BlockStorage-question%5C1585558932156.png" alt></p>
+<img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-question/1585558932156.png" class title="This is an example image">
+
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">定位人：朱晓伟、高红</span><br><span class="line">解决：（暂时判断是这个问题导致，不确定）</span><br><span class="line">关闭NetworkManager</span><br><span class="line">systemctl <span class="built_in">stop</span> NetworkManager</span><br></pre></td></tr></table></figure>
+
+<h1 id="012-abrt-hook-ccpp导致设备内存占用高"><a href="#012-abrt-hook-ccpp导致设备内存占用高" class="headerlink" title="012-abrt-hook-ccpp导致设备内存占用高"></a>012-abrt-hook-ccpp导致设备内存占用高</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>SIT-SNBS环境abrt-hook-ccpp导致设备内存占用高</span><br><span class="line">时间：<span class="number">12.14</span>日</span><br><span class="line">定位人：卢辉</span><br><span class="line">解决：关闭abrt-hook-ccpp</span><br><span class="line">解决方案未定</span><br></pre></td></tr></table></figure>
+
+<h1 id="013-rollback的问题"><a href="#013-rollback的问题" class="headerlink" title="013-rollback的问题"></a>013-rollback的问题</h1><figure class="highlight erlang-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">chunkserver日志：cat /mnt/snbslog/snbs/ChunkServer/chunkserver.INFO|grep <span class="string">"code bug"</span></span><br><span class="line"><span class="number">2020</span>-<span class="number">03</span>-<span class="number">31</span> <span class="number">15</span>:<span class="number">18</span>:<span class="number">19.184</span> [I <span class="number">03602</span> extenttable.go:<span class="number">1750</span>] <span class="number">000000000098968e00000352</span> <span class="number">6455</span> <span class="number">1</span> code bug!!!!!!!!!!!!!!!!!! <span class="number">0</span></span><br><span class="line"><span class="number">2020</span>-<span class="number">03</span>-<span class="number">31</span> <span class="number">15</span>:<span class="number">18</span>:<span class="number">19.184</span> [I <span class="number">03602</span> chunkstore.go:<span class="number">84</span>] extentstore Write ChunkId:<span class="number">000000000098968e00000352</span>  error:code bug!!!!!!!!!!!!!!!!!! </span><br><span class="line"><span class="number">2020</span>-<span class="number">03</span>-<span class="number">31</span> <span class="number">15</span>:<span class="number">18</span>:<span class="number">19.184</span> [I <span class="number">03602</span> rebuild.go:<span class="number">187</span>]  repair Extent: <span class="number">000000000098968e00000352</span>    write err:  <span class="number">000000000098968e00000352</span> code bug!!!!!!!!!!!!!!!!!!</span><br></pre></td></tr></table></figure>
+
+<h1 id="014-extent修复序列号"><a href="#014-extent修复序列号" class="headerlink" title="014-extent修复序列号"></a>014-extent修复序列号</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">chunkserver日志打印：</span><br><span class="line">cd /mnt/snbslog/snbs/ChunkServer/;cat stackfile*|grep <span class="string">"rebuild.go:55"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">2020</span><span class="number">-03</span><span class="number">-31</span> <span class="number">15</span>:<span class="number">15</span>:<span class="number">26.573</span> [I <span class="number">03430</span> rebuild.go:<span class="number">55</span>] repairExtent: start  <span class="number">000000000098968</span>b00000539  res: <span class="number">1</span>  nowseq: <span class="number">0</span> spend: map[checkLoc:<span class="number">338.236</span>µs GetFixNode:<span class="number">84</span>ns]</span><br><span class="line"></span><br><span class="line">res <span class="number">0</span> 代表修复 成功。<span class="number">1</span> 代表修复失败。</span><br></pre></td></tr></table></figure>
+
+<h1 id="015-写入写缓存成功，写入机械盘失败"><a href="#015-写入写缓存成功，写入机械盘失败" class="headerlink" title="015-写入写缓存成功，写入机械盘失败"></a>015-写入写缓存成功，写入机械盘失败</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">反正不影响读写，而且也给何大佬报备过了。出现一个写请求写入写缓存成功。但写入机械盘失败。失败原因是seq不对，但插入前已经比对过seq了，不应该在写机械盘的时候出现这个错误。同时，写缓存的重试机制没有生效。日志关键字“doDirtyBlockReq ErrBadTranseq</span><br><span class="line"></span><br><span class="line"><span class="number">2020</span><span class="number">-03</span><span class="number">-30</span> <span class="number">21</span>:<span class="number">55</span>:<span class="number">32.312</span> [I <span class="number">06774</span> extent.go:<span class="number">206</span>] <span class="number">00000000008</span>add1400000215 doDirtyBlockReq ErrBadTranseq <span class="number">122752</span> <span class="number">5471</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>平时带着搜下err /Err 就好</p>
+
+    </div>
+
+    
+    
+    
+      
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-question/" title="BlockStorage-question">https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-question/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/BlockStorage-question/" rel="tag"># BlockStorage-question</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-summary/" rel="prev" title="BlockStorage-summary">
+      <i class="fa fa-chevron-left"></i> BlockStorage-summary
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-openstack/" rel="next" title="BlockStorage-openstack">
+      BlockStorage-openstack <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#002-issci延时放大"><span class="nav-text">002-issci延时放大</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#003-集群没空间了"><span class="nav-text">003-集群没空间了</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#004-checksum错误"><span class="nav-text">004-checksum错误</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#005-seq不对"><span class="nav-text">005-seq不对</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#006-超时"><span class="nav-text">006-超时</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#007-extent不存在"><span class="nav-text">007-extent不存在</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#008-Gateway乱码："><span class="nav-text">008-Gateway乱码：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#009-checksum"><span class="nav-text">009-checksum</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#010-错误码"><span class="nav-text">010-错误码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#011-snbs设备死机"><span class="nav-text">011-snbs设备死机</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#012-abrt-hook-ccpp导致设备内存占用高"><span class="nav-text">012-abrt-hook-ccpp导致设备内存占用高</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#013-rollback的问题"><span class="nav-text">013-rollback的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#014-extent修复序列号"><span class="nav-text">014-extent修复序列号</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#015-写入写缓存成功，写入机械盘失败"><span class="nav-text">015-写入写缓存成功，写入机械盘失败</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">What hurts more, the pain of hard work or the pain of regret?</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">34:51</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

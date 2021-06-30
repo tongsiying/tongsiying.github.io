@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="dd">
+<meta property="og:url" content="https://tongsiying.github.io/2007/01/14/linux/2007-01-14-linux-dd/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/14/linux/2007-01-14-linux-dd/SouthEast">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/14/linux/2007-01-14-linux-dd/SouthEast">
+<meta property="article:published_time" content="2007-01-14T10:37:19.000Z">
+<meta property="article:modified_time" content="2020-05-20T13:43:56.294Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="linux-文件管理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tongsiying.github.io/2007/01/14/linux/2007-01-14-linux-dd/SouthEast">
+
+<link rel="canonical" href="https://tongsiying.github.io/2007/01/14/linux/2007-01-14-linux-dd/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>dd | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">嘻嘻嘻嘻嘻嘻</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2007/01/14/linux/2007-01-14-linux-dd/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="What hurts more, the pain of hard work or the pain of regret?">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          dd
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2007-01-14 18:37:19" itemprop="dateCreated datePublished" datetime="2007-01-14T18:37:19+08:00">2007-01-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-20 21:43:56" itemprop="dateModified" datetime="2020-05-20T21:43:56+08:00">2020-05-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>20k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>19 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>dd 是用指定大小的块拷贝一个文件，并在拷贝的同时进行指定的转换。<br>注意：指定数字的地方若以下列字符结尾，则乘以相应的数字： 注意：指定数字的地方若以下列字符结尾乘以相应的数字：b=512, c=1, k=1024, w=2, xm=number m，kB=1000，K=1024，MB=1000<em>1000，M=1024</em>1024，GB=1000<em>1000</em>1000，G=1024<em>1024</em>1024 </p>
+<h1 id="1-dd-语法格式"><a href="#1-dd-语法格式" class="headerlink" title="1.dd 语法格式"></a>1.dd 语法格式</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=path/to/input_file of=/path/to/output_file bs=block_size count=number_of_blocks</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="2-使用方法"><a href="#2-使用方法" class="headerlink" title="2.使用方法"></a>2.使用方法</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">主要选项（指定数字的地方若以下列字符结尾乘以相应的数字: b=512, c=1, k=1024, w=2, xm=number m）： </span><br><span class="line">if=file：输入文件名，缺省为标准输入</span><br><span class="line">of=file：输出文件名，缺省为标准输出</span><br><span class="line">ibs=bytes：一次读入 bytes 个字节（即一个块大小为 bytes 个字节）</span><br><span class="line">obs=bytes：一次写 bytes 个字节（即一个块大小为 bytes 个字节）</span><br><span class="line">bs=bytes：同时设置读写块的大小为 bytes ，可代替 ibs 和 obs</span><br><span class="line">cbs=bytes：一次转换 bytes 个字节，即转换缓冲区大小</span><br><span class="line">skip=blocks：从输入文件开头跳过 blocks 个块后再开始复制</span><br><span class="line">seek=blocks：从输出文件开头跳过 blocks 个块后再开始复制。（通常只有当输出文件是磁盘或磁带时才有效）</span><br><span class="line">count=blocks：仅拷贝 blocks 个块，块大小等于 ibs 指定的字节数</span><br><span class="line">conv=ASCII：把EBCDIC码转换为ASCIl码。 </span><br><span class="line">conv=ebcdic：把ASCIl码转换为EBCDIC码。 </span><br><span class="line">conv=ibm：把ASCIl码转换为alternate EBCDIC码。 </span><br><span class="line">conv=block：把变动位转换成固定字符。 </span><br><span class="line">conv=ublock：把固定位转换成变动位。 </span><br><span class="line">conv=ucase：把字母由小写转换为大写。 </span><br><span class="line">conv=lcase：把字母由大写转换为小写。 </span><br><span class="line">conv=notrunc：不截短输出文件。 </span><br><span class="line">conv=swab：交换每一对输入字节。 </span><br><span class="line">conv=noerror：出错时不停止处理。 </span><br><span class="line">conv=sync：把每个输入记录的大小都调到ibs的大小（用NUL填充）。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">conv 转换参数：</span><br><span class="line">ascii 　　　　　　　　　　　　　　　　　转换 EBCDIC 为 ASCII。 </span><br><span class="line">ebcdic 　　　　　　　　　　　　     　 转换 ASCII 为 EBCDIC。 </span><br><span class="line">ibm 　　　　　　　　　　　　　　　　　　转换 ASCII 为 alternate EBCDIC. </span><br><span class="line">block 　　　　　　　　　　　　　　　　 把每一行转换为长度为 cbs 的记录，不足部分用空格填充。 </span><br><span class="line">unblock 　　　　　　　　　　　　　　　 使每一行的长度都为 cbs ，不足部分用空格填充。 </span><br><span class="line">lcase 　　　　　　　　　　　　　　　　 把大写字符转换为小写字符。 </span><br><span class="line">ucase 　　　　　　　　　　　　　　　　 把小写字符转换为大写字符。 </span><br><span class="line">swab 　　　　　　　　　　　　　　　　  交换输入的每对字节。 </span><br><span class="line">noerror 　　　　　　　　　　　　　　　 出错时不停止。 </span><br><span class="line">notrunc 　　　　　　　　　　　　　　　 不截短输出文件。sync 　　　　　　　　　　　　　　　　　 把每个输入块填充到ibs个字节，不足部分用空(NUL)字符补齐。 </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">iflag=FLAGS：指定读的方式FLAGS，参见“FLAGS参数说明”</span><br><span class="line">oflag=FLAGS：指定写的方式FLAGS，参见“FLAGS参数说明”</span><br><span class="line">FLAGS参数说明：</span><br><span class="line">append -append  mode  (makes  sense  only  for output; conv=notrunc sug-gested)</span><br><span class="line">direct：读写数据采用直接IO方式；</span><br><span class="line">directory：读写失败除非是directory；</span><br><span class="line">dsync：读写数据采用同步IO；</span><br><span class="line">sync：同上，但是针对是元数据</span><br><span class="line">fullblock：堆积满block（accumulate full blocks of input ）(iflag only)；</span><br><span class="line">nonblock：读写数据采用非阻塞IO方式</span><br><span class="line">noatime：读写数据不更新访问时间</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="3-time-dd-测磁盘读写速度"><a href="#3-time-dd-测磁盘读写速度" class="headerlink" title="3.time+dd 测磁盘读写速度"></a>3.time+dd 测磁盘读写速度</h1><p><strong>①先熟悉两个特殊的设备及一些相关参数：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1) time有计时作用，dd用于复制，从if读出，写到of；</span><br><span class="line">2) if=/dev/zero（产生字符）不产生IO，因此可以用来测试纯写速度；</span><br><span class="line">3) 同理of=/dev/null（回收站、无底洞）不产生IO，可以用来测试纯读速度；</span><br><span class="line">4) 将/tmp/test拷贝到/var则同时测试了读写速度；</span><br><span class="line">5) bs是每次读或写的大小，即一个块的大小，count是读写块的数量。</span><br><span class="line">当写入到驱动盘的时候，我们简单的从无穷无用字节的源 /dev/zero 读取，当从驱动盘读取的时候，我们读取的是刚才的文件，并把输出结果发送到无用的 /dev/null。在整个操作过程中， DD 命令会跟踪数据传输的速度并且报告出结果。</span><br></pre></td></tr></table></figure>
+
+<p><strong>②测试磁盘写能力</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">time dd if=/dev/zero of=/testw.dbf bs=4k count=100000</span><br></pre></td></tr></table></figure>
+
+<p>因为/dev//zero是一个伪设备，它只产生空字符流，对它不会产生IO，所以，IO都会集中在of文件中，of文件只用于写，所以这个命令相当于测试磁盘的写能力。命令结尾添加oflag=direct将跳过内存缓存，添加oflag=sync将跳过hdd缓存。</p>
+<p><strong>③测试磁盘读能力</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">time dd if=/dev/sdb of=/dev/null bs=4k</span><br></pre></td></tr></table></figure>
+
+<p>因为/dev/sdb是一个物理分区，对它的读取会产生IO，/dev/null是伪设备，相当于黑洞，of到该设备不会产生IO，所以，这个命令的IO只发生在/dev/sdb上，也相当于测试磁盘的读能力。（Ctrl+c终止测试）</p>
+<p><strong>④测试同时读写能力</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">time dd if=/dev/sdb of=/testrw.dbf bs=4k</span><br></pre></td></tr></table></figure>
+
+<p>在这个命令下，一个是物理分区，一个是实际的文件，对它们的读写都会产生IO（对/dev/sdb是读，对/testrw.dbf是写），假设它们都在一个磁盘中，这个命令就相当于测试磁盘的同时读写能力。</p>
+<p><strong>⑤测试纯写入性能</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=/dev/zero of=test bs=8k count=10000 oflag=direct</span><br></pre></td></tr></table></figure>
+
+<p><strong>⑥测试纯读取性能</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=test of=/dev/null bs=8k count=10000 iflag=direct</span><br></pre></td></tr></table></figure>
+
+<p> 注意：dd 只能提供一个大概的测试结果，而且是连续 I/O 而不是随机 I/O，理论上文件规模越大，测试结果越准确。 同时，iflag/oflag 提供 direct 模式，direct 模式是把写入请求直接封装成 I/O 指令发到磁盘，非 direct 模式只是把数据写入到系统缓存就认为 I/O 成功，并由操作系统决定缓存中的数据什么时候被写入磁盘。（参考链接：  <a href="http://www.360doc.com/content/15/0906/17/8737500_497292503.shtml）" target="_blank" rel="noopener external nofollow noreferrer">http://www.360doc.com/content/15/0906/17/8737500_497292503.shtml）</a> </p>
+<h1 id="4-备份的数据文件"><a href="#4-备份的数据文件" class="headerlink" title="4.备份的数据文件"></a>4.备份的数据文件</h1><p>要备份的数据文件：30720KB<br>block 0 =8 KB.<br>raw offset 64 KB.<br>设定 bs=8k</p>
+<p><strong>①从raw设备备份到raw设备</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=/dev/rsd1b of=/dev/rsd2b bs=8k skip=8 seek=8 count=3841</span><br></pre></td></tr></table></figure>
+
+<p><strong>②裸设备到文件系统</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=/dev/rsd1b of=/backup/df1.dbf bs=8k skip=8 count=3841</span><br></pre></td></tr></table></figure>
+
+<p><strong>③文件系统到裸设备</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=/backup/df1.dbf of=/dev/rsd2b bs=8k seek=8</span><br></pre></td></tr></table></figure>
+
+<p><strong>④文件系统到文件系统，你可以为了提升I/O把bs设为较高的数值</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=/oracle/dbs/df1.dbf of=/backup/df1.dbf bs=1024k</span><br></pre></td></tr></table></figure>
+
+<p><strong>⑤备份/dev/hdx全盘数据，并利用gzip工具进行压缩，保存到指定路径（bzip2工具也一样可使用）</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd  if=/dev/hdx  |  gzip &gt; /path/to/image.gz</span><br></pre></td></tr></table></figure>
+
+<p><strong>⑥生成1G的虚拟块设备Sparse File(稀疏文件)</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dd if=/dev/zero of=1G.img bs=1M seek=1000 count=0 </span><br><span class="line">Sparse File是什么，稀疏文件，也就是说，是一个拥有空的空间的文件，磁盘块将并没分配给这些文件。如果这些空的空间填满ASCII的NULL字符，那么文件才会是实际的大小。</span><br></pre></td></tr></table></figure>
+
+<p><strong>⑦拷贝光盘数据到backup文件夹下，并保存为cd.iso文件，再进行刻录</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dd  if=/dev/cdrom  of=/backup/cd.iso</span><br><span class="line">cdrecord -v cd.iso</span><br></pre></td></tr></table></figure>
+
+<p><strong>⑧将内存里的数据拷贝到backup目录下的mem.bin文件</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=/dev/mem of=/backup/mem.bin bs=1024</span><br></pre></td></tr></table></figure>
+
+<p><strong>⑨将软驱数据备份到当前目录的disk.img文件</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=/dev/fd0 of=disk.img count=1 bs=1440k</span><br></pre></td></tr></table></figure>
+
+<p><strong>⑩将备份文件恢复到指定盘</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=/backup/df1.dbf of=/dev/rsd1b</span><br></pre></td></tr></table></figure>
+
+<p> <strong>⑪ 将压缩的备份文件恢复到指定盘</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gzip -dc /path/to/image.gz | dd of=/dev/hdx</span><br></pre></td></tr></table></figure>
+
+<p> <strong>⑫测试磁盘写能力</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">time dd if=/dev/zero of=/test.dbf bs=8k count=300000 </span><br><span class="line">因为/dev/zero是一个伪设备，它只产生空字符流，对它不会产生IO，所以，IO都会集中在of文件中，of文件只用于写，所以这个命令相当于测试磁盘的写能力。</span><br></pre></td></tr></table></figure>
+
+<p><strong>⑬测试磁盘读能力</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">time dd if=/dev/sdb1 of=/dev/null bs=8k </span><br><span class="line">因为/dev/sdb1是一个物理分区，对它的读取会产生IO，/dev/null是伪设备，相当于黑洞，of到该设备不会产生IO，所以，这个命令的IO只发生在/dev/sdb1上，也相当于测试磁盘的读能力。</span><br></pre></td></tr></table></figure>
+
+<p><strong>⑭测试同时读写能力</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">time dd if=/dev/sdb1 of=/test1.dbf bs=8k </span><br><span class="line">这个命令下，一个是物理分区，一个是实际的文件，对它们的读写都会产生IO（对/dev/sdb1是读，对/test1.dbf是写），假设他们都在一个磁盘中，这个命令就相当于测试磁盘的同时读写能力</span><br></pre></td></tr></table></figure>
+
+<p><strong>⑮备份磁盘开始的512Byte大小的MBR信息到指定文件</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dd  if=/dev/hdx  of=/path/to/image  count=1  bs=512 </span><br><span class="line">16、恢复MBR</span><br><span class="line">dd if=/mnt/windows/linux.lnx of=/dev/hda bs=512 count=1</span><br></pre></td></tr></table></figure>
+
+<p><strong>⑯得到最恰当的block size。 通过比较dd指令输出中所显示的命令执行时间（选时间最少的那个），即可确定系统最佳的block size大小</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dd if=/dev/zero bs=1024 count=1000000 of=/root/1Gb.file</span><br><span class="line">dd if=/dev/zero bs=2048 count=500000 of=/root/1Gb.file</span><br><span class="line">dd if=/dev/zero bs=4096 count=250000 of=/root/1Gb.file</span><br><span class="line">dd if=/dev/zero bs=8192 count=125000 of=/root/1Gb.file</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="5-Oracle数据库的dd备份"><a href="#5-Oracle数据库的dd备份" class="headerlink" title="5.Oracle数据库的dd备份"></a>5.Oracle数据库的dd备份</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br></pre></td><td class="code"><pre><span class="line">说明，以下实验操作系统版本为RHEL 5.4没有offset </span><br><span class="line">Raw offset </span><br><span class="line">在一些os上，在裸设备上的文件的开头是被os使用的。这些存储空间被叫做raw offset，Oracle不会备份和恢复这些内容(字节)。因此，备份的时候要跳过含有offset的字节。 目前只有AIX和Tru64系统的裸设备存在offset，详细信息如下</span><br><span class="line">UNIX　　　　　OS Reserved Size</span><br><span class="line">------------　----------------</span><br><span class="line">SUN Solaris　　　　　　   　0</span><br><span class="line">HP-UX　　　　　　　　　      0</span><br><span class="line">IBM AIX　　　　　　　　     4k    </span><br><span class="line">Tru64 UNIX　　　　　　　   64k</span><br><span class="line">Linux　　　　　　　　　　    0</span><br><span class="line"></span><br><span class="line">在 Aix环境中，如果是使用了原始VG，或者是Big VG，但是创建LV的时候没有指定-T O标签，创建出来的LV都带有4K保留空间，如果把这些LV作为裸设备使用，则需要注意这个4K的问题。如果是使用了Scalable-type VG，或者是使用Big VG，而且在创建VG的时候使用了-T O标签，则创建的LV没有4K保留空间，称为DS_LVZ类型的LV。</span><br><span class="line"></span><br><span class="line">在AIX平台下，我们可以使用$ORACLE_HOME/bin路径下的dbfsize命令确认裸设备是否包含offset</span><br><span class="line">下面是包含offset的裸设备</span><br><span class="line"><span class="meta">#</span><span class="bash">dbfsize /dev/rlv_data01_10g</span></span><br><span class="line">Database file: /dev/rlv_data01_10g</span><br><span class="line">Database file type:raw device </span><br><span class="line">Database file size: 1048448 8192 byte blocks </span><br><span class="line">下面是不包含offset的裸设备</span><br><span class="line"><span class="meta">#</span><span class="bash">dbfsize /dev/rlv_data01_10g</span></span><br><span class="line">Database file: /dev/rlv_data01_10g</span><br><span class="line">Database file type:raw device without 4K starting offset </span><br><span class="line">Database file size: 1048448 8192 byte blocks </span><br><span class="line">block 0 </span><br><span class="line">在 每个oracle文件的开头，os系统放置了一个块叫做block 0。 这个块的大小和其所在数据文件的oracle块大小相同。 一般的oracle 代码不能识别这个块，但是这个块是包含在os上的文件大小里面的。就是说oracle认为datafile1大小为100块，但是os看来，datafile1大小为101块(100+block 0). 注意，利用dd备份时，需要包含block 0。因为block 0位于offset之后，而block 0是所有数据文件都需要的，无论它是基于裸备还是文件系统，且block 0的大小只与oracle的block size有关，所以，把block 0也dd出来是必要的，不需要skip数据文件的block 0。</span><br><span class="line"></span><br><span class="line">计算数据文件的占用的实际空间大小 </span><br><span class="line">实际的数据文件大小是在dba_data_files中的bytes + 1* blocksize</span><br><span class="line"><span class="meta">SQL&gt;</span><span class="bash"> select file_name,bytes from dba_data_files;</span></span><br><span class="line">FILE_NAME BYTES BLOCKSIZE</span><br><span class="line">---------------------------------------- ---------- ----------</span><br><span class="line">/opt/oracle/oradata/test1/system01.dbf 360710144 8192 </span><br><span class="line">在操作系统查看文件大小：</span><br><span class="line"><span class="meta">#</span><span class="bash"> ls -l system01.dbf</span></span><br><span class="line">-rw-r--r-- 1 oracle oinstall 360718336 Nov 15 11:53 system01.dbf </span><br><span class="line">360718336 = 360710144 + 8192 (8192是数据文件所在表空间的blocksize)</span><br><span class="line">那么一个裸设备的数据文件最多可以是多大？</span><br><span class="line">这个和具体的操作系统和数据文件所在表空间的blocksize有关。</span><br><span class="line">假设裸设备的大小是r，操作系统裸设备的offset为f，数据文件所在表空间的blocksize是b，则数据文件的最大大小为：</span><br><span class="line">d=r – f – b*1 (1为block 0)</span><br><span class="line">如裸设备大小为1008k，offset为0，表空间的blocksize为4k，则在此裸设备的数据文件的最大大小为：</span><br><span class="line">d=1008-0-1*4=1004(k)</span><br><span class="line"></span><br><span class="line">实例测试</span><br><span class="line">从裸设备到裸设备拷贝ORACLE数据文件</span><br><span class="line">1、创建裸设备</span><br><span class="line"><span class="meta">#</span><span class="bash"> fdisk /dev/sdd</span></span><br><span class="line">The number of cylinders for this disk is set to 25856.</span><br><span class="line">There is nothing wrong with that, but this is larger than 1024,</span><br><span class="line">and could in certain setups cause problems with:</span><br><span class="line">1) software that runs at boot time (e.g., old versions of LILO)</span><br><span class="line">2) booting and partitioning software from other OSs</span><br><span class="line">   (e.g., DOS FDISK, OS/2 FDISK)</span><br><span class="line"></span><br><span class="line">Command (m for help): n</span><br><span class="line">Command action</span><br><span class="line">   l   logical (5 or over)</span><br><span class="line">   p   primary partition (1-4)</span><br><span class="line">l</span><br><span class="line">First cylinder (4201-4485, default 4201): </span><br><span class="line">Using default value 4201</span><br><span class="line">Last cylinder or +size or +sizeM or +sizeK (4201-4485, default 4485): +10M</span><br><span class="line"></span><br><span class="line">Command (m for help): n</span><br><span class="line">Command action</span><br><span class="line">   l   logical (5 or over)</span><br><span class="line">   p   primary partition (1-4)</span><br><span class="line">l</span><br><span class="line">First cylinder (4212-4485, default 4212):  </span><br><span class="line">Using default value 4212</span><br><span class="line">Last cylinder or +size or +sizeM or +sizeK (4212-4485, default 4485): +20M</span><br><span class="line"></span><br><span class="line">Command (m for help): n</span><br><span class="line">Command action</span><br><span class="line">   l   logical (5 or over)</span><br><span class="line">   p   primary partition (1-4)</span><br><span class="line">l</span><br><span class="line">First cylinder (4232-4485, default 4232): </span><br><span class="line">Using default value 4232</span><br><span class="line">Last cylinder or +size or +sizeM or +sizeK (4232-4485, default 4485): +30M</span><br><span class="line"></span><br><span class="line">Command (m for help): n</span><br><span class="line">Command action</span><br><span class="line">   l   logical (5 or over)</span><br><span class="line">   p   primary partition (1-4)</span><br><span class="line">l</span><br><span class="line">First cylinder (4262-4485, default 4262): </span><br><span class="line">Using default value 4262</span><br><span class="line">Last cylinder or +size or +sizeM or +sizeK (4262-4485, default 4485): +40M</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Command (m for help): p</span><br><span class="line"></span><br><span class="line">Disk /dev/sdd: 27.1 GB, 27111981056 bytes</span><br><span class="line">64 heads, 32 sectors/track, 25856 cylinders</span><br><span class="line">Units = cylinders of 2048 * 512 = 1048576 bytes</span><br><span class="line"></span><br><span class="line">   Device Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/sdd1               1        3816     3907568   83  Linux</span><br><span class="line">/dev/sdd4            3817        4485      685056    5  Extended</span><br><span class="line">/dev/sdd5            3817        3912       98288   83  Linux</span><br><span class="line">/dev/sdd6            3913        4008       98288   83  Linux</span><br><span class="line">/dev/sdd7            4009        4104       98288   83  Linux</span><br><span class="line">/dev/sdd8            4105        4200       98288   83  Linux</span><br><span class="line">/dev/sdd9            4201        4211       11248   83  Linux</span><br><span class="line">/dev/sdd10           4212        4231       20464   83  Linux</span><br><span class="line">/dev/sdd11           4232        4261       30704   83  Linux</span><br><span class="line">/dev/sdd12           4262        4300       39920   83  Linux</span><br><span class="line"></span><br><span class="line">Command (m for help): w</span><br><span class="line">The partition table has been altered!</span><br><span class="line"></span><br><span class="line">Calling ioctl() to re-read partition table.</span><br><span class="line">The new table will be used at the next reboot.</span><br><span class="line">Syncing disks.</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> partprobe</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> raw /dev/raw/raw3 /dev/sdd9</span></span><br><span class="line">/dev/raw/raw3:  bound to major 8, minor 57</span><br><span class="line"><span class="meta">#</span><span class="bash"> raw /dev/raw/raw4 /dev/sdd10</span></span><br><span class="line">/dev/raw/raw4:  bound to major 8, minor 58</span><br><span class="line"><span class="meta">#</span><span class="bash"> raw /dev/raw/raw5 /dev/sdd11</span></span><br><span class="line">/dev/raw/raw5:  bound to major 8, minor 59</span><br><span class="line"><span class="meta">#</span><span class="bash"> raw /dev/raw/raw6 /dev/sdd12</span></span><br><span class="line">/dev/raw/raw6:  bound to major 8, minor 60 </span><br><span class="line"></span><br><span class="line">2、基于裸设备创建表空间</span><br><span class="line"><span class="meta">SQL&gt;</span><span class="bash">create tablespace mytest datafile <span class="string">'/dev/raw/raw3'</span> size 5m,<span class="string">'/dev/raw/raw6'</span> size 10m;</span></span><br><span class="line">Tablespace created. </span><br><span class="line"></span><br><span class="line">3、从小裸设备到大裸设备</span><br><span class="line"><span class="meta">#</span><span class="bash"> dd <span class="keyword">if</span>=<span class="string">'/dev/raw/raw3'</span> of=<span class="string">'/dev/raw/raw4'</span></span></span><br><span class="line">22496+0 records in</span><br><span class="line">22496+0 records out</span><br><span class="line">11517952 bytes (12 MB) copied, 104.599 seconds, 110 kB/s </span><br><span class="line"></span><br><span class="line">4、从大裸设备到小裸设备，但数据文件比小裸设备小</span><br><span class="line"><span class="meta">#</span><span class="bash"> dd <span class="keyword">if</span>=<span class="string">'/dev/raw/raw6'</span> of=<span class="string">'/dev/raw/raw5'</span> bs=1024k count=12</span></span><br><span class="line">12+0 records in</span><br><span class="line">12+0 records out</span><br><span class="line">12582912 bytes (13 MB) copied, 3.34273 seconds, 3.8 MB/s </span><br><span class="line">注意：这里bs*count要大于原裸设备上的数据文件尺寸 </span><br><span class="line"></span><br><span class="line">5、重启数据库至mount状态</span><br><span class="line"><span class="meta">SQL&gt;</span><span class="bash"> shutdown immediate;</span></span><br><span class="line">Database closed.</span><br><span class="line">Database dismounted.</span><br><span class="line">ORACLE instance shut down.</span><br><span class="line"><span class="meta">SQL&gt;</span><span class="bash"> startup mount;</span></span><br><span class="line">ORACLE instance started.</span><br><span class="line">Total System Global Area  369098752 bytes</span><br><span class="line">Fixed Size                  1219472 bytes</span><br><span class="line">Variable Size             125830256 bytes</span><br><span class="line">Database Buffers          239075328 bytes</span><br><span class="line">Redo Buffers                2973696 bytes</span><br><span class="line">Database mounted. </span><br><span class="line"></span><br><span class="line">6、重命名数据文件，并打开数据库</span><br><span class="line"><span class="meta">SQL&gt;</span><span class="bash"> alter database rename file <span class="string">'/dev/raw/raw3'</span> to <span class="string">'/dev/raw/raw4'</span>;</span></span><br><span class="line">Database altered. </span><br><span class="line"><span class="meta">SQL&gt;</span><span class="bash"> alter database rename file <span class="string">'/dev/raw/raw6'</span> to <span class="string">'/dev/raw/raw5'</span>;</span></span><br><span class="line">Database altered.</span><br><span class="line"><span class="meta">SQL&gt;</span><span class="bash"> alter database open;</span></span><br><span class="line">Database altered. </span><br><span class="line"></span><br><span class="line">从这个测试可以看出：</span><br><span class="line">1、从小裸设备到大裸设备，只需把小裸设备的所有数据块dd到大裸设备即可</span><br><span class="line">2、 是否可以把大裸设备上的数据文件dd到小裸设备，取决于位于大裸设备上的数据文件尺寸(+block 0)是否比小裸设备小。如果数据文件小于小裸设备，则可以把数据文件从大裸设备dd到小裸设备上，在dd过程中不需要太准确计算原来数据文件的大小，只要 保证dd的总量大于数据文件并小于小裸设备的尺寸即可。</span><br><span class="line">3、如果数据文件大于小裸设备的尺寸，则肯定不能把它从大裸设备拷贝到小裸设备上</span><br><span class="line">4、 裸设备之间拷贝数据文件比裸设备到文件系统之间拷贝的优点在于：不需要精确计算要拷贝多少数据，只需要保证覆盖了数据文件+block 0即可；而从裸设备到文件系统拷贝数据文件时，必须准确计算出要拷贝的数据量（数据文件+block 0），dd多一点或者少一点都会报错。</span><br><span class="line">5、 如果有offset的话，在裸设备之间拷贝数据文件的时候都要考虑（skip、seek）</span><br><span class="line"></span><br><span class="line">从文件系统到裸设备拷贝ORACLE数据文件 </span><br><span class="line">继续上面的实验，首先要保证裸设备的大小要大于等于oracle数据文件大小+ block 0，如果裸设备需要offset的话，则要保证更大，然后直接用dd就可以。</span><br><span class="line">1、创建表空间，数据文件大小为5m</span><br><span class="line"></span><br><span class="line"><span class="meta">SQL&gt;</span><span class="bash"> create tablespace  mytest1 datafile <span class="string">'/home/oracle/mytest1.dbf'</span> size 5m;</span></span><br><span class="line">Tablespace created.</span><br><span class="line"><span class="meta">#</span><span class="bash"> ls -l /home/oracle/mytest1.dbf </span></span><br><span class="line">-rw-r----- 1 oracle oinstall 5251072 Dec 16 21:37 /home/oracle/mytest1.dbf</span><br><span class="line"></span><br><span class="line">2、dd文件到裸设备上</span><br><span class="line"><span class="meta">#</span><span class="bash"> dd <span class="keyword">if</span>=<span class="string">'/dev/zero'</span> of=<span class="string">'/dev/raw/raw3'</span> bs=1024k</span></span><br><span class="line">dd: writing `/dev/raw/raw3': No space left on device</span><br><span class="line">11+0 records in</span><br><span class="line">10+0 records out</span><br><span class="line">11517952 bytes (12 MB) copied, 7.63555 seconds, 1.5 MB/s</span><br><span class="line"><span class="meta">#</span><span class="bash"> dd <span class="keyword">if</span>=/home/oracle/mytest1.dbf of=/dev/raw/raw3</span></span><br><span class="line">10256+0 records in</span><br><span class="line">10256+0 records out</span><br><span class="line">5251072 bytes (5.3 MB) copied, 35.9816 seconds, 146 kB/s </span><br><span class="line">注意：从文件系统到裸设备不用设置count </span><br><span class="line"></span><br><span class="line">3、重命名数据文件，打开数据库</span><br><span class="line"><span class="meta">SQL&gt;</span><span class="bash"> alter database rename file <span class="string">'/home/oracle/mytest1.dbf'</span> to <span class="string">'/dev/raw/raw3'</span>;</span></span><br><span class="line">Database altered.</span><br><span class="line"><span class="meta">SQL&gt;</span><span class="bash"> alter database open;</span></span><br><span class="line">Database altered </span><br><span class="line">从裸设备到文件系统拷贝ORACLE数据文件</span><br><span class="line"></span><br><span class="line">这里不并不是所有情况都能把整个裸设备拷贝到文件中，要看裸设备是否有offset，如果有offset，则肯定不能全拷贝出来，需要使用skip参数跳过offset，以下演示没有offset的情况</span><br><span class="line"></span><br><span class="line">1、在mytest1表空间上创建表，并填充数据，然后将整个裸设备备份到文件系统</span><br><span class="line"><span class="meta">SQL&gt;</span><span class="bash"> create table <span class="built_in">test</span> tablespace mytest1</span></span><br><span class="line">  2  as</span><br><span class="line">  3  select * from dba_users;</span><br><span class="line">Table created. </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">dd <span class="keyword">if</span>=<span class="string">'/dev/raw/raw3'</span> of=<span class="string">'/home/oracle/mytest2.dbf'</span> bs=512k</span></span><br><span class="line">21+1 records in</span><br><span class="line">21+1 records out</span><br><span class="line">11517952 bytes (12 MB) copied, 0.804403 seconds, 14.3 MB/s </span><br><span class="line"></span><br><span class="line">2、重启数据库，并充命名数据文件</span><br><span class="line"><span class="meta">SQL&gt;</span><span class="bash"> shutdown immediate;</span></span><br><span class="line">Database closed.</span><br><span class="line">Database dismounted.</span><br><span class="line">ORACLE instance shut down.</span><br><span class="line"><span class="meta">SQL&gt;</span><span class="bash"> startup mount;</span></span><br><span class="line">ORACLE instance started.</span><br><span class="line">Total System Global Area  369098752 bytes</span><br><span class="line">Fixed Size                  1219472 bytes</span><br><span class="line">Variable Size             134218864 bytes</span><br><span class="line">Database Buffers          230686720 bytes</span><br><span class="line">Redo Buffers                2973696 bytes</span><br><span class="line">Database mounted.</span><br><span class="line"><span class="meta">SQL&gt;</span><span class="bash"> alter database rename file <span class="string">'/dev/raw/raw3'</span> to <span class="string">'/home/oracle/mytest2.dbf'</span>;</span></span><br><span class="line">Database altered.</span><br><span class="line"><span class="meta">SQL&gt;</span><span class="bash"> alter database open;</span></span><br><span class="line">alter database open</span><br><span class="line">*</span><br><span class="line">ERROR at line 1:</span><br><span class="line">ORA-01113: file 9 needs media recovery</span><br><span class="line">ORA-01110: data file 9: '/home/oracle/mytest2.dbf'</span><br><span class="line">可以看到数据库无法打开，这是因为裸设备已被数据文件使用部分的逻辑块与未使用部分的逻辑块大小不一致。这种情况下，只能拷贝裸设备中数据文件大小 + block 0部分。这里用到两个工具</span><br><span class="line">dbfsize 求出在裸设备或者文件系统上的oracle数据文件的大小，由oracle提供。</span><br><span class="line">blockdev 求出裸设备的大小，操作系统自带。</span><br><span class="line">要计算出要要拷贝的大小，否则报错，如：</span><br><span class="line"><span class="meta">$</span><span class="bash"> dbfsize /dev/raw/raw3</span></span><br><span class="line">Database file: /dev/raw/raw3</span><br><span class="line">Database file type: raw device</span><br><span class="line">Database file size: 640 8192 byte blocks</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> blockdev --getsize /dev/raw/raw3</span></span><br><span class="line">22496</span><br><span class="line"></span><br><span class="line">一般一个OS BLOCK大小是512字节，所以22496*512/1024/1024= 10.9(m) 就是裸设备的大小。</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> rm /home/oracle/mytest2.dbf</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> dd <span class="keyword">if</span>=<span class="string">'/dev/raw/raw3'</span> of=<span class="string">'/home/oracle/mytest2.dbf'</span> bs=8k count=641 </span></span><br><span class="line"><span class="meta">SQL&gt;</span><span class="bash"> alter database open;</span></span><br><span class="line">Database altered</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="6-如何真正写磁盘"><a href="#6-如何真正写磁盘" class="headerlink" title="6.如何真正写磁盘"></a>6.如何真正写磁盘</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=/dev/zero of=test bs=64k count=16k</span><br></pre></td></tr></table></figure>
+
+<p>这个是不准确的，因为命令结束的时候数据还没有真正写到磁盘上去，因为对磁盘的写，我们一般是先写到了缓存就返回了。</p>
+<p>我们来看dd的帮助页面对于一些参数的解释：</p>
+<p>the FLAG 参数（完整的看手册哦，这里假设你是知道iflag跟oflag的）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-dsync</span><br><span class="line">   Use synchronized I/O for data. For the output file, this forces a physical write of output data on each write. For the input file, this flag can matter when reading from a remote file that    has been written to synchronously by some other process. Metadata (e.g., last-access and last-modified time) is not necessarily synchronized. </span><br><span class="line"></span><br><span class="line">-sync    likewise, but also for metadata</span><br></pre></td></tr></table></figure>
+
+<p>the CONV参数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-fsync </span><br><span class="line">  Synchronize output data and metadata just before finishing. This forces a physical write of output data and metadata</span><br></pre></td></tr></table></figure>
+
+<p>  dsync跟sync比较好理解，前者是只同步写数据，sync同时写元数据</p>
+<p>但是感觉-dsync与 -fsync怎么感觉有些一样？ 网上的说法是  dd if=/dev/zero of=test bs=64k count=4k oflag=dsync　这个可以当成是模拟数据库插入操作，所以很慢，但还是没太明白。</p>
+<p>后来自己认真的抠了这英文用词：</p>
+<p>conv=fsync  Synchronize output data and metadata just before finishing 意思也就是在dd命令结束前同步data和metadata，那就是不是每一次写都同步一次咯，也就是如果我们在dd命令中写了100次，他可能是等到最后的时候才把他们同步到磁盘。而oflag=dsync是说Use synchronized I/O for data. For the output file, this forces a physical write of output data on each write，注意这里边用词  a physical write of output data on each write,那就是他是每一次写都得等到这一次写写到了磁盘才进行下一个写，也就是如果我们使用dd写100次，他每次写都是写到磁盘后才进行下一次写的。所以这样当然要比conv=fsync慢一些吧。那么自己感觉如果只是写一次的话，两者应该是差别不大的，后来做了下小实验，证实确实是这样的。</p>
+<p> <img src="/2007/01/14/linux/2007-01-14-linux-dd/SouthEast" alt="img"> </p>
+<img src="/2007/01/14/linux/2007-01-14-linux-dd/SouthEast" class title="This is an example image">
+
+<p>在第一个图中，我们只写1块，然后使用oflag=sync与conv=fsync 测出来一个是32.1kb/s 一个是37.8kb/s 差别不大。但是下一个我写1000个，conv=fsync就明显的比oflag=dsync/sync快很多了，所以觉得上面自己扣的英文的理解应该是正确的。</p>
+<p>所以在用dd做读或者写的时候，应该要注意自己的使用场景，如果需要将数据写入磁盘的话</p>
+<p>dd if=/dev/zero of=test bs=64k count=16k  是不准确的，</p>
+<p>而 dd if=/dev/zero of=test bs=64k count=16k conv=fsync 比较准确，他在dd结束前会写到磁盘，</p>
+<p>而dd if=/dev/zero of=test bs=64k count=4k oflag=dsync或者sync 是真正的每写一次就写一次磁盘，所以其实可以听到磁盘啪啪啪的响的。</p>
+<h1 id="7-dd如何绕开cache"><a href="#7-dd如何绕开cache" class="headerlink" title="7.dd如何绕开cache"></a>7.dd如何绕开cache</h1><p>如果要规避掉文件系统cache,直接读写,不使用buffer cache，需做这样的设置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">iflag=direct,nonblock</span><br><span class="line">oflag=direct,nonblock</span><br><span class="line">iflag=cio</span><br><span class="line">oflag=cio</span><br><span class="line">direct 模式就是把写入请求直接封装成io 指令发到磁盘</span><br><span class="line">非direct 模式，就把数据写入系统缓存，然后就认为io 成功，并由操作系统决定缓存中的数据什么时候被写入磁盘</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="8-seek和skip用法"><a href="#8-seek和skip用法" class="headerlink" title="8.seek和skip用法"></a>8.seek和skip用法</h1><p>　　假如我有一个文件abc.gz，大小为83456k，我想用dd命令实现如下备份 结果：首先将备份分成三个部分，第一部分为备份文件abc.gz的前10000k，第二部分为中间的70000k，最后备份后面的3456k.　　</p>
+<p>备份方法如下三条命令：　　</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dd if=abc.gz of=abc.gz.bak1 bs=1k count=10000　　</span><br><span class="line"></span><br><span class="line">dd if=abc.gz of=abc.gz.bak2 bs=1k skip=10000 count=70000　　</span><br><span class="line"></span><br><span class="line">dd if=abc.gz of=abc.gz.bak3 bs=1k skip=80000</span><br></pre></td></tr></table></figure>
+
+<p>恢复方法如下：　　</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dd if=abc.gz.bak1 of=abc.gz　　</span><br><span class="line"></span><br><span class="line">dd if=abc.gz.bak2 of=abc.gz bs=1k seek=10000　　</span><br><span class="line"></span><br><span class="line">dd if=abc.gz.bak3 of=abc.gz bs=1k seek=80000</span><br></pre></td></tr></table></figure>
+
+<p>这时你查看一下恢复的文件将和你原来的文件一模一样，说明备份成功!　　</p>
+<p>理解说明:skip=xxx是在备份时对if 后面的部分也就是原文件跳过多少块再开始备份;seek=xxx则是在备份时对of 后面的部分也就是目标文件跳过多少块再开始写</p>
+<p><a href="https://jingyan.baidu.com/article/4b07be3c7cc93348b380f3dd.html" target="_blank" rel="noopener external nofollow noreferrer">https://jingyan.baidu.com/article/4b07be3c7cc93348b380f3dd.html</a></p>
+<h1 id="9-dev-null和-dev-zero的区别"><a href="#9-dev-null和-dev-zero的区别" class="headerlink" title="9./dev/null和/dev/zero的区别"></a>9./dev/null和/dev/zero的区别</h1><p><a href="https://www.cnblogs.com/ginvip/p/6370836.html" target="_blank" rel="noopener external nofollow noreferrer">https://www.cnblogs.com/ginvip/p/6370836.html</a></p>
+<p>/dev/null，外号叫无底洞，你可以向它输出任何数据，它通吃，并且不会撑着！</p>
+<p>/dev/zero，是一个输入设备，你可你用它来初始化文件。该设备无穷尽地提供0，可以使用任何你需要的数目——设备提供的要多的多。他可以用于向设备或文件写入字符串0。</p>
+<p>/dev/null——它是空设备，也称为位桶（bit bucket）。任何写入它的输出都会被抛弃。如果不想让消息以标准输出显示或写入文件，那么可以将消息重定向到位桶。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">heng@me:if=/dev/zero of=./test.txt bs=1k count=1</span><br><span class="line">heng@me:ls –l</span><br><span class="line">total 4</span><br><span class="line">-rw-r--r-- 1 oracle dba 1024 Jul 15 16:56 test.txt</span><br><span class="line">heng@me:find / -name access_log 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="使用-dev-nul"><a href="#使用-dev-nul" class="headerlink" title="使用/dev/nul"></a>使用/dev/nul</h2><p>把/dev/null看作”黑洞”， 它等价于一个只写文件，所有写入它的内容都会永远丢失.，而尝试从它那儿读取内容则什么也读不到。然而， /dev/null对命令行和脚本都非常的有用</p>
+<p>禁止标准输出</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">heng@me:cat $filename &gt;/dev/null #文件内容丢失，而不会输出到标准输出.</span><br></pre></td></tr></table></figure>
+
+<p>禁止标准错误</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">heng@me:rm $badname 2&gt;/dev/null #这样错误信息[标准错误]就被丢到太平洋去了</span><br></pre></td></tr></table></figure>
+
+<p>禁止标准输出和标准错误的输出</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">heng@me:cat $filename 2&gt;/dev/null &gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<p>如果”$filename”不存在，将不会有任何错误信息提示；如果”$filename”存在， 文件的内容不会打印到标准输出。因此，上面的代码根本不会输出任何信息。当只想测试命令的退出码而不想有任何输出时非常有用。</p>
+<h2 id="使用-dev-zero"><a href="#使用-dev-zero" class="headerlink" title="使用/dev/zero"></a>使用/dev/zero</h2><p>像/dev/null一样， /dev/zero也是一个伪文件， 但它实际上产生连续不断的null的流（二进制的零流，而不是ASCII型的）。 写入它的输出会丢失不见， 而从/dev/zero读出一连串的null也比较困难， 虽然这也能通过od或一个十六进制编辑器来做到。</p>
+<p>/dev/zero主要的用处是用来创建一个指定长度用于初始化的空文件，就像临时交换文件。</p>
+<p>用/dev/zero创建一个交换临时文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建一个交换文件.</span></span><br><span class="line">ROOT_UID=0 # Root 用户的 $UID 是 0.</span><br><span class="line">E_WRONG_USER=65 # 不是 root?</span><br><span class="line">FILE=/swap</span><br><span class="line">BLOCKSIZE=1024</span><br><span class="line">MINBLOCKS=40</span><br><span class="line">SUCCESS=0</span><br><span class="line"><span class="meta">#</span><span class="bash"> 这个脚本必须用root来运行.</span></span><br><span class="line">if [ "$UID" -ne "$ROOT_UID" ]</span><br><span class="line">then</span><br><span class="line">echo; echo "You must be root to run this script."; echo</span><br><span class="line">exit $E_WRONG_USER</span><br><span class="line">fi</span><br><span class="line">blocks=$&#123;1:-$MINBLOCKS&#125; # 如果命令行没有指定，</span><br><span class="line"><span class="meta">#</span><span class="bash">+ 则设置为默认的40块.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 上面这句等同如：</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> --------------------------------------------------</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="keyword">if</span> [ -n <span class="string">"<span class="variable">$1</span>"</span> ]</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="keyword">then</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> blocks=<span class="variable">$1</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="keyword">else</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> blocks=<span class="variable">$MINBLOCKS</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="keyword">fi</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> --------------------------------------------------</span></span><br><span class="line">if [ "$blocks" -lt $MINBLOCKS ]</span><br><span class="line">then</span><br><span class="line">blocks=$MINBLOCKS # 最少要有 40 个块长.</span><br><span class="line">fi</span><br><span class="line">echo "Creating swap file of size $blocks blocks (KB)."</span><br><span class="line">dd if=/dev/zero of=$FILE bs=$BLOCKSIZE count=$blocks # 把零写入文件.</span><br><span class="line">mkswap $FILE $blocks # 将此文件建为交换文件（或称交换分区）.</span><br><span class="line">swapon $FILE # 激活交换文件.</span><br><span class="line">echo "Swap file created and activated."</span><br><span class="line">exit $SUCCESS</span><br></pre></td></tr></table></figure>
+
+<p>关于 /dev/zero 的另一个应用是为特定的目的而用零去填充一个指定大小的文件， 如挂载一个文件系统到环回设备 （loopback device）或”安全地” 删除一个文件。</p>
+<h2 id="创建ramdisk"><a href="#创建ramdisk" class="headerlink" title="创建ramdisk"></a>创建ramdisk</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ramdisk.sh</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="string">"ramdisk"</span>是系统RAM内存的一段，</span></span><br><span class="line"><span class="meta">#</span><span class="bash">+ 它可以被当成是一个文件系统来操作.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 它的优点是存取速度非常快 (包括读和写).</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 缺点: 易失性, 当计算机重启或关机时会丢失数据.</span></span><br><span class="line"><span class="meta">#</span><span class="bash">+ 会减少系统可用的RAM.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 10 <span class="comment"># 那么ramdisk有什么作用呢?</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 保存一个较大的数据集在ramdisk, 比如一张表或字典,</span></span><br><span class="line"><span class="meta">#</span><span class="bash">+ 这样可以加速数据查询, 因为在内存里查找比在磁盘里查找快得多.</span></span><br><span class="line">E_NON_ROOT_USER=70 # 必须用root来运行.</span><br><span class="line">ROOTUSER_NAME=root</span><br><span class="line">MOUNTPT=/mnt/ramdisk</span><br><span class="line">SIZE=2000 # 2K 个块 (可以合适的做修改)</span><br><span class="line">BLOCKSIZE=1024 # 每块有1K (1024 byte) 的大小</span><br><span class="line">DEVICE=/dev/ram0 # 第一个 ram 设备</span><br><span class="line">username=`id -nu`</span><br><span class="line">if [ "$username" != "$ROOTUSER_NAME" ]</span><br><span class="line">then</span><br><span class="line">echo "Must be root to run "`basename $0`"."</span><br><span class="line">exit $E_NON_ROOT_USER</span><br><span class="line">fi</span><br><span class="line">if [ ! -d "$MOUNTPT" ] # 测试挂载点是否已经存在了,</span><br><span class="line">then #+ 如果这个脚本已经运行了好几次了就不会再建这个目录了</span><br><span class="line">mkdir $MOUNTPT #+ 因为前面已经建立了.</span><br><span class="line">fi</span><br><span class="line">dd if=/dev/zero of=$DEVICE count=$SIZE bs=$BLOCKSIZE</span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span><span class="bash"> 把RAM设备的内容用零填充.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 为何需要这么做?</span></span><br><span class="line">mke2fs $DEVICE # 在RAM设备上创建一个ext2文件系统.</span><br><span class="line">mount $DEVICE $MOUNTPT # 挂载设备.</span><br><span class="line">chmod 777 $MOUNTPT # 使普通用户也可以存取这个ramdisk.</span><br><span class="line"><span class="meta">#</span><span class="bash"> 但是, 只能由root来缷载它.</span></span><br><span class="line">echo ""$MOUNTPT" now available for use."</span><br><span class="line"><span class="meta">#</span><span class="bash"> 现在 ramdisk 即使普通用户也可以用来存取文件了.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 注意, ramdisk是易失的, 所以当计算机系统重启或关机时ramdisk里的内容会消失.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 拷贝所有你想保存文件到一个常规的磁盘目录下.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 重启之后, 运行这个脚本再次建立起一个 ramdisk.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 仅重新加载 /mnt/ramdisk 而没有其他的步骤将不会正确工作.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果加以改进, 这个脚本可以放在 /etc/rc.d/rc.local,</span></span><br><span class="line"><span class="meta">#</span><span class="bash">+ 以使系统启动时能自动设立一个ramdisk.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 这样很合适速度要求高的数据库服务器.</span></span><br><span class="line">exit 0</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="10-其它例子"><a href="#10-其它例子" class="headerlink" title="10.其它例子"></a>10.其它例子</h1><p>例1</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# dd if=/dev/hdx of=/dev/hdy          #将本地的/dev/hdx整盘备份到/dev/hdy</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# dd if=/dev/hdx of=/path/to/image    #将/dev/hdx全盘数据备份到指定路径的image文件</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# dd if=/dev/hdx | gzip &gt;/path/to/image.gz   #备份/dev/hdx全盘数据，并利用gzip工具进行压缩，保存到指定路径</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# dd if=/path/to/image of=/dev/hdx    #	将备份文件恢复到指定盘</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# gzip -dc /path/to/image.gz | dd of=/dev/hdx     #将压缩的备份文件恢复到指定盘</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# dd if=/dev/hdx of=/path/to/image count=1 bs=512  #备份磁盘开始的512Byte大小的MBR信息到指定文件</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# dd if=/dev/cdrom of=/root/cd.iso   #拷贝光盘数据到root文件夹下，并保存为cd.iso文件</span><br></pre></td></tr></table></figure>
+
+<p>例2</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">1.将本地的/dev/hdb整盘备份到/dev/hdd</span><br><span class="line"><span class="meta">#</span><span class="bash"> dd <span class="keyword">if</span>=/dev/hdb of=/dev/hdd</span></span><br><span class="line"></span><br><span class="line">2.将/dev/hdb全盘数据备份到指定路径的image文件</span><br><span class="line"><span class="meta">#</span><span class="bash"> dd <span class="keyword">if</span>=/dev/hdb of=/root/image</span></span><br><span class="line"></span><br><span class="line">3.将备份文件恢复到指定盘</span><br><span class="line"><span class="meta">#</span><span class="bash"> dd <span class="keyword">if</span>=/root/image of=/dev/hdb</span></span><br><span class="line"></span><br><span class="line">4.备份/dev/hdb全盘数据，并利用gzip工具进行压缩，保存到指定路径</span><br><span class="line"><span class="meta">#</span><span class="bash"> dd <span class="keyword">if</span>=/dev/hdb | gzip &gt; /root/image.gz</span></span><br><span class="line"></span><br><span class="line">5.将压缩的备份文件恢复到指定盘</span><br><span class="line"><span class="meta">#</span><span class="bash"> gzip -dc /root/image.gz | dd of=/dev/hdb</span></span><br><span class="line"></span><br><span class="line">6.备份与恢复MBR</span><br><span class="line">备份磁盘开始的512个字节大小的MBR信息到指定文件：</span><br><span class="line"><span class="meta">#</span><span class="bash"> dd <span class="keyword">if</span>=/dev/hda of=/root/image count=1 bs=512</span></span><br><span class="line">count=1指仅拷贝一个块；bs=512指块大小为512个字节。</span><br><span class="line">恢复：</span><br><span class="line"><span class="meta">#</span><span class="bash"> dd <span class="keyword">if</span>=/root/image of=/dev/had</span></span><br><span class="line">将备份的MBR信息写到磁盘开始部分</span><br><span class="line"></span><br><span class="line">7.备份软盘</span><br><span class="line"><span class="meta">#</span><span class="bash"> dd <span class="keyword">if</span>=/dev/fd0 of=disk.img count=1 bs=1440k (即块大小为1.44M)</span></span><br><span class="line"></span><br><span class="line">8.拷贝内存内容到硬盘</span><br><span class="line"><span class="meta">#</span><span class="bash"> dd <span class="keyword">if</span>=/dev/mem of=/root/mem.bin bs=1024 (指定块大小为1k)</span></span><br><span class="line"></span><br><span class="line">9.拷贝光盘内容到指定文件夹，并保存为cd.iso文件</span><br><span class="line"><span class="meta">#</span><span class="bash"> dd <span class="keyword">if</span>=/dev/cdrom(hdc) of=/root/cd.iso</span></span><br><span class="line"></span><br><span class="line">10.增加swap分区文件大小</span><br><span class="line">第一步：创建一个大小为256M的文件：</span><br><span class="line"><span class="meta">#</span><span class="bash"> dd <span class="keyword">if</span>=/dev/zero of=/swapfile bs=1024 count=262144</span></span><br><span class="line">第二步：把这个文件变成swap文件：</span><br><span class="line"><span class="meta">#</span><span class="bash"> mkswap /swapfile</span></span><br><span class="line">第三步：启用这个swap文件：</span><br><span class="line"><span class="meta">#</span><span class="bash"> swapon /swapfile</span></span><br><span class="line">第四步：编辑/etc/fstab文件，使在每次开机时自动加载swap文件：</span><br><span class="line">/swapfile swap swap default 0 0</span><br><span class="line"></span><br><span class="line">11.销毁磁盘数据</span><br><span class="line"><span class="meta">#</span><span class="bash"> dd <span class="keyword">if</span>=/dev/urandom of=/dev/hda1</span></span><br><span class="line">注意：利用随机的数据填充硬盘，在某些必要的场合可以用来销毁数据。</span><br><span class="line"></span><br><span class="line">12.测试硬盘的读写速度</span><br><span class="line"><span class="meta">#</span><span class="bash"> dd <span class="keyword">if</span>=/dev/zero bs=1024 count=1000000 of=/root/1Gb.file</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> dd <span class="keyword">if</span>=/root/1Gb.file bs=64k | dd of=/dev/null</span></span><br><span class="line">通过以上两个命令输出的命令执行时间，可以计算出硬盘的读、写速度。</span><br><span class="line"></span><br><span class="line">13.确定硬盘的最佳块大小：</span><br><span class="line"><span class="meta">#</span><span class="bash"> dd <span class="keyword">if</span>=/dev/zero bs=1024 count=1000000 of=/root/1Gb.file</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> dd <span class="keyword">if</span>=/dev/zero bs=2048 count=500000 of=/root/1Gb.file</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> dd <span class="keyword">if</span>=/dev/zero bs=4096 count=250000 of=/root/1Gb.file</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> dd <span class="keyword">if</span>=/dev/zero bs=8192 count=125000 of=/root/1Gb.file</span></span><br><span class="line">通过比较以上命令输出中所显示的命令执行时间，即可确定系统最佳的块大小。</span><br><span class="line"></span><br><span class="line">14.修复硬盘：</span><br><span class="line"><span class="meta">#</span><span class="bash"> dd <span class="keyword">if</span>=/dev/sda of=/dev/sda 或dd <span class="keyword">if</span>=/dev/hda of=/dev/hda</span></span><br><span class="line">当硬盘较长时间(一年以上)放置不使用后，磁盘上会产生magnetic flux point，当磁头读到这些区域时会遇到困难，并可能导致I/O错误。</span><br><span class="line">当这种情况影响到硬盘的第一个扇区时，可能导致硬盘报废。上边的命令有可能使这些数 据起死回生。并且这个过程是安全、高效的。</span><br></pre></td></tr></table></figure>
+
+<p>例3</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1、测试磁盘写能力</span><br><span class="line"><span class="meta">#</span><span class="bash"> time dd <span class="keyword">if</span>=/dev/zero of=/test.dbf ibs=8k count=300000</span></span><br><span class="line">因为/dev/zero是一个伪设备，它只产生空字符流，对它不会产生IO，所以，</span><br><span class="line">IO都会集中在of文件中，of文件只用于写，所以这个命令相当于测试磁盘的写能力。</span><br><span class="line"></span><br><span class="line">2、测试磁盘读能力</span><br><span class="line"><span class="meta">#</span><span class="bash"> time dd <span class="keyword">if</span>=/dev/sdb1 of=/dev/null obs=8k</span></span><br><span class="line">因为/dev/sdb1是一个物理分区，对它的读取会产生IO，/dev/null是伪设备，相当于黑洞，of到该设备不会产生IO，</span><br><span class="line">所以，这个命令的IO只发生在/dev/sdb1上，也相当于测试磁盘的读能力。</span><br><span class="line"></span><br><span class="line">3、测试同时读写能力</span><br><span class="line"><span class="meta">#</span><span class="bash"> time dd <span class="keyword">if</span>=/dev/sdb1 of=/test1.dbf bs=8k</span></span><br><span class="line">这个命令下，一个是物理分区，一个是实际的文件，对它们的读写都会产生IO（对/dev/sdb1是读，对/test1.dbf是写），</span><br><span class="line">假设他们都在一个磁盘中，这个命令就相当于测试磁盘的同时读写能力</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>引用：<br><a href="http://smilejay.com/2012/08/qemu-img-details/" target="_blank" rel="noopener external nofollow noreferrer">http://smilejay.com/2012/08/qemu-img-details/</a><br><a href="https://blog.csdn.net/menogen/article/details/38059671" target="_blank" rel="noopener external nofollow noreferrer">https://blog.csdn.net/menogen/article/details/38059671</a><br><a href="https://www.cnblogs.com/sylar5/p/6649009.html" target="_blank" rel="noopener external nofollow noreferrer">https://www.cnblogs.com/sylar5/p/6649009.html</a><br><a href="https://www.cnblogs.com/ginvip/p/6370836.html" target="_blank" rel="noopener external nofollow noreferrer">https://www.cnblogs.com/ginvip/p/6370836.html</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2007\01\01\linux\2007-01-01-linux-string\" rel="bookmark">字符串</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2007\01\03\linux\2007-01-03-linux-wildcard\" rel="bookmark">通配符-元字符-转义符</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2007\01\02\linux\2007-01-02-linux-ASCII\" rel="bookmark">ASCII</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2007\01\04\linux\2007-01-04-linux-cat\" rel="bookmark">cat</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2007\01\05\linux\2007-01-05-linux-cut\" rel="bookmark">cut</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2007/01/14/linux/2007-01-14-linux-dd/" title="dd">https://tongsiying.github.io/2007/01/14/linux/2007-01-14-linux-dd/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" rel="tag"># linux-文件管理</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2007/01/13/linux/2007-01-13-linux-qemu-img/" rel="prev" title="qemu-img">
+      <i class="fa fa-chevron-left"></i> qemu-img
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2007/01/15/linux/2007-01-15-linux-tr/" rel="next" title="tr">
+      tr <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-dd-语法格式"><span class="nav-text">1.dd 语法格式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-使用方法"><span class="nav-text">2.使用方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-time-dd-测磁盘读写速度"><span class="nav-text">3.time+dd 测磁盘读写速度</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-备份的数据文件"><span class="nav-text">4.备份的数据文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-Oracle数据库的dd备份"><span class="nav-text">5.Oracle数据库的dd备份</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-如何真正写磁盘"><span class="nav-text">6.如何真正写磁盘</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-dd如何绕开cache"><span class="nav-text">7.dd如何绕开cache</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-seek和skip用法"><span class="nav-text">8.seek和skip用法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-dev-null和-dev-zero的区别"><span class="nav-text">9.&#x2F;dev&#x2F;null和&#x2F;dev&#x2F;zero的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-dev-nul"><span class="nav-text">使用&#x2F;dev&#x2F;nul</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-dev-zero"><span class="nav-text">使用&#x2F;dev&#x2F;zero</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建ramdisk"><span class="nav-text">创建ramdisk</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-其它例子"><span class="nav-text">10.其它例子</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">What hurts more, the pain of hard work or the pain of regret?</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">34:51</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

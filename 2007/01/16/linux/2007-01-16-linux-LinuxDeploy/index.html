@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="安卓Linux">
+<meta property="og:url" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C164020_xhgB_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/164020_xhgB_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C164742_96Fw_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/164742_96Fw_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C165517_bEfX_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/165517_bEfX_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C165810_0lzR_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/165810_0lzR_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C170008_Ri1c_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/170008_Ri1c_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C170240_A1ng_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/170240_A1ng_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C170434_R7aU_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/170434_R7aU_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C170939_azc1_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/170939_azc1_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C171108_l6zS_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/171108_l6zS_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C172146_bsTw_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/172146_bsTw_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C172424_EfK1_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/172424_EfK1_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C173048_ghVz_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/173048_ghVz_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C173225_enkQ_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/173225_enkQ_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C173507_uB6p_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/173507_uB6p_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C173507_uB6p_2846946-1624021827576.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/173507_uB6p_2846946-1624021827576.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C173521_s3rp_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/173521_s3rp_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C173541_fNg4_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/173541_fNg4_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C173556_CeBe_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/173556_CeBe_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C173626_QUDW_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/173626_QUDW_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C173654_bzEb_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/173654_bzEb_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C173850_bV9L_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/173850_bV9L_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2007-01-16-linux-LinuxDeploy%5C173850_bV9L_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C173946_p7FM_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/173946_p7FM_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2007-01-16-linux-LinuxDeploy%5C173946_p7FM_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C174325_eew7_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/174325_eew7_2846946.png">
+<meta property="og:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2007-01-16-linux-LinuxDeploy%5C174325_eew7_2846946.png">
+<meta property="article:published_time" content="2007-01-16T10:37:19.000Z">
+<meta property="article:modified_time" content="2021-06-18T13:21:42.977Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C164020_xhgB_2846946.png">
+
+<link rel="canonical" href="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>安卓Linux | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">嘻嘻嘻嘻嘻嘻</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="What hurts more, the pain of hard work or the pain of regret?">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          安卓Linux
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2007-01-16 18:37:19" itemprop="dateCreated datePublished" datetime="2007-01-16T18:37:19+08:00">2007-01-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-18 21:21:42" itemprop="dateModified" datetime="2021-06-18T21:21:42+08:00">2021-06-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">参考网址：</span><br><span class="line"><span class="string">https:</span><span class="comment">//my.oschina.net/zss1993/blog/1790223?tdsourcetag=s_pctim_aiomsg</span></span><br><span class="line"><span class="string">https:</span><span class="comment">//my.oschina.net/zss1993/blog/1790562</span></span><br><span class="line"></span><br><span class="line">备注：</span><br><span class="line">【🦔备注：挂载点可以是<span class="regexp">/mnt/</span><span class="string">sdcard:</span>/mnt下面可能是不对的】</span><br><span class="line">【🦔备注：可以默认为软件自带的，不默认出现过retring的问题】</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://tongsiying.github.io/download/source/busybox-1.31.1-45.apk">busybox-1.31.1-45.apk</a></p>
+<p><a href="https://tongsiying.github.io/download/source/linuxdeploy-2.5.1-257.apk">linuxdeploy-2.5.1-257.apk</a></p>
+<p>作为一个程序猿和一个业余的玩机爱好者，自然喜欢折腾各种技术和设备，前几天无意间注意到一个可以在安卓机器上使用chroot容器技术运行arm或者x86的Linux系统（目前有些手机可能支持x64了），本文就来亲自体验下，还有后续会使用该技术搭建个人服务器、部署个人博客系统等</p>
+<h1 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h1><p>​    该技术的验证是在安卓系统上进行的，因此大家先要有一台安卓手机或者安卓平板。该技术的原理就是在安卓机上搁置一个chroot容器，来运行linux系统，那为啥别的系统不行呢，因为安卓的系统内核也是Linux的。我自使用小米4（系统安卓6.0）先后试验了debian、Ubuntu、CentOS都是成功的，本文将以CentOS为例进行验证。</p>
+<h1 id="二、准备工作"><a href="#二、准备工作" class="headerlink" title="二、准备工作"></a>二、准备工作</h1><h2 id="1-一台安卓设备（手机过着平板）"><a href="#1-一台安卓设备（手机过着平板）" class="headerlink" title="1.一台安卓设备（手机过着平板）"></a>1.一台安卓设备（手机过着平板）</h2><p>设备硬件要求：建议RAM在1G及以上，手机ROM空闲容量4G左右</p>
+<p>设备软件要求：建议安卓版本4.0以上，系统必须是拥有ROOT系统权限的</p>
+<h2 id="2-Busy-Box安卓软件"><a href="#2-Busy-Box安卓软件" class="headerlink" title="2.Busy Box安卓软件"></a>2.Busy Box安卓软件</h2><p>软件简介：BusyBox 是一个集成了三百多个最常用Linux命令和工具的软件。BusyBox 包含了一些简单的工具，例如ls、cat和echo等等，还包含了一些更大、更复杂的工具，例grep、find、mount以及telnet。有些人将 BusyBox 称为 Linux 工具里的瑞士军刀。简单的说BusyBox就好像是个大工具箱，它集成压缩了 Linux 的许多工具和命令，也包含了 Android 系统的自带的shell。（摘自：百度百科）</p>
+<p>在本实验中Busy Box作为Linux Deploy最主要的依赖软件软件地址：<a href="https://github.com/meefik/busybox/releases" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/meefik/busybox/releases</a>  （本文使用最新版）</p>
+<h2 id="3-Linux-Deploy安卓软件"><a href="#3-Linux-Deploy安卓软件" class="headerlink" title="3.Linux Deploy安卓软件"></a>3.Linux Deploy安卓软件</h2><p>软件简介：安卓平台虚拟机（chroot运行linux的容器）</p>
+<p>软件地址：<a href="https://github.com/meefik/linuxdeploy/releases" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/meefik/linuxdeploy/releases</a> （本文使用最新版）</p>
+<h1 id="三、安装工作"><a href="#三、安装工作" class="headerlink" title="三、安装工作"></a>三、安装工作</h1><p>注意：如果安卓设备没有拥有ROOT系统权限，得先ROOT设备（自行百度）</p>
+<h2 id="1-安装Busy-Box"><a href="#1-安装Busy-Box" class="headerlink" title="1.安装Busy Box"></a>1.安装Busy Box</h2><p>将下载的Busy Box软件安装在安卓设备上，然后打开设备点击右上角三个点然后点击Setting进行设置</p>
+<p><img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C164020_xhgB_2846946.png" alt></p>
+<img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/164020_xhgB_2846946.png" class title="This is an example image">
+
+<p>这里可以设置肤色、字体大小、屏幕滚动行数等</p>
+<p>注意：安装路径不要改动，后面要用的！（改了也行，不过的记住，后面找不到就尴尬了）</p>
+<p><img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C164742_96Fw_2846946.png" alt></p>
+<img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/164742_96Fw_2846946.png" class title="This is an example image">
+
+<p>剩下的设置就按这样来就行，日志文件可以打开也可以关闭，建议关闭，调试模式也关闭。设置完成后返回到主界面，然后点击安装按钮，等待安装完成在界面中输出## END，然后点击右上角三个点然后点信息按钮可以看到输出的系统信息：</p>
+<p><img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C165517_bEfX_2846946.png" alt></p>
+<img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/165517_bEfX_2846946.png" class title="This is an example image">
+
+<h2 id="2-安装Linux-Deploy"><a href="#2-安装Linux-Deploy" class="headerlink" title="2.安装Linux Deploy"></a>2.安装Linux Deploy</h2><p>安装完成后打开Linux Deploy可以看到主界面如下：</p>
+<p><img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C165810_0lzR_2846946.png" alt></p>
+<img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/165810_0lzR_2846946.png" class title="This is an example image">
+
+<p>然后我们点击左上角三个横杠然后点击设置：</p>
+<p><img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C170008_Ri1c_2846946.png" alt></p>
+<img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/170008_Ri1c_2846946.png" class title="This is an example image">
+
+<p>这里是一些显示相关的设置，前面三个中的锁定wifi一定要打钩、保持CPU唤醒也要打钩、屏幕常亮一定关闭避免耗电</p>
+<p><img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C170240_A1ng_2846946.png" alt></p>
+<img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/170240_A1ng_2846946.png" class title="This is an example image">
+
+<p>下面这些看自己的需求设置、开机启动建议打开，防止手机某些问题重启后，容易没打开这样服务就断开了</p>
+<p><img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C170434_R7aU_2846946.png" alt></p>
+<img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/170434_R7aU_2846946.png" class title="This is an example image">
+
+<p>这里最重要的就是PATH变量，就是前面说的不要改的，填进去就好了（改了就填写改了的路径）设置的部分就先到这，下面是最重要的部分，进行系统安装的设置工作：</p>
+<p>&lt;1&gt;在主界面点击左上角的三个横杠然后点击点击配置文件、然后新建文件的名称，可以随意定义，本文是安装CentOS系统就用其命名了</p>
+<p><img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C170939_azc1_2846946.png" alt></p>
+<img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/170939_azc1_2846946.png" class title="This is an example image">
+
+<p>&lt;2&gt;点击手机右下角的设置图标，设置系统相关信息</p>
+<p><img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C171108_l6zS_2846946.png" alt></p>
+<img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/171108_l6zS_2846946.png" class title="This is an example image">
+
+<p>这里的容器选择chroot（proot很不稳定）发行版本文选择CentOS，大家可以选择其他的发行版本安装架构这里一定要选对，不然安装会出错，或者安装完成后不能正常使用，这里一定要知道自己手机cpu的架构，我的小米4是晓龙801处理器，理论上是可以用x86的，但是我安装总是出错，所以选择向下兼容的armhfp，这架构大部分手机都是支持的；源地址默认或者可以切换成国内源，国内源安装的速度比较快，阿里的源地址是<a href="http://mirrors.aliyun.com/centos/" target="_blank" rel="noopener external nofollow noreferrer">http://mirrors.aliyun.com/centos/</a> ，还有很多国内的比如网易等大家自己百度；安装类型选择镜像安装，安装地址可以默认，这里是改过的，/linux是指手机sdcard根目录的linux文件夹下的地址；</p>
+<p><img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C172146_bsTw_2846946.png" alt></p>
+<img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/172146_bsTw_2846946.png" class title="This is an example image">
+
+<p>设置镜像大小2000mb往上（如果是用来做服务器，建议使用分区安装，这样可以使用整个手机所有的空间），文件系统建议选择ext4，其他的自定义信息大家自己填写，用户名和密码是待会进入系统需要的；DNS自动就好，或者改成114.114.114.114 或者8.8.8.8 或者1.1.1.1等都行；</p>
+<p><img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C172424_EfK1_2846946.png" alt></p>
+<img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/172424_EfK1_2846946.png" class title="This is an example image">
+
+<p>这里的设置也很重要，一定要勾启用SSH，不然待会登陆不到系统，挂载点也勾选并设置，本文设置将sdcard整个挂载到Linux系统的/mnt/sdcard下，如下所示：</p>
+<p><img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C173048_ghVz_2846946.png" alt></p>
+<img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/173048_ghVz_2846946.png" class title="This is an example image">
+
+<p>下面是一些桌面化的设置，本文是没有安装桌面的，因此没勾选某些项，大家需要桌面版可以自行勾选</p>
+<p><img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C173225_enkQ_2846946.png" alt></p>
+<img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/173225_enkQ_2846946.png" class title="This is an example image">
+
+<p>&lt;3&gt;开始安装系统</p>
+<p>设置完成返回主界面点击右上角三个点中的安装选项，开始系统的安装操作，然后等待安装，下面是系统安装的截图：</p>
+<p><img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C173507_uB6p_2846946.png" alt></p>
+<img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/173507_uB6p_2846946.png" class title="This is an example image">
+
+<p><img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C173507_uB6p_2846946-1624021827576.png" alt></p>
+<img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/173507_uB6p_2846946-1624021827576.png" class title="This is an example image">
+
+<p><img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C173521_s3rp_2846946.png" alt></p>
+<img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/173521_s3rp_2846946.png" class title="This is an example image">
+
+<p><img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C173541_fNg4_2846946.png" alt></p>
+<img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/173541_fNg4_2846946.png" class title="This is an example image">   
+
+<p><img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C173556_CeBe_2846946.png" alt></p>
+<img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/173556_CeBe_2846946.png" class title="This is an example image">
+
+<p><img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C173626_QUDW_2846946.png" alt></p>
+<img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/173626_QUDW_2846946.png" class title="This is an example image">
+
+<p>看到如下输出&lt;&lt;&lt;deploy 时说明安装完成</p>
+<p><img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C173654_bzEb_2846946.png" alt></p>
+<img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/173654_bzEb_2846946.png" class title="This is an example image">
+
+<p>&lt;4&gt;启动linux系统</p>
+<p>在启动系统之前先点击一次停止按钮：</p>
+<p><img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C173850_bV9L_2846946.png" alt></p>
+<img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/173850_bV9L_2846946.png" class title="This is an example image">
+
+<p><img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2007-01-16-linux-LinuxDeploy%5C173850_bV9L_2846946.png" alt="img"></p>
+<p>看到如上停止信息时，再点击确定系统按钮：</p>
+<p><img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C173946_p7FM_2846946.png" alt></p>
+<img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/173946_p7FM_2846946.png" class title="This is an example image">
+
+<p><img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2007-01-16-linux-LinuxDeploy%5C173946_p7FM_2846946.png" alt="img"></p>
+<p>看到如上启动信息，说明系统么启动成功</p>
+<h1 id="四、安装配置验证"><a href="#四、安装配置验证" class="headerlink" title="四、安装配置验证"></a>四、安装配置验证</h1><p>在上面安装启动工作完成后，我们来验证安装是否成功，用电脑打开系统终端，开始连接测试：</p>
+<p><img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/2007-01-16-linux-LinuxDeploy%5C174325_eew7_2846946.png" alt></p>
+<img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/174325_eew7_2846946.png" class title="This is an example image">
+
+<p><img src="/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/C:%5Cprivate%5Cblog%5Ctongsiying.github.io%5Csource_posts%5C2007-01-16-linux-LinuxDeploy%5C174325_eew7_2846946.png" alt="img"></p>
+<p>我们使用root用户登陆正常，和正常的Linux系统是一样的，不过因为是运行在chroot下，有些命令是不支持的，具体请百度chroot了解</p>
+<p>注意：本文使用的是Linux系统，可以直接在终端使用SSH命令测试连接，大家的要是window可以使用xshell或者putty等软件连接测试，若果没有电脑可以使用手机安装程序员工具这个软件或者ConnectBox连接验证</p>
+<h1 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h1><p>​    经过前面的实验，已经成功的在安卓设备上安装了Linux-CentOS发行版，而且是正常的连接使用，后面我们实验在改系统上架设tomcat等服务，并且使用花生壳或者花生棒硬件映射服务到公网作为个人云主机使用。</p>
+
+    </div>
+
+    
+    
+    
+      
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/" title="安卓Linux">https://tongsiying.github.io/2007/01/16/linux/2007-01-16-linux-LinuxDeploy/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2007/01/16/linux/2007-01-16-linux-column/" rel="prev" title="column">
+      <i class="fa fa-chevron-left"></i> column
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2007/01/18/linux/2007-01-19-linux-sort/" rel="next" title="sort">
+      sort <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、前言"><span class="nav-text">一、前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、准备工作"><span class="nav-text">二、准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-一台安卓设备（手机过着平板）"><span class="nav-text">1.一台安卓设备（手机过着平板）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Busy-Box安卓软件"><span class="nav-text">2.Busy Box安卓软件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Linux-Deploy安卓软件"><span class="nav-text">3.Linux Deploy安卓软件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、安装工作"><span class="nav-text">三、安装工作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-安装Busy-Box"><span class="nav-text">1.安装Busy Box</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-安装Linux-Deploy"><span class="nav-text">2.安装Linux Deploy</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、安装配置验证"><span class="nav-text">四、安装配置验证</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、总结"><span class="nav-text">五、总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">What hurts more, the pain of hard work or the pain of regret?</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">34:51</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

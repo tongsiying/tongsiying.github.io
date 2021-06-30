@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="BlockStorage-一致性对比">
+<meta property="og:url" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-%E4%B8%80%E8%87%B4%E6%80%A7%E5%AF%B9%E6%AF%94/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-%E4%B8%80%E8%87%B4%E6%80%A7%E5%AF%B9%E6%AF%94/2008-01-04-BlockStorage-%E4%B8%80%E8%87%B4%E6%80%A7%E5%AF%B9%E6%AF%94%5C425762-20151212160019653-1079393936.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-%E4%B8%80%E8%87%B4%E6%80%A7%E5%AF%B9%E6%AF%94/425762-20151212160019653-1079393936.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-%E4%B8%80%E8%87%B4%E6%80%A7%E5%AF%B9%E6%AF%94/%E8%8B%8F%E5%AE%81%E8%B1%86%E8%8A%BD%E5%9B%BE%E7%89%8720200526202942946.png">
+<meta property="article:published_time" content="2008-01-04T10:37:19.000Z">
+<meta property="article:modified_time" content="2021-06-24T15:08:05.502Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="BlockStorage-一致性对比">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-%E4%B8%80%E8%87%B4%E6%80%A7%E5%AF%B9%E6%AF%94/2008-01-04-BlockStorage-%E4%B8%80%E8%87%B4%E6%80%A7%E5%AF%B9%E6%AF%94%5C425762-20151212160019653-1079393936.png">
+
+<link rel="canonical" href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-%E4%B8%80%E8%87%B4%E6%80%A7%E5%AF%B9%E6%AF%94/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>BlockStorage-一致性对比 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">嘻嘻嘻嘻嘻嘻</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-%E4%B8%80%E8%87%B4%E6%80%A7%E5%AF%B9%E6%AF%94/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="What hurts more, the pain of hard work or the pain of regret?">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          BlockStorage-一致性对比
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2008-01-04 18:37:19" itemprop="dateCreated datePublished" datetime="2008-01-04T18:37:19+08:00">2008-01-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-24 23:08:05" itemprop="dateModified" datetime="2021-06-24T23:08:05+08:00">2021-06-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BlockStorage/" itemprop="url" rel="index"><span itemprop="name">BlockStorage</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>24k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>22 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+<p>CRC32、MD5和SHA1是目前用来校验文件信息真实性的主要手段，使用这些校验算法可以发现保存或传输的信息是否受到损坏或篡改，防止文件或信息被恶意篡改。下面将分别介绍这几种校验算法。</p>
+<h1 id="crc32"><a href="#crc32" class="headerlink" title="crc32"></a>crc32</h1><p>CRC全称为Cyclic Redundancy Check，又叫循环冗余校验。CRC是目前使用中最老的一种校验算法，它是由W. Wesley Peterson在1961年发表的论文中提出，CRC是种根据网络数据封包或电脑档案等数据产生简短固定位数校验码的一种散列函數（HASH，把任意长度的输入通过散列算法，最终变换成固定长度的摘要输出，其结果就是散列值，按照HASH算法，HASH具有单向性，不可逆性），主要用来检测或校验数据传输或者保存后可能出现的错误。生成的数字在传输或者储存之前计算出来并且附加到数据后面，然后接收方进行检验确定数据是否发生变化。一般来说，循环冗余校验的值都是32位的整数。由于本函数易于用二进制的电脑硬件使用、容易进行数学分析并且尤其善于检测传输通道干扰引起的错误，因此获得广泛应用。</p>
+<p>尽管CRC在错误检测中非常有用，但CRC并不能可靠地校验数据完整性，这是因为CRC多项式是线性结构，可以非常容易地通过改变数据方式达到CRC碰撞，这里给一个更加通俗的解释，假设一串带有CRC校验的代码在传输中，如果连续出现差错，当出错次数达到一定次数时，那么几乎可以肯定会出现一次碰撞（值不对但CRC结果正确），但随着CRC数据位增加，碰撞几率会显著降低，比如CRC32比CRC16具有更可靠的验证性，CRC64又会比CRC32更可靠，当然这都是按照ITU规范标准条件下。</p>
+<p>正因为CRC具有以上特点，对于网络上传输的文件类很少只使用CRC作为校验依据，文件传输相比通信底层传输风险更大，很容易受到人为干预影响。</p>
+<ul>
+<li>通信数据的校验,差错控制，检错和纠错能力强，</li>
+<li>16位或32位（带符号）</li>
+</ul>
+<h1 id="md5，sha1（安全领域）"><a href="#md5，sha1（安全领域）" class="headerlink" title="md5，sha1（安全领域）"></a>md5，sha1（安全领域）</h1><p> MD5全称为Message-Digest Algorithm 5，又叫摘要算法和哈希算法。是Ronald L. Rivest在1992年间提出的，MD5由MD4、MD3、MD2改进而来，MD5散列长度通常是128位，是目前被大量广泛使用的散列算法之一，主要用于密码加密和文件校验等，虽然MD5比CRC的安全可靠性要高的多，但目前已经找到可行的破解方法。现在网上虽然出现有些破解网站和软件，不过可以肯定实际作用范围相当有限，比如，即使黑客拿到了PASSWORD MD5值，除了暴力破解，即使找到碰撞结果也未必能够影响用户安全问题，因为对于密码还要限定位数、类型等，但是如果是面向数字签名等应用，可能就会被破解掉。 </p>
+<ul>
+<li>文件加密</li>
+<li>数字签名</li>
+<li>鉴权协议</li>
+<li>128位</li>
+<li>验证数据的完整性<br> -（推荐）比较的列（项）较多的情况，性能会有所提升</li>
+</ul>
+<h1 id="sha1"><a href="#sha1" class="headerlink" title="sha1"></a>sha1</h1><p>SHA全称为Secure Hash Algorithm，又叫安全散列算法。SHA是由美国国家安全局（NSA）所设计，并由美国国家标准与技术研究院（NIST）发布，SHA家族算法有SHA-1、SHA-224、SHA-256、SHA-384和SHA-512（后四者通常并称SHA2），原理和MD4、MD5相似。SHA可将一个最大2^64位（2305843009213693952字节）信息，转换成一串160位（20字节）的散列值（摘要信息），是目前应用最广的HASH算法。同MD5一样，从理论角度，SHA1也不是绝对可靠，目前也已经找到SHA1的碰撞条件，但“实用”的碰撞算法软件还没出现。于是美国NIST又开始使用SHA2，研究更新的加密算法。</p>
+<p>补充：虽然目前这几种校验算法都找到了破解条件，但像目前主流使用的MD5、SHA1还是值得信赖的，因为MD5和SHA1都具有高度的离散性，哪怕是只修改一个字节值都会导致MD5或SHA1值“巨大”变化，从实践角度，不同信息具有相同MD5或SHA1码的可能性非常低，通常认为是不可能的，对于普通的下载文件或操作系统，想通过简单的修改某个字节或某些字节，又要保证文件名、大小和安装可靠性的前提下，想达到MD5、SHA1碰撞效果也几乎是不可能的。</p>
+<ul>
+<li><p>类似于md4,md5</p>
+</li>
+<li><p>单线程，多线程下载，下载文件的准确性校验拼装</p>
+</li>
+</ul>
+<h1 id="比较对比"><a href="#比较对比" class="headerlink" title="比较对比"></a>比较对比</h1><table>
+<thead>
+<tr>
+<th>内容</th>
+<th>算法</th>
+<th>校验值</th>
+<th>安全性</th>
+<th>效率</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>crc32</td>
+<td>多项式除法，16或32位</td>
+<td>crc值</td>
+<td>比较弱</td>
+<td>快</td>
+<td>通信数据的校验</td>
+</tr>
+<tr>
+<td>md5、sha1</td>
+<td>16字节（128位）</td>
+<td>hash值或散列值</td>
+<td>强</td>
+<td>慢</td>
+<td>文件加密、数字签名等</td>
+</tr>
+</tbody></table>
+<h1 id="python实现方式"><a href="#python实现方式" class="headerlink" title="python实现方式"></a>python实现方式</h1><h2 id="md5"><a href="#md5" class="headerlink" title="md5:"></a>md5:</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"> </span><br><span class="line">md5 = hashlib.md5()</span><br><span class="line">md5.update(bytes(<span class="string">'http://www.baidu.com'</span>,encoding=<span class="string">"utf-8"</span>))</span><br><span class="line">result = md5.hexdigest()</span><br></pre></td></tr></table></figure>
+
+<p>　　</p>
+<h2 id="SHA1"><a href="#SHA1" class="headerlink" title="SHA1:"></a>SHA1:</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"> </span><br><span class="line">sha1 = hashlib.sha1()</span><br><span class="line">sha1.update(bytes(<span class="string">'how to use sha1 in '</span>,encoding=<span class="string">"utf-8"</span>))</span><br><span class="line">result = sha1.hexdigest()</span><br></pre></td></tr></table></figure>
+
+<p>　　</p>
+<h2 id="CRC32"><a href="#CRC32" class="headerlink" title="CRC32:"></a>CRC32:</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> zlib <span class="keyword">import</span> crc32</span><br><span class="line">result = crc32(<span class="string">b'http://www.baidu.com'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>其中SHA-1与MD5 的最大区别在于其摘要比MD5 摘要长 32 比特。对于强行攻击，产生任何一个报文使之摘要等于给定报文摘要的难度：MD5 是2128 数量级的操作，SHA-1 是2160 数量级的操作。但由于SHA-1 的循环步骤比MD5 多（80:64）且要处理的缓存大（160 比特:128 比特），SHA-1 的运行速度比MD5 慢。</p>
+<p>虽然在数据表非常大的时候CRC32会出现大量hash冲突，但是能提供更好的性能，在mysql性能优化能起到很好的作用。查询语句可以这样来写：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select id <span class="keyword">from</span> table where url_crc=%s <span class="keyword">and</span> url=%s;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><a href="https://blog.csdn.net/anypkv/article/details/16823797" target="_blank" rel="noopener external nofollow noreferrer">https://blog.csdn.net/anypkv/article/details/16823797</a></p>
+<p><a href="https://www.cnblogs.com/zenan/p/9165719.html" target="_blank" rel="noopener external nofollow noreferrer">https://www.cnblogs.com/zenan/p/9165719.html</a></p>
+<h1 id="基础积累"><a href="#基础积累" class="headerlink" title="基础积累"></a>基础积累</h1><h2 id="Python使用struct处理二进制"><a href="#Python使用struct处理二进制" class="headerlink" title="Python使用struct处理二进制"></a>Python使用struct处理二进制</h2><p><a href="https://www.cnblogs.com/xywq/p/7594457.html" target="_blank" rel="noopener external nofollow noreferrer">https://www.cnblogs.com/xywq/p/7594457.html</a></p>
+<p><a href="https://www.cnblogs.com/gala/archive/2011/09/22/2184801.html" target="_blank" rel="noopener external nofollow noreferrer">https://www.cnblogs.com/gala/archive/2011/09/22/2184801.html</a></p>
+<p>有的时候需要用python处理二进制数据，比如，存取文件，socket操作时.这时候，可以使用python的struct模块来完成.可以用 struct来处理c语言中的结构体.</p>
+<p>struct模块中最重要的三个函数是pack(), unpack(), calcsize()</p>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#  按照给定的格式(<span class="keyword">fmt</span>)，把数据封装成字符串(实际上是类似于c结构体的字节流)</span><br><span class="line"><span class="built_in">pack</span>(<span class="keyword">fmt</span>, v1, v2, ...) </span><br><span class="line"> </span><br><span class="line"># 按照给定的格式(<span class="keyword">fmt</span>)解析字节流string，返回解析出来的tuple</span><br><span class="line"><span class="built_in">unpack</span>(<span class="keyword">fmt</span>, string)       </span><br><span class="line"> </span><br><span class="line"># 计算给定的格式(<span class="keyword">fmt</span>)占用多少字节的内存</span><br><span class="line">calcsize(<span class="keyword">fmt</span>)</span><br></pre></td></tr></table></figure>
+
+<p>上述fmt中，支持的格式为：</p>
+<table>
+<thead>
+<tr>
+<th>FORMAT</th>
+<th>C TYPE</th>
+<th>PYTHON TYPE</th>
+<th>STANDARD SIZE</th>
+<th>NOTES</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>x</td>
+<td>pad byte</td>
+<td>no value</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>c</td>
+<td>char</td>
+<td>string of length 1</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>b</td>
+<td>signed char</td>
+<td>integer</td>
+<td>1</td>
+<td>(3)</td>
+</tr>
+<tr>
+<td>B</td>
+<td>unsigned char</td>
+<td>integer</td>
+<td>1</td>
+<td>(3)</td>
+</tr>
+<tr>
+<td>?</td>
+<td>_Bool</td>
+<td>bool</td>
+<td>1</td>
+<td>(1)</td>
+</tr>
+<tr>
+<td>h</td>
+<td>short</td>
+<td>integer</td>
+<td>2</td>
+<td>(3)</td>
+</tr>
+<tr>
+<td>H</td>
+<td>unsigned short</td>
+<td>integer</td>
+<td>2</td>
+<td>(3)</td>
+</tr>
+<tr>
+<td>i</td>
+<td>int</td>
+<td>integer</td>
+<td>4</td>
+<td>(3)</td>
+</tr>
+<tr>
+<td>I</td>
+<td>unsigned int</td>
+<td>integer</td>
+<td>4</td>
+<td>(3)</td>
+</tr>
+<tr>
+<td>l</td>
+<td>long</td>
+<td>integer</td>
+<td>4</td>
+<td>(3)</td>
+</tr>
+<tr>
+<td>L</td>
+<td>unsigned long</td>
+<td>integer</td>
+<td>4</td>
+<td>(3)</td>
+</tr>
+<tr>
+<td>q</td>
+<td>long long</td>
+<td>integer</td>
+<td>8</td>
+<td>(2), (3)</td>
+</tr>
+<tr>
+<td>Q</td>
+<td>unsigned long long</td>
+<td>integer</td>
+<td>8</td>
+<td>(2), (3)</td>
+</tr>
+<tr>
+<td>f</td>
+<td>float</td>
+<td>float</td>
+<td>4</td>
+<td>(4)</td>
+</tr>
+<tr>
+<td>d</td>
+<td>double</td>
+<td>float</td>
+<td>8</td>
+<td>(4)</td>
+</tr>
+<tr>
+<td>s</td>
+<td>char[]</td>
+<td>string</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>p</td>
+<td>char[]</td>
+<td>string</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>P</td>
+<td>void *</td>
+<td>integer</td>
+<td></td>
+<td>(5), (3)</td>
+</tr>
+</tbody></table>
+<p>unsigned 无符号</p>
+<p>signed 有符号</p>
+<p>注1.q和Q只在机器支持64位操作时有意思</p>
+<p>注2.每个格式前可以有一个数字，表示个数</p>
+<p>注3.s格式表示一定长度的字符串，4s表示长度为4的字符串，但是p表示的是pascal字符串</p>
+<p>注4.P用来转换一个指针，其长度和机器字长相关</p>
+<p>注5.最后一个可以用来表示指针类型的，占4个字节</p>
+<p>为了同c中的结构体交换数据，还要考虑有的c或c++编译器使用了字节对齐，通常是以4个字节为单位的32位系统，故而struct根据本地机器字节顺序转换.可以用格式中的第一个字符来改变对齐方式.定义如下：</p>
+<table>
+<thead>
+<tr>
+<th>C TYPE</th>
+<th>范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>unsigned int</td>
+<td>0~4294967295</td>
+</tr>
+<tr>
+<td>int</td>
+<td>-2147483648~2147483647</td>
+</tr>
+<tr>
+<td>unsigned long</td>
+<td>0~4294967295</td>
+</tr>
+<tr>
+<td>long</td>
+<td>-2147483648~2147483647</td>
+</tr>
+<tr>
+<td>long long最大值</td>
+<td>9223372036854775807</td>
+</tr>
+<tr>
+<td>long long最小值</td>
+<td>-9223372036854775808</td>
+</tr>
+<tr>
+<td>unsigned long long的最大值</td>
+<td>18446744073709551615</td>
+</tr>
+<tr>
+<td>_int64的最大值</td>
+<td>9223372036854775807</td>
+</tr>
+<tr>
+<td>int64最小值</td>
+<td>-9223372036854775808</td>
+</tr>
+<tr>
+<td>unsigned_int64的最大值</td>
+<td>18446744073709551615</td>
+</tr>
+</tbody></table>
+<p>为了同c中的结构体交换数据，还要考虑有的c或c++编译器使用了字节对齐，通常是以4个字节为单位的32位系统，故而struct根据本地机器字节顺序转换.可以用格式中的第一个字符来改变对齐方式.定义如下：</p>
+<table>
+<thead>
+<tr>
+<th>Character</th>
+<th>Byte order</th>
+<th>Size and alignment</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>@</td>
+<td>native</td>
+<td>native      凑够4个字节</td>
+</tr>
+<tr>
+<td>=</td>
+<td>native</td>
+<td>standard    按原字节数</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>little-endian</td>
+<td>standard    按原字节数</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>big-endian</td>
+<td>standard    按原字节数</td>
+</tr>
+<tr>
+<td>!</td>
+<td>network (= big-endian)</td>
+<td>standard    按原字节数</td>
+</tr>
+</tbody></table>
+<p><a href="https://www.cnblogs.com/qionglouyuyu/p/4175480.html" target="_blank" rel="noopener external nofollow noreferrer">https://www.cnblogs.com/qionglouyuyu/p/4175480.html</a></p>
+<p>Little和Big指的是内存地址的大小，end指的是数据的末尾。</p>
+<p>不同的CPU有不同的字节序类型，这些字节序是指整数在内存中保存的顺序。</p>
+<p>最常见的有两种：</p>
+<p>1． Little-endian：将低序字节存储在起始地址（低位编址）</p>
+<p>2． Big-endian：将高序字节存储在起始地址（高位编址）</p>
+<p>Big-endian 的内存顺序和数字的书写顺序是一致的，方便阅读理解。<br>Little-endian 在变量指针转换的时候地址保持不变，比如 int64* 转到 int32*</p>
+<p>各有利弊，统一就好，目前看来是 little-endian成为主流了。</p>
+<ol>
+<li>little-endain是小头端编码方式，即内存的低位对应数值低位</li>
+</ol>
+<p>Little-endian指内存地址低的地方存数据的末尾（即低字节）</p>
+<p>特点：</p>
+<p>1.最符合人的思维的字节序 </p>
+<p>2.地址低位存储值的低位 </p>
+<p>3.地址高位存储值的高位 </p>
+<p>4.怎么讲是最符合人的思维的字节序，是因为从人的第一观感来说 ：</p>
+<p>-低位值小，就应该放在内存地址小的地方，也即内存地址低位 </p>
+<p>-反之，高位值就应该放在内存地址大的地方，也即内存地址高位 </p>
+<p> <strong>举个例子：</strong>存放值12345678 </p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> 低地址 ------------------&gt; 高地址</span><br><span class="line">       ####################################################</span><br><span class="line">地址 #      <span class="number">100</span>        #     <span class="number">101</span>        #          <span class="number">102</span>       #      <span class="number">103</span>          # </span><br><span class="line">       ####################################################</span><br><span class="line">值    #<span class="number">0111</span>，<span class="number">1000</span> #<span class="number">0101</span>，<span class="number">0110</span> # <span class="number">0011</span>，<span class="number">0100</span>  #  <span class="number">0001</span>，<span class="number">0010</span>  #</span><br><span class="line">		<span class="number">7</span>    <span class="number">8</span>     <span class="number">5</span>     <span class="number">6</span>      <span class="number">3</span>    <span class="number">4</span>         <span class="number">1</span>    <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>举例的数据要看成16进制，就对了</p>
+<p>一个地址8位，一个十六进制4位</p>
+<p>所以一个地址存两个十六进制数</p>
+<ol start="2">
+<li>big-endain是大头端编码方式，即内存的高位对应数值低位</li>
+</ol>
+<p>Big-endian指内存地址高的地方存数据的末尾（即高字节）</p>
+<p>特点：</p>
+<p>1.最直观的字节序 </p>
+<p>2.地址低位存储值的高位 </p>
+<p>3.地址高位存储值的低位 </p>
+<p>4.为什么说直观，不要考虑对应关系 </p>
+<p>5.只需要把内存地址从左到右按照由低到高的顺序写出 </p>
+<p>6.把值按照通常的高位到低位的顺序写出 </p>
+<p>9.两者对照，一个字节一个字节的填充进去 </p>
+<p><strong>举个例子：</strong>存放值12345678</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">       低地址 ------------------&gt; 高地址</span><br><span class="line">       ####################################################</span><br><span class="line">地址 #      <span class="number">100</span>        #     <span class="number">101</span>        #          <span class="number">102</span>       #      <span class="number">103</span>          # </span><br><span class="line">       ####################################################</span><br><span class="line">值    # <span class="number">0001</span>，<span class="number">0010</span>  #<span class="number">0011</span>，<span class="number">0100</span> # <span class="number">0101</span>，<span class="number">0110</span>  #  <span class="number">0111</span>，<span class="number">1000</span>  #</span><br><span class="line">		<span class="number">1</span>     <span class="number">2</span>       <span class="number">3</span>    <span class="number">4</span>      <span class="number">5</span>    <span class="number">6</span>         <span class="number">7</span>    <span class="number">8</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>例：0x1234要存放进从0x4000开始的内存中</p>
+<p>在Little-endian中</p>
+<table>
+<thead>
+<tr>
+<th>内存地址</th>
+<th>存放内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0x4000</td>
+<td>0x34</td>
+</tr>
+<tr>
+<td>0x4001</td>
+<td>0x12</td>
+</tr>
+</tbody></table>
+<p>在Big-endian中</p>
+<table>
+<thead>
+<tr>
+<th>内存地址</th>
+<th>存放内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0x4000</td>
+<td>0x12</td>
+</tr>
+<tr>
+<td>0x4001</td>
+<td>0x34</td>
+</tr>
+</tbody></table>
+<p><a href="https://www.cnblogs.com/passingcloudss/archive/2011/05/03/2035273.html" target="_blank" rel="noopener external nofollow noreferrer">https://www.cnblogs.com/passingcloudss/archive/2011/05/03/2035273.html</a></p>
+<p>例子1：在内存中双字0x01020304(DWORD)的存储方式。 </p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">内存地址 <span class="number">4000</span> <span class="number">4001</span> <span class="number">4002</span> <span class="number">4003</span> </span><br><span class="line">  LE    <span class="number">04</span>  <span class="number">03</span>  <span class="number">02</span>  <span class="number">01</span> </span><br><span class="line">  BE    <span class="number">01</span>  <span class="number">02</span>  <span class="number">03</span>  <span class="number">04</span> </span><br><span class="line">注：每个地址存<span class="number">1</span>个字节，每个字有<span class="number">4</span>个字节。<span class="number">2</span>位<span class="number">16</span>进制数是<span class="number">1</span>个字节（<span class="number">0xFF</span>=<span class="number">11111111</span>）。</span><br></pre></td></tr></table></figure>
+
+
+
+<p>例子2：如果我们将0x1234abcd写入到以0x0000开始的内存中，则结果为</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">　　　　big-endian  little-endian</span><br><span class="line"><span class="number">0x0000</span>   <span class="number">0x12</span>      <span class="number">0xcd</span></span><br><span class="line"><span class="number">0x0001</span>   <span class="number">0x23</span>      <span class="number">0xab</span></span><br><span class="line"><span class="number">0x0002</span>   <span class="number">0xab</span>      <span class="number">0x34</span></span><br><span class="line"><span class="number">0x0003</span>   <span class="number">0xcd</span>      <span class="number">0x12</span></span><br><span class="line">x86系列的CPU都是little-endian的字节序。</span><br></pre></td></tr></table></figure>
+
+
+
+<p>使用方法是放在fmt的第一个位置，就像‘@5s6sif’</p>
+<p>&lt;QqQqQ8s64sQqqq</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">解释：</span></span><br><span class="line"><span class="meta">&lt;</span> : <span class="string">little-endain是小头端编码方式，即内存的低位对应数值低位;内存地址低的地方存数据的末尾（即低字节)</span></span><br><span class="line"><span class="attr">Q</span> : <span class="string">第一个字符，长度为unsigned long long；最大值为18446744073709551615</span></span><br><span class="line"><span class="attr">q</span> <span class="string">： 第二个字符，长度为long long；最大值为9223372036854775807</span></span><br><span class="line"><span class="attr">Q</span> <span class="string">： 第三个字符</span></span><br><span class="line"><span class="attr">q</span> <span class="string">： 第四个字符</span></span><br><span class="line"><span class="attr">Q</span> <span class="string">： 第五个字符</span></span><br><span class="line"><span class="attr">8s</span> <span class="string">： 第六个字符；长度为8的字符串；</span></span><br><span class="line"><span class="attr">64s：第七个字符；长度为64的字符串；</span></span><br><span class="line"><span class="attr">Q</span> <span class="string">： 第八个字符</span></span><br><span class="line"><span class="attr">q</span> <span class="string">： 第九个字符</span></span><br><span class="line"><span class="attr">q</span> <span class="string">： 第十个字符</span></span><br><span class="line"><span class="attr">q</span> <span class="string">： 第十一个字符</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Python之socket（套接字）"><a href="#Python之socket（套接字）" class="headerlink" title="Python之socket（套接字）"></a>Python之socket（套接字）</h2><p><a href="https://www.cnblogs.com/fanweibin/p/5053328.html" target="_blank" rel="noopener external nofollow noreferrer">https://www.cnblogs.com/fanweibin/p/5053328.html</a></p>
+<p><strong>一、概述</strong></p>
+<p>​    传输层实现端到端的通信，因此，每一个传输层连接有两个端点。那么传输层连接的端点是什么呢？不是主机，不是主机的IP地址，不是应用进程，也不是传输层的协议端口。 传输层连接的端点叫做套接字（socket）。</p>
+<p>根据RFC793的定义：端口号拼接到IP地址就构成了套接字。所谓套接字，实际上是一个通信端点，每个套接字都有一个套接字序号，包括主机的IP地址与一个16位的主机端口号，即形如（主机IP地址：端口号）。例如，如果IP地址是210.37.145.1，而端口号是23，那么得到套接字就是（210.37.145.1：23）。 </p>
+<p>​    总之，套接字Socket=（IP地址：端口号），套接字的表示方法是点分十进制的IP地址后面写上端口号，中间用冒号或逗号隔开。每一个传输层连接唯一地被通信两端的两个端点（即两个套接字）所确定。</p>
+<p>​    套接字可以看成是两个网络应用程序进行通信时，各自通信连接中的一个端点。通信时，其中的一个网络应用程序将要传输的一段信息写入它所在主机的Socket中，该Socket通过网络接口卡的传输介质将这段信息发送给另一台主机的Socket中，使这段信息能传送到其他程序中。因此，两个应用程序之间的数据传输要通过套接字来完成。</p>
+<p>​    在网络应用程序设计时，由于TCP/IP的核心内容被封装在操作系统中，如果应用程序要使用TCP/IP，可以通过系统提供的TCP/IP的编程接口来实现。 在Windows环境下，网络应用程序编程接口称作Windows Socket。为了支持用户开发面向应用的通信程序，大部分系统都提供了一组基于TCP或者UDP的应用程序编程接口（API），该接口通常以一组函数的形式出现，也称为套接字（Socket）。 </p>
+<p>分类</p>
+<p>为了满足不同的通信程序对通信质量和性能的要求，一般的网络系统提供了三种不同类型的套接字，以供用户在设计网络应用程序时根据不同的要求来选择。这三种套接为：流式套接字（SOCK-STREAM）、数据报套接字（SOCK-DGRAM）和原始套接字（SOCK-RAW）。 </p>
+<p>（1）流式套接字。它提供了一种<strong>可靠的、面向连接的双向数据传输服务</strong>，实现了数据无差错、无重复的发送。流式套接字内设流量控制，被传输的数据看作是无记录边界的字节流。在TCP/IP协议簇中，使用TCP协议来实现字节流的传输，当用户想要发送大批量的数据或者对数据传输有较高的要求时，可以使用流式套接字。</p>
+<p>（2）数据报套接字。它提供了一种<strong>无连接、不可靠的双向数据传输服务</strong>。数据包以独立的形式被发送，并且保留了记录边界，不提供可靠性保证。数据在传输过程中可能会丢失或重复，并且不能保证在接收端按发送顺序接收数据。在TCP/IP协议簇中，使用UDP协议来实现数据报套接字。在出现差错的可能性较小或允许部分传输出错的应用场合，可以使用数据报套接字进行数据传输，这样通信的效率较高。</p>
+<p>（3）原始套接字。该套接字允许对较低层协议（如IP或ICMP）进行直接访问，常用于网络协议分析，检验新的网络协议实现，也可用于测试新配置或安装的网络设备。</p>
+<p>套接字属性</p>
+<p>套接字的特性由3个属性确定，他们是：域、类型、协议</p>
+<p>域指定套接字通信中使用的网络介质，最常见的套接字域是AF_INET，它指的是Internet网络</p>
+<p>套接字类型</p>
+<p>一个套接字可能有多种不同的通信方式</p>
+<p>流套接字，流套接字提供一个有序，可靠，双向节流的链接，流套接字由类型SOCK_STREAM指定，它是在AF_INET域中通过TCP/IP链接实现的，这就是套接字类型（其实就是通信方式）</p>
+<p>与流套接字相反，由类型SOCK_DGRAM指定的数据报套接字不建立和维持一个连接，它对可以发送的数据长度有限制，数据报作为一个单独的网络消息被传输，它可能会丢失，复制或乱序</p>
+<p>最后一个是套接字协议，通常使用默认就可以了（也就是最后一个参数填0）</p>
+<p>调用流程：</p>
+<p><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-%E4%B8%80%E8%87%B4%E6%80%A7%E5%AF%B9%E6%AF%94/2008-01-04-BlockStorage-%E4%B8%80%E8%87%B4%E6%80%A7%E5%AF%B9%E6%AF%94%5C425762-20151212160019653-1079393936.png" alt></p>
+<img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-%E4%B8%80%E8%87%B4%E6%80%A7%E5%AF%B9%E6%AF%94/425762-20151212160019653-1079393936.png" class title="This is an example image"> 
+
+
+
+<p>bind()：指定本地地址。一个套接字用socket()创建后，它其实还没有与任何特定的本地或目的地址相关联。在很多情况下，应用程序并不关心它们使用的本地地址，这时就可以不用调用bind指定本地的地址，而由协议软件为它们选择一个。但是，在某个知名端口（Well-known Port）上操作的服务器进程必须要对系统指定本地端口。所以一旦创建了一个套接字，服务器就必须使用bind()系统调用为套接字建立一个本地地址。</p>
+<p>connect()：将套接字连接到目的地址。初始创建的套接字并未与任何外地目的地址关联。客户机可以调用connect()为套接字绑定一个永久的目的地址，将它置于已连接状态。对数据流方式的套接字，必须在传输数据前，调用connect()构造一个与目的地的TCP连接，并在不能构造连接时返回一个差错代码。如果是数据报方式，则不是必须在传输数据前调用connect。如果调用了connect()，也并不像数据流方式那样发送请求建连的报文，而是只在本地存储目的地址，以后该socket上发送的所有数据都送往这个地址，程序员就可以免去为每一次发送数据都指定目的地址的麻烦。</p>
+<p>listen()：设置等待连接状态。对于一个服务器的程序，当申请到套接字，并调用bind()与本地地址绑定后，就应该等待某个客户机的程序来要求连接。listen()就是把一个套接字设置为这种状态的函数。</p>
+<p>accept()：接受连接请求。服务器进程使用系统调用socket，bind和listen创建一个套接字，将它绑定到知名的端口，并指定连接请求的队列长度。然后，服务器调用accept进入等待状态，直到到达一个连接请求。</p>
+<p>send()/recv()和sendto()/recvfrom()：发送和接收数据 。在数据流方式中，一个连接建立以后，或者在数据报方式下，调用了connect()进行了套接字与目的地址的绑定后，就可以调用send()和reev()函数进行数据传输。 </p>
+<p>socket通常也称作”套接字”，用于描述IP地址和端口，是一个通信链的句柄，应用程序通常通过”套接字”向网络发出请求或者应答网络请求。</p>
+<p>socket起源于Unix，而Unix/Linux基本哲学之一就是“一切皆文件”，对于文件用【打开】【读写】【关闭】模式来操作。socket就是该模式的一个实现，socket即是一种特殊的文件，一些socket函数就是对其进行的操作（读/写IO、打开、关闭）</p>
+<p>socket和file的区别：</p>
+<ul>
+<li>file模块是针对某个指定文件进行【打开】【读写】【关闭】</li>
+<li>socket模块是针对 服务器端 和 客户端Socket 进行【打开】【读写】【关闭】</li>
+</ul>
+<p><strong>创建套接字</strong></p>
+<p>socket系统调用创建一个套接字并返回一个描述符，该描述符可以用来访问该套接字</p>
+<p>创建的套接字是一条通信线路的一个端点，domain参数指定协议族（使用的网络介质），type参数指定这个套接字的通信类型（通信方式），protocot参数指定使用的协议</p>
+<p>domain参数可以指定如下协议族</p>
+<p>AF_UNIX     UNIX域协议（文件系统套接字）</p>
+<p>AF_INET     ARPA因特网协议</p>
+<p>AF_ISSO     ISO标准协议</p>
+<p>AF_NS      Xerox网络协议</p>
+<p>AF_IPX     Novell IPX协议</p>
+<p>AF_APPLETALK  Appletalk DDS协议</p>
+<p>最常用的套接字域是AF_UNIX和AF_INET，前者用于通过UNIX和Linux文件系统实现本地套接字</p>
+<p>socket函数的第二个参数type指定用于新套接字的特性，它的取值包括SOCK_STREAM和SOCK_DGRAM</p>
+<p>SOCK_STREAM是一个有序，可靠，面向连接的双向字节流，一般用这个</p>
+<p>最后一个protocol参数，将参数设为0表示使用默认协议。</p>
+<p>socket_server</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line">ip_port = (<span class="string">'127.0.0.1'</span>,<span class="number">9999</span>)</span><br><span class="line"></span><br><span class="line">sk = socket.socket()</span><br><span class="line">sk.bind(ip_port)</span><br><span class="line">sk.listen(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="keyword">print</span> <span class="string">'server waiting...'</span></span><br><span class="line">    conn,addr = sk.accept()</span><br><span class="line"></span><br><span class="line">    client_data = conn.recv(<span class="number">1024</span>)</span><br><span class="line">    <span class="keyword">print</span> client_data</span><br><span class="line">    conn.sendall(<span class="string">'不要回答,不要回答,不要回答'</span>)</span><br><span class="line"></span><br><span class="line">    conn.close()</span><br><span class="line"></span><br><span class="line"><span class="comment">#socket server</span></span><br></pre></td></tr></table></figure>
+
+<p> socket_client </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line">ip_port = (<span class="string">'127.0.0.1'</span>,<span class="number">9999</span>)</span><br><span class="line"></span><br><span class="line">sk = socket.socket()</span><br><span class="line">sk.connect(ip_port)</span><br><span class="line"></span><br><span class="line">sk.sendall(<span class="string">'请求占领地球'</span>)</span><br><span class="line"></span><br><span class="line">server_reply = sk.recv(<span class="number">1024</span>)</span><br><span class="line"><span class="keyword">print</span> server_reply</span><br><span class="line"></span><br><span class="line">sk.close()</span><br><span class="line"></span><br><span class="line"><span class="comment">#socket client</span></span><br></pre></td></tr></table></figure>
+
+<p> Web实例 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handle_request</span><span class="params">(client)</span>:</span></span><br><span class="line">    buf = client.recv(<span class="number">1024</span>)</span><br><span class="line">    client.send(<span class="string">"HTTP/1.1 200 OK\r\n\r\n"</span>)</span><br><span class="line">    client.send(<span class="string">"Hello, World"</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line">    sock.bind((<span class="string">'localhost'</span>,<span class="number">8080</span>))</span><br><span class="line">    sock.listen(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        connection, address = sock.accept()</span><br><span class="line">        handle_request(connection)</span><br><span class="line">        connection.close()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">  main()</span><br><span class="line"></span><br><span class="line"><span class="comment">#Web实例</span></span><br><span class="line"><span class="comment">#执行后浏览器打开：http://10.244.25.44:8080</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>二、解释</strong></p>
+<p><strong>sk = socket.socket(socket.AF_INET,socket.SOCK_STREAM,0)</strong></p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">参数一：地址簇</span><br><span class="line"></span><br><span class="line">　　<span class="built_in">socket</span>.AF_INET IPv4（默认）</span><br><span class="line">　　<span class="built_in">socket</span>.AF_INET6 IPv6</span><br><span class="line"></span><br><span class="line">　　<span class="built_in">socket</span>.AF_UNIX 只能够用于单一的Unix系统进程间通信</span><br><span class="line"></span><br><span class="line">参数二：类型</span><br><span class="line"></span><br><span class="line">　　<span class="built_in">socket</span>.SOCK_STREAM　　流式<span class="built_in">socket</span> , <span class="keyword">for</span> TCP （默认）</span><br><span class="line">　　<span class="built_in">socket</span>.SOCK_DGRAM　　 数据报式<span class="built_in">socket</span> , <span class="keyword">for</span> UDP</span><br><span class="line"></span><br><span class="line">　　<span class="built_in">socket</span>.SOCK_RAW 原始套接字，普通的套接字无法处理ICMP、IGMP等网络报文，而SOCK_RAW可以；其次，SOCK_RAW也可以处理特殊的IPv4报文；此外，利用原始套接字，可以通过IP_HDRINCL套接字选项由用户构造IP头。</span><br><span class="line">　　<span class="built_in">socket</span>.SOCK_RDM 是一种可靠的UDP形式，即保证交付数据报但不保证顺序。SOCK_RAM用来提供对原始协议的低级访问，在需要执行某些特殊操作时使用，如发送ICMP报文。SOCK_RAM通常仅限于高级用户或管理员运行的程序使用。</span><br><span class="line">　　<span class="built_in">socket</span>.SOCK_SEQPACKET 可靠的连续数据包服务</span><br><span class="line"></span><br><span class="line">参数三：协议</span><br><span class="line"></span><br><span class="line">　　<span class="number">0</span>　　（默认）与特定的地址家族相关的协议,如果是 <span class="number">0</span> ，则系统就会根据地址格式和套接类别,自动选择一个合适的协议</span><br></pre></td></tr></table></figure>
+
+<p>  UDP demo </p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import <span class="built_in">socket</span></span><br><span class="line">ip_port = (<span class="string">'127.0.0.1'</span>,<span class="number">9999</span>)</span><br><span class="line">sk = <span class="built_in">socket</span>.<span class="built_in">socket</span>(<span class="built_in">socket</span>.AF_INET,<span class="built_in">socket</span>.SOCK_DGRAM,<span class="number">0</span>)</span><br><span class="line">sk.bind(ip_port)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> True:</span><br><span class="line">    data = sk.recv(<span class="number">1024</span>)</span><br><span class="line">    print data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import <span class="built_in">socket</span></span><br><span class="line">ip_port = (<span class="string">'127.0.0.1'</span>,<span class="number">9999</span>)</span><br><span class="line"></span><br><span class="line">sk = <span class="built_in">socket</span>.<span class="built_in">socket</span>(<span class="built_in">socket</span>.AF_INET,<span class="built_in">socket</span>.SOCK_DGRAM,<span class="number">0</span>)</span><br><span class="line"><span class="keyword">while</span> True:</span><br><span class="line">    inp = raw_input(<span class="string">'数据：'</span>).strip()</span><br><span class="line">    <span class="keyword">if</span> inp == <span class="string">'exit'</span>:</span><br><span class="line">        break</span><br><span class="line">    sk.sendto(inp,ip_port)</span><br><span class="line"></span><br><span class="line">sk.<span class="built_in">close</span>()</span><br><span class="line"><span class="comment">#UDP demo</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>sk.bind(address)</strong></p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s.bind(<span class="built_in">address</span>) 将套接字绑定到地址。<span class="built_in">address</span>地址的格式取决于地址族。在AF_INET下，以元组（host,port）的形式表示地址。</span><br></pre></td></tr></table></figure>
+
+<p><strong>sk.listen(backlog)</strong></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">开始监听传入连接。backlog指定在拒绝连接之前，可以挂起的最大连接数量。</span><br><span class="line"></span><br><span class="line">      backlog等于<span class="number">5</span>，表示内核已经接到了连接请求，但服务器还没有调用accept进行处理的连接个数最大为<span class="number">5</span></span><br><span class="line">      这个值不能无限大，因为要在内核中维护连接队列</span><br></pre></td></tr></table></figure>
+
+<p><strong>sk.setblocking(bool)</strong></p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">是否阻塞（默认<span class="literal">True</span>），如果设置<span class="literal">False</span>，那么<span class="keyword">accept</span>和recv时一旦无数据，则报错。</span><br></pre></td></tr></table></figure>
+
+<p><strong>sk.accept()</strong></p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">接受连接并返回（conn,<span class="built_in">address</span>）,其中conn是新的套接字对象，可以用来接收和发送数据。<span class="built_in">address</span>是连接客户端的地址。</span><br><span class="line"></span><br><span class="line">　　接收TCP 客户的连接（阻塞式）等待连接的到来</span><br></pre></td></tr></table></figure>
+
+<p><strong>sk.connect(address)</strong></p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">　连接到<span class="built_in">address</span>处的套接字。一般，<span class="built_in">address</span>的格式为元组（hostname,port）,如果连接出错，返回socket.error错误。</span><br></pre></td></tr></table></figure>
+
+<p><strong>sk.connect_ex(address)</strong></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">同上，只不过会有返回值，连接成功时返回 <span class="number">0</span> ，连接失败时候返回编码，例如：<span class="number">10061</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>sk.close()</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">关闭套接字</span><br></pre></td></tr></table></figure>
+
+<p><strong>sk.recv(bufsize[,flag])</strong></p>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">接受套接字的数据。数据以字符串形式返回，bufsize指定最多可以接收的数量。<span class="built_in">flag</span>提供有关消息的其他信息，通常可以忽略。</span><br></pre></td></tr></table></figure>
+
+<p><strong>sk.recvfrom(bufsize[.flag])</strong></p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">　与recv()类似，但返回值是（<span class="class"><span class="keyword">data</span>,address）。其中<span class="keyword">data</span>是包含接收数据的字符串，address是发送数据的套接字地址。</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>sk.send(string[,flag])</strong></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">将<span class="built_in">string</span>中的数据发送到连接的套接字。返回值是要发送的字节数量，该数量可能小于<span class="built_in">string</span>的字节大小。</span><br></pre></td></tr></table></figure>
+
+<p><strong>sk.sendall(string[,flag])</strong></p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">将<span class="built_in">string</span>中的数据发送到连接的套接字，但在返回之前会尝试发送所有数据。成功返回<span class="literal">None</span>，失败则抛出异常。</span><br></pre></td></tr></table></figure>
+
+<p><strong>sk.sendto(string[,flag],address)</strong></p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">将数据发送到套接字，address是形式为（ipaddr，<span class="keyword">port</span>）的元组，指定远程地址。返回值是发送的字节数。该函数主要用于UDP协议。</span><br></pre></td></tr></table></figure>
+
+<p><strong>sk.settimeout(timeout)</strong></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">设置套接字操作的超时期，timeout是一个浮点数，单位是秒。值为None表示没有超时期。一般，超时期应该在刚创建套接字时设置，因为它们可能用于连接的操作（如<span class="built_in"> client </span>连接最多等待5s ）</span><br></pre></td></tr></table></figure>
+
+<p><strong>sk.getpeername()</strong></p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">返回连接套接字的远程地址。返回值通常是元组（ipaddr,<span class="keyword">port</span>）。</span><br></pre></td></tr></table></figure>
+
+<p><strong>sk.getsockname()</strong></p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">返回套接字自己的地址。通常是一个元组(ipaddr,<span class="keyword">port</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>sk.fileno()</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">套接字的文件描述符</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> socket</span><br><span class="line">ip_port = (<span class="string">'127.0.0.1'</span>,<span class="number">9999</span>)</span><br><span class="line">sk = socket.socket(socket.AF_INET,socket.SOCK_DGRAM,<span class="number">0</span>)</span><br><span class="line">sk.bind(ip_port)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    data = sk.recv(<span class="number">1024</span>)</span><br><span class="line">    <span class="keyword">print</span> data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line">ip_port = (<span class="string">'127.0.0.1'</span>,<span class="number">9999</span>)</span><br><span class="line"></span><br><span class="line">sk = socket.socket(socket.AF_INET,socket.SOCK_DGRAM,<span class="number">0</span>)</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    inp = raw_input(<span class="string">'数据：'</span>).strip()</span><br><span class="line">    <span class="keyword">if</span> inp == <span class="string">'exit'</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    sk.sendto(inp,ip_port)</span><br><span class="line"></span><br><span class="line">sk.close()</span><br><span class="line"></span><br><span class="line"><span class="comment">#UDP Demo</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="三、实例"><a href="#三、实例" class="headerlink" title="三、实例"></a><strong>三、实例</strong></h2><h3 id="智能机器人"><a href="#智能机器人" class="headerlink" title="智能机器人"></a>智能机器人</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line">ip_port = (<span class="string">'127.0.0.1'</span>,<span class="number">8888</span>)</span><br><span class="line">sk = socket.socket()</span><br><span class="line">sk.bind(ip_port)</span><br><span class="line">sk.listen(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    conn,address =  sk.accept()</span><br><span class="line">    conn.sendall(<span class="string">'欢迎致电 10086，请输入1xxx,0转人工服务.'</span>)</span><br><span class="line">    Flag = <span class="literal">True</span></span><br><span class="line">    <span class="keyword">while</span> Flag:</span><br><span class="line">        data = conn.recv(<span class="number">1024</span>)</span><br><span class="line">        <span class="keyword">if</span> data == <span class="string">'exit'</span>:</span><br><span class="line">            Flag = <span class="literal">False</span></span><br><span class="line">        <span class="keyword">elif</span> data == <span class="string">'0'</span>:</span><br><span class="line">            conn.sendall(<span class="string">'通过可能会被录音.balabala一大推'</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            conn.sendall(<span class="string">'请重新输入.'</span>)</span><br><span class="line">    conn.close()</span><br><span class="line"></span><br><span class="line"><span class="comment">#服务端</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ip_port = (<span class="string">'127.0.0.1'</span>,<span class="number">8888</span>)</span><br><span class="line">sk = socket.socket()</span><br><span class="line">sk.connect(ip_port)</span><br><span class="line">sk.settimeout(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    data = sk.recv(<span class="number">1024</span>)</span><br><span class="line">    <span class="keyword">print</span> <span class="string">'receive:'</span>,data</span><br><span class="line">    inp = raw_input(<span class="string">'please input:'</span>)</span><br><span class="line">    sk.sendall(inp)</span><br><span class="line">    <span class="keyword">if</span> inp == <span class="string">'exit'</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">sk.close()</span><br><span class="line"></span><br><span class="line"><span class="comment">#客户端</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="具体实现脚本："><a href="#具体实现脚本：" class="headerlink" title="具体实现脚本："></a>具体实现脚本：</h1><p>gateway内部：</p>
+<p>Q uint64<br>q int64<br>64s —&gt; 64长字符串</p>
+<p><img src="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-%E4%B8%80%E8%87%B4%E6%80%A7%E5%AF%B9%E6%AF%94/%E8%8B%8F%E5%AE%81%E8%B1%86%E8%8A%BD%E5%9B%BE%E7%89%8720200526202942946.png" alt="苏宁豆芽图片20200526202942946"></p>
+<table>
+<thead>
+<tr>
+<th>Gateway的参数</th>
+<th>占位</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MessSeq</td>
+<td>uint64</td>
+</tr>
+<tr>
+<td>SendTime</td>
+<td>int64</td>
+</tr>
+<tr>
+<td>MessType</td>
+<td>uint64</td>
+</tr>
+<tr>
+<td>MetaLen</td>
+<td>int64</td>
+</tr>
+<tr>
+<td>CheckSum</td>
+<td>uint64</td>
+</tr>
+<tr>
+<td>Version</td>
+<td>uint32</td>
+</tr>
+<tr>
+<td>Flag</td>
+<td>[4]byte</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>[64]byte</td>
+</tr>
+<tr>
+<td>Offset</td>
+<td>uint64</td>
+</tr>
+<tr>
+<td>WriteDataLen</td>
+<td>int64</td>
+</tr>
+<tr>
+<td>ReadDataLen</td>
+<td>int64</td>
+</tr>
+<tr>
+<td>Result</td>
+<td>int64</td>
+</tr>
+</tbody></table>
+<p>注：</p>
+<p>之前Flag [8]byte现在拆分成uint32（Version）和[4]byte（Flag）实际还是8位，上面显示当前gateway是12个参数。从占用空间角度去数就没问题的，所以下面的gw_rw.py是11个参数就不需要调整了</p>
+<p>gw_rw.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> socket	</span><br><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GwFd</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.gwfd = socket.socket(socket.AF_INET, socket.SOCK_STREAM)<span class="comment">#IPv4(默认),流式socket</span></span><br><span class="line">        self.fmt = <span class="string">"&lt;QqQqQ8s64sQqqq"</span><span class="comment">#q和Q只在机器支持64位操作时有意思，11个字符</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">connect</span><span class="params">(self, ip, port)</span>:</span></span><br><span class="line">        self.gwfd.connect((ip,port))</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">write</span><span class="params">(self, volname,offset,buflen,buf)</span>:</span></span><br><span class="line">        sendMsg = struct.pack(self.fmt, <span class="number">0</span>, <span class="number">0</span>, <span class="number">3002</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">""</span>, volname, offset, buflen, <span class="number">0</span>, <span class="number">0</span>);<span class="comment">#按照给定的格式(fmt)，把数据封装成字符串(实际上是类似于c结构体的字节流)</span></span><br><span class="line">        <span class="comment">#data = sendMsg+buf</span></span><br><span class="line">        self.gwfd.send(sendMsg+buf)<span class="comment">#sendMsg通过struct.pack打包成字符串发给服务端gateway</span></span><br><span class="line">        </span><br><span class="line">        recvMsg = self.gwfd.recv(struct.calcsize(self.fmt))</span><br><span class="line">        r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11 = struct.unpack(self.fmt, recvMsg)</span><br><span class="line">        <span class="comment">#recvMsg表示接收了gateway的消息进行struct.unpack</span></span><br><span class="line">        <span class="keyword">return</span> r10</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">read</span><span class="params">(self,volname,offset,buflen)</span>:</span></span><br><span class="line">        sendMsg = struct.pack(self.fmt, <span class="number">0</span>, <span class="number">0</span>, <span class="number">3001</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">""</span>, volname, offset, <span class="number">0</span>, buflen, <span class="number">0</span>);</span><br><span class="line">        self.gwfd.send(sendMsg)</span><br><span class="line">        recvMsg = self.gwfd.recv(struct.calcsize(self.fmt))</span><br><span class="line">        <span class="keyword">if</span> len(recvMsg) != struct.calcsize(self.fmt):</span><br><span class="line">            print(<span class="string">"read head error"</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="string">""</span></span><br><span class="line">        r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11 = struct.unpack(self.fmt, recvMsg)</span><br><span class="line">        <span class="keyword">if</span> r11 != <span class="number">0</span>:</span><br><span class="line">            print(<span class="string">"read %s res error"</span> % volname)</span><br><span class="line">            <span class="keyword">return</span> <span class="string">""</span></span><br><span class="line">        total_data=<span class="string">""</span></span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            recvMsg2 = self.gwfd.recv(buflen)</span><br><span class="line">            total_data = total_data+recvMsg2</span><br><span class="line">            <span class="keyword">if</span> len(total_data) == r9: <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">if</span> len(total_data) != buflen:</span><br><span class="line">            print(<span class="string">"data len error"</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="string">""</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">''</span>.join(total_data)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">openVolume</span><span class="params">(self, volname)</span>:</span></span><br><span class="line">        sendMsg = struct.pack(self.fmt, <span class="number">0</span>, <span class="number">0</span>, <span class="number">3006</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">""</span>, volname, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        self.gwfd.send(sendMsg)</span><br><span class="line"></span><br><span class="line">        recvMsg = self.gwfd.recv(struct.calcsize(self.fmt))</span><br><span class="line">        r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11 = struct.unpack(self.fmt, recvMsg)</span><br><span class="line">        <span class="keyword">return</span> r11</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">size</span><span class="params">(self, volname)</span>:</span></span><br><span class="line">        sendMsg = struct.pack(self.fmt, <span class="number">0</span>, <span class="number">0</span>, <span class="number">3004</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">""</span>, volname, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        self.gwfd.send(sendMsg)</span><br><span class="line"></span><br><span class="line">        recvMsg = self.gwfd.recv(struct.calcsize(self.fmt))</span><br><span class="line">        r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11 = struct.unpack(self.fmt, recvMsg)</span><br><span class="line">        <span class="keyword">return</span> r11</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">closeVolume</span><span class="params">(self, volname)</span>:</span></span><br><span class="line">        sendMsg = struct.pack(self.fmt, <span class="number">0</span>, <span class="number">0</span>, <span class="number">3007</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">""</span>, volname, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        self.gwfd.send(sendMsg)</span><br><span class="line"></span><br><span class="line">        recvMsg = self.gwfd.recv(struct.calcsize(self.fmt))</span><br><span class="line">        r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11 = struct.unpack(self.fmt, recvMsg)</span><br><span class="line">        <span class="keyword">return</span> r11</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">removeVolume</span><span class="params">(self, volname)</span>:</span></span><br><span class="line">        sendMsg = struct.pack(self.fmt, <span class="number">0</span>, <span class="number">0</span>, <span class="number">3003</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">""</span>, volname, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        self.gwfd.send(sendMsg)</span><br><span class="line">        </span><br><span class="line">        recvMsg = self.gwfd.recv(struct.calcsize(self.fmt))</span><br><span class="line">        r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11 = struct.unpack(self.fmt, recvMsg)</span><br><span class="line">        <span class="keyword">return</span> r11</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">close</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.gwfd.close()</span><br></pre></td></tr></table></figure>
+
+<p>gw_rw_test8.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> gw_rw</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> zlib</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> optparse</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> signal</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> copy</span><br><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process, JoinableQueue</span><br><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Thread</span><br><span class="line"><span class="comment"># from Queue import Queue</span></span><br><span class="line"></span><br><span class="line">q = JoinableQueue() <span class="comment">#JoinableQueue创建队进程池</span></span><br><span class="line">logQ = JoinableQueue() <span class="comment">#JoinableQueue创建队进程池</span></span><br><span class="line"></span><br><span class="line">volUrl = <span class="string">"http://%s:8686/region/pool/vol?volume=%s"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Task</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, begin, end)</span>:</span></span><br><span class="line">        self.begin = begin</span><br><span class="line">        self.end = end</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SNBS</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, gw, target, opened=True)</span>:</span><span class="comment">#主要用来定义全局变量</span></span><br><span class="line">        self.gw = gw</span><br><span class="line">        self.target = target</span><br><span class="line">        self.opened = opened</span><br><span class="line">        self.fd = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">clear</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.fd = <span class="literal">None</span></span><br><span class="line">        self.opened = <span class="literal">True</span></span><br><span class="line">        <span class="keyword">return</span> self</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">connect</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> self.fd != <span class="literal">None</span>:</span><br><span class="line">            self.disconnect()</span><br><span class="line"></span><br><span class="line">        self.fd = gw_rw.GwFd() <span class="comment">#gw_rw为gw_rw.py,GwFd为gw_rw.py中class</span></span><br><span class="line">        self.fd.connect(self.gw, <span class="number">8585</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">disconnect</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> self.fd != <span class="literal">None</span>:</span><br><span class="line">            self.fd.close()</span><br><span class="line">            self.fd = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">open</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.connect()</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.opened:</span><br><span class="line">            ret = self.fd.openVolume(self.target)</span><br><span class="line">            <span class="keyword">if</span> ret != <span class="number">0</span>:</span><br><span class="line">                err = <span class="string">"target: "</span> + self.target + <span class="string">" gw: "</span> + \</span><br><span class="line">                    self.gw + <span class="string">" ret: "</span> + str(ret) + <span class="string">" open fail"</span></span><br><span class="line">                print(err)</span><br><span class="line">                <span class="keyword">raise</span> Exception(err)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">close</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.opened:</span><br><span class="line">            self.fd.removeVolume(self.target)</span><br><span class="line">            self.fd.closeVolume(self.target)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> self.fd != <span class="literal">None</span>:</span><br><span class="line">            self.disconnect()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">read</span><span class="params">(self, begin, length)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.fd.read(self.target, begin, length)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">size</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.fd.size(self.target)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IMG</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, localvol)</span>:</span></span><br><span class="line">        self.file = localvol</span><br><span class="line">        self.fd = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">clear</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.fd = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">open</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> self.fd != <span class="literal">None</span>:</span><br><span class="line">            self.close()</span><br><span class="line">        self.fd = open(self.file, <span class="string">'r'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">close</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> self.fd != <span class="literal">None</span>:</span><br><span class="line">            self.fd.close()</span><br><span class="line">            self.fd = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">read</span><span class="params">(self, begin, length)</span>:</span></span><br><span class="line">        self.fd.seek(begin, <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> self.fd.read(length)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Vol</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, type, gw=<span class="string">""</span>)</span>:</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.type = type</span><br><span class="line">        self.gw = gw</span><br><span class="line"></span><br><span class="line"><span class="comment"># def vol(vol):</span></span><br><span class="line"><span class="comment">#     if vol.type=="origin":</span></span><br><span class="line"><span class="comment">#         return SNBS(vol.gw, vol.Name, True)</span></span><br><span class="line"><span class="comment">#         elif vol.type=="local":</span></span><br><span class="line"><span class="comment">#             pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(gw, target, source, sourceType, blocksize, skip, count, hashMethod, process_num)</span>:</span></span><br><span class="line">    print(<span class="string">"target:"</span>, target, <span class="string">"source:"</span>, source, <span class="string">"type:"</span>, sourceType,</span><br><span class="line">          <span class="string">"bs:"</span>, blocksize, <span class="string">"skip:"</span>, skip, <span class="string">"count:"</span>, count,</span><br><span class="line">          <span class="string">"hash:"</span>, hashMethod, <span class="string">"processNum:"</span>, process_num)</span><br><span class="line"></span><br><span class="line">    tar = <span class="literal">None</span></span><br><span class="line">    src = <span class="literal">None</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        gwport = queryGW(gw, target)</span><br><span class="line">        <span class="keyword">if</span> gwport == <span class="string">""</span>:</span><br><span class="line">            targetGW = gw</span><br><span class="line">            opened = <span class="literal">False</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            targetGW = gw.split(<span class="string">":"</span>)[<span class="number">0</span>]</span><br><span class="line">            opened = <span class="literal">True</span></span><br><span class="line">        print(<span class="string">"target: %s gw: %s opend: %s"</span> % (target, targetGW, str(opened)))</span><br><span class="line">        tar = SNBS(targetGW, target, opened)</span><br><span class="line">        tar.open()</span><br><span class="line">        size = tar.size()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> sourceType == <span class="string">"origin"</span>:</span><br><span class="line">            gwport = queryGW(gw, source)</span><br><span class="line">            <span class="keyword">if</span> gwport == <span class="string">""</span>:</span><br><span class="line">                sourceGW = gw</span><br><span class="line">                opened = <span class="literal">False</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                sourceGW = gw.split(<span class="string">":"</span>)[<span class="number">0</span>]</span><br><span class="line">                opened = <span class="literal">True</span></span><br><span class="line">            print(<span class="string">"source: %s gw: %s opend: %s"</span> %</span><br><span class="line">                  (source, sourceGW, str(opened)))</span><br><span class="line">            src = SNBS(sourceGW, source, opened)</span><br><span class="line">            runTask = localCheck</span><br><span class="line">        <span class="keyword">elif</span> sourceType == <span class="string">"local"</span>:</span><br><span class="line">            src = IMG(source)</span><br><span class="line">            runTask = localCheck</span><br><span class="line">        src.open()</span><br><span class="line">        begin = <span class="number">0</span></span><br><span class="line">        <span class="keyword">if</span> skip != <span class="number">0</span>:</span><br><span class="line">            begin = blocksize * skip</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> begin &gt; size:</span><br><span class="line">            print(<span class="string">"begin offset:"</span>, begin, <span class="string">"target size:"</span>, size)</span><br><span class="line">            exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> count != <span class="number">-1</span>:</span><br><span class="line">            end = blocksize * (skip + count)</span><br><span class="line">            <span class="keyword">if</span> end &gt; size:</span><br><span class="line">                print(<span class="string">"end offset:"</span>, end, <span class="string">"target size:"</span>, size, <span class="string">"set end:"</span>, size)</span><br><span class="line">                end = min(end, size)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            end = size</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(begin + blocksize, end, blocksize):</span><br><span class="line">            task = Task(begin, i)</span><br><span class="line">            q.put(task)</span><br><span class="line">            begin = i</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> begin != end:</span><br><span class="line">            task = Task(begin, end)</span><br><span class="line">            q.put(task)</span><br><span class="line">        print(<span class="string">"generate task finish"</span>)</span><br><span class="line">        t = Thread(target=display, args=(q.qsize(),))</span><br><span class="line">        t.setDaemon(<span class="literal">True</span>)</span><br><span class="line">        t.start()</span><br><span class="line"></span><br><span class="line">        t = Thread(target=displayLog, args=(logQ,))</span><br><span class="line">        t.setDaemon(<span class="literal">True</span>)</span><br><span class="line">        t.start()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> range(process_num):</span><br><span class="line">            p = Process(target=runTask, args=(</span><br><span class="line">                copy.deepcopy(tar).clear(), copy.deepcopy(src).clear(),</span><br><span class="line">                hashMethod, q, logQ))</span><br><span class="line">            p.daemon = <span class="literal">True</span></span><br><span class="line">            p.start()</span><br><span class="line">        q.join()</span><br><span class="line">        print(<span class="string">"Finished"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                q.get_nowait()</span><br><span class="line">                q.task_done()</span><br><span class="line">            <span class="keyword">except</span>:</span><br><span class="line">                print(<span class="string">"Terminated"</span>)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        <span class="keyword">if</span> tar != <span class="literal">None</span>:</span><br><span class="line">            print(<span class="string">"closing target: %s gw: %s opend: %s"</span> %</span><br><span class="line">                  (tar.target, tar.gw, str(tar.opened)))</span><br><span class="line">            tar.close()</span><br><span class="line">        <span class="keyword">if</span> src != <span class="literal">None</span>:</span><br><span class="line">            print(<span class="string">"closing target: %s gw: %s opend: %s"</span> %</span><br><span class="line">                  (src.target, src.gw, str(src.opened)))</span><br><span class="line">            src.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">queryGW</span><span class="params">(gw, target)</span>:</span></span><br><span class="line">    r = requests.get(volUrl % (gw, target), timeout=<span class="number">5</span>)</span><br><span class="line">    res = r.json()</span><br><span class="line">    <span class="keyword">if</span> res.get(<span class="string">"error"</span>) != <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">raise</span> Exception(<span class="string">" gw: "</span> + gw + <span class="string">"vol: "</span> + target + <span class="string">" not exist"</span>)</span><br><span class="line">    <span class="keyword">return</span> r.json().get(<span class="string">"Owner"</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">localCheck</span><span class="params">(target, source, hashMethod, q, logQ)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        work = <span class="literal">True</span></span><br><span class="line">        target.open()</span><br><span class="line">        source.open()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                task = q.get()</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> work:</span><br><span class="line">                    str1 = target.read(task.begin, task.end - task.begin)</span><br><span class="line">                    str2 = source.read(task.begin, task.end - task.begin)</span><br><span class="line">                    errTimes = <span class="number">0</span></span><br><span class="line">                    <span class="keyword">for</span> method <span class="keyword">in</span> hashMethod:</span><br><span class="line">                        <span class="keyword">if</span> hashSet[method](str1) != hashSet[method](str2):</span><br><span class="line">                            errTimes += <span class="number">1</span></span><br><span class="line">                            logQ.put(<span class="string">"error offset:%d, len:%d, method:%s"</span> %</span><br><span class="line">                                    (task.begin, task.end - task.begin, method))</span><br><span class="line">                    </span><br><span class="line">                    <span class="keyword">if</span> errTimes != <span class="number">0</span>:</span><br><span class="line">                        work = <span class="literal">False</span></span><br><span class="line">            <span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">                exit(<span class="number">254</span>)</span><br><span class="line">            <span class="keyword">finally</span>:</span><br><span class="line">                q.task_done()</span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        target.close()</span><br><span class="line">        source.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">originCheck</span><span class="params">(target, source, gw, hashMethod, q, logQ)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        fd = gw_rw.GwFd()</span><br><span class="line">        fd.connect(gw, <span class="number">8585</span>)</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                task = q.get()</span><br><span class="line">                str1 = fd.read(target, task.begin, task.end - task.begin)</span><br><span class="line">                str2 = fd.read(source, task.begin, task.end - task.begin)</span><br><span class="line">                <span class="comment"># print(str1, str2)</span></span><br><span class="line">                <span class="keyword">if</span> hashMethod(str1) != hashMethod(str2):</span><br><span class="line">                    logQ.put(<span class="string">"error offset:%d, len:%d"</span> %</span><br><span class="line">                             (task.begin, task.end - task.begin))</span><br><span class="line">            <span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">                exit(<span class="number">254</span>)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">finally</span>:</span><br><span class="line">                q.task_done()</span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        fd.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">displayLog</span><span class="params">(logQ)</span>:</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        log = logQ.get()</span><br><span class="line">        print(log)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">display</span><span class="params">(total)</span>:</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> q.empty():</span><br><span class="line">        print(<span class="string">"================ task left:%d total:%d ================"</span> %</span><br><span class="line">              (q.qsize(), total))</span><br><span class="line">        time.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hashcheck</span><span class="params">(method)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">check</span><span class="params">(string)</span>:</span></span><br><span class="line">        md5 = method()</span><br><span class="line">        md5.update(string)</span><br><span class="line">        <span class="keyword">return</span> md5.hexdigest()</span><br><span class="line">    <span class="keyword">return</span> check</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">hashSet = &#123;<span class="string">"crc32"</span>: zlib.crc32,</span><br><span class="line">           <span class="string">"md5"</span>: hashcheck(hashlib.md5),</span><br><span class="line">           <span class="string">"sha1"</span>: hashcheck(hashlib.sha1)&#125;</span><br><span class="line"></span><br><span class="line">m = hashlib.md5()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">aaa</span><span class="params">(b)</span>:</span></span><br><span class="line">    m.update(b)</span><br><span class="line">    id_md5 = m.hexdigest()</span><br><span class="line">    <span class="keyword">print</span> id_md5</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line"></span><br><span class="line">    p = optparse.OptionParser()</span><br><span class="line">    p.add_option(<span class="string">'--gw'</span>, <span class="string">'-g'</span>)  <span class="comment"># gateway IP</span></span><br><span class="line">    p.add_option(<span class="string">'--target'</span>, <span class="string">'-t'</span>)  <span class="comment"># target volume</span></span><br><span class="line">    p.add_option(<span class="string">'--source'</span>, <span class="string">'-s'</span>)  <span class="comment"># source volume</span></span><br><span class="line">    <span class="comment"># source volume type (origin/local)</span></span><br><span class="line">    p.add_option(<span class="string">'--type'</span>, <span class="string">'-T'</span>, default=<span class="string">"origin"</span>)</span><br><span class="line">    p.add_option(<span class="string">'--blocksize'</span>, <span class="string">'-b'</span>, default=<span class="number">4194304</span>)  <span class="comment"># blocksize</span></span><br><span class="line">    <span class="comment"># skip k of blocksize, begin offset = blocksize * skip</span></span><br><span class="line">    p.add_option(<span class="string">'--skip'</span>, <span class="string">'-k'</span>, default=<span class="number">0</span>)</span><br><span class="line">    p.add_option(<span class="string">'--count'</span>, <span class="string">'-c'</span>, default=<span class="number">-1</span>)  <span class="comment"># block count</span></span><br><span class="line">    <span class="comment"># verify hash method, crc32 only now</span></span><br><span class="line">    p.add_option(<span class="string">'--verify'</span>, <span class="string">'-v'</span>, default=<span class="string">"crc32"</span>)</span><br><span class="line">    p.add_option(<span class="string">'--num'</span>, <span class="string">'-n'</span>, default=<span class="number">4</span>)  <span class="comment"># number of process</span></span><br><span class="line">    options, args = p.parse_args()</span><br><span class="line">    gw = options.gw</span><br><span class="line">    target = options.target</span><br><span class="line">    source = options.source</span><br><span class="line">    sourceType = options.type</span><br><span class="line">    blocksize = int(options.blocksize)</span><br><span class="line">    skip = int(options.skip)</span><br><span class="line">    count = int(options.count)</span><br><span class="line">    num = int(options.num)</span><br><span class="line"></span><br><span class="line">    h = options.verify</span><br><span class="line">    hashMethod = set()</span><br><span class="line">    <span class="keyword">if</span> h != <span class="string">"crc32"</span> <span class="keyword">and</span> h != <span class="string">"md5"</span> <span class="keyword">and</span> h != <span class="string">"sha1"</span> <span class="keyword">and</span> h != <span class="string">"all"</span>:</span><br><span class="line">        <span class="keyword">raise</span> Exception(<span class="string">"unsupport verify hash method: %s"</span> % h)</span><br><span class="line">    <span class="keyword">if</span> h == <span class="string">"crc32"</span> <span class="keyword">or</span> h == <span class="string">"all"</span>:</span><br><span class="line">        hashMethod.add(<span class="string">"crc32"</span>)</span><br><span class="line">    <span class="keyword">if</span> h == <span class="string">"md5"</span> <span class="keyword">or</span> h == <span class="string">"all"</span>:</span><br><span class="line">        hashMethod.add(<span class="string">"md5"</span>)</span><br><span class="line">    <span class="keyword">if</span> h == <span class="string">"sha1"</span> <span class="keyword">or</span> h == <span class="string">"all"</span>:</span><br><span class="line">        hashMethod.add(<span class="string">"sha1"</span>)</span><br><span class="line">    print(<span class="string">"hashMethod:"</span>, hashMethod)</span><br><span class="line">    main(gw, target, source, sourceType, blocksize, skip, count, hashMethod, num)</span><br></pre></td></tr></table></figure>
+
+<p>使用方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> 有时间复现一下磁盘损坏的问题</span><br><span class="line"><span class="number">2.</span> 文件在 全闪<span class="number">.6</span> /root/verify，本地没测。。。。 运行案例：python gw_rw_test2.py -t dev0 -s dev160 -T origin -g <span class="number">10.37</span><span class="number">.2</span><span class="number">.20</span> -n <span class="number">2</span> -v crc32 -b <span class="number">4096</span> -k <span class="number">400</span> -c <span class="number">40000</span></span><br><span class="line"><span class="number">3.</span> 各个参数</span><br><span class="line">   p. add_option(<span class="string">'--gw'</span>,<span class="string">'-g'</span>)<span class="comment"># gateway IP</span></span><br><span class="line">   p. add_option(<span class="string">'--target'</span>,<span class="string">'-t")# target volume</span></span><br><span class="line"><span class="string">   p. add_option('</span>--source<span class="string">','</span>-s<span class="string">')# source volume</span></span><br><span class="line"><span class="string">   p. add_option("--type'</span>,<span class="string">'-T'</span>, default=<span class="string">"origin"</span>)<span class="comment"># source volume type(origin/local)</span></span><br><span class="line">   p. add_option(<span class="string">'--blocksize'</span>,<span class="string">'-b'</span>, default=<span class="number">4194304</span>)<span class="comment"># blocksize</span></span><br><span class="line">   p. add_option(<span class="string">'--skip'</span>,<span class="string">'-k", default=e)# skip k of blocksize, begin offset=blocksize* skip</span></span><br><span class="line"><span class="string">   p. add_option('</span>--count<span class="string">','</span>-c<span class="string">', default=-1)# block count</span></span><br><span class="line"><span class="string">   p. add_option('</span>--verify<span class="string">','</span>-v<span class="string">', default="crc32")# verify hash method, crc32 only now</span></span><br><span class="line"><span class="string">   p. add option('</span>--num<span class="string">','</span>-n<span class="string">', default=4)# number of process</span></span><br><span class="line"><span class="string">-t是克隆卷/上传卷</span></span><br><span class="line"><span class="string">-s是原卷/本地卷</span></span><br><span class="line"><span class="string">                 </span></span><br><span class="line"><span class="string">-v all ---&gt; md5 + crc32</span></span><br><span class="line"><span class="string">-v md5 ---&gt; md5</span></span><br><span class="line"><span class="string">-v crc32 ---&gt; crc32</span></span><br><span class="line"><span class="string">-v sha1 ---&gt;sha1</span></span><br></pre></td></tr></table></figure>
+
+<p>grpc（gateway和master之间，查询卷之类），因为效率的问题</p>
+<p>tcp接口</p>
+<p>HTTP接口（应用层）-</p>
+
+    </div>
+
+    
+    
+    
+      
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-%E4%B8%80%E8%87%B4%E6%80%A7%E5%AF%B9%E6%AF%94/" title="BlockStorage-一致性对比">https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-一致性对比/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/BlockStorage-%E4%B8%80%E8%87%B4%E6%80%A7%E5%AF%B9%E6%AF%94/" rel="tag"># BlockStorage-一致性对比</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-%E5%8A%9F%E8%83%BD/" rel="prev" title="BlockStorage-功能">
+      <i class="fa fa-chevron-left"></i> BlockStorage-功能
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-tool/" rel="next" title="BlockStorage-tool">
+      BlockStorage-tool <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#crc32"><span class="nav-text">crc32</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#md5，sha1（安全领域）"><span class="nav-text">md5，sha1（安全领域）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sha1"><span class="nav-text">sha1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#比较对比"><span class="nav-text">比较对比</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#python实现方式"><span class="nav-text">python实现方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#md5"><span class="nav-text">md5:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SHA1"><span class="nav-text">SHA1:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CRC32"><span class="nav-text">CRC32:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基础积累"><span class="nav-text">基础积累</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Python使用struct处理二进制"><span class="nav-text">Python使用struct处理二进制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python之socket（套接字）"><span class="nav-text">Python之socket（套接字）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、实例"><span class="nav-text">三、实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#智能机器人"><span class="nav-text">智能机器人</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#具体实现脚本："><span class="nav-text">具体实现脚本：</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">What hurts more, the pain of hard work or the pain of regret?</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">34:51</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

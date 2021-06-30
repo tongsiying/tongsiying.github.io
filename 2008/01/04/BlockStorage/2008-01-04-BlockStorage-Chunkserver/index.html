@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="BlockStorage-Chunkserver">
+<meta property="og:url" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-Chunkserver/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2008-01-04T10:37:19.000Z">
+<meta property="article:modified_time" content="2021-02-12T03:48:20.865Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="BlockStorage-Chunkserver">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-Chunkserver/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>BlockStorage-Chunkserver | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">嘻嘻嘻嘻嘻嘻</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-Chunkserver/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="What hurts more, the pain of hard work or the pain of regret?">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          BlockStorage-Chunkserver
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2008-01-04 18:37:19" itemprop="dateCreated datePublished" datetime="2008-01-04T18:37:19+08:00">2008-01-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-02-12 11:48:20" itemprop="dateModified" datetime="2021-02-12T11:48:20+08:00">2021-02-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BlockStorage/" itemprop="url" rel="index"><span itemprop="name">BlockStorage</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>16k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>14 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+<h1 id="001-chunkserver理解"><a href="#001-chunkserver理解" class="headerlink" title="001-chunkserver理解"></a>001-chunkserver理解</h1><figure class="highlight stan"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">chunkserver理解</span><br><span class="line">https:<span class="comment">//zhidao.baidu.com/question/541048918.html</span></span><br><span class="line">一、<span class="title">data</span> <span class="built_in">block</span> , extent 和 <span class="built_in">segment</span>的区别：</span><br><span class="line"><span class="number">1</span>、<span class="built_in">block</span>：是Oracle中存储数据块的最小单位，所以数据最终都是存储在<span class="built_in">block</span>中。它也被称为逻辑blocks或是页（pages）。每个操作系统都有自己的<span class="built_in">block</span> <span class="built_in">size</span>。而这里的<span class="built_in">block</span>是Oracle自己的，不同于OS的blocks。可以通过设置DB_BLOCK_SIZE设置Oracle的<span class="built_in">block</span>为OS的<span class="built_in">block</span>的几倍，从而减少不必要的I/O。不管<span class="built_in">block</span>中存放的数据是表、索引还是clusterdata，<span class="built_in">block</span>的结构都是一致。</span><br><span class="line"><span class="number">2</span>、extent：extent</span><br><span class="line">是每次分配给一个对象的逻辑最小单位，是由一定数量连续的<span class="built_in">block</span>组成。一个或多个extent又组成了一个<span class="built_in">segment</span>。</span><br><span class="line"><span class="number">3</span>、<span class="built_in">segment</span>：它是extents的集合，它包含了在表空间中所包含的具体逻辑存储机构的所有extents。例如一个未分区的table，index,cluster被成为一个段，一个被分区的index，table的一个partition 被成为一个段。对temporary <span class="built_in">segment</span>，主要用于排序等操作，只有当DB的内存无法存放相应的排序操作并无法找到其他更好的解决办法时，才会在临时表空间中创建temporarysegment。</span><br><span class="line"></span><br><span class="line">二、<span class="title">data</span> <span class="built_in">block</span>是数据库中最小的逻辑存储单元。当数据库的对象需要更多的物理存储空间时，连续的<span class="title">data</span> <span class="built_in">block</span>就组成了extent。一个数据库对象拥有的所有extents被称为该对象的<span class="built_in">segment</span>.</span><br><span class="line">https:<span class="comment">//www.cnblogs.com/foxmailed/archive/2012/01/05/2313477.html</span></span><br><span class="line">GFS 论文笔记</span><br><span class="line">https:<span class="comment">//www.cnblogs.com/xybaby/p/8967424.html</span></span><br><span class="line">典型分布式系统分析: GFS</span><br><span class="line">https:<span class="comment">//www.cnblogs.com/youngerchina/archive/2011/12/15/5624646.html</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">chunkserver都是追加写</span></span><br><span class="line"><span class="keyword">为啥vdbench测试随机写和顺序写有区别呢？</span></span><br><span class="line"><span class="keyword">原因：gateway顺序写会进行写合并，因为都是写一个extent；随机写是机率性合并，所有随机写的性能好于顺序写</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">15.</span>记录</span><br><span class="line">使用率超过<span class="number">90</span>%的情况下就不能新建extent了，</span><br><span class="line">使用率超过<span class="number">95</span>%  chunkserver就不接收写操作了。 </span><br><span class="line">kill进程启动不会触发修复</span><br><span class="line">kill <span class="number">-9</span> 进程启动会触发修复</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="002-扫描工具"><a href="#002-扫描工具" class="headerlink" title="002-扫描工具"></a>002-扫描工具</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">接口：</span><br><span class="line">1.获取进度</span><br><span class="line">curl -X GET "http://127.0.0.1:8080/snbs/selfscan?pretty=y"</span><br><span class="line"></span><br><span class="line">2.启动扫描所有磁盘</span><br><span class="line">curl -X POST "http://127.0.0.1:8080/snbs/selfscan?optype=<span class="keyword">start</span><span class="string">"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">3.启动扫描指定磁盘</span></span><br><span class="line"><span class="string">curl -X POST "</span><span class="keyword">http</span>://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8080</span>/snbs/selfscan?optype=<span class="keyword">start</span>&amp;devs=sdc,sdb,sda<span class="string">" </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">4.暂停扫描</span></span><br><span class="line"><span class="string">curl -X POST "</span><span class="keyword">http</span>://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8080</span>/snbs/selfscan?optype=<span class="keyword">suspend</span><span class="string">"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">6.继续扫描</span></span><br><span class="line"><span class="string">curl -X POST "</span><span class="keyword">http</span>://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8080</span>/snbs/selfscan?optype=proceed<span class="string">"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">7.关闭扫描</span></span><br><span class="line"><span class="string">curl -X POST "</span><span class="keyword">http</span>://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8080</span>/snbs/selfscan?optype=<span class="keyword">stop</span><span class="string">"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">8.启动扫描extent列表</span></span><br><span class="line"><span class="string">curl -X POST http://10.37.2.15:8080/snbs/selfscan?optype=start&amp;chunkid=94e9339792adecfa66b62804,9ije008779ioifuf9"</span> </span><br><span class="line"></span><br><span class="line"><span class="number">9.</span>dbh级别的接口</span><br><span class="line">以上接口启动接口加上&amp;<span class="keyword">level</span>=dbh</span><br><span class="line">&amp;<span class="keyword">level</span>=dbh</span><br><span class="line">curl -X POST <span class="string">"http://127.0.0.1:8080/snbs/selfscan?optype=start&amp;level=dbh"</span></span><br><span class="line"></span><br><span class="line"><span class="number">10.</span>是否修复：</span><br><span class="line">curl -X POST “<span class="keyword">http</span>://<span class="number">10.37</span><span class="number">.2</span><span class="number">.15</span>:<span class="number">8080</span>/snbs/selfscan?optype=<span class="keyword">start</span>&amp;<span class="keyword">level</span>=dbh&amp;<span class="keyword">repair</span>=<span class="literal">true</span><span class="string">"</span></span><br><span class="line"><span class="string">true代表及时修复，不带和带其他表示不及时修复，仅仅扫描</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="003-设置回收、碎片时间"><a href="#003-设置回收、碎片时间" class="headerlink" title="003-设置回收、碎片时间"></a>003-设置回收、碎片时间</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>设置chunkserver回收时间</span><br><span class="line">curl <span class="string">"http://127.0.0.1:8080/snbs/setrecyclestrgy?strgy=00:01-23:59"</span></span><br><span class="line">strgy：格式：<span class="number">12</span>:<span class="number">00</span><span class="number">-14</span>:<span class="number">00</span>   </span><br><span class="line"><span class="keyword">switch</span>：默认值：无，代表沿用现有；数据类型：<span class="number">0</span>/<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>设置chunkserver碎片整理时间</span><br><span class="line">curl <span class="string">"http://127.0.0.1:8080/snbs/setdefragstrgy?strgy=00:01-23:59"</span></span><br><span class="line">strgy：格式：<span class="number">12</span>:<span class="number">00</span><span class="number">-14</span>:<span class="number">00</span>   </span><br><span class="line"><span class="keyword">switch</span>：默认值：无，代表沿用现有；数据类型：<span class="number">0</span>/<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>master侧设置全局</span><br><span class="line">curl -X PUT <span class="string">"http://127.0.0.1:8787/service/param?service=chunkserver&amp;ipport=public&amp;param=DefragSwitch&amp;value=1,2"</span> -v</span><br><span class="line">curl -X PUT <span class="string">"http://127.0.0.1:8787/service/param?service=chunkserver&amp;ipport=public&amp;param=VacuumSwitch&amp;value=1,10"</span> -v</span><br><span class="line"></span><br><span class="line"><span class="number">4.</span>检查参数是否生效</span><br><span class="line">curl -s <span class="string">"http://127.0.0.1:8080/sys/debug/config?pretty=y"</span>|grep -E <span class="string">"VacuumSwitch|DefragSwitch|VacuumStrgy|DefragStrgy"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">curl -X GET <span class="string">"http://127.0.0.1:8787/service/param?service=chunkserver&amp;ipport=public&amp;param=VacuumSwitch&amp;value"</span></span><br><span class="line"></span><br><span class="line">curl -X GET <span class="string">"http://127.0.0.1:8787/service/param?service=chunkserver&amp;ipport=public&amp;param=DefragSwitch"</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="004-配置文件参数解释"><a href="#004-配置文件参数解释" class="headerlink" title="004-配置文件参数解释"></a>004-配置文件参数解释</h1><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="string">.查看参数设置</span></span><br><span class="line"><span class="string">curl</span> <span class="string">"http://127.0.0.1:8080/sys/debug/config?pretty=y"</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="attr">"Port":</span> <span class="number">9595</span><span class="string">,</span></span><br><span class="line"><span class="attr">"PprofPort":</span> <span class="number">7772</span><span class="string">,</span></span><br><span class="line"><span class="attr">"RestfulPort":</span> <span class="number">7776</span><span class="string">,</span></span><br><span class="line"><span class="attr">"Master":</span> <span class="string">"10.243.0.129:9696,10.243.0.130:9696,10.243.0.131:9696"</span><span class="string">,</span></span><br><span class="line"><span class="attr">"HeartBeatInterval":</span> <span class="number">8</span><span class="string">,</span></span><br><span class="line"><span class="attr">"VolDev":</span> <span class="string">"sdd,sde,sdf,sdg,sdh,sdi,sdj,sdk"</span><span class="string">,</span></span><br><span class="line"><span class="attr">"RcacheDev":</span> <span class="string">"sdc1"</span><span class="string">,</span>  <span class="comment">#读缓存</span></span><br><span class="line"><span class="attr">"WcacheDev":</span> <span class="string">"sdc2"</span><span class="string">,</span> <span class="comment">#写缓存</span></span><br><span class="line"><span class="attr">"VacuumSwitch":</span> <span class="number">1</span><span class="string">,#1</span> <span class="string">是开，0是关</span></span><br><span class="line"><span class="attr">"VacuumStrgy":</span> <span class="string">"0:01-23:59"</span><span class="string">,#垃圾回收</span></span><br><span class="line"><span class="attr">"MinSegmentTimeLife":</span> <span class="number">120</span><span class="string">,</span></span><br><span class="line"><span class="attr">"MinCheckpointTimeLife":</span> <span class="number">300</span><span class="string">,</span></span><br><span class="line"><span class="attr">"MinCheckpointSeqLife":</span> <span class="number">256</span><span class="string">,</span></span><br><span class="line"><span class="attr">"MaxCheckpointSeqLife":</span> <span class="number">4096</span><span class="string">,</span></span><br><span class="line"><span class="attr">"RecycleTap":</span> <span class="number">500</span><span class="string">,</span></span><br><span class="line"><span class="attr">"DefragSwitch":</span> <span class="number">1</span><span class="string">,</span></span><br><span class="line"><span class="attr">"DefragStrgy":</span> <span class="string">"0:01-23:59"</span><span class="string">,#碎片整理</span></span><br><span class="line"><span class="attr">"DefragQuota":</span> <span class="number">0.3</span><span class="string">,</span></span><br><span class="line"><span class="attr">"DefragExtentThreshold":</span> <span class="number">67108864</span><span class="string">,</span></span><br><span class="line"><span class="attr">"DefragBlockThreshold":</span> <span class="number">262144</span><span class="string">,</span></span><br><span class="line"><span class="attr">"DefragLastWrite":</span> <span class="number">2592000</span><span class="string">,</span></span><br><span class="line"><span class="attr">"DefragTap":</span> <span class="number">1000</span><span class="string">,</span></span><br><span class="line"><span class="attr">"DefragThreshold":</span> <span class="number">0.7</span><span class="string">,</span></span><br><span class="line"><span class="attr">"DefragMaxAliveObjSum":</span> <span class="number">10</span><span class="string">,</span></span><br><span class="line"><span class="attr">"DefragInterval":</span> <span class="number">21600</span><span class="string">,</span></span><br><span class="line"><span class="attr">"StaticSwitch":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line"><span class="attr">"SegmentUsedRatio":</span> <span class="number">0.95</span><span class="string">,</span></span><br><span class="line"><span class="attr">"MaxRepairThreadSum":</span> <span class="number">10</span><span class="string">,</span></span><br><span class="line"><span class="attr">"MaxCheckThreadSum":</span> <span class="number">10</span><span class="string">,</span></span><br><span class="line"><span class="attr">"MaxMigrateThreadSum":</span> <span class="number">2</span><span class="string">,</span></span><br><span class="line"><span class="attr">"SysOpUploadMaxTps":</span> <span class="number">10</span><span class="string">,</span></span><br><span class="line"><span class="attr">"SysOpUploadMaxRate":</span> <span class="number">640</span><span class="string">,</span></span><br><span class="line"><span class="attr">"SysOpDownloadMaxTps":</span> <span class="number">10</span><span class="string">,</span></span><br><span class="line"><span class="attr">"SysOpDownloadMaxRate":</span> <span class="number">640</span><span class="string">,</span></span><br><span class="line"><span class="attr">"MigrateUploadMaxTps":</span> <span class="number">10</span><span class="string">,</span></span><br><span class="line"><span class="attr">"MigrateUploadMaxRate":</span> <span class="number">640</span><span class="string">,</span></span><br><span class="line"><span class="attr">"MigrateDownloadMaxTps":</span> <span class="number">10</span><span class="string">,</span></span><br><span class="line"><span class="attr">"MigrateDownloadMaxRate":</span> <span class="number">640</span><span class="string">,</span></span><br><span class="line"><span class="attr">"CloneOpUploadMaxTps":</span> <span class="number">10</span><span class="string">,</span></span><br><span class="line"><span class="attr">"CloneOpUploadMaxRate":</span> <span class="number">640</span><span class="string">,</span></span><br><span class="line"><span class="attr">"CloneOpDownloadMaxTps":</span> <span class="number">10</span><span class="string">,</span></span><br><span class="line"><span class="attr">"CloneOpDownloadMaxRate":</span> <span class="number">64</span><span class="string">,</span></span><br><span class="line"><span class="attr">"ClientOpTimeOut":</span> <span class="number">30</span><span class="string">,</span></span><br><span class="line"><span class="attr">"ReadConcurrentNum":</span> <span class="number">16</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="005-统计"><a href="#005-统计" class="headerlink" title="005-统计"></a>005-统计</h1><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="string">.查看chunkserver</span> <span class="string">各个磁盘的tps统计</span></span><br><span class="line"><span class="string">curl</span> <span class="string">-X</span> <span class="string">GET</span> <span class="string">"http://127.0.0.1:7776/snbs/stats?pretty=y"</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line">  <span class="attr">"DefragStat":</span> <span class="string">&#123;#碎片整理信息</span></span><br><span class="line">    <span class="attr">"ChipSum":</span> <span class="number">4949</span><span class="string">,#过去24小时整理的碎片数量</span></span><br><span class="line">    <span class="attr">"ChipSize":</span> <span class="number">245198848</span><span class="string">,#过去24小时，共整理的碎片大小</span></span><br><span class="line">    <span class="attr">"RunTimes":</span> <span class="number">1164</span><span class="comment">#过去24小时一共执行了多少轮碎片整理</span></span><br><span class="line">  <span class="string">&#125;,</span></span><br><span class="line">  <span class="attr">"RecycleStat":</span> <span class="string">&#123;#空间回收信息</span></span><br><span class="line">    <span class="attr">"RecycleSegmentSum":</span> <span class="number">8</span><span class="string">,#过去24小时空间回收的segment个数</span></span><br><span class="line">    <span class="attr">"DegradedSegmentSum":</span> <span class="number">0</span><span class="string">,#过去24小时，触发了回收阈值整理但是实际不能回收的segment（属于问题segment）</span></span><br><span class="line">    <span class="attr">"RunTimes":</span> <span class="number">1174</span><span class="comment">#过去24小时一共执行了多少轮空间回收</span></span><br><span class="line">  <span class="string">&#125;,</span></span><br><span class="line">  <span class="attr">"chunkserver":</span> <span class="string">&#123;#Chunkserver</span> <span class="string">是总的统计</span></span><br><span class="line">    <span class="attr">"SessionName":</span> <span class="string">"chunkserver"</span><span class="string">,</span></span><br><span class="line">    <span class="attr">"op":</span> <span class="string">&#123;#op系统操作，创建、删除、快照、克隆</span></span><br><span class="line">      <span class="attr">"AvgDelay":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"AvgSize":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"ErrCount":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"MaxDelay":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"MaxSize":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"MinDelay":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"MinSize":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"TotalCount":</span> <span class="number">0</span></span><br><span class="line">    <span class="string">&#125;,</span></span><br><span class="line">    <span class="attr">"read":</span> <span class="string">&#123;#读操作</span></span><br><span class="line">      <span class="attr">"AvgDelay":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"AvgSize":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"ErrCount":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"MaxDelay":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"MaxSize":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"MinDelay":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"MinSize":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"TotalCount":</span> <span class="number">0</span></span><br><span class="line">    <span class="string">&#125;,</span></span><br><span class="line">    <span class="attr">"write":</span> <span class="string">&#123;#写操作</span></span><br><span class="line">      <span class="attr">"AvgDelay":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"AvgSize":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"ErrCount":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"MaxDelay":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"MaxSize":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"MinDelay":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"MinSize":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"TotalCount":</span> <span class="number">0</span><span class="comment">#总的操作数量</span></span><br><span class="line">    <span class="string">&#125;</span></span><br><span class="line">  <span class="string">&#125;,</span></span><br><span class="line">  <span class="attr">"vdc":</span> <span class="string">&#123;</span></span><br><span class="line">    <span class="attr">"SessionName":</span> <span class="string">"vdc"</span><span class="string">,</span></span><br><span class="line">    <span class="attr">"op":</span> <span class="string">&#123;</span></span><br><span class="line">      <span class="attr">"AvgDelay":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"AvgSize":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"ErrCount":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"MaxDelay":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"MaxSize":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"MinDelay":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"MinSize":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"TotalCount":</span> <span class="number">0</span></span><br><span class="line">    <span class="string">&#125;,</span></span><br><span class="line">    <span class="attr">"read":</span> <span class="string">&#123;</span></span><br><span class="line">      <span class="attr">"AvgDelay":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"AvgSize":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"ErrCount":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"MaxDelay":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"MaxSize":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"MinDelay":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"MinSize":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"TotalCount":</span> <span class="number">0</span></span><br><span class="line">    <span class="string">&#125;,</span></span><br><span class="line">    <span class="attr">"write":</span> <span class="string">&#123;</span></span><br><span class="line">      <span class="attr">"AvgDelay":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"AvgSize":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"ErrCount":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"MaxDelay":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"MaxSize":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"MinDelay":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"MinSize":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line">      <span class="attr">"TotalCount":</span> <span class="number">0</span></span><br><span class="line">    <span class="string">&#125;</span></span><br><span class="line">  <span class="string">&#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2</span><span class="string">.查看chunkserver</span> <span class="string">的空间使用/缓存命中</span> <span class="string">统计</span></span><br><span class="line"><span class="string">curl</span> <span class="string">-X</span> <span class="string">GET</span> <span class="string">"http://127.0.0.1:8080/snbs/states?pretty=y"</span></span><br><span class="line"><span class="attr">"vdb4":</span> <span class="string">&#123;</span></span><br><span class="line"><span class="attr">"DevStat":</span> <span class="string">&#123;#磁盘使用统计信息</span></span><br><span class="line"><span class="attr">"ReadCount":</span> <span class="number">17616603</span><span class="string">,//这个磁盘自从格式化到现在的读次数</span></span><br><span class="line"><span class="attr">"WriteCount":</span> <span class="number">11599415</span><span class="string">,//这个磁盘自从格式化到现在的写次数</span></span><br><span class="line"><span class="attr">"ReadBytes":</span> <span class="number">1685985746944</span><span class="string">,//这个磁盘自从格式化到现在的读大小</span></span><br><span class="line"><span class="attr">"WriteBytes":</span> <span class="number">796305776640</span><span class="string">,//这个磁盘自从格式化到现在的写大小</span></span><br><span class="line"><span class="attr">"DiskErrCount":</span> <span class="number">0</span><span class="string">,//磁盘读写出错的次数</span></span><br><span class="line"><span class="attr">"DiskSlowCount":</span> <span class="number">4772</span><span class="string">,//磁盘慢操作的次数（慢操作的阈值？？？）</span></span><br><span class="line"><span class="attr">"DiskEvents":</span> <span class="string">[//磁盘事件？？？？怎么统计或则计算</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="attr">"Type":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line"><span class="attr">"OccurFreq":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line"><span class="attr">"OccurTime":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line"><span class="attr">"OccurPos":</span> <span class="number">0</span></span><br><span class="line"><span class="string">&#125;,</span></span><br><span class="line"><span class="string">]</span></span><br><span class="line"><span class="string">&#125;,</span></span><br><span class="line"><span class="attr">"LogSegmentCurrent":</span> <span class="number">83494</span><span class="string">,#这个磁盘有的总segment数量</span></span><br><span class="line"><span class="attr">"LogSegmentEnd":</span> <span class="number">267164</span><span class="string">,</span></span><br><span class="line"><span class="attr">"LogSegmentOffset":</span> <span class="number">290816</span><span class="string">,#现在的偏移</span></span><br><span class="line"><span class="attr">"LogSegmentStart":</span> <span class="number">0</span><span class="string">,</span></span><br><span class="line"><span class="attr">"SegmentSeqCurrent":</span> <span class="number">180728</span><span class="string">,#现在的segment位置</span></span><br><span class="line"><span class="attr">"SegmentSize":</span> <span class="number">4194304</span><span class="string">,</span></span><br><span class="line"><span class="attr">"SegmentTotNum":</span> <span class="number">118001</span><span class="string">,</span> <span class="comment">#现在的segment的seq（不同于位置，是个递增的）</span></span><br><span class="line"><span class="attr">"SegmentTotSize":</span> <span class="number">494932066304</span><span class="string">,#segment总大小</span></span><br><span class="line"><span class="attr">"SpaceStat":</span> <span class="string">&#123;</span> <span class="comment">#空间统计信息（VolumeStat）</span></span><br><span class="line"><span class="attr">"Total":</span> <span class="number">494932066304</span><span class="string">,//总大小</span></span><br><span class="line"><span class="attr">"Used":</span> <span class="number">132393205760</span><span class="string">,//已用</span></span><br><span class="line"><span class="attr">"Inited":</span> <span class="number">362538860544</span><span class="string">,//没使用</span></span><br><span class="line"><span class="attr">"ActualUsed":</span> <span class="number">126294142976</span><span class="string">,#//实际保存数据大小</span></span><br><span class="line"><span class="attr">"ActualRef":</span> <span class="number">60382912512</span><span class="string">,#//被引用的大小</span></span><br><span class="line"><span class="attr">"ActualDel":</span> <span class="number">65911230464</span><span class="string">,#//实际已经删除的;为引用计数为0的实际segment大小。ObjectDelNum</span>  <span class="string">为引用计数为0的segment中保存的object数量</span></span><br><span class="line"><span class="attr">"ObjectNum":</span> <span class="number">5751889</span><span class="string">,</span></span><br><span class="line"><span class="attr">"ObjectRefNum":</span> <span class="number">1611930</span><span class="string">,</span></span><br><span class="line"><span class="attr">"ObjectDelNum":</span> <span class="number">4139959</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">&#125;,</span></span><br><span class="line"><span class="attr">"volumeTot":</span> <span class="number">2</span>   <span class="comment">#一共几个磁盘</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="string">ActualDel/ActualUsed=垃圾率，待回收的</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="006-磁盘碎片度"><a href="#006-磁盘碎片度" class="headerlink" title="006-磁盘碎片度"></a>006-磁盘碎片度</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>触发磁盘碎片度计算</span><br><span class="line">curl -X GET <span class="string">"http://127.0.0.1:8080/snbs/analyzefrag"</span></span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>获取磁盘最近一次计算的碎片度</span><br><span class="line">curl -X GET <span class="string">"http://127.0.0.1:7776/snbs/getfragstat"</span></span><br><span class="line">结果:</span><br><span class="line">&#123;</span><br><span class="line"><span class="string">"LastRunTime"</span>: <span class="string">"2019-07-31T15:16:47.038642949+08:00"</span>,   #碎片整理的执行时间</span><br><span class="line"><span class="string">"IsRunning"</span>: <span class="literal">false</span>,    #现在是否正在执行</span><br><span class="line"><span class="string">"FragStat"</span>: &#123;</span><br><span class="line"><span class="string">"vdb3"</span>: &#123;</span><br><span class="line"><span class="string">"chipsum"</span>: <span class="number">71928</span>,     #零散的碎片数量</span><br><span class="line"><span class="string">"fragvalue"</span>: <span class="number">0.14814044453973393</span>,   #碎片度。<span class="number">0</span><span class="number">-1</span>之间，越大表示碎片越厉害</span><br><span class="line"><span class="string">"totalsize"</span>: <span class="number">2086170624</span>     #总的存活的数据大小（业务数据+元数据，不包括segment的头以及留白）</span><br><span class="line">&#125;,</span><br><span class="line"><span class="string">"vdb4"</span>: &#123;</span><br><span class="line"><span class="string">"chipsum"</span>: <span class="number">61720</span>,</span><br><span class="line"><span class="string">"fragvalue"</span>: <span class="number">0.12536954112597834</span>,</span><br><span class="line"><span class="string">"totalsize"</span>: <span class="number">1692164096</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;,</span><br><span class="line"><span class="string">"ChipStat"</span>: [  #碎片的分布，第一个表示<span class="number">4</span>K的，第二个表示<span class="number">8</span>K的。。。</span><br><span class="line"><span class="number">773</span>,   <span class="comment">//4K个数</span></span><br><span class="line"><span class="number">104498</span>, <span class="comment">//8K个数</span></span><br><span class="line"><span class="number">67</span>,  <span class="comment">//12K个数</span></span><br><span class="line"><span class="number">40</span>, <span class="comment">//16K个数</span></span><br><span class="line"><span class="number">29</span>, <span class="comment">//20K个数</span></span><br><span class="line"><span class="number">33</span>, <span class="comment">//24K个数</span></span><br><span class="line"><span class="number">44</span>,  <span class="comment">//28K个数</span></span><br><span class="line"><span class="number">45</span>,  <span class="comment">//32K个数</span></span><br><span class="line"><span class="number">29</span>,<span class="comment">//36K 个数</span></span><br><span class="line"><span class="number">43</span>, <span class="comment">//40K个数</span></span><br><span class="line"><span class="number">46</span>, <span class="comment">//44K个数</span></span><br><span class="line"><span class="number">30</span>, <span class="comment">//48K个数</span></span><br><span class="line"><span class="number">29</span>, <span class="comment">//52K个数</span></span><br><span class="line"><span class="number">36</span>, </span><br><span class="line"><span class="number">84</span>, <span class="comment">//60K个数</span></span><br><span class="line"><span class="number">22255</span>, <span class="comment">//64K个数</span></span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">依次+<span class="number">4</span>k</span><br><span class="line">]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="007-调试接口"><a href="#007-调试接口" class="headerlink" title="007-调试接口"></a>007-调试接口</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line">其他开发/白盒常用</span><br><span class="line">/sys/debug  是跟开发相关</span><br><span class="line">/sys            是自身相关</span><br><span class="line">/snbs          是给别人用的命令</span><br><span class="line">/sys/debug/config</span><br><span class="line">/sys/debug/extentlist</span><br><span class="line">/sys/debug/extenthead?chunkid=asd/sys/debug/extentstatus?chunkid=asd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">1.清空chunkserver 的缓存命中统计</span><br><span class="line">curl -X GET "http://127.0.0.1:8080/snbs/<span class="keyword">cache</span>/state/clean<span class="string">"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">2.修改日志级别</span></span><br><span class="line"><span class="string">curl "</span><span class="keyword">http</span>://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8080</span>/<span class="keyword">log</span>?v=<span class="number">4</span><span class="string">"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">3.查看chunkserver的io统计</span></span><br><span class="line"><span class="string">curl "</span><span class="keyword">http</span>://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8080</span>/<span class="keyword">sys</span>/debug/iodelayon<span class="string">"</span></span><br><span class="line"><span class="string">curl "</span><span class="keyword">http</span>://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8080</span>/<span class="keyword">sys</span>/debug/iodelayoff<span class="string">"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">4.查询node上的extentid信息</span></span><br><span class="line"><span class="string">curl "</span><span class="keyword">http</span>://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8080</span>/<span class="keyword">sys</span>/debug/extentlist?pretty=y<span class="string">"</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">"</span>vdb3<span class="string">": [</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">"</span>extentId<span class="string">": "</span><span class="number">00000000003e8</span>fc00000004f<span class="string">",</span></span><br><span class="line"><span class="string">"</span><span class="keyword">size</span><span class="string">": 268435456,</span></span><br><span class="line"><span class="string">"</span>ExtentType<span class="string">": 2,</span></span><br><span class="line"><span class="string">"</span>tranSeq<span class="string">": 1,</span></span><br><span class="line"><span class="string">"</span>createTime<span class="string">": 1569501808946106623,</span></span><br><span class="line"><span class="string">"</span>devName<span class="string">": "",</span></span><br><span class="line"><span class="string">"</span><span class="keyword">status</span><span class="string">": 0,</span></span><br><span class="line"><span class="string">"</span>hasClone<span class="string">": false</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">],</span></span><br><span class="line"><span class="string">"</span>volumeTot<span class="string">": 2</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">5.查看chunkid对应的seq</span></span><br><span class="line"><span class="string">curl -X GET "</span><span class="keyword">http</span>://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8080</span>/<span class="keyword">sys</span>/debug/extentstatus?chunkid=<span class="number">000000000007</span>a1d4000000b3&amp;pretty=y<span class="string">"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">6.移除指定extent（出现不能修复的extent的情况下，需要删除extent）</span></span><br><span class="line"><span class="string">curl -X GET "</span><span class="keyword">http</span>://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8080</span>/<span class="keyword">sys</span>/debug/extentdel?chunkid=<span class="number">0000000001</span>d164a200000005<span class="string">"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">9.触发全量检验</span></span><br><span class="line"><span class="string">curl -X GET "</span><span class="keyword">http</span>://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8080</span>/snbs/fullcheck<span class="string">"</span></span><br><span class="line"><span class="string">实时修复+full:</span></span><br><span class="line"><span class="string">日志看到这个res:0 就是修复成功</span></span><br><span class="line"><span class="string">tail -f stackfile | grep "</span>rebuild.go:<span class="number">51</span><span class="string">"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">10.seq相差太大修复不了时，设置下面value=1，默认修成seq大的副本，然后再fullcheck</span></span><br><span class="line"><span class="string">curl "</span><span class="keyword">http</span>://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8080</span>/<span class="keyword">sys</span>/debug/getfixnode?<span class="keyword">value</span>=<span class="number">1</span><span class="string">"</span></span><br><span class="line"><span class="string">seq相差太大的时候选择最大的</span></span><br><span class="line"><span class="string">check完之后再把value改为0</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">11.加快修复迁移：</span></span><br><span class="line"><span class="string">Chunkserver有修复迁移时，etcd里面设置设置Chunkserver参数：</span></span><br><span class="line"><span class="string">SysOpUploadMaxTps=0.1</span></span><br><span class="line"><span class="string">SysOpDownloadMaxTps=0.1</span></span><br><span class="line"><span class="string">查询：</span></span><br><span class="line"><span class="string">curl -X GET "</span><span class="keyword">http</span>://<span class="number">10.242</span><span class="number">.180</span><span class="number">.207</span>:<span class="number">8787</span>/service/param?service=chunkserver&amp;ipport=<span class="keyword">public</span>&amp;param=SysOpUploadMaxTps<span class="string">"</span></span><br><span class="line"><span class="string">curl -X GET "</span><span class="keyword">http</span>://<span class="number">10.242</span><span class="number">.180</span><span class="number">.207</span>:<span class="number">8787</span>/service/param?service=chunkserver&amp;ipport=<span class="keyword">public</span>&amp;param=SysOpDownloadMaxTps<span class="string">"</span></span><br><span class="line"><span class="string">设置：</span></span><br><span class="line"><span class="string">curl -X PUT "</span><span class="keyword">http</span>://<span class="number">10.242</span><span class="number">.180</span><span class="number">.207</span>:<span class="number">8787</span>/service/param?service=chunkserver&amp;param=SysOpUploadMaxTps&amp;<span class="keyword">value</span>=<span class="number">0.1</span>,<span class="number">2</span>&amp;pretty=y&amp;ipport=<span class="keyword">public</span><span class="string">" -v</span></span><br><span class="line"><span class="string">curl -X PUT "</span><span class="keyword">http</span>://<span class="number">10.242</span><span class="number">.180</span><span class="number">.207</span>:<span class="number">8787</span>/service/param?service=chunkserver&amp;param=SysOpDownloadMaxTps&amp;<span class="keyword">value</span>=<span class="number">0.1</span>,<span class="number">2</span>&amp;pretty=y&amp;ipport=<span class="keyword">public</span><span class="string">" -v</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">12.获取现在的任务数量</span></span><br><span class="line"><span class="string">curl "</span><span class="keyword">http</span>://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8080</span>/<span class="keyword">sys</span>/debug/systask?pretty=y<span class="string">"</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">  "</span>CheckTaskSum<span class="string">": 0,</span></span><br><span class="line"><span class="string">  "</span>MigrateTaskSum<span class="string">": 0,</span></span><br><span class="line"><span class="string">  "</span>RepairTaskSum<span class="string">": 0</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">13.返回statSegment的信息：</span></span><br><span class="line"><span class="string">curl "</span><span class="keyword">http</span>://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">7776</span>/<span class="keyword">sys</span>/debug/statsg?dev=vdb3&amp;<span class="keyword">start</span>=<span class="number">116382</span>&amp;<span class="keyword">end</span>=<span class="number">116383</span>&amp;pretty=y<span class="string">" -o 116382vdb3</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">14.从chunkserver读取数据（指定chunk指定位置，指定大小数据）</span></span><br><span class="line"><span class="string">curl "</span><span class="keyword">http</span>://<span class="number">10.242</span><span class="number">.231</span><span class="number">.123</span>:<span class="number">7776</span>/<span class="keyword">sys</span>/debug/extentread?chunkid=<span class="number">000000000172</span>c9e100000009&amp;<span class="keyword">offset</span>=<span class="number">136560640</span>&amp;<span class="keyword">size</span>=<span class="number">8192</span><span class="string">" -o 123-8k</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">15.修复extent到某个extent，例如553这种</span></span><br><span class="line"><span class="string">curl "</span><span class="keyword">http</span>://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8080</span>/snbs/repairextent?chunkid=<span class="number">0000000000663</span>be900000215&amp;seq=<span class="number">137607</span>&amp;othernode=<span class="number">10.238</span><span class="number">.161</span><span class="number">.6</span>:<span class="number">9595</span><span class="string">"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">16.查看chunkid的最新的seq：</span></span><br><span class="line"><span class="string">curl -s -X GET "</span><span class="keyword">http</span>://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8080</span>/<span class="keyword">sys</span>/debug/extentstatus?chunkid=<span class="number">00000000000</span>dbbba00000004&amp;pretty=y<span class="string">"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">17.根据seq读取数据：</span></span><br><span class="line"><span class="string">curl "</span><span class="keyword">http</span>://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8080</span>/<span class="keyword">sys</span>/debug/extentexport?chunkid=<span class="number">00000000000</span>dbbba0000000a<span class="string">"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">18.抽空试试，把这个参数设置大一些。然后全量克隆。</span></span><br><span class="line"><span class="string">朱晓伟 2020-03-12 17:22:16</span></span><br><span class="line"><span class="string">curl -X PUT "</span><span class="keyword">http</span>://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8787</span>/service/param?service=chunkserver&amp;ipport=<span class="keyword">public</span>&amp;param=SysOpDownloadMaxRate&amp;<span class="keyword">value</span>=<span class="number">999999</span>,<span class="number">0</span>&amp;pretty=y<span class="string">"</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="008-参数设置："><a href="#008-参数设置：" class="headerlink" title="008-参数设置："></a>008-参数设置：</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>启动命令中的参数优先级最高</span><br><span class="line"><span class="number">2.</span>其次优先使用etcd中的配置。 /etc/etcd/etcd.conf</span><br><span class="line"><span class="number">3.</span>公共配置没有的情况下使用本地缓存的私有配置（本地配置文件）</span><br><span class="line"><span class="number">4.</span>本地配置文件没有的，采用默认配置。</span><br><span class="line"><span class="number">5.</span>本地的配置文件一直会记录现在使用的配置，并会实时更新（etcd，卸载磁盘/调整回收时间）</span><br><span class="line"><span class="number">6.</span>.默认值、有配置文件、etcd值、启动参数 启动的时候启动参数优先级最高</span><br><span class="line"><span class="number">7.</span>运行当中，接口设置是什么，配置文件会更改</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span>chunkid和extentid不是一个东西</span><br></pre></td></tr></table></figure>
+
+<h1 id="009-磁盘："><a href="#009-磁盘：" class="headerlink" title="009-磁盘："></a>009-磁盘：</h1><figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">387 </span> /home/snbs/ChunkServer/chunkserver format -dev=sda6 -type=wcache</span><br><span class="line"><span class="symbol">388 </span> /home/snbs/ChunkServer/chunkserver format -dev=sda6 -purpose=wcache</span><br><span class="line"><span class="symbol">389 </span> /home/snbs/ChunkServer/chunkserver format -dev=sdh -purpose=<span class="keyword">base</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> `cat sv_snbs_chunkserver.conf|grep command|awk <span class="string">'&#123;print $5&#125;'</span>|sed <span class="string">'s/-VolDev=//g;s/,/ /g'</span>`;<span class="keyword">do</span> /home/snbs/ChunkServer<span class="built_in">/server </span>format <span class="attribute">-dev</span>=<span class="variable">$&#123;i&#125;</span> <span class="attribute">-purpose</span>=base;done</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>移除指定磁盘</span><br><span class="line">移除数据盘：</span><br><span class="line">curl -X <span class="keyword">GET</span> "http://127.0.0.1:8080/snbs/removedev?dev=sdc"</span><br><span class="line">移除写缓存盘：</span><br><span class="line">curl -X <span class="keyword">GET</span> "http://127.0.0.1:8080/snbs/removedev?dev=sdb1&amp;type=wcache"</span><br><span class="line">移除读缓存盘：（chunkserver已无读缓存）</span><br><span class="line">curl -X <span class="keyword">GET</span> "http://127.0.0.1:8080/snbs/removedev?dev=sdc&amp;type=rcache"</span><br><span class="line">元数据缓存盘：</span><br><span class="line">curl -X <span class="keyword">GET</span> "http://127.0.0.1:8080/snbs/removedev?dev=sda&amp;type=metacache"</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>重新加载指定磁盘（加载前<span class="keyword">format</span>磁盘）</span><br><span class="line">实际不需要带forceRollback：</span><br><span class="line">重新加载数据盘：</span><br><span class="line">curl "http://127.0.0.1:8080/snbs/reloaddev?dev=vdc"</span><br><span class="line">重新加写缓存盘：（一个缓存盘对应一个数据盘）</span><br><span class="line">curl " http://127.0.0.1:8080/snbs/reloaddev?dev=sda2&amp;dataDevName=sda&amp;type=wcache"</span><br><span class="line">重新加载读缓存盘：（chunkserver已无读缓存）</span><br><span class="line">curl "http://127.0.0.1:8080/snbs/reloaddev?dev=vdc&amp;type=rcache"</span><br><span class="line">重新加载元数据缓存盘：</span><br><span class="line">curl "http://127.0.0.1:8080/snbs/reloaddev?dev=vdc&amp;type=metacache"</span><br><span class="line"></span><br><span class="line">向前回滚的<span class="keyword">checkpoint</span>数量(默认<span class="number">0</span>，不可为负数):<span class="number">1</span></span><br><span class="line">curl "http://127.0.0.1:8080/snbs/reloaddev?dev=vdc&amp;forceRollback=1"</span><br><span class="line">curl "http://127.0.0.1:8080/snbs/reloaddev?dev=vdc&amp;forceRollback=1?type=wcache"</span><br><span class="line"></span><br><span class="line">注：重新加载一个磁盘，原本没加载的加载上，原本加载上的重新加载</span><br><span class="line">forceRollback：强制向前回滚的<span class="keyword">checkpoint</span>数量；数据盘加载有效；数据类型：字符串，默认值：<span class="number">0</span>；不可为负数</span><br><span class="line"><span class="keyword">type</span>：wcache/rcache/metacache或空值</span><br><span class="line"><span class="keyword">type</span>为空值，指data盘</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>格式指定磁盘</span><br><span class="line">curl -X <span class="keyword">GET</span> "http://127.0.0.1:8080/snbs/formatdev?dev=vdb3&amp;purpose=base"</span><br><span class="line">purpose:wcache/rcache/metacache/base </span><br><span class="line">base；为数据盘</span><br><span class="line"></span><br><span class="line"><span class="number">4.</span>磁盘<span class="keyword">debug</span>异常模拟</span><br><span class="line">卡顿：</span><br><span class="line">curl "http://127.0.0.1:8080/sys/debug/disktest?debugType=1&amp;sleepTime=600&amp;probability=100&amp;diskName=sdd,sde"</span><br><span class="line">损坏：</span><br><span class="line">curl "http://127.0.0.1:8080/sys/debug/disktest?debugType=2&amp;diskName=sdd,sde"</span><br><span class="line">恢复：</span><br><span class="line">curl "http://127.0.0.1:8080/sys/debug/disktest?debugType=0&amp;diskName=sdd,sde"</span><br><span class="line"></span><br><span class="line">sleepTime：<span class="number">600</span>（单位ms）</span><br><span class="line">probability：<span class="number">100</span>（出问题的几率）</span><br><span class="line">diskName：可以是多个逗号分隔，也可以是单个</span><br><span class="line">debugType：<span class="number">0</span>/<span class="number">1</span>/<span class="number">2</span> 恢复/卡顿/损坏</span><br></pre></td></tr></table></figure>
+
+<h1 id="010-问题extent修复"><a href="#010-问题extent修复" class="headerlink" title="010-问题extent修复"></a>010-问题extent修复</h1><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br></pre></td><td class="code"><pre><span class="line">首先查看snbs中出问题的extent可以从两部分查询：</span><br><span class="line"><span class="number">1.</span>从master查询并修复</span><br><span class="line">（<span class="number">1</span>）从master获取snbs资源池信息</span><br><span class="line">curl <span class="string">"http://10.242.231.121:8787/pool?pretty=y&amp;poolname=pool-tt"</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="string">"poolname"</span>: <span class="string">"pool-tt"</span>,</span><br><span class="line"><span class="string">"createtime"</span>: <span class="string">"2019-08-02 17:50:25"</span>,s</span><br><span class="line"><span class="string">"regionid"</span>: <span class="string">"region-tt"</span>,</span><br><span class="line"><span class="string">"rebalancetime"</span>: <span class="string">"19:15"</span>,  <span class="comment">//定时均衡时间，支持分钟级别</span></span><br><span class="line"><span class="string">"rebalanceswitch"</span>: <span class="number">1</span>,  <span class="comment">//非0即为打开</span></span><br><span class="line"><span class="string">"faultdomainnum"</span>: <span class="number">6</span>, <span class="comment">//故障域，zone的个数</span></span><br><span class="line"><span class="string">"node_active_num"</span>: <span class="number">5</span>,</span><br><span class="line"><span class="string">"node_num"</span>: <span class="number">5</span>,</span><br><span class="line"><span class="string">"volume_num"</span>: <span class="number">16</span>,</span><br><span class="line"><span class="string">"total_byte"</span>: <span class="number">4949320663040</span>,</span><br><span class="line"><span class="string">"free_byte"</span>: <span class="number">2648694587392</span>,</span><br><span class="line"><span class="string">"used_byte"</span>: <span class="number">2300626075648</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">（<span class="number">2</span>）从master查询每个资源池下的出现问题的extent</span><br><span class="line"> curl <span class="string">http:</span><span class="comment">//127.0.0.1:8787/pool/repair/status?poolname=store&amp;pretty=y</span></span><br><span class="line">参数介绍：poolname  <span class="comment">//代表资源池的name</span></span><br><span class="line">应答如下：</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"prepare"</span>: &#123;&#125;,</span><br><span class="line">  <span class="string">"repairing"</span>: &#123;</span><br><span class="line">    <span class="string">"10.238.161.1:9595"</span>: [  <span class="comment">//所在节点  </span></span><br><span class="line">      <span class="string">"000000000007a2aa00000072"</span>  <span class="comment">//extent id</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"10.238.161.3:9595"</span>: [</span><br><span class="line">      <span class="string">"000000000007a27900000068"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"10.238.161.4:9595"</span>: [</span><br><span class="line">      <span class="string">"0000000000155cd3000000fd"</span></span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">（<span class="number">3</span>）从gateway查询每个extent对应副本的seq</span><br><span class="line">Curl <span class="string">"http://127.0.0.1:8686/snbs/debug/stat?type=chunkid&amp;chunkid=000000000007a2c011&amp;pretty=y"</span> </span><br><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="string">"ckunkid"</span>: <span class="string">"000000000007a2c600000011"</span>,</span><br><span class="line">    <span class="string">"repsn"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">"ckaddr"</span>: <span class="string">"10.238.161.5:9595"</span>,</span><br><span class="line">        <span class="string">"sn"</span>: <span class="number">67770</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">"ckaddr"</span>: <span class="string">"10.238.161.4:9595"</span>,</span><br><span class="line">        <span class="string">"sn"</span>: <span class="number">67770</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">"ckaddr"</span>: <span class="string">"10.238.161.1:9595"</span>,</span><br><span class="line">        <span class="string">"sn"</span>: <span class="number">67770</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">（<span class="number">4</span>）从chunkserver开始修复extent到指定的节点</span><br><span class="line">Curl <span class="string">"http://127.0.0.1:8080/snbs/repairextent?chunkid=00000000014ca44900000183&amp;seq=9&amp;othernode=10.37.2.16:9191"</span></span><br><span class="line">请求方法：GET</span><br><span class="line">请求路径：<span class="regexp">/snbs/</span>repairextent</span><br><span class="line">请求地址：chunkserver IP：restfulPort</span><br><span class="line">请求参数：</span><br><span class="line">名称			描述				值</span><br><span class="line">chunid		Extentid		</span><br><span class="line">seq							指定到修复的seq</span><br><span class="line">othernode					指定从othernode修复</span><br><span class="line"></span><br><span class="line">指定从othernode修复</span><br><span class="line">返回<span class="number">200</span> 正确</span><br><span class="line">其他错误</span><br><span class="line"></span><br><span class="line">（<span class="number">5</span>）通知gateway刷新下最新extent的信息</span><br><span class="line">Curl <span class="string">"http://127.0.0.1:8686/snbs/debug/stat?type=updateseqnum&amp;chunkid=xxxxxx"</span></span><br><span class="line">      </span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>从gateway查询并修复</span><br><span class="line">（<span class="number">1</span>）从gateway查询所有snbs出现问题的extent</span><br><span class="line">curl <span class="string">"http://127.0.0.1:8686/snbs/debug/stat?type=allchunkid"</span></span><br><span class="line"></span><br><span class="line">（<span class="number">2</span>）从gateway查询每个extent对应副本的seq</span><br><span class="line">Curl <span class="string">"http://127.0.0.1:8686/snbs/debug/stat?type=chunkid&amp;chunkid=000000000007a2c011&amp;pretty=y"</span> </span><br><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="string">"ckunkid"</span>: <span class="string">"000000000007a2c600000011"</span>,</span><br><span class="line">    <span class="string">"repsn"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">"ckaddr"</span>: <span class="string">"10.238.161.5:9595"</span>,</span><br><span class="line">        <span class="string">"sn"</span>: <span class="number">67770</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">"ckaddr"</span>: <span class="string">"10.238.161.4:9595"</span>,</span><br><span class="line">        <span class="string">"sn"</span>: <span class="number">67770</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">"ckaddr"</span>: <span class="string">"10.238.161.1:9595"</span>,</span><br><span class="line">        <span class="string">"sn"</span>: <span class="number">67770</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br><span class="line">（<span class="number">3</span>）从chunkserver开始修复extent到指定的节点</span><br><span class="line">Curl <span class="string">"http://127.0.0.1:8080/snbs/repairextent?chunkid=00000000014ca44900000183&amp;seq=9&amp;othernode=10.37.2.16:9191"</span></span><br><span class="line">请求方法：GET</span><br><span class="line">请求路径：<span class="regexp">/snbs/</span>repairextent</span><br><span class="line">请求地址：chunkserver IP：restfulPort</span><br><span class="line"></span><br><span class="line">名称			描述				值</span><br><span class="line">chunid		Extentid		</span><br><span class="line">seq							指定到修复的seq</span><br><span class="line">othernode					指定从othernode修复</span><br><span class="line"></span><br><span class="line">返回<span class="number">200</span> 正确</span><br><span class="line">其他错误</span><br><span class="line"></span><br><span class="line">（<span class="number">4</span>）通知gateway刷新下最新extent的信息</span><br><span class="line">Curl <span class="string">"http://127.0.0.1:8686/snbs/debug/stat?type=updateseqnum&amp;chunkid=xxxxxx"</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+    </div>
+
+    
+    
+    
+      
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-Chunkserver/" title="BlockStorage-Chunkserver">https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-Chunkserver/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/BlockStorage-Chunkserver/" rel="tag"># BlockStorage-Chunkserver</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-Emergency/" rel="prev" title="BlockStorage-Emergency">
+      <i class="fa fa-chevron-left"></i> BlockStorage-Emergency
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2008/01/05/python/2008-01-04-python-ruan/" rel="next" title="python-ruan">
+      python-ruan <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#001-chunkserver理解"><span class="nav-text">001-chunkserver理解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#002-扫描工具"><span class="nav-text">002-扫描工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#003-设置回收、碎片时间"><span class="nav-text">003-设置回收、碎片时间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#004-配置文件参数解释"><span class="nav-text">004-配置文件参数解释</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#005-统计"><span class="nav-text">005-统计</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#006-磁盘碎片度"><span class="nav-text">006-磁盘碎片度</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#007-调试接口"><span class="nav-text">007-调试接口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#008-参数设置："><span class="nav-text">008-参数设置：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#009-磁盘："><span class="nav-text">009-磁盘：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#010-问题extent修复"><span class="nav-text">010-问题extent修复</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">What hurts more, the pain of hard work or the pain of regret?</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">34:51</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

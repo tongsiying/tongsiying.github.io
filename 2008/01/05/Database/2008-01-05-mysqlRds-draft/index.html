@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="mysqlRds-draft">
+<meta property="og:url" content="https://tongsiying.github.io/2008/01/05/Database/2008-01-05-mysqlRds-draft/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2008-01-05T10:37:19.000Z">
+<meta property="article:modified_time" content="2021-05-29T11:59:17.985Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="mysql">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tongsiying.github.io/2008/01/05/Database/2008-01-05-mysqlRds-draft/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>mysqlRds-draft | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">嘻嘻嘻嘻嘻嘻</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2008/01/05/Database/2008-01-05-mysqlRds-draft/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="What hurts more, the pain of hard work or the pain of regret?">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          mysqlRds-draft
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2008-01-05 18:37:19" itemprop="dateCreated datePublished" datetime="2008-01-05T18:37:19+08:00">2008-01-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-29 19:59:17" itemprop="dateModified" datetime="2021-05-29T19:59:17+08:00">2021-05-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+<h1 id="一-MySQL-RDS-独立部署版本物理机手动安装手册"><a href="#一-MySQL-RDS-独立部署版本物理机手动安装手册" class="headerlink" title="一 MySQL RDS 独立部署版本物理机手动安装手册"></a>一 MySQL RDS 独立部署版本物理机手动安装手册</h1><h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>本文档为MysqlRds(5.7)在物理机上手动执行脚本安装的操作说明。适配操作系统为CentOS 7.3(64bit) 和Redhat 6.3(64bit)。</p>
+<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><p>基本环境要求</p>
+<h3 id="硬件需求"><a href="#硬件需求" class="headerlink" title="硬件需求"></a>硬件需求</h3><ol>
+<li><p>机器数量</p>
+<ul>
+<li>单实例： 1台机器</li>
+<li>HA集群：2台机器或3台机器</li>
+</ul>
+</li>
+<li><p>vip资源  </p>
+<ul>
+<li>HA集群配置2个同网段的vip(单实例不需要vip)</li>
+</ul>
+</li>
+<li><p>同一HA集群中的数据库服务器部署在不同机架上</p>
+</li>
+<li><p>机器硬件配置</p>
+<ul>
+<li>PRD环境配置万兆业务网卡</li>
+<li>PRD环境配置独立的万兆备份网卡(或网口)并接入备份网络</li>
+<li>PRD环境配置SSD硬盘</li>
+<li>同一HA集群的机器的硬件配置一致</li>
+</ul>
+</li>
+</ol>
+<h3 id="软件和配置需求"><a href="#软件和配置需求" class="headerlink" title="软件和配置需求"></a>软件和配置需求</h3><ol>
+<li><p>OS支持 </p>
+<ul>
+<li>CentOS 7.3 64位</li>
+<li>Redhat 6.3 64位</li>
+</ul>
+</li>
+<li><p>文件系统</p>
+<ul>
+<li><p>格式</p>
+<pre><code>ext4格式 </code></pre></li>
+<li><p>物理磁盘</p>
+<pre><code>binlog分区： /binlog ext4 defaults,noatime,nodiratime 0 0
+bak分区：  /bak ext4 defaults 0 0
+data分区： /mysql ext4 defaults,noatime,nodiratime 0 0
+
+确保binlog分区至少100G, data分区和bak分区的大小比值为1:2,三个分区的总大小要小于磁盘的总大小
+（要预留出至少2G以上的空间，不能全部占满）。</code></pre></li>
+</ul>
+</li>
+</ol>
+<h2 id="安装前准备"><a href="#安装前准备" class="headerlink" title="安装前准备"></a>安装前准备</h2><p>物理机安装MySQLRds前需要确认以下安装包已获取并上传到各节点的/opt目录下：</p>
+<ul>
+<li>percona-xtrabackup-2.4.3-Linux-x86_64.tar.gz</li>
+<li>Percona-Server-5.7.19-17-Linux.x86_64.ssl101.tar</li>
+<li>mysqlRds_standalone_v1.0.0.tar.gz(独立部署版本)</li>
+<li>pkgs.tar.gz</li>
+</ul>
+<h2 id="安装前环境清理-各节点均执行"><a href="#安装前环境清理-各节点均执行" class="headerlink" title="安装前环境清理[各节点均执行]"></a>安装前环境清理[各节点均执行]</h2><p>以下步骤是为了清理过去可能有过的安装步骤造成的残留文件，清理环境避免安装失败。</p>
+<pre><code>[root@CentOS7 opt]#  rm -rf /mysql/*
+[root@CentOS7 opt]#  rm -rf /binlog/*
+[root@CentOS7 opt]#  rm -rf /bak/*</code></pre><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="1-共通安装操作"><a href="#1-共通安装操作" class="headerlink" title="1. 共通安装操作"></a>1. 共通安装操作</h3><p>以下步骤是适用于单实例和HA集群安装的共通操作，在所有机器上执行，使用root用户执行作。</p>
+<h3 id="1-1-解压-各节点均执行"><a href="#1-1-解压-各节点均执行" class="headerlink" title="1.1 解压[各节点均执行]"></a>1.1 解压[各节点均执行]</h3><pre><code>- 解压mysqlRds_standalone.tar.gz到/opt, 并重命名
+
+[root@CentOS7 opt]# tar -C /opt -xvf mysqlRds_standalone.tar
+
+[root@CentOS7 opt]# mv mysqlRds_standalone mysqlRds
+
+- 解压pkgs.tar.gz到/opt/mysqlRds
+
+[root@CentOS7 opt]# tar -C /opt/mysqlRds -zxvf pkgs.tar.gz 
+
+- 拷贝MySQL和xtrabackup安装包到/opt/mysqlRds/pkgs/mysql
+
+[root@CentOS7 opt]# cp -f Percona-Server-5.7.19-17-Linux.x86_64.ssl101.tar.gz percona-xtrabackup-2.4.3-Linux-x86_64.tar.gz /opt/mysqlRds/pkgs/mysql 
+
+- 赋权限：
+
+[root@CentOS7 opt]# chmod -R 755 /opt/mysqlRds
+[root@CentOS7 opt]# chmod -R 777 /opt/mysqlRds/pkgs/</code></pre><p>​    </p>
+<h3 id="1-2-编辑mysqlRds-cfg-各节点均执行"><a href="#1-2-编辑mysqlRds-cfg-各节点均执行" class="headerlink" title="1.2 编辑mysqlRds.cfg[各节点均执行]"></a>1.2 编辑mysqlRds.cfg[各节点均执行]</h3><pre><code>[root@CentOS7 opt]#cd /opt/mysqlRds/etc 
+
+vim打开mysqlRds.cfg，具体配置如下修改：
+[mysqlRds]
+ftp_pkg_dir = /soft/mysql/5.7
+mysql_install_pkg = Percona-Server-5.7.19-17-Linux.x86_64.ssl101.tar.gz
+xtrabackup_install_pkg = percona-xtrabackup-2.4.3-Linux-x86_64.tar.gz
+
+mysql_install_path = /usr/local
+defaults_file = /home/mysql/etc/my.cnf
+mysql_instance_user = mysql
+
+mysqlRds_dir = /opt/mysqlRds    
+data_path = /mysql/data         
+binlog_path = /mysql/binlog     
+backup_path = /mysql/bak        
+core_path = /mysql/cores
+
+disk_device = /dev/vdb   ##根据实际改          
+data_mount_point = /mysql       
+data_size = 200G               
+binlog_mount_point = /binlog    
+binlog_size = 100G            ## 正常设置200G  
+backup_mount_point = /bak       
+backup_size = 400G       ##data_size和backup_size比例正常为1:2  
+
+vm_cpu = auto
+vm_mem = auto
+#######注：上述参数一般情况下不需要修改，下述参数根据情况修改###########################
+root_user = root
+root_password = SuningRds@123
+fabu_user = fabu
+fabu_password = SuningRds@123
+innotop_user = innotop
+innotop_password = SuningRds@123
+
+repl_mode = semisync                #注：semisync半同步（保证双主数据一致，互相同步），async异步同步
+repl_user = repl                    #注：单实例不创建复制用户，此项留空      
+repl_password = repl                #注：单实例不创建复制用户，此项留空
+admin_user = sndsadmin
+admin_password = 123456
+app_database = app_db
+app_user = appuser
+app_password = mysqlRds@suning
+
+ipnodes = 10.47.211.117,10.47.211.118,10.47.211.119  #各节点ip,单实例填写该节点ip即可
+writer_vip = 10.47.211.210          #注：单实例没有vip此项留空（主从如果没有vip，选择一个ping不通的ip）
+reader_vip = 10.47.211.215          #注：单实例没有vip此项留空,注意请按实际情况填写，有的环境不需要只读VIP（主从如果没有vip，选择一个ping不通的ip）
+vip_nic = bond0                     #注：请按照实际情况填写，物理机一般为bond0
+
+其中：ipnodes配置服务器ip信息，writer_ip配置读写VIP，reader_vip配置只读VIP。
+      vip_nic即网卡名称需按照实际情况填写，物理机通常为bond0, 虚拟机一般为eth0。</code></pre><p>【如果配置文件配置错，再执行一遍setup_mysql_ha.py生效】</p>
+<h3 id="1-3-创建目录和软连接-各节点均执行-【没分区可以不执行1-3】"><a href="#1-3-创建目录和软连接-各节点均执行-【没分区可以不执行1-3】" class="headerlink" title="1.3 创建目录和软连接[各节点均执行]【没分区可以不执行1.3】"></a>1.3 创建目录和软连接[各节点均执行]【没分区可以不执行1.3】</h3><pre><code>[root@CentOS7 ~]mkdir -p /mysql/data
+[root@CentOS7 ~]mkdir -p /bak/cores
+[root@CentOS7 ~]ln -sf /binlog /mysql/binlog
+[root@CentOS7 ~]ln -sf /bak  /mysql/bak
+[root@CentOS7 ~]ln -sf /bak/cores /mysql/cores   </code></pre><h3 id="1-4-安装python2-7-各节点均执行"><a href="#1-4-安装python2-7-各节点均执行" class="headerlink" title="1.4 安装python2.7[各节点均执行]"></a>1.4 安装python2.7[各节点均执行]</h3><pre><code>[root@CentOS7 ~]# cd /opt/mysqlRds/install
+[root@CentOS7 install]# python  install_python.py 
+注： 此过程会检测当前python版本是否是2.7，如果不是，则安装python2.7至/usr/local/python2.7
+
+创建目录和软连接：（其实就是1.3）
+[root@CentOS7 ~]# cd /opt/mysqlRds/install
+[root@CentOS7 ~]# python create_disk.py[如果执行卡住，先执行下pvcreate /dev/vdb]</code></pre><h3 id="1-5-安装mysql软件和初始化实例-各节点均执行"><a href="#1-5-安装mysql软件和初始化实例-各节点均执行" class="headerlink" title="1.5 安装mysql软件和初始化实例[各节点均执行]"></a>1.5 安装mysql软件和初始化实例[各节点均执行]</h3><pre><code>[root@CentOS7 ~]# cd /opt/mysqlRds/install
+[root@CentOS7 install]# python2.7 install_mysql.py 
+[root@CentOS7 install]# python2.7 init_db.py</code></pre><p>​    </p>
+<h2 id="2-仅单实例需要执行的步骤【单机执行这一步-主从直接跳到3-】"><a href="#2-仅单实例需要执行的步骤【单机执行这一步-主从直接跳到3-】" class="headerlink" title="2. 仅单实例需要执行的步骤【单机执行这一步,主从直接跳到3.】"></a>2. 仅单实例需要执行的步骤【单机执行这一步,主从直接跳到3.】</h2><pre><code>[root@CentOS7 ~]# cd /opt/mysqlRds/install
+[root@CentOS7 install]# python2.7 setup_mysql_single.py
+
+单实例安装步骤到此结束。</code></pre><h3 id="2-1-检查实例状态"><a href="#2-1-检查实例状态" class="headerlink" title="2.1 检查实例状态"></a>2.1 检查实例状态</h3><pre><code>安装完成后可以执行mysql_ha_status查看实例状态是否正常。</code></pre><h2 id="3-仅HA集群需要执行的步骤"><a href="#3-仅HA集群需要执行的步骤" class="headerlink" title="3. 仅HA集群需要执行的步骤"></a>3. 仅HA集群需要执行的步骤</h2><h3 id="3-1-资源准备"><a href="#3-1-资源准备" class="headerlink" title="3.1    资源准备"></a>3.1    资源准备</h3><pre><code>支持创建1主1从和1主2从HA集群，准备2或3台机器以及1个读写VIP，一个只读VIP，注意请按实际情况填写，有的环境不需要只读VIP</code></pre><h3 id="3-2-设置ssh互信"><a href="#3-2-设置ssh互信" class="headerlink" title="3.2.    设置ssh互信"></a>3.2.    设置ssh互信</h3><pre><code>设置所有机器SSH互信，并且每台机器还要和自身互信
+设置ssh免密码登录（使用RSA Key）
+
+机器1：10.37.64.52
+机器2：10.37.64.53
+
+设置机器1和机器2之间免密码登录
+
+以下全是使用root用户，若以其他用户登录（如postgres用户），则先切换到该用户环境下在执行以下步骤。
+
+机器1免密码登录机器2
+
+1）机器1上生成RSA Key
+
+cd ~/.ssh/
+rm -f ./*
+ssh-keygen -t rsa           //随后按3次ENTER键
+
+此时在.ssh目录下生成了id_rsa和id_rsa.pub。其中id_rsa是私钥，本机要用；id_rsa.pub是公钥，给其他的机器用。
+
+2） 设置自身ssh互信
+cd ~/.ssh/
+cp id_rsa.pub authorized_keys
+
+3）将公钥上传到机器2上
+
+scp ./id_rsa.pub root@10.37.64.53:/root/.ssh/1_id_rsa.pub
+
+4）将公匙写入机器2中的~/.ssh/authorized_keys文件
+cat ~/.ssh/1_id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys
+
+机器2免密码登录机器1
+
+与“机器1免密码登录机器2”的操作类似。
+
+
+常见问题
+设置ssh免密码后仍需要输入密码
+
+在root用户下查看系统日志文件(rhel6.3目录 /etc/log/secure，centOS6.5目录/var/log/secure）,发现如下日志：
+
+Jun 26 15:28:14 sndsdevapp14 sshd[18439]: Authentication refused: bad ownership or modes for directory /var/lib/pgsql
+Jun 26 15:28:16 sndsdevapp14 sshd[18439]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=sndsdevapp12  user=postgres
+
+由日志可知，是目录/var/lib/pgsql的权限问题，将该目录权限设为700即可。
+
+注：如果发现secure文件中没有日志记载，可能是rsyslog服务未启动，执行 &apos; service rsyslog start &apos; 启动即可。</code></pre><p>​    </p>
+<h3 id="3-3-配置主从复制-仅主节点执行"><a href="#3-3-配置主从复制-仅主节点执行" class="headerlink" title="3.3.    配置主从复制[仅主节点执行]"></a>3.3.    配置主从复制[仅主节点执行]</h3><pre><code>在第一台机器上以root用户执行以下命令，配置主从复制
+[root@CentOS7 ~]# cd /opt/mysqlRds/install
+[root@CentOS7 install]# python2.7 setup_replication.py</code></pre><h3 id="3-4-安装配置HA-仅主节点执行"><a href="#3-4-安装配置HA-仅主节点执行" class="headerlink" title="3.4.安装配置HA[仅主节点执行]"></a>3.4.安装配置HA[仅主节点执行]</h3><pre><code>在第一台机器上以root用户执行以下命令，配置主从HA
+[root@CentOS7 ~]# cd /opt/mysqlRds/install
+[root@CentOS7 install]# python2.7 setup_mysql_ha.py 
+
+至此HA集群的安装步骤结束。</code></pre><h3 id="3-5-检查HA集群情况"><a href="#3-5-检查HA集群情况" class="headerlink" title="3.5 检查HA集群情况"></a>3.5 检查HA集群情况</h3><pre><code>在任一台机器上以root用户执行mysql_ha_status命令检查集群状态。
+CLUSTER INFO
+================================================================================
+cluster type   [ha]
+cluster id     [standalone_cluster]
+nodes          [{&apos;ip&apos;: &apos;10.47.211.117&apos;, &apos;bak_ip&apos;: &apos;&apos;}, {&apos;ip&apos;: &apos;10.47.211.118&apos;,
+               &apos;bak_ip&apos;: &apos;&apos;}, {&apos;ip&apos;: &apos;10.47.211.119&apos;, &apos;bak_ip&apos;: &apos;&apos;}]
+port           [3306]
+vip            [eth0]
+readonly_vip   [10.47.211.215]
+writer_vip     [10.47.211.210]
+master         [10.47.211.117]
+slave          [[&apos;10.47.211.118&apos;, &apos;10.47.211.119&apos;]]
+dead servers   [[]]
+cluster is healthy</code></pre><h2 id="4-测试验证"><a href="#4-测试验证" class="headerlink" title="4. 测试验证"></a>4. 测试验证</h2><p>HA集群在部署完毕后，确认HA切换是否正常</p>
+<ul>
+<li>验证HA集群状态[在任意节点执行]：</li>
+</ul>
+<pre><code>mysql_ha_status
+CLUSTER INFO
+================================================================================
+cluster type   [ha]
+cluster id     [standalone_cluster]
+nodes          [{&apos;ip&apos;: &apos;10.47.211.117&apos;, &apos;bak_ip&apos;: &apos;&apos;}, {&apos;ip&apos;: &apos;10.47.211.118&apos;,
+               &apos;bak_ip&apos;: &apos;&apos;}, {&apos;ip&apos;: &apos;10.47.211.119&apos;, &apos;bak_ip&apos;: &apos;&apos;}]
+port           [3306]
+vip            [eth0]
+readonly_vip   [10.47.211.215]
+writer_vip     [10.47.211.210]
+master         [10.47.211.117]
+slave          [[&apos;10.47.211.118&apos;, &apos;10.47.211.119&apos;]]
+dead servers   [[]]
+
+如集群状态正常会出现类似上面的结果。若出现&quot;cluster is not healthy&quot;代表集群状态不正常。
+dead_servers表示可能宕机或Mysql进程不存在的节点。</code></pre><ul>
+<li><p>登录本机mysql：</p>
+<pre><code>su - mysql
+mysql -h127.1 -usndsadmin -p&apos;123456&apos;</code></pre></li>
+<li><p>检查是否具有在线切换的条件：</p>
+<pre><code>1、在任意节点上以root用户验证集群状态：
+    mysql_ha_status
+
+2、切换前系统参数配置和VIP情况检查：
+    cd /opt/mysqlRds/lib
+    python2.7 mysql_ha_check.py 
+   若无任何信息输出，代表系统复制参数配置和VIP挂载正常
+
+3、检查是否具有在线切换的条件(在任意节点)：
+    mysql_ha_online_switch -c</code></pre></li>
+<li><p>验证在线切换：   </p>
+<pre><code>1、在任意节点上以root用户执行脚本：
+    mysql_ha_online_switch -n
+    查看切换结果和切换日志/opt/mysqlRds/log/mysql_ha.log,检查切换是否成功。
+
+2、验证在线切换后HA集群的状态:
+    mysql_ha_status        </code></pre><h1 id="二-orzdba安装"><a href="#二-orzdba安装" class="headerlink" title="二 orzdba安装"></a>二 orzdba安装</h1></li>
+</ul>
+<p>MySQL 淘宝网开源监控工具orzdba安装、使用（安装到mysql服务端）</p>
+<pre><code>mysql客户端是指在一台设备上面装一个单机mysql
+mysql服务端是指在主从mysql，实际提供服务的mysql</code></pre><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>orzdba是淘宝DBA团队开发出来的一个perl监控脚本,主要功能是监控mysql数据库,也有一些磁盘和cpu的监控选项,好不好用就见仁见智,毕竟各公司需求不尽相同.</p>
+<h2 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h2><h3 id="1-共通安装操作-1"><a href="#1-共通安装操作-1" class="headerlink" title="1. 共通安装操作"></a>1. 共通安装操作</h3><p>既然是perl脚本,那当然是先装各种perl相关的依赖包和控件:</p>
+<pre><code>yum install -y perl-Test-Simple.x86_64 perl-Time-HiRes perl-ExtUtils-CBuilder 
+yum install -y perl-ExtUtils-MakeMaker perl-DBD-MySQL perl-DBI perl-Module-Build</code></pre><p>还有一个依赖命令:</p>
+<h3 id="2-先下载下来（有安装包可以不下载）"><a href="#2-先下载下来（有安装包可以不下载）" class="headerlink" title="2.先下载下来（有安装包可以不下载）"></a>2.先下载下来（有安装包可以不下载）</h3><p>wget <a href="http://github.com/downloads/Lowercases/tcprstat/tcprstat-static.v0.3.1.x86_64" target="_blank" rel="noopener external nofollow noreferrer">http://github.com/downloads/Lowercases/tcprstat/tcprstat-static.v0.3.1.x86_64</a></p>
+<h3 id="3-移动到-usr-bin"><a href="#3-移动到-usr-bin" class="headerlink" title="3.移动到/usr/bin"></a>3.移动到/usr/bin</h3><p>mv tcprstat-static.v0.3.1.x86_64  /usr/bin/</p>
+<h3 id="4-做个连接"><a href="#4-做个连接" class="headerlink" title="4.做个连接"></a>4.做个连接</h3><p>ln -sf /usr/bin/tcprstat-static.v0.3.1.x86_64 /usr/bin/tcprstat</p>
+<h2 id="安装控件"><a href="#安装控件" class="headerlink" title="安装控件"></a>安装控件</h2><h3 id="1-先解压"><a href="#1-先解压" class="headerlink" title="1.先解压"></a>1.先解压</h3><pre><code>tar -zxvf orzdba.tar.gz
+cd /opt/trunk
+tar xf orzdba_rt_depend_perl_module.tar.gz</code></pre><h3 id="2-进去解压后的文件夹"><a href="#2-进去解压后的文件夹" class="headerlink" title="2.进去解压后的文件夹"></a>2.进去解压后的文件夹</h3><pre><code>cd Perl_Module</code></pre><h3 id="3-里面有几个压缩包-一个个来安装"><a href="#3-里面有几个压缩包-一个个来安装" class="headerlink" title="3.里面有几个压缩包,一个个来安装"></a>3.里面有几个压缩包,一个个来安装</h3><pre><code>tar xf version-0.99.tar.gz
+cd version-0.99
+perl Makefile.PL
+make
+make install
+
+cd ..
+tar xf File-Lockfile-v1.0.5.tar.gz 
+cd File-Lockfile-v1.0.5 
+perl Build.PL
+perl ./Build
+perl ./Build install
+
+cd ..
+tar xf Class-Data-Inheritable-0.08.tar.gz
+cd Class-Data-Inheritable-0.08 
+perl Makefile.PL 
+make
+make install
+
+cd ..
+tar xf Module-Build-0.31.tar.gz 
+cd Module-Build-0.31 
+perl Build.PL 
+./Build
+./Build install</code></pre><p>当然了,还要改下配置,不然你怎么确认他连的是哪里呢?</p>
+<h3 id="4-修改orzdba"><a href="#4-修改orzdba" class="headerlink" title="4.修改orzdba"></a>4.修改orzdba</h3><p>​    cd /opt/trunk</p>
+<pre><code>修改481行
+my $ip = &quot;10.244.208.11&quot;;//数据库ip
+
+修改28行：
+my  $ipdz = &apos;10.244.208.11&apos;;    #数据库ip</code></pre><p>当然了,有很多参数,请看最后面一一列举,现在来看看怎么用:</p>
+<p>./orzdba-lazy -rt 2&gt;/dev/null</p>
+<h1 id="三-sysbench安装"><a href="#三-sysbench安装" class="headerlink" title="三 sysbench安装"></a>三 sysbench安装</h1><p>（安装到mysql客户端上）</p>
+<p>前言</p>
+<p>sysbench原码安装，rpm包安装需要依赖</p>
+<pre><code>参考：https://www.jianshu.com/p/9982e0e513ee</code></pre><h3 id="1-安装前准备工作"><a href="#1-安装前准备工作" class="headerlink" title="1.安装前准备工作"></a>1.安装前准备工作</h3><p>​    yum -y install make automake libtool pkgconfig libaio-devel<br>​    //对于MySQL支持，在RHEL/CentOS 5上用mysql-devel替换<br>​    yum -y install mysql-devel openssl-devel</p>
+<h3 id="2-安装sysbench-源码编译形式"><a href="#2-安装sysbench-源码编译形式" class="headerlink" title="2.安装sysbench(源码编译形式)"></a>2.安装sysbench(源码编译形式)</h3><p>​    ./autogen.sh<br>​    ./configure<br>​    make -j<br>​    make install</p>
+<h3 id="3-检查安装是否成功"><a href="#3-检查安装是否成功" class="headerlink" title="3.检查安装是否成功"></a>3.检查安装是否成功</h3><p>​    sysbench –version<br>​    显示 sysbench 1.0.9</p>
+<h3 id="4-lua脚本路径"><a href="#4-lua脚本路径" class="headerlink" title="4.lua脚本路径"></a>4.lua脚本路径</h3><p>​    /usr/local/share/sysbench<br>​    常用的脚本：<br>​    只读：oltp_read_only.lua<br>​    只写：oltp_write_only.lua<br>​    更新：oltp_update_non_index.lua –主要是用来测试复制延时</p>
+<h3 id="5-拷贝mysql到-usr-bin"><a href="#5-拷贝mysql到-usr-bin" class="headerlink" title="5.拷贝mysql到/usr/bin/"></a>5.拷贝mysql到/usr/bin/</h3><p>​    cp /usr/local/mysql/bin/mysql /usr/bin/</p>
+<h3 id="6-修改get-rpl-delay-p"><a href="#6-修改get-rpl-delay-p" class="headerlink" title="6.修改get_rpl_delay.p"></a>6.修改get_rpl_delay.p</h3><p>​    1.get_rpl_delay.py放在/opt目录下<br>​    2.修改一下parser.add_argument(‘-h’, ‘–host’, dest=’host’, help=’host’, default=”127.0.0.1”) 这一行的default值为备机的IP地址</p>
+<h3 id="7-注：如何采集复制延迟和剩余内存："><a href="#7-注：如何采集复制延迟和剩余内存：" class="headerlink" title="7.注：如何采集复制延迟和剩余内存："></a>7.注：如何采集复制延迟和剩余内存：</h3><p>​    因为orzdba本身不支持复制延迟和剩余内存指标的收集，因此需要自己改一下代码支持一下。<br>​    （一）复制延迟：<br>​        MySQL:  修改orzdba脚本，当带-mysql参数时，调用一个python脚本，该脚本通过show slave status中的Seconds Behind Master参数值，作为当前时刻的复制延迟,并打印在orzdba输出值的delay参数这一列。<br>​        PG: 修改orzdba脚本，当带-mysql参数时，调用一个shell脚本，该脚本通过在主机上执行”select extract(epoch from replay_lag::time)::numeric(20,6) from pg_stat_replication;”获取复制延迟，并打印在orzdba输出值的pg_delay参数这一列。<br>​    （二）剩余内存：<br>​        修改orzdba脚本，当带-s或-lazy参数时，打印mem-free参数。  </p>
+<h1 id="四-Mysql性能测试"><a href="#四-Mysql性能测试" class="headerlink" title="四 Mysql性能测试"></a>四 Mysql性能测试</h1><h2 id="1-背景数据准备"><a href="#1-背景数据准备" class="headerlink" title="1. 背景数据准备"></a>1. 背景数据准备</h2><p>为不同的数据量创建不同的数据库。例如sysbench_10_100w对应于10张表，每张表100w记录。</p>
+<p>【mysql数据准备：】</p>
+<pre><code>1.在主mysql上创建库：
+CREATE DATABASE 数据库名;
+2.在客户端上通过sysbench创建背景数据
+sysbench oltp_common  --db-driver=mysql --mysql-host=10.244.208.11 --mysql-port=3306 --mysql-user=sndsadmin --mysql-password=123456  --mysql-db=sysbench_10_1000w --tables=10 --table-size=1000000  prepare
+注释：
+1.--mysql-host=10.37.2.180       数据库地址
+2.--mysql-db=sysbench_10_1000w    库名称
+3.--tables=10                    表个数
+4.--table-size=10000000            多少条数据</code></pre><p>【PostgreSQL数据准备：】</p>
+<pre><code>sysbench oltp_common  --db-driver=pgsql --pgsql-host=10.37.2.180 --pgsql-port=5432 --pgsql-user=postgres  --pgsql-db=sysbench_10_1000w  --tables=10 --table-size=10000000  prepare</code></pre><h2 id="2-测试"><a href="#2-测试" class="headerlink" title="2.测试"></a>2.测试</h2><p>【mysql测试：】</p>
+<pre><code>sysbench /usr/local/share/sysbench/oltp_write_only.lua \
+--db-driver=mysql --mysql-host=10.37.2.180 --mysql-port=3306 \
+--mysql-user=sndsadmin --mysql-password=123456  --mysql-db=sysbench_10_1000w  \
+--tables=10 --table-size=10000000  --num_threads=1  --report-interval=1 \
+--max-time=1200 run</code></pre><p>【PostgreSQL测试：】</p>
+<pre><code>sysbench /usr/local/share/sysbench/oltp_write_only.lua \
+--db-driver=pgsql --pgsql-host=10.37.2.180 --pgsql-port=5432 \
+--pgsql-user=postgres  --pgsql-db=sysbench_10_1000w  \
+--tables=10 --table-size=10000000  --num_threads=1  --report-interval=1 \
+--max-time=1200 </code></pre><h2 id="3-orzdba进行性能参数"><a href="#3-orzdba进行性能参数" class="headerlink" title="3. orzdba进行性能参数"></a>3. orzdba进行性能参数</h2><p>在mysql服务端上执行</p>
+<pre><code>分别运行：
+     nohup /opt/trunk/orzdba -lazy -d vdb -mysql -rt -L /tmp/orzdba_0729.log &amp;
+采集的参数记录在/tmp/orzdba_0729.log中</code></pre><h2 id="4-orzdba结果分析"><a href="#4-orzdba结果分析" class="headerlink" title="4.orzdba结果分析"></a>4.orzdba结果分析</h2><p>1.所有结果求平均值<br>2.参数：</p>
+<p>-tcprstat(us）：</p>
+<pre><code>count：此间隔内完成的请求数量
+avg：此间隔内所有完成的请求，响应的平均时间
+95_avg：此间隔内95%的请求量的平均响应时间(单位微秒)，该值较能体现MySQL Server查询的平均响应时间</code></pre><p>-QPS–TPS- ：</p>
+<pre><code>显示出数据库常用变量值、insert/update/delete/select的统计值、innodb请求命中率、线程状态、mysql收发字节数</code></pre>
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2008\01\04\Database\2007-01-17-mysql-存储过程\" rel="bookmark">存储过程</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2008/01/05/Database/2008-01-05-mysqlRds-draft/" title="mysqlRds-draft">https://tongsiying.github.io/2008/01/05/Database/2008-01-05-mysqlRds-draft/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/mysql/" rel="tag"># mysql</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2008/01/05/python/2008-01-04-python-ruan/" rel="prev" title="python-ruan">
+      <i class="fa fa-chevron-left"></i> python-ruan
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/07/08/hexo/2007-01-02-hexo-pic/" rel="next" title="hexo引用本地图片无法显示">
+      hexo引用本地图片无法显示 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一-MySQL-RDS-独立部署版本物理机手动安装手册"><span class="nav-text">一 MySQL RDS 独立部署版本物理机手动安装手册</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目的"><span class="nav-text">目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境准备"><span class="nav-text">环境准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#硬件需求"><span class="nav-text">硬件需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软件和配置需求"><span class="nav-text">软件和配置需求</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装前准备"><span class="nav-text">安装前准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装前环境清理-各节点均执行"><span class="nav-text">安装前环境清理[各节点均执行]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-共通安装操作"><span class="nav-text">1. 共通安装操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-解压-各节点均执行"><span class="nav-text">1.1 解压[各节点均执行]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-编辑mysqlRds-cfg-各节点均执行"><span class="nav-text">1.2 编辑mysqlRds.cfg[各节点均执行]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-创建目录和软连接-各节点均执行-【没分区可以不执行1-3】"><span class="nav-text">1.3 创建目录和软连接[各节点均执行]【没分区可以不执行1.3】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-安装python2-7-各节点均执行"><span class="nav-text">1.4 安装python2.7[各节点均执行]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-安装mysql软件和初始化实例-各节点均执行"><span class="nav-text">1.5 安装mysql软件和初始化实例[各节点均执行]</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-仅单实例需要执行的步骤【单机执行这一步-主从直接跳到3-】"><span class="nav-text">2. 仅单实例需要执行的步骤【单机执行这一步,主从直接跳到3.】</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-检查实例状态"><span class="nav-text">2.1 检查实例状态</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-仅HA集群需要执行的步骤"><span class="nav-text">3. 仅HA集群需要执行的步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-资源准备"><span class="nav-text">3.1    资源准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-设置ssh互信"><span class="nav-text">3.2.    设置ssh互信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-配置主从复制-仅主节点执行"><span class="nav-text">3.3.    配置主从复制[仅主节点执行]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-安装配置HA-仅主节点执行"><span class="nav-text">3.4.安装配置HA[仅主节点执行]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-检查HA集群情况"><span class="nav-text">3.5 检查HA集群情况</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-测试验证"><span class="nav-text">4. 测试验证</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二-orzdba安装"><span class="nav-text">二 orzdba安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-1"><span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-共通安装操作-1"><span class="nav-text">1. 共通安装操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-先下载下来（有安装包可以不下载）"><span class="nav-text">2.先下载下来（有安装包可以不下载）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-移动到-usr-bin"><span class="nav-text">3.移动到&#x2F;usr&#x2F;bin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-做个连接"><span class="nav-text">4.做个连接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装控件"><span class="nav-text">安装控件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-先解压"><span class="nav-text">1.先解压</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-进去解压后的文件夹"><span class="nav-text">2.进去解压后的文件夹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-里面有几个压缩包-一个个来安装"><span class="nav-text">3.里面有几个压缩包,一个个来安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-修改orzdba"><span class="nav-text">4.修改orzdba</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三-sysbench安装"><span class="nav-text">三 sysbench安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-安装前准备工作"><span class="nav-text">1.安装前准备工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-安装sysbench-源码编译形式"><span class="nav-text">2.安装sysbench(源码编译形式)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-检查安装是否成功"><span class="nav-text">3.检查安装是否成功</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-lua脚本路径"><span class="nav-text">4.lua脚本路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-拷贝mysql到-usr-bin"><span class="nav-text">5.拷贝mysql到&#x2F;usr&#x2F;bin&#x2F;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-修改get-rpl-delay-p"><span class="nav-text">6.修改get_rpl_delay.p</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-注：如何采集复制延迟和剩余内存："><span class="nav-text">7.注：如何采集复制延迟和剩余内存：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四-Mysql性能测试"><span class="nav-text">四 Mysql性能测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-背景数据准备"><span class="nav-text">1. 背景数据准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-测试"><span class="nav-text">2.测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-orzdba进行性能参数"><span class="nav-text">3. orzdba进行性能参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-orzdba结果分析"><span class="nav-text">4.orzdba结果分析</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">What hurts more, the pain of hard work or the pain of regret?</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">34:51</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

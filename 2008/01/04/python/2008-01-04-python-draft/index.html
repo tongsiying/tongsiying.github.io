@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="python-draft">
+<meta property="og:url" content="https://tongsiying.github.io/2008/01/04/python/2008-01-04-python-draft/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/python/2008-01-04-python-draft/E:%5C%E8%AE%B0%E5%BD%95%5Cimg%5C1028496-20160921163939199-1015768640.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/python/2008-01-04-python-draft/E:%5C%E8%AE%B0%E5%BD%95%5Cimg%5C1028496-20160921180539465-1664856169.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/python/2008-01-04-python-draft/E:%5C%E8%AE%B0%E5%BD%95%5Cimg%5C1028496-20160921200910668-479749832.png">
+<meta property="og:image" content="https://tongsiying.github.io/2008/01/04/python/2008-01-04-python-draft/E:%5C%E8%AE%B0%E5%BD%95%5Cimg%5C1028496-20160921202627902-2054932986.png">
+<meta property="article:published_time" content="2008-01-04T10:37:19.000Z">
+<meta property="article:modified_time" content="2021-06-24T14:58:32.107Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tongsiying.github.io/2008/01/04/python/2008-01-04-python-draft/E:%5C%E8%AE%B0%E5%BD%95%5Cimg%5C1028496-20160921163939199-1015768640.png">
+
+<link rel="canonical" href="https://tongsiying.github.io/2008/01/04/python/2008-01-04-python-draft/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>python-draft | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">嘻嘻嘻嘻嘻嘻</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2008/01/04/python/2008-01-04-python-draft/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="What hurts more, the pain of hard work or the pain of regret?">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          python-draft
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2008-01-04 18:37:19" itemprop="dateCreated datePublished" datetime="2008-01-04T18:37:19+08:00">2008-01-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-24 22:58:32" itemprop="dateModified" datetime="2021-06-24T22:58:32+08:00">2021-06-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>16k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>15 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+
+
+<h1 id="001-安装matplotlib"><a href="#001-安装matplotlib" class="headerlink" title="001-安装matplotlib"></a>001-安装matplotlib</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">001</span>-python怎么安装matplotlib</span><br><span class="line">https:<span class="comment">//www.php.cn/python-tutorials-423909.html</span></span><br><span class="line"></span><br><span class="line"><span class="number">1.</span>进入到cmd窗口下</span><br><span class="line">python -m pip install -U pip setuptools --proxy http:<span class="comment">//xzproxy.cnsuning.com:8080 -i  https://pypi.tuna.tsinghua.edu.cn/simple/</span></span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>接着键入进行自动的安装，系统会自动下载安装包。</span><br><span class="line">python -m pip install matplotlib --proxy http:<span class="comment">//xzproxy.cnsuning.com:8080 -i  https://pypi.tuna.tsinghua.edu.cn/simple/</span></span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>安装完成后，可以用python -m pip list查看本机的安装的所有模块，确保matplotlib已经安装成功。</span><br><span class="line">显示的界面为：</span><br><span class="line">MarkupSafe			<span class="number">1.0</span></span><br><span class="line">matplotiib          <span class="number">2.2</span><span class="number">.3</span></span><br><span class="line">mistune             <span class="number">0.8</span><span class="number">.3</span></span><br><span class="line">nbconvert           <span class="number">5.3</span><span class="number">.1</span></span><br><span class="line">nbformat            <span class="number">4.4</span><span class="number">.0</span></span><br><span class="line">notebook            <span class="number">5.4</span><span class="number">.0</span></span><br><span class="line">munpy               <span class="number">1.14</span>. <span class="number">0</span></span><br><span class="line">https:<span class="comment">//www.cnblogs.com/dingjiaoyang/p/11579723.html</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">linux安装：</span><br><span class="line">yum install python-matplotlib.x86_64</span><br></pre></td></tr></table></figure>
+
+<h1 id="002-博客"><a href="#002-博客" class="headerlink" title="002-博客"></a>002-博客</h1><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">https:</span><span class="comment">//www.crifan.com/how_to_do_python_development_under_windows_environment/</span></span><br><span class="line"><span class="symbol">https:</span><span class="comment">//www.runoob.com/numpy/numpy-matplotlib.html</span></span><br><span class="line"><span class="symbol">https:</span><span class="comment">//blog.csdn.net/vs_hero_2019/article/details/88322515</span></span><br><span class="line"><span class="symbol">https:</span><span class="comment">//www.cnblogs.com/OliverQin/p/8976150.html</span></span><br><span class="line"><span class="symbol">https:</span><span class="comment">//blog.csdn.net/discoverer100/article/details/90111149</span></span><br><span class="line"><span class="symbol">https:</span><span class="comment">//blog.csdn.net/beautiful77moon/article/details/96475964</span></span><br><span class="line"></span><br><span class="line"><span class="symbol">https:</span><span class="comment">//pypi.org/project/configparser/#files</span></span><br><span class="line"></span><br><span class="line"><span class="symbol">https:</span><span class="comment">//www.cnblogs.com/hanmk/p/9843136.html</span></span><br><span class="line"><span class="symbol">https:</span><span class="comment">//www.cnblogs.com/feeland/p/4514771.html</span></span><br><span class="line"></span><br><span class="line"><span class="symbol">https:</span><span class="comment">//www.cnblogs.com/clement-jiao/p/9043110.html</span></span><br><span class="line"></span><br><span class="line"><span class="symbol">https:</span><span class="comment">//www.zhangshengrong.com/p/QrXejvyy1d/</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="003-Linux服务器没有GUI的情况下使用matplotlib绘图"><a href="#003-Linux服务器没有GUI的情况下使用matplotlib绘图" class="headerlink" title="003-Linux服务器没有GUI的情况下使用matplotlib绘图"></a>003-Linux服务器没有GUI的情况下使用matplotlib绘图</h1><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="comment">//www.cnblogs.com/devilmaycry812839668/p/10201971.html</span></span><br><span class="line"></span><br><span class="line">最近看到关于 python3 中用matplotlib 不进行交互画图，而是直接将图保存到硬盘，主要的一个设置就是  matplotlib.use(<span class="string">'agg'</span>)</span><br><span class="line"> </span><br><span class="line">注明：</span><br><span class="line">其实不设置  matplotlib.use(<span class="string">'agg'</span>) 也可以把图片保存到硬盘，但是设置了这条语句再调用 matplotlib.pyplot.show 等进行交互式图片查看就会报错。</span><br><span class="line">可以这么理解，设置了  matplotlib.use(<span class="string">'agg'</span>) 后便强制你不能交互式查看显示图片，而只能保存到磁盘再查看。</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">下面对其进行一些介绍：</span><br><span class="line"><span class="keyword">import</span> matplotlib </span><br><span class="line"> </span><br><span class="line">matplotlib.use(<span class="string">'Agg'</span>)</span><br><span class="line"> </span><br><span class="line">#而且matplotlib.use(<span class="string">'Agg'</span>)必须添加在 <span class="keyword">import</span> matplotlib.pyplot 之前，否则无效</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#最后在后面加上</span><br><span class="line">plt.savefig(<span class="string">'/tmp/figure_2_1.png'</span>)</span><br><span class="line">#就可以把绘制的图存为png，down到本地查看就行了</span><br></pre></td></tr></table></figure>
+
+<h1 id="003-读文件生成图表"><a href="#003-读文件生成图表" class="headerlink" title="003-读文件生成图表"></a>003-读文件生成图表</h1><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># encoding: utf-8</span></span><br><span class="line">import matplotlib </span><br><span class="line">matplotlib.use(<span class="string">'Agg'</span>)</span><br><span class="line">import matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="built_in">file</span> = <span class="built_in">open</span>(<span class="string">'map.txt'</span>)  <span class="comment">#打开文档</span></span><br><span class="line">data = <span class="built_in">file</span>.readlines() <span class="comment">#读取文档数据</span></span><br><span class="line">para_1 = []  <span class="comment">#新建列表，用于保存第一列数据</span></span><br><span class="line">para_2 = []  <span class="comment">#新建列表，用于保存第二列数据</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">num</span> <span class="keyword">in</span> data:</span><br><span class="line">    <span class="comment"># split用于将每一行数据用逗号分割成多个对象</span></span><br><span class="line">    <span class="comment">#取分割后的第0列，转换成float格式后添加到para_1列表中</span></span><br><span class="line">    para_1.append(float(<span class="built_in">num</span>.<span class="built_in">split</span>(<span class="string">','</span>)[<span class="number">0</span>]))</span><br><span class="line">    <span class="comment">#取分割后的第1列，转换成float格式后添加到para_1列表中</span></span><br><span class="line">    para_2.append(float(<span class="built_in">num</span>.<span class="built_in">split</span>(<span class="string">','</span>)[<span class="number">1</span>]))</span><br><span class="line">plt.figure()</span><br><span class="line">plt.title(<span class="string">'map'</span>)</span><br><span class="line">plt.plot(para_1, para_2)</span><br><span class="line">plt.savefig(<span class="string">'./figure_2_1.png'</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="004-生成多张图"><a href="#004-生成多张图" class="headerlink" title="004-生成多张图"></a>004-生成多张图</h1><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import matplotlib </span><br><span class="line">matplotlib.use(<span class="string">'Agg'</span>)</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"><span class="keyword">from</span> numpy import *</span><br><span class="line"><span class="attribute">x</span>=linspace(-2,2)</span><br><span class="line"><span class="attribute">y1</span>=2*x+1</span><br><span class="line"><span class="attribute">y2</span>=x**2</span><br><span class="line"> </span><br><span class="line">plt.figure()    </span><br><span class="line">plt.plot(x,y1)   </span><br><span class="line">plt.savefig(<span class="string">'./1.png'</span>)</span><br><span class="line"> </span><br><span class="line">plt.figure()</span><br><span class="line">plt.plot(x,y2,<span class="attribute">color</span>=<span class="string">'red'</span>,linestyle='--')</span><br><span class="line"></span><br><span class="line">plt.savefig(<span class="string">'./2.png'</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="005-读文件生成多张图"><a href="#005-读文件生成多张图" class="headerlink" title="005-读文件生成多张图"></a>005-读文件生成多张图</h1><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># encoding: utf-8</span></span><br><span class="line">import matplotlib </span><br><span class="line">matplotlib.use(<span class="string">'Agg'</span>)</span><br><span class="line">import matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="built_in">file</span> = <span class="built_in">open</span>(<span class="string">'map.txt'</span>)  <span class="comment">#打开文档</span></span><br><span class="line">data = <span class="built_in">file</span>.readlines() <span class="comment">#读取文档数据</span></span><br><span class="line">para_1 = []  <span class="comment">#新建列表，用于保存第一列数据</span></span><br><span class="line">para_2 = []  <span class="comment">#新建列表，用于保存第二列数据</span></span><br><span class="line">para_3 = []</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">num</span> <span class="keyword">in</span> data:</span><br><span class="line">    para_1.append(float(<span class="built_in">num</span>.<span class="built_in">split</span>(<span class="string">','</span>)[<span class="number">0</span>]))</span><br><span class="line">    para_2.append(float(<span class="built_in">num</span>.<span class="built_in">split</span>(<span class="string">','</span>)[<span class="number">1</span>]))</span><br><span class="line">    para_3.append(float(<span class="built_in">num</span>.<span class="built_in">split</span>(<span class="string">','</span>)[<span class="number">2</span>]))</span><br><span class="line">	</span><br><span class="line">plt.figure()</span><br><span class="line">plt.title(<span class="string">'map'</span>)</span><br><span class="line">plt.plot(para_1, para_2)</span><br><span class="line">plt.savefig(<span class="string">'./1.png'</span>)</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.plot(para_1, para_3)</span><br><span class="line">plt.savefig(<span class="string">'./2.png'</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># encoding: utf-8</span></span><br><span class="line">import matplotlib </span><br><span class="line">matplotlib.use(<span class="string">'Agg'</span>)</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"></span><br><span class="line">file = open(<span class="string">'map.txt'</span>)  #打开文档</span><br><span class="line">data = file.readlines() #读取文档数据</span><br><span class="line">para_1 = []  #新建列表，用于保存第一列数据</span><br><span class="line">para_2 = []  #新建列表，用于保存第二列数据</span><br><span class="line">para_3 = []</span><br><span class="line">para_4 = []</span><br><span class="line">para_5 = []</span><br><span class="line">para_6 = []</span><br><span class="line"><span class="keyword">for</span> num <span class="keyword">in</span> data:</span><br><span class="line">    para_1.append(float(num.split(<span class="string">','</span>)[0]))</span><br><span class="line">    para_2.append(float(num.split(<span class="string">','</span>)[1]))</span><br><span class="line">    para_3.append(float(num.split(<span class="string">','</span>)[2]))</span><br><span class="line">    para_4.append(float(num.split(<span class="string">','</span>)[4]))</span><br><span class="line">    para_5.append(float(num.split(<span class="string">','</span>)[5]))</span><br><span class="line">    para_6.append(float(num.split(<span class="string">','</span>)[6]))</span><br><span class="line">	</span><br><span class="line">plt.figure()</span><br><span class="line">plt.title(<span class="string">'IOPS'</span>)</span><br><span class="line">plt.plot(para_1, para_2)</span><br><span class="line">plt.xlabel(<span class="string">"second"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"tims"</span>)</span><br><span class="line">plt.figtext(0.75, 0.45, <span class="string">'IOPS'</span>,</span><br><span class="line">         <span class="attribute">fontsize</span>=40, <span class="attribute">color</span>=<span class="string">'gray'</span>,</span><br><span class="line">         <span class="attribute">ha</span>=<span class="string">'right'</span>, <span class="attribute">va</span>=<span class="string">'bottom'</span>, <span class="attribute">alpha</span>=0.4)</span><br><span class="line">plt.savefig(<span class="string">'./1.png'</span>)</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.title(<span class="string">'BW'</span>)</span><br><span class="line">plt.plot(para_1, para_3)</span><br><span class="line">plt.xlabel(<span class="string">"second"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"MB/sec"</span>)</span><br><span class="line">plt.figtext(0.75, 0.45, <span class="string">'BM'</span>,</span><br><span class="line">         <span class="attribute">fontsize</span>=40, <span class="attribute">color</span>=<span class="string">'gray'</span>,</span><br><span class="line">         <span class="attribute">ha</span>=<span class="string">'right'</span>, <span class="attribute">va</span>=<span class="string">'bottom'</span>, <span class="attribute">alpha</span>=0.4)</span><br><span class="line">plt.savefig(<span class="string">'./2.png'</span>)</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.title(<span class="string">'RESP'</span>)</span><br><span class="line">plt.plot(para_1, para_4)</span><br><span class="line">plt.xlabel(<span class="string">"second"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"resp/time"</span>)</span><br><span class="line">plt.figtext(0.75, 0.45, <span class="string">'RESP'</span>,</span><br><span class="line">         <span class="attribute">fontsize</span>=40, <span class="attribute">color</span>=<span class="string">'gray'</span>,</span><br><span class="line">         <span class="attribute">ha</span>=<span class="string">'right'</span>, <span class="attribute">va</span>=<span class="string">'bottom'</span>, <span class="attribute">alpha</span>=0.4)</span><br><span class="line">plt.savefig(<span class="string">'./3.png'</span>)</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.title(<span class="string">'READ-RESP'</span>)</span><br><span class="line">plt.plot(para_1, para_5)</span><br><span class="line">plt.xlabel(<span class="string">"second"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"read/resp"</span>)</span><br><span class="line">plt.figtext(0.75, 0.45, <span class="string">'READ-RESP'</span>,</span><br><span class="line">         <span class="attribute">fontsize</span>=40, <span class="attribute">color</span>=<span class="string">'gray'</span>,</span><br><span class="line">         <span class="attribute">ha</span>=<span class="string">'right'</span>, <span class="attribute">va</span>=<span class="string">'bottom'</span>, <span class="attribute">alpha</span>=0.4)</span><br><span class="line">plt.savefig(<span class="string">'./4.png'</span>)</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.title(<span class="string">'WRITE-RESP'</span>)</span><br><span class="line">plt.plot(para_1, para_6)</span><br><span class="line">plt.xlabel(<span class="string">"second"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"write/resp"</span>)</span><br><span class="line">plt.figtext(0.75, 0.45, <span class="string">'WRITE-RESP'</span>,</span><br><span class="line">         <span class="attribute">fontsize</span>=40, <span class="attribute">color</span>=<span class="string">'gray'</span>,</span><br><span class="line">         <span class="attribute">ha</span>=<span class="string">'right'</span>, <span class="attribute">va</span>=<span class="string">'bottom'</span>, <span class="attribute">alpha</span>=0.4)</span><br><span class="line">plt.savefig(<span class="string">'./5.png'</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="006-函数生成图表"><a href="#006-函数生成图表" class="headerlink" title="006-函数生成图表"></a>006-函数生成图表</h1><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># encoding: utf-8</span></span><br><span class="line">import matplotlib </span><br><span class="line">matplotlib.use(<span class="string">'Agg'</span>)</span><br><span class="line">import matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="built_in">file</span> = <span class="built_in">open</span>(<span class="string">'map.txt'</span>)  <span class="comment">#打开文档</span></span><br><span class="line">data = <span class="built_in">file</span>.readlines() <span class="comment">#读取文档数据</span></span><br><span class="line">para_1 = []  <span class="comment">#新建列表，用于保存第一列数据</span></span><br><span class="line">para_2 = []  <span class="comment">#新建列表，用于保存第二列数据</span></span><br><span class="line">para_3 = []</span><br><span class="line">para_4 = []</span><br><span class="line">para_5 = []</span><br><span class="line">para_6 = []</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">num</span> <span class="keyword">in</span> data:</span><br><span class="line">    para_1.append(float(<span class="built_in">num</span>.<span class="built_in">split</span>(<span class="string">','</span>)[<span class="number">0</span>]))</span><br><span class="line">    para_2.append(float(<span class="built_in">num</span>.<span class="built_in">split</span>(<span class="string">','</span>)[<span class="number">1</span>]))</span><br><span class="line">    para_3.append(float(<span class="built_in">num</span>.<span class="built_in">split</span>(<span class="string">','</span>)[<span class="number">2</span>]))</span><br><span class="line">    para_4.append(float(<span class="built_in">num</span>.<span class="built_in">split</span>(<span class="string">','</span>)[<span class="number">4</span>]))</span><br><span class="line">    para_5.append(float(<span class="built_in">num</span>.<span class="built_in">split</span>(<span class="string">','</span>)[<span class="number">5</span>]))</span><br><span class="line">    para_6.append(float(<span class="built_in">num</span>.<span class="built_in">split</span>(<span class="string">','</span>)[<span class="number">6</span>]))</span><br><span class="line">	</span><br><span class="line">def figure_show(<span class="keyword">a</span>,x,y):</span><br><span class="line">	plt.figure()</span><br><span class="line">	plt.title(<span class="keyword">a</span>)</span><br><span class="line">	plt.plot(x, y)</span><br><span class="line">	plt.xlabel(<span class="string">"second"</span>)</span><br><span class="line">	plt.ylabel(<span class="keyword">a</span>)</span><br><span class="line">	plt.figtext(<span class="number">0.75</span>, <span class="number">0.45</span>, <span class="keyword">a</span>,</span><br><span class="line">			 fontsize=<span class="number">40</span>, color=<span class="string">'gray'</span>,</span><br><span class="line">			 ha=<span class="string">'right'</span>, va=<span class="string">'bottom'</span>, alpha=<span class="number">0.4</span>)</span><br><span class="line">	</span><br><span class="line">	plt.savefig(<span class="keyword">a</span>+<span class="string">".png"</span>)</span><br><span class="line"></span><br><span class="line">figure_show(<span class="string">'iops'</span>,para_1,para_2)</span><br></pre></td></tr></table></figure>
+
+<h1 id="报错解决呀："><a href="#报错解决呀：" class="headerlink" title="报错解决呀："></a>报错解决呀：</h1><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">直接报错：TypeError: cannot concatenate <span class="string">'str'</span> <span class="keyword">and</span> <span class="string">'int'</span> objects</span><br><span class="line">解决这个方法只有提前把<span class="built_in">num</span>转换为字符串类型，可以使用<span class="keyword">bytes</span>函数把int型转换为<span class="keyword">string</span>型。</span><br><span class="line">代码：</span><br><span class="line"><span class="comment"># coding=utf8</span></span><br><span class="line">str = <span class="string">'你的分数是:'</span></span><br><span class="line"><span class="built_in">num</span> = <span class="number">82</span></span><br><span class="line"><span class="built_in">num</span> = <span class="keyword">bytes</span>(<span class="built_in">num</span>)</span><br><span class="line"><span class="keyword">text</span> = str+<span class="built_in">num</span>+<span class="string">'分 | 琼台博客'</span></span><br><span class="line">print <span class="keyword">text</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="007-zip"><a href="#007-zip" class="headerlink" title="007 zip"></a>007 zip</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">看一个实例：</span><br><span class="line">x = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">y = [<span class="number">-1</span>, <span class="number">-2</span>, <span class="number">-3</span>] # y = [i * <span class="number">-1</span> <span class="keyword">for</span> i <span class="keyword">in</span> x]</span><br><span class="line">zip(x, y)</span><br><span class="line">zip的结果如下：</span><br><span class="line">[(<span class="number">1</span>, <span class="number">-1</span>), (<span class="number">2</span>, <span class="number">-2</span>), (<span class="number">3</span>, <span class="number">-3</span>)]</span><br><span class="line">zip([seql, ...])接受一系列可迭代对象作为参数，将对象中对应的元素打包成一个个tuple（元组），然后返回由这些tuples组成的list（列表）。</span><br><span class="line"></span><br><span class="line">进入正题：如何使用一个<span class="keyword">for</span>循环同时循环多个变量呢？使用tuple。如下，同时循环i和j变量。</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (i, j) <span class="keyword">in</span> [(<span class="number">1</span>, <span class="number">2</span>), (<span class="number">2</span>, <span class="number">3</span>), (<span class="number">4</span>, <span class="number">5</span>)]:</span><br><span class="line">print(i, j)</span><br><span class="line">输出结果如下：</span><br><span class="line">(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">(<span class="number">4</span>, <span class="number">5</span>)</span><br><span class="line">所以我们如果要将x和y中的元素分别相加，则可以使用如下代码：</span><br><span class="line"><span class="keyword">for</span> (i, j) <span class="keyword">in</span> zip(x, y):</span><br><span class="line">  print(i + j)</span><br><span class="line">输出结果：</span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># encoding: utf-8</span></span><br><span class="line">import matplotlib </span><br><span class="line">matplotlib.use(<span class="string">'Agg'</span>)</span><br><span class="line">import matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="built_in">file</span> = <span class="built_in">open</span>(<span class="string">'map.txt'</span>)  <span class="comment">#打开文档</span></span><br><span class="line">data = <span class="built_in">file</span>.readlines() <span class="comment">#读取文档数据</span></span><br><span class="line">para_1 = []  <span class="comment">#新建列表，用于保存第一列数据</span></span><br><span class="line">para_2 = []  <span class="comment">#新建列表，用于保存第二列数据</span></span><br><span class="line">para_3 = []</span><br><span class="line">para_4 = []</span><br><span class="line">para_5 = []</span><br><span class="line">para_6 = []</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">num</span> <span class="keyword">in</span> data:</span><br><span class="line">    para_1.append(float(<span class="built_in">num</span>.<span class="built_in">split</span>(<span class="string">','</span>)[<span class="number">0</span>]))</span><br><span class="line">    para_2.append(float(<span class="built_in">num</span>.<span class="built_in">split</span>(<span class="string">','</span>)[<span class="number">1</span>]))</span><br><span class="line">    para_3.append(float(<span class="built_in">num</span>.<span class="built_in">split</span>(<span class="string">','</span>)[<span class="number">2</span>]))</span><br><span class="line">    para_4.append(float(<span class="built_in">num</span>.<span class="built_in">split</span>(<span class="string">','</span>)[<span class="number">4</span>]))</span><br><span class="line">    para_5.append(float(<span class="built_in">num</span>.<span class="built_in">split</span>(<span class="string">','</span>)[<span class="number">5</span>]))</span><br><span class="line">    para_6.append(float(<span class="built_in">num</span>.<span class="built_in">split</span>(<span class="string">','</span>)[<span class="number">6</span>]))</span><br><span class="line">	</span><br><span class="line">def figure_show(<span class="keyword">a</span>,x,y):</span><br><span class="line">	plt.figure()</span><br><span class="line">	plt.title(<span class="keyword">a</span>)</span><br><span class="line">	plt.plot(x, y)</span><br><span class="line">	plt.xlabel(<span class="string">"second"</span>)</span><br><span class="line">	plt.ylabel(<span class="keyword">a</span>)</span><br><span class="line">	plt.figtext(<span class="number">0.75</span>, <span class="number">0.45</span>, <span class="keyword">a</span>,</span><br><span class="line">			 fontsize=<span class="number">40</span>, color=<span class="string">'gray'</span>,</span><br><span class="line">			 ha=<span class="string">'right'</span>, va=<span class="string">'bottom'</span>, alpha=<span class="number">0.4</span>)</span><br><span class="line">	</span><br><span class="line">	plt.savefig(<span class="keyword">a</span>+<span class="string">".png"</span>)</span><br><span class="line"></span><br><span class="line">name = [<span class="string">"iops"</span>,<span class="string">"MB"</span>,<span class="string">"resp"</span>,<span class="string">"read-resp"</span>,<span class="string">"write-resp"</span>]</span><br><span class="line">y = [para_2, para_3, para_4, para_5, para_6]</span><br><span class="line"><span class="keyword">for</span> (i, j) <span class="keyword">in</span> zip(name, y):</span><br><span class="line">    figure_show(i,para_1,j)</span><br></pre></td></tr></table></figure>
+
+<h1 id="008-用python执行Linux命令"><a href="#008-用python执行Linux命令" class="headerlink" title="008 用python执行Linux命令"></a>008 用python执行Linux命令</h1><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">https:</span><span class="comment">//www.cnblogs.com/Jintaonet/p/11158485.html</span></span><br><span class="line"><span class="string">https:</span><span class="comment">//www.cnblogs.com/clhac/p/3708166.html</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">subprocess.call([<span class="string">"ls"</span>,<span class="string">"-l"</span>])</span><br></pre></td></tr></table></figure>
+
+<h1 id="009-enumerate-函数"><a href="#009-enumerate-函数" class="headerlink" title="009 enumerate() 函数"></a>009 enumerate() 函数</h1><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;seq = [<span class="string">'one'</span>, <span class="string">'two'</span>, <span class="string">'three'</span>] </span><br><span class="line">&gt;&gt;&gt; <span class="keyword">for</span> i, <span class="keyword">element</span> <span class="keyword">in</span> enumerate(seq): </span><br><span class="line">... print i, <span class="keyword">element</span> </span><br><span class="line">... </span><br><span class="line"><span class="number">0</span> <span class="literal">one</span> </span><br><span class="line"><span class="number">1</span> <span class="literal">two</span> </span><br><span class="line"><span class="number">2</span> <span class="literal">three</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="010-换行写"><a href="#010-换行写" class="headerlink" title="010 换行写"></a>010 换行写</h1><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">"new.txt"</span>, <span class="string">"w"</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.<span class="built_in">write</span>(<span class="string">"Hello World!"</span>+<span class="string">"\n"</span>)</span><br><span class="line">    f.<span class="built_in">write</span>(<span class="string">"2"</span>+<span class="string">"\n"</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="configparser-python读配置文件"><a href="#configparser-python读配置文件" class="headerlink" title="configparser python读配置文件"></a>configparser python读配置文件</h1><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">https:</span><span class="comment">//pypi.org/project/configparser/#files</span></span><br><span class="line"></span><br><span class="line"><span class="symbol">https:</span><span class="comment">//www.cnblogs.com/hanmk/p/9843136.html</span></span><br><span class="line"><span class="symbol">https:</span><span class="comment">//www.cnblogs.com/feeland/p/4514771.html</span></span><br><span class="line"></span><br><span class="line"><span class="symbol">https:</span><span class="comment">//www.cnblogs.com/clement-jiao/p/9043110.html</span></span><br><span class="line"></span><br><span class="line"><span class="symbol">https:</span><span class="comment">//zixuephp.net/article-431.html</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="symbol">https:</span><span class="comment">//blog.csdn.net/tadwork/article/details/80845599</span></span><br><span class="line">今天把服务器上一个备份同步脚本放到老服务器上用，执行脚本后报错。</span><br><span class="line">import configparser</span><br><span class="line"><span class="symbol">ImportError:</span> No module named configparser</span><br><span class="line">pip安装configparser也没有，网上一查原来是python3的，对应python2的是ConfigParser。</span><br><span class="line"></span><br><span class="line">修改代码</span><br><span class="line"></span><br><span class="line"><span class="symbol">try:</span></span><br><span class="line">    import configparser</span><br><span class="line"><span class="symbol">except:</span></span><br><span class="line">    import ConfigParser as configparser</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">[root@ceph4 vdench]# cat config.ini </span><br><span class="line">[mysql]</span><br><span class="line">host = 127.0.0.1</span><br><span class="line">port = 3306</span><br><span class="line">user = root</span><br><span class="line">password = Zhsy08241128</span><br><span class="line">database = leartd</span><br><span class="line">[root@ceph4 vdench]# cat 2.py </span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line">import os</span><br><span class="line"><span class="comment">#import ConfigParser</span></span><br><span class="line">import ConfigParser</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 项目路径</span></span><br><span class="line">rootDir = os.path.split(os.path.realpath(__file__))[0]</span><br><span class="line"><span class="comment"># config.ini文件路径</span></span><br><span class="line">configFilePath = os.path.join(rootDir, <span class="string">'config.ini'</span>)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">def get_config_values(section, option):</span><br><span class="line">    <span class="string">""</span><span class="string">"</span></span><br><span class="line"><span class="string">    根据传入的section获取对应的value</span></span><br><span class="line"><span class="string">    :param section: ini配置文件中用[]标识的内容</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    "</span><span class="string">""</span></span><br><span class="line">   <span class="built_in"> config </span>= ConfigParser.ConfigParser()</span><br><span class="line">    config.read(configFilePath)</span><br><span class="line">    # return config.items(<span class="attribute">section</span>=section)</span><br><span class="line">    return config.<span class="builtin-name">get</span>(<span class="attribute">section</span>=section, <span class="attribute">option</span>=option)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    result = get_config_values(<span class="string">'mysql'</span>, <span class="string">'port'</span>)</span><br><span class="line">    <span class="builtin-name">print</span>(result)</span><br></pre></td></tr></table></figure>
+
+<h1 id="以逗号分隔成列表"><a href="#以逗号分隔成列表" class="headerlink" title="以逗号分隔成列表"></a>以逗号分隔成列表</h1><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="regexp">//</span>www.cnblogs.com<span class="regexp">/clement-jiao/</span>p<span class="regexp">/9043110.html</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="python脚本传递参数"><a href="#python脚本传递参数" class="headerlink" title="python脚本传递参数"></a>python脚本传递参数</h1><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="regexp">//</span>www.cnblogs.com<span class="regexp">/lijunjiang2015/</span>p<span class="regexp">/7689492.html</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="python编译"><a href="#python编译" class="headerlink" title="python编译"></a>python编译</h1><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">python</span> -<span class="keyword">m</span> py_compile <span class="keyword">file</span>.<span class="keyword">py</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="使用Matplotlib画图系列（一）"><a href="#使用Matplotlib画图系列（一）" class="headerlink" title="使用Matplotlib画图系列（一）"></a>使用Matplotlib画图系列（一）</h1><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="regexp">//</span>www.cnblogs.com<span class="regexp">/laoniubile/</span>p<span class="regexp">/5893286.html</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight gml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">实现一个最简单的plot函数调用：</span><br><span class="line"></span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"><span class="symbol">y</span>=pp.DS.Transac_open  # 设置<span class="symbol">y</span>轴数据，以数组形式提供</span><br><span class="line"><span class="symbol">x</span>=len(<span class="symbol">y</span>)           # 设置<span class="symbol">x</span>轴，以<span class="symbol">y</span>轴数组长度为宽度</span><br><span class="line"><span class="symbol">x</span>=range(<span class="symbol">x</span>)      # 以<span class="number">0</span>开始的递增序列作为<span class="symbol">x</span>轴数据</span><br><span class="line">plt.plot(<span class="symbol">x</span>,<span class="symbol">y</span>)  #  只提供<span class="symbol">x</span>轴，<span class="symbol">y</span>轴参数，画最简单图形</span><br><span class="line">图形输出结果类似于:</span><br></pre></td></tr></table></figure>
+
+<p> <img src="/2008/01/04/python/2008-01-04-python-draft/E:%5C%E8%AE%B0%E5%BD%95%5Cimg%5C1028496-20160921163939199-1015768640.png" alt="img"> </p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">加入新方法：</span><br><span class="line"><span class="selector-tag">plt</span><span class="selector-class">.figure</span>() ：自定义画布大小</span><br><span class="line"><span class="selector-tag">plt</span><span class="selector-class">.subplot</span>() ：设置画布划分以及图像在画布上输出的位置</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot as plt</span><br><span class="line">y=pp.DS.Transac_open  # 设置y轴数据，以数组形式提供</span><br><span class="line">x=len(y)           # 设置x轴，以y轴数组长度为宽度</span><br><span class="line">x=range(x)      # 以<span class="number">0</span>开始的递增序列作为x轴数据</span><br><span class="line">#==============================</span><br><span class="line">plt.figure(figsize=(<span class="number">8</span>,<span class="number">8</span>),dpi=<span class="number">80</span>)  # 画图之前首先设置figure对象，此函数相当于设置一块自定义大小的画布，使得后面的图形输出在这块规定了大小的画布上，其中参数figsize设置画布大小</span><br><span class="line">plt.subplot(<span class="number">221</span>) # 将figure设置的画布大小分成几个部分，参数‘<span class="number">221</span>’表示<span class="number">2</span>(row)x2(colu),即将画布分成<span class="number">2</span>x2，两行两列的<span class="number">4</span>块区域，<span class="number">1</span>表示选择图形输出的区域在第一块，图形输出区域参数必须在“行x列”范围                       ，此处必须在<span class="number">1</span>和<span class="number">2</span>之间选择——如果参数设置为subplot(<span class="number">111</span>)，则表示画布整个输出，不分割成小块区域，图形直接输出在整块画布上</span><br><span class="line">plt.plot(y,xx) # 在<span class="number">2</span>x2画布中第一块区域输出图形</span><br><span class="line">plt.subplot(<span class="number">222</span>) </span><br><span class="line">plt.plot(y,xx)    #在<span class="number">2</span>x2画布中第二块区域输出图形</span><br><span class="line">plt.show()</span><br><span class="line">plt.subplot(<span class="number">223</span>)  #在<span class="number">2</span>x2画布中第三块区域输出图形</span><br><span class="line">plt.plot(y,xx)</span><br><span class="line">plt.subplot(<span class="number">224</span>)  # 在在<span class="number">2</span>x2画布中第四块区域输出图形</span><br><span class="line">plt.plot(y,xx)</span><br><span class="line">#==============================</span><br><span class="line">plt.plot(x,y)  #  只提供x轴，y轴参数，画最简单图形</span><br><span class="line">输出结果：</span><br></pre></td></tr></table></figure>
+
+<p> <img src="/2008/01/04/python/2008-01-04-python-draft/E:%5C%E8%AE%B0%E5%BD%95%5Cimg%5C1028496-20160921180539465-1664856169.png" alt="img"> </p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">加入新方法：</span><br><span class="line"><span class="selector-tag">plt</span><span class="selector-class">.xticks</span>()：设置<span class="selector-tag">x</span>轴刻度的表现方式</span><br><span class="line"><span class="selector-tag">plt</span><span class="selector-class">.xlim</span>()：设置<span class="selector-tag">x</span>轴刻度的取值范围</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot as plt</span><br><span class="line"><span class="keyword">import</span> numpy as nu</span><br><span class="line"></span><br><span class="line">y=pp.DS.Transac_open  # 设置y轴数据，以数组形式提供</span><br><span class="line"></span><br><span class="line">x=len(y)           # 设置x轴，以y轴数组长度为宽度</span><br><span class="line">x=range(x)      # 以<span class="number">0</span>开始的递增序列作为x轴数据</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(<span class="number">8</span>,<span class="number">8</span>),dpi=<span class="number">80</span>)  # 画图之前首先设置figure对象，此函数相当于设置一块自定义大小的画布，使得后面的图形输出在这块规定了大小的画布上，其中参数figsize设置画布大小</span><br><span class="line">plt.subplot(<span class="number">111</span>) # 将figure设置的画布大小分成几个部分，参数‘<span class="number">221</span>’表示<span class="number">2</span>(row)x2(colu),即将画布分成<span class="number">2</span>x2，两行两列的<span class="number">4</span>块区域，<span class="number">1</span>表示选择图形输出的区域在第一块，图形输出区域参数必须在“行x列”范围                       ，此处必须在<span class="number">1</span>和<span class="number">2</span>之间选择——如果参数设置为subplot(<span class="number">111</span>)，则表示画布整个输出，不分割成小块区域，图形直接输出在整块画布上</span><br><span class="line">plt.plot(y,x)</span><br><span class="line">#================================</span><br><span class="line">plt.xlim(<span class="number">0</span>,<span class="number">1000</span>)  #  设置x轴刻度范围，从<span class="number">0</span>~<span class="number">1000</span></span><br><span class="line">plt.ylim(<span class="number">0</span>,<span class="number">20</span>)   # 设置y轴刻度的范围，从<span class="number">0</span>~<span class="number">20</span></span><br><span class="line"></span><br><span class="line">plt.xticks(nu.linspace(<span class="number">0</span>,<span class="number">1000</span>,<span class="number">15</span>,endpoint=True))  # 设置x轴刻度</span><br><span class="line">plt.yticks(nu.linspace(<span class="number">0</span>,<span class="number">20</span>,<span class="number">10</span>,endpoint=True))  # 设置y轴刻度</span><br><span class="line">#numpy.linspace()方法返回一个等差数列数组,第一个参数表示等差数列的第一个数，第二个参数表示等差数列最后一个数，第三个参数设置组成等差数列的元素个数，endpoint参数设置最后一个数是否包含在该等差数列。数列中相邻元素间的步长值为随机</span><br><span class="line">如：nu.linspace(<span class="number">0</span>,<span class="number">1000</span>,<span class="number">15</span>,endpoint=True)表示：第一个元素为<span class="number">0</span>，最后一个数为<span class="number">1000</span>，在这个 范围内，取<span class="number">15</span>个值，构成一个等差数列，步长值随机，且<span class="number">1000</span>包含在该数列中</span><br><span class="line">#================================</span><br><span class="line">plt.show()</span><br><span class="line">图形输出结果：</span><br></pre></td></tr></table></figure>
+
+<p> <img src="/2008/01/04/python/2008-01-04-python-draft/E:%5C%E8%AE%B0%E5%BD%95%5Cimg%5C1028496-20160921200910668-479749832.png" alt="img"> </p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">修改plot方法，新加入参数：</span><br><span class="line">plt.plot(y,xx,color=<span class="string">'red'</span>,linew<span class="type">idth</span>=<span class="number">2.5</span>,linestyle=<span class="string">'-'</span>) <span class="meta"># color参数设置曲线颜色，linewidth设置曲线宽度，linestyle设置曲线风格</span></span><br><span class="line">输出结果：</span><br></pre></td></tr></table></figure>
+
+<p>  <img src="/2008/01/04/python/2008-01-04-python-draft/E:%5C%E8%AE%B0%E5%BD%95%5Cimg%5C1028496-20160921202627902-2054932986.png" alt="img"> </p>
+<h1 id="matplotlib-横坐标为时间数据的设置"><a href="#matplotlib-横坐标为时间数据的设置" class="headerlink" title="matplotlib 横坐标为时间数据的设置"></a>matplotlib 横坐标为时间数据的设置</h1><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">https:</span><span class="comment">//www.cnblogs.com/Lengjie/p/9377729.html</span></span><br><span class="line"><span class="symbol">https:</span><span class="comment">//blog.csdn.net/zhangpeterx/article/details/83628558</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: utf<span class="number">-8</span> -*-</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> matplotlib.dates <span class="keyword">as</span> mdates</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">plt.rcParams[<span class="string">'font.sans-serif'</span>]=[<span class="string">'SimHei'</span>]                           # 用来正常显示中文标签</span><br><span class="line">plt.rcParams[<span class="string">'axes.unicode_minus'</span>]=<span class="literal">False</span>                             # 用来正常显示负号</span><br><span class="line"></span><br><span class="line">fig=plt.figure(figsize=(<span class="number">12</span>,<span class="number">6</span>))                                          # 定义图并设置画板尺寸</span><br><span class="line">fig.set(alpha=<span class="number">0.2</span>)                                                      # 设定图表颜色alpha参数</span><br><span class="line"># fig.tight_layout()                                                    # 调整整体空白</span><br><span class="line">plt.subplots_adjust(bottom=<span class="number">0.06</span>,top=<span class="number">0.94</span>,left=<span class="number">0.08</span>,right=<span class="number">0.94</span>,wspace =<span class="number">0.36</span>, hspace =<span class="number">0.5</span>)       # 设置作图范围、子图间距。</span><br><span class="line"></span><br><span class="line">df_milano=pd.read_csv(<span class="string">"milano_270615.csv"</span>)                            # 读取数据</span><br><span class="line"></span><br><span class="line">x1= df_milano[<span class="string">'day'</span>].values                                                     # 自变量序列</span><br><span class="line">x1= [datetime.strptime(d, <span class="string">'%Y-%m-%d %H:%M:%S'</span>) for d <span class="keyword">in</span> x1]                     # 格式化时间数据输入</span><br><span class="line">y1= df_milano[<span class="string">'temp'</span>]                                                           # 因变量序列</span><br><span class="line">ax=fig.add_subplot(<span class="number">111</span>)                                                         # 定义子图</span><br><span class="line">plt.xticks(rotation=<span class="number">70</span>)                                                         # 横坐标刻度旋转角度</span><br><span class="line">ax.xaxis.set_major_formatter(mdates.DateFormatter(<span class="string">"%H:%M:%S"</span>))                  # 设置横坐标时间标签的格式</span><br><span class="line"># ax.xaxis.set_major_locator(mdates.HourLocator())                              # 指定横坐标刻度序列</span><br><span class="line">ax.set_xticks(x1)                                                               # 指定横坐标刻度序列</span><br><span class="line">ax.plot(x1,y1,<span class="string">'r'</span>)                                                              # 绘图</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="matp"><a href="#matp" class="headerlink" title="matp"></a>matp</h1><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">https:</span><span class="comment">//www.cnblogs.com/magle/p/7389240.html</span></span><br><span class="line"><span class="symbol">https:</span><span class="comment">//www.jianshu.com/p/33f843a7cef5</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="GET请求"><a href="#GET请求" class="headerlink" title="GET请求"></a>GET请求</h1><p><a href="https://blog.csdn.net/weixin_42734407/article/details/81162026" target="_blank" rel="noopener external nofollow noreferrer">https://blog.csdn.net/weixin_42734407/article/details/81162026</a></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line">url = <span class="string">"http://127.0.0.1:8787/region/pool?pretty=y&amp;prefix=test"</span></span><br><span class="line">req = urllib2.<span class="type">Request</span>(url)</span><br><span class="line"><span class="built_in">print</span> req</span><br><span class="line">res_data = urllib2.urlopen(req)</span><br><span class="line">res = res_data.read()</span><br><span class="line"><span class="built_in">print</span> res</span><br><span class="line"></span><br><span class="line">实现：curl -s -<span class="type">X</span> <span class="type">GET</span> <span class="string">"http://127.0.0.1:8787/region/pool?pretty=y&amp;prefix=test"</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="pos请求"><a href="#pos请求" class="headerlink" title="pos请求"></a>pos请求</h1><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 以下为POST请求</span></span><br><span class="line">url = <span class="string">'https://xxxxx.com/login'</span></span><br><span class="line">postdatas = &#123;<span class="string">'key'</span>: <span class="string">'value'</span>&#125;</span><br><span class="line">requests = requests.post(url, data=postdatas)</span><br><span class="line"><span class="built_in">print</span> requests.content  <span class="comment"># 返回字节形式</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">然后其他的put、<span class="keyword">delete</span>等方法，也可以照葫芦画瓢的使用</span><br></pre></td></tr></table></figure>
+
+<h1 id="响应码code和响应头headers的处理"><a href="#响应码code和响应头headers的处理" class="headerlink" title="响应码code和响应头headers的处理"></a>响应码code和响应头headers的处理</h1><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line">import requests</span><br><span class="line"> </span><br><span class="line">url = <span class="string">'https://www.csdn.net/'</span></span><br><span class="line">r = requests.<span class="builtin-name">get</span>(url)</span><br><span class="line"><span class="keyword">if</span> r.status_code == requests.codes.ok:</span><br><span class="line">    <span class="builtin-name">print</span> <span class="string">'=== status_code === '</span>, r.status_code  # 响应码</span><br><span class="line">    <span class="builtin-name">print</span> <span class="string">'=== headers === '</span>, r.headers  # 响应头</span><br><span class="line">    <span class="builtin-name">print</span> <span class="string">'=== Content-Type === '</span>, r.headers.<span class="builtin-name">get</span>(<span class="string">'Content-Type'</span>)  # 获取响应头中的Content-Type字段</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    r.raise_for_status()  # 抛出异常</span><br></pre></td></tr></table></figure>
+
+<h1 id="Python处理Json数据"><a href="#Python处理Json数据" class="headerlink" title="Python处理Json数据"></a>Python处理Json数据</h1><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">Python处理Json数据</span><br><span class="line">获取json里的数据</span><br><span class="line">获取其中所有dog的name：</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"animals"</span>: &#123;</span><br><span class="line">        <span class="string">"dog"</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"name"</span>: <span class="string">"Rufus"</span>,</span><br><span class="line">                <span class="string">"age"</span>:15</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"name"</span>: <span class="string">"Marty"</span>,</span><br><span class="line">                <span class="string">"age"</span>: <span class="literal">null</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">我们可以这样做：</span><br><span class="line"></span><br><span class="line">load_data = json.loads(dump_data)</span><br><span class="line">data = load_data.<span class="builtin-name">get</span>(<span class="string">"animals"</span>).<span class="builtin-name">get</span>(<span class="string">"dog"</span>)</span><br><span class="line">result1 = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> data:</span><br><span class="line">    result1.append(i.<span class="builtin-name">get</span>(<span class="string">"name"</span>))</span><br><span class="line"><span class="builtin-name">print</span>(result1)</span><br><span class="line">运行结果：</span><br><span class="line"></span><br><span class="line">[<span class="string">'Rufus'</span>, <span class="string">'Marty'</span>]</span><br></pre></td></tr></table></figure>
+
+<h1 id="python-生成随机字符串（数字-字母-特殊字符）"><a href="#python-生成随机字符串（数字-字母-特殊字符）" class="headerlink" title="python 生成随机字符串（数字+字母+特殊字符）"></a>python 生成随机字符串（数字+字母+特殊字符）</h1><p><a href="https://blog.csdn.net/u011921487/article/details/90522996" target="_blank" rel="noopener external nofollow noreferrer">https://blog.csdn.net/u011921487/article/details/90522996</a></p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import random</span><br><span class="line">import <span class="built_in">string</span></span><br><span class="line">#第一种方法</span><br><span class="line">seed = <span class="string">"1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&amp;*()_+=-"</span></span><br><span class="line"><span class="keyword">sa</span> = []</span><br><span class="line"><span class="keyword">for</span> i in <span class="built_in">range</span>(<span class="number">8</span>):</span><br><span class="line">  <span class="keyword">sa</span>.<span class="keyword">append</span>(random.choice(seed))</span><br><span class="line">salt = <span class="string">''</span>.<span class="keyword">join</span>(<span class="keyword">sa</span>)</span><br><span class="line"><span class="keyword">print</span> salt</span><br></pre></td></tr></table></figure>
+
+<h2 id="python生成随机数、随机字符串"><a href="#python生成随机数、随机字符串" class="headerlink" title="python生成随机数、随机字符串"></a>python生成随机数、随机字符串</h2><p><a href="https://www.cnblogs.com/zqifa/p/python-random-1.html" target="_blank" rel="noopener external nofollow noreferrer">https://www.cnblogs.com/zqifa/p/python-random-1.html</a></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">python生成随机数、随机字符串</span><br><span class="line"></span><br><span class="line">import random</span><br><span class="line">import string</span><br><span class="line"></span><br><span class="line"><span class="comment"># 随机整数：</span></span><br><span class="line"><span class="builtin-name">print</span> random.randint(1,50)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 随机选取0到100间的偶数：</span></span><br><span class="line"><span class="builtin-name">print</span> random.randrange(0, 101, 2)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 随机浮点数：</span></span><br><span class="line"><span class="builtin-name">print</span> random.random()</span><br><span class="line"><span class="builtin-name">print</span> random.uniform(1, 10)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 随机字符：</span></span><br><span class="line"><span class="builtin-name">print</span> random.choice(<span class="string">'abcdefghijklmnopqrstuvwxyz!@#$%^&amp;*()'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 多个字符中生成指定数量的随机字符：</span></span><br><span class="line"><span class="builtin-name">print</span> random.sample(<span class="string">'zyxwvutsrqponmlkjihgfedcba'</span>,5)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从a-zA-Z0-9生成指定数量的随机字符：</span></span><br><span class="line">ran_str = <span class="string">''</span>.join(random.sample(string.ascii_letters + string.digits, 8))</span><br><span class="line"><span class="builtin-name">print</span> ran_str</span><br><span class="line"></span><br><span class="line"><span class="comment"># 多个字符中选取指定数量的字符组成新字符串：</span></span><br><span class="line">prin <span class="string">''</span>.join(random.sample([<span class="string">'z'</span>,<span class="string">'y'</span>,<span class="string">'x'</span>,<span class="string">'w'</span>,<span class="string">'v'</span>,<span class="string">'u'</span>,<span class="string">'t'</span>,<span class="string">'s'</span>,<span class="string">'r'</span>,<span class="string">'q'</span>,<span class="string">'p'</span>,<span class="string">'o'</span>,<span class="string">'n'</span>,<span class="string">'m'</span>,<span class="string">'l'</span>,<span class="string">'k'</span>,<span class="string">'j'</span>,<span class="string">'i'</span>,<span class="string">'h'</span>,<span class="string">'g'</span>,<span class="string">'f'</span>,<span class="string">'e'</span>,<span class="string">'d'</span>,<span class="string">'c'</span>,<span class="string">'b'</span>,<span class="string">'a'</span>], 5))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 随机选取字符串：</span></span><br><span class="line"><span class="builtin-name">print</span> random.choice([<span class="string">'剪刀'</span>, <span class="string">'石头'</span>, <span class="string">'布'</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打乱排序</span></span><br><span class="line">items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]</span><br><span class="line"><span class="builtin-name">print</span> random.shuffle(items)</span><br></pre></td></tr></table></figure>
+
+<h1 id="获取当前路径"><a href="#获取当前路径" class="headerlink" title="获取当前路径"></a>获取当前路径</h1><p><a href="https://www.cnblogs.com/Jomini/p/8636129.html" target="_blank" rel="noopener external nofollow noreferrer">https://www.cnblogs.com/Jomini/p/8636129.html</a></p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">一、获取当前路径</span><br><span class="line"><span class="number">1</span>、使用sys.argv[<span class="number">0</span>]</span><br><span class="line">import sys</span><br><span class="line"><span class="built_in">print</span> sys.argv[<span class="number">0</span>]</span><br><span class="line">#输出</span><br><span class="line">#本地路径</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>、<span class="built_in">os</span>模块</span><br><span class="line">import  <span class="built_in">os</span></span><br><span class="line"><span class="built_in">print</span> <span class="built_in">os</span>.getcwd() #获取当前工作目录路径</span><br><span class="line"><span class="built_in">print</span> <span class="built_in">os</span>.<span class="built_in">path</span>.abspath(<span class="string">'.'</span>) #获取当前工作目录路径</span><br><span class="line"><span class="built_in">print</span> <span class="built_in">os</span>.<span class="built_in">path</span>.abspath(<span class="string">'test.txt'</span>) #获取当前目录文件下的工作目录路径</span><br><span class="line"><span class="built_in">print</span> <span class="built_in">os</span>.<span class="built_in">path</span>.abspath(<span class="string">'..'</span>) #获取当前工作的父目录 ！注意是父目录路径</span><br><span class="line"><span class="built_in">print</span> <span class="built_in">os</span>.<span class="built_in">path</span>.abspath(<span class="built_in">os</span>.curdir) #获取当前工作目录路径</span><br><span class="line"></span><br><span class="line"><span class="number">3</span>、改变当前目录</span><br><span class="line"></span><br><span class="line"><span class="number">1</span>) 使用: <span class="built_in">os</span>.chdir(<span class="built_in">path</span>)。</span><br><span class="line">比如, 如果当前目录在 ‘E:’ 下面， 然后进入E 下面的files 文件 可以使用 <span class="built_in">os</span>.chdir(E:\files).</span><br><span class="line">之后，使用比如 test1 = <span class="built_in">open</span>(<span class="string">'file1.txt'</span>),  打开的文件会是在这个 ‘E:\files’ 目录下的文件，而不是 <span class="string">'E'</span> 下的文件。</span><br><span class="line"></span><br><span class="line"><span class="number">4</span>、组合路径返回</span><br><span class="line"><span class="built_in">os</span>.<span class="built_in">path</span>.join(<span class="string">'file1'</span>,<span class="string">'file2'</span>,<span class="string">'file3'</span>)</span><br><span class="line">合并得到路径 file1/file2/file3</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; <span class="built_in">print</span> <span class="built_in">os</span>.<span class="built_in">path</span>.join(<span class="string">'E:'</span>, <span class="string">'file1'</span>, <span class="string">'file2'</span>)</span><br><span class="line">E:/file1/file2</span><br><span class="line">&gt;&gt;&gt; <span class="built_in">print</span> <span class="built_in">os</span>.<span class="built_in">path</span>.join(<span class="string">'/home'</span>, <span class="string">'/home/file1/'</span>, <span class="string">'/home/file1/file2/'</span>)</span><br><span class="line">/home/file1/file2/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">no<span class="number">.2</span></span><br><span class="line">import <span class="built_in">os</span></span><br><span class="line">root = <span class="built_in">os</span>.getcwd()               #获得当前路径 /home/dir1</span><br><span class="line"><span class="built_in">print</span> root</span><br><span class="line">#输出</span><br><span class="line">#/home/dir1</span><br><span class="line"></span><br><span class="line">name = <span class="string">"file1"</span>                    #定义文件名字  </span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">os</span>.<span class="built_in">path</span>.join(root, name))   #合并路径名字和文件名字，并打印</span><br><span class="line">#输出</span><br><span class="line">#/home/dir1/file1</span><br></pre></td></tr></table></figure>
+
+<p>二、获得当前目录下所有文件</p>
+<ol>
+<li><p>os.walk() 用于在目录树种游走输出目录中的文件名字，向上或下；</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">语法</span><br><span class="line">os.walk(top[, <span class="attribute">topdown</span>=<span class="literal">True</span>[, <span class="attribute">onerror</span>=None[, <span class="attribute">followlinks</span>=<span class="literal">False</span>]]])</span><br><span class="line"></span><br><span class="line">参数：</span><br><span class="line">top -- 根目录下的每一个文件夹(包含它自己), 产生3-元组 (dirpath, dirnames, filenames)【文件夹路径, </span><br><span class="line">       文件夹名字, 文件名】。</span><br><span class="line"></span><br><span class="line">topdown --可选，为<span class="literal">True</span>或者没有指定, 一个目录的的3-元组将比它的任何子文件夹的3-元组先产生 (目录自上而下)。</span><br><span class="line">          如果topdown为 <span class="literal">False</span>, 一个目录的3-元组将比它的任何子文件夹的3-元组后产生 (目录自下而上)。</span><br><span class="line"></span><br><span class="line">onerror -- 可选，是一个函数; 它调用时有一个参数, 一个OSError实例。报告这错误后，继续walk,或者抛出exception终止walk。</span><br><span class="line"></span><br><span class="line">followlinks -- 设置为 <span class="literal">true</span>，则通过软链接访问目录。</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><figure class="highlight moonscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="built_in">os</span></span><br><span class="line">root = <span class="built_in">os</span>.getcwd()</span><br><span class="line"></span><br><span class="line">def file_name(file_dir):</span><br><span class="line">    <span class="keyword">for</span> root, dirs, files <span class="keyword">in</span> <span class="built_in">os</span>.walk(file_dir):</span><br><span class="line">        <span class="built_in">print</span> <span class="string">"-----------"</span></span><br><span class="line">        <span class="built_in">print</span> root   #<span class="built_in">os</span>.walk()所在目录</span><br><span class="line">        <span class="built_in">print</span> dirs   #<span class="built_in">os</span>.walk()所在目录的所有目录名</span><br><span class="line">        <span class="built_in">print</span> files   #<span class="built_in">os</span>.walk()所在目录的所有非目录文件名</span><br><span class="line">        <span class="built_in">print</span> <span class="string">" "</span></span><br><span class="line"></span><br><span class="line">file_name(root)</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+</li>
+</ol>
+<h1 id="paramiko模块，基于SSH用于连接远程服务器并执行相关操作。"><a href="#paramiko模块，基于SSH用于连接远程服务器并执行相关操作。" class="headerlink" title="paramiko模块，基于SSH用于连接远程服务器并执行相关操作。"></a>paramiko模块，基于SSH用于连接远程服务器并执行相关操作。</h1><p><a href="https://www.cnblogs.com/python-nameless/p/6855804.html" target="_blank" rel="noopener external nofollow noreferrer">https://www.cnblogs.com/python-nameless/p/6855804.html</a></p>
+<h1 id="利用python向excel文件写数据并绘制折线图"><a href="#利用python向excel文件写数据并绘制折线图" class="headerlink" title="利用python向excel文件写数据并绘制折线图"></a>利用python向excel文件写数据并绘制折线图</h1><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">http<span class="variable">s:</span>//www.jianshu.<span class="keyword">com</span>/<span class="keyword">p</span>/<span class="number">2</span>a6240d38f3b</span><br><span class="line"></span><br><span class="line">http<span class="variable">s:</span>//www.cnblogs.<span class="keyword">com</span>/puresoul/<span class="keyword">p</span>/<span class="number">7520246</span>.html</span><br><span class="line"></span><br><span class="line">http<span class="variable">s:</span>//www.cnblogs.<span class="keyword">com</span>/zhangyang123/<span class="keyword">p</span>/<span class="number">10784741</span>.html</span><br><span class="line">http<span class="variable">s:</span>//blog.csdn.net/pursuit_zhangyu/article/details/<span class="number">83957977</span>/</span><br><span class="line"></span><br><span class="line">http<span class="variable">s:</span>//<span class="keyword">files</span>.pythonhosted.org/packages/<span class="number">6</span><span class="keyword">a</span>/<span class="number">50</span>/<span class="number">77</span>a5d3377e0b5caff56609a9075160f57951015c274e6ba891e5ad96f61f/XlsxWriter-<span class="number">1.2</span>.<span class="number">8</span>.tar.gz</span><br><span class="line"><span class="number">3</span>.<span class="keyword">python</span> setup.<span class="keyword">py</span> build</span><br><span class="line"><span class="number">4</span>.<span class="keyword">python</span> setup.<span class="keyword">py</span> install</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2008\01\05\python\2008-01-04-python-ruan\" rel="bookmark">python-ruan</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2008/01/04/python/2008-01-04-python-draft/" title="python-draft">https://tongsiying.github.io/2008/01/04/python/2008-01-04-python-draft/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2008/01/04/python/2008-01-04-python-paramiko/" rel="prev" title="python-Paramiko">
+      <i class="fa fa-chevron-left"></i> python-Paramiko
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2008/01/04/python/2008-01-04-python-accumulation/" rel="next" title="python-accumulation">
+      python-accumulation <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#001-安装matplotlib"><span class="nav-text">001-安装matplotlib</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#002-博客"><span class="nav-text">002-博客</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#003-Linux服务器没有GUI的情况下使用matplotlib绘图"><span class="nav-text">003-Linux服务器没有GUI的情况下使用matplotlib绘图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#003-读文件生成图表"><span class="nav-text">003-读文件生成图表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#004-生成多张图"><span class="nav-text">004-生成多张图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#005-读文件生成多张图"><span class="nav-text">005-读文件生成多张图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#006-函数生成图表"><span class="nav-text">006-函数生成图表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#报错解决呀："><span class="nav-text">报错解决呀：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#007-zip"><span class="nav-text">007 zip</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#008-用python执行Linux命令"><span class="nav-text">008 用python执行Linux命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#009-enumerate-函数"><span class="nav-text">009 enumerate() 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#010-换行写"><span class="nav-text">010 换行写</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#configparser-python读配置文件"><span class="nav-text">configparser python读配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#以逗号分隔成列表"><span class="nav-text">以逗号分隔成列表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#python脚本传递参数"><span class="nav-text">python脚本传递参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#python编译"><span class="nav-text">python编译</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用Matplotlib画图系列（一）"><span class="nav-text">使用Matplotlib画图系列（一）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#matplotlib-横坐标为时间数据的设置"><span class="nav-text">matplotlib 横坐标为时间数据的设置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#matp"><span class="nav-text">matp</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GET请求"><span class="nav-text">GET请求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pos请求"><span class="nav-text">pos请求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#响应码code和响应头headers的处理"><span class="nav-text">响应码code和响应头headers的处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Python处理Json数据"><span class="nav-text">Python处理Json数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#python-生成随机字符串（数字-字母-特殊字符）"><span class="nav-text">python 生成随机字符串（数字+字母+特殊字符）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#python生成随机数、随机字符串"><span class="nav-text">python生成随机数、随机字符串</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取当前路径"><span class="nav-text">获取当前路径</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#paramiko模块，基于SSH用于连接远程服务器并执行相关操作。"><span class="nav-text">paramiko模块，基于SSH用于连接远程服务器并执行相关操作。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#利用python向excel文件写数据并绘制折线图"><span class="nav-text">利用python向excel文件写数据并绘制折线图</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">What hurts more, the pain of hard work or the pain of regret?</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">34:51</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

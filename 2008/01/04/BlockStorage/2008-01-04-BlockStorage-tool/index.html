@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="BlockStorage-tool">
+<meta property="og:url" content="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-tool/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2008-01-04T10:37:19.000Z">
+<meta property="article:modified_time" content="2021-06-29T14:59:51.869Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="BlockStorage-tool">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-tool/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>BlockStorage-tool | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">嘻嘻嘻嘻嘻嘻</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-tool/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="What hurts more, the pain of hard work or the pain of regret?">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          BlockStorage-tool
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2008-01-04 18:37:19" itemprop="dateCreated datePublished" datetime="2008-01-04T18:37:19+08:00">2008-01-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-06-29 22:59:51" itemprop="dateModified" datetime="2021-06-29T22:59:51+08:00">2021-06-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BlockStorage/" itemprop="url" rel="index"><span itemprop="name">BlockStorage</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>25k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>23 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+<h1 id="校验副本间extent、seq是否一致"><a href="#校验副本间extent、seq是否一致" class="headerlink" title="校验副本间extent、seq是否一致"></a>校验副本间extent、seq是否一致</h1><p>extent-check.sh</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">/bin/bash</span></span><br><span class="line">ZONE1=(</span><br><span class="line">"10.238.161.1"</span><br><span class="line">"10.238.161.2")</span><br><span class="line">ZONE2=(</span><br><span class="line">"10.238.161.3"</span><br><span class="line">"10.238.161.4")</span><br><span class="line">ZONE3=(</span><br><span class="line">"10.238.161.5"</span><br><span class="line">"10.238.161.6")</span><br><span class="line"></span><br><span class="line">LOCAL_PATH=`pwd`</span><br><span class="line">rm -rf $&#123;LOCAL_PATH&#125;/zone*.log $&#123;LOCAL_PATH&#125;/result.log $&#123;LOCAL_PATH&#125;/f-result.log</span><br><span class="line"></span><br><span class="line">exec 5&gt;&gt;$&#123;LOCAL_PATH&#125;/zone1.log</span><br><span class="line">exec 6&gt;&gt;$&#123;LOCAL_PATH&#125;/zone2.log</span><br><span class="line">exec 7&gt;&gt;$&#123;LOCAL_PATH&#125;/zone3.log</span><br><span class="line">exec 9&gt;&gt;$&#123;LOCAL_PATH&#125;/result.log</span><br><span class="line"></span><br><span class="line">thread_num=4000</span><br><span class="line"></span><br><span class="line">tempfifo="my_temp_fifo"</span><br><span class="line">mkfifo $&#123;tempfifo&#125;</span><br><span class="line">exec 8&lt;&gt;$&#123;tempfifo&#125;</span><br><span class="line">rm -f $&#123;tempfifo&#125;</span><br><span class="line"></span><br><span class="line">ProgressBar()</span><br><span class="line">&#123;</span><br><span class="line">  local current=$1; local total=$2</span><br><span class="line">  local now=$((current*100/total))</span><br><span class="line">  local last=$(((current-1)*100/total))</span><br><span class="line">  [[ $((last % 2)) -eq 1 ]]&amp;&amp;let last++</span><br><span class="line">  local str=$(for i in `seq 1 $((last/2))`; do printf '#'; done)</span><br><span class="line">  use_time=`ps -p $$ -o etime|column -t|tail -1`</span><br><span class="line">  for ((i=$last;$i&lt;=$now;i+=2));do printf "\r[%-50s]%d%%[%03d/%03d][%-5s]\r" "$str" $i $current $total $&#123;use_time&#125;;str+='#';done</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ex_zone1() &#123; </span><br><span class="line">		curl -s -X GET "http://$&#123;ZONE1[0]&#125;:8080/sys/debug/extentlist?pretty=y"|grep -E "extentId|tranSeq"|sed -n '&#123;N;s/\n/ /p&#125;'|sed 's/      //g'|sed 's/ //g'|sed 's/"extentId":"//g'|sed 's/","/:/g'|sed 's/tranSeq"://g'|sed 's/,//g' &gt;&gt; ZONE1.log</span><br><span class="line">		curl -s -X GET "http://$&#123;ZONE1[1]&#125;:8080/sys/debug/extentlist?pretty=y"|grep -E "extentId|tranSeq"|sed -n '&#123;N;s/\n/ /p&#125;'|sed 's/      //g'|sed 's/ //g'|sed 's/"extentId":"//g'|sed 's/","/:/g'|sed 's/tranSeq"://g'|sed 's/,//g' &gt;&gt; ZONE1.log</span><br><span class="line">		sort -t ":" -n -k2 ZONE1.log &gt;&amp;5</span><br><span class="line">		rm -rf ZONE1.log</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ex_zone2() &#123; </span><br><span class="line">		curl -s -X GET "http://$&#123;ZONE2[0]&#125;:8080/sys/debug/extentlist?pretty=y"|grep -E "extentId|tranSeq"|sed -n '&#123;N;s/\n/ /p&#125;'|sed 's/      //g'|sed 's/ //g'|sed 's/"extentId":"//g'|sed 's/","/:/g'|sed 's/tranSeq"://g'|sed 's/,//g' &gt;&gt; ZONE2.log</span><br><span class="line">		curl -s -X GET "http://$&#123;ZONE2[1]&#125;:8080/sys/debug/extentlist?pretty=y"|grep -E "extentId|tranSeq"|sed -n '&#123;N;s/\n/ /p&#125;'|sed 's/      //g'|sed 's/ //g'|sed 's/"extentId":"//g'|sed 's/","/:/g'|sed 's/tranSeq"://g'|sed 's/,//g' &gt;&gt; ZONE2.log</span><br><span class="line">		sort -t ":" -n -k2 ZONE2.log &gt;&amp;6</span><br><span class="line">		rm -rf ZONE2.log</span><br><span class="line">&#125;</span><br><span class="line">	</span><br><span class="line">ex_zone3() &#123; </span><br><span class="line">		curl -s -X GET "http://$&#123;ZONE3[0]&#125;:8080/sys/debug/extentlist?pretty=y"|grep -E "extentId|tranSeq"|sed -n '&#123;N;s/\n/ /p&#125;'|sed 's/      //g'|sed 's/ //g'|sed 's/"extentId":"//g'|sed 's/","/:/g'|sed 's/tranSeq"://g'|sed 's/,//g' &gt;&gt; ZONE3.log</span><br><span class="line">		curl -s -X GET "http://$&#123;ZONE3[1]&#125;:8080/sys/debug/extentlist?pretty=y"|grep -E "extentId|tranSeq"|sed -n '&#123;N;s/\n/ /p&#125;'|sed 's/      //g'|sed 's/ //g'|sed 's/"extentId":"//g'|sed 's/","/:/g'|sed 's/tranSeq"://g'|sed 's/,//g' &gt;&gt; ZONE3.log</span><br><span class="line">		sort -t ":" -n -k2 ZONE3.log &gt;&amp;7</span><br><span class="line">		rm -rf ZONE3.log</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">check_extent() &#123; </span><br><span class="line">	for ((i=1;i&lt;=$&#123;thread_num&#125;;i++))</span><br><span class="line">	do</span><br><span class="line">	&#123;</span><br><span class="line">		echo </span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	done &gt;&amp;8</span><br><span class="line">	</span><br><span class="line">	num=0</span><br><span class="line">	len=$(wc -l $&#123;LOCAL_PATH&#125;/zone1.log | sed 's/^[ \t]*//g' | cut -d ' ' -f1)</span><br><span class="line">	mi_len=`expr $len / 2`</span><br><span class="line">	cat $&#123;LOCAL_PATH&#125;/zone1.log |awk -F ":" '&#123;print $1&#125;'| while read line</span><br><span class="line">	do</span><br><span class="line">	&#123;</span><br><span class="line">		let num=$&#123;num&#125;+1</span><br><span class="line">		if [ $(($num%4000)) = '0' ] || [ $num == $len ];then</span><br><span class="line">                	ProgressBar $num $len</span><br><span class="line">                fi</span><br><span class="line">			</span><br><span class="line">		read -u8</span><br><span class="line">		&#123;</span><br><span class="line">			readzone1=`cat $&#123;LOCAL_PATH&#125;/zone1.log|grep $&#123;line&#125;`</span><br><span class="line">			readzone2=`cat $&#123;LOCAL_PATH&#125;/zone2.log|grep $&#123;line&#125;`</span><br><span class="line">			readzone3=`cat $&#123;LOCAL_PATH&#125;/zone3.log|grep $&#123;line&#125;`</span><br><span class="line">		</span><br><span class="line">			if [ "$&#123;readzone1&#125;" == "$&#123;readzone2&#125;" ] &amp;&amp; [ "$&#123;readzone2&#125;" == "$&#123;readzone3&#125;" ];then</span><br><span class="line">				echo  &gt;&gt; /dev/null</span><br><span class="line">			else</span><br><span class="line">				echo A:$&#123;readzone1&#125;"|"B:$&#123;readzone2&#125;"|"C:$&#123;readzone3&#125; &gt;&amp;9</span><br><span class="line">			fi</span><br><span class="line"><span class="meta">			#</span><span class="bash">sed -i <span class="string">"/<span class="variable">$readzone1</span>/d"</span> <span class="variable">$&#123;LOCAL_PATH&#125;</span>/zone1.log <span class="variable">$&#123;LOCAL_PATH&#125;</span>/zone2.log <span class="variable">$&#123;LOCAL_PATH&#125;</span>/zone3.log</span></span><br><span class="line">			echo "" &gt;&amp;8</span><br><span class="line">		&#125; &amp; </span><br><span class="line">	&#125;</span><br><span class="line">	done</span><br><span class="line">	printf "\n"</span><br><span class="line">	wait</span><br><span class="line">	exec 8&gt;&amp;-</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function main()</span><br><span class="line">&#123;</span><br><span class="line">	a=$(date +%H%M%S)</span><br><span class="line">	ex_zone1</span><br><span class="line">	ex_zone2</span><br><span class="line">	ex_zone3</span><br><span class="line">	check_extent</span><br><span class="line">	exit 0</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main</span><br></pre></td></tr></table></figure>
+
+<h1 id="snbs版本编译脚本"><a href="#snbs版本编译脚本" class="headerlink" title="snbs版本编译脚本"></a>snbs版本编译脚本</h1><p>sh snbs-1_10_256M_Ft_Sherman.sh -f snbs.cfg</p>
+<p>snbs-1_10_256M_Ft_Sherman.sh</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ----------------------------------------------</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Filename: snbs-1_10.sh</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Version: 0.1</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Date: 2019/02/19</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Description: 1.add auto install. 2.modify manual install.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ----------------------------------------------</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -------------------Variable-------------------</span></span><br><span class="line">SCRIPTE_NAME=$(readlink -f $0)</span><br><span class="line">SCRIPTE_PATH=$(cd `dirname $0`; pwd)</span><br><span class="line">OS_VER="centos73"</span><br><span class="line">VERSION_PATH="/mnt/data/version/$&#123;OS_VER&#125;/snbs/Ft_Sherman/256M"</span><br><span class="line">GIT="/usr/bin/git"</span><br><span class="line">CP="/bin/cp -rf"</span><br><span class="line"><span class="meta">#</span><span class="bash"> -------------------Function-------------------</span></span><br><span class="line">function usage()</span><br><span class="line">&#123;</span><br><span class="line">    echo "Usage:"</span><br><span class="line">    echo "sh  $0 [options]"</span><br><span class="line">    echo "options:"</span><br><span class="line">    echo "  -h, --help          ; show this message"</span><br><span class="line">    echo "  -f, --file=FILE     ; select a specific configure file"</span><br><span class="line">    echo "Example:"</span><br><span class="line">    echo " sh $0 -f snbs.cfg"</span><br><span class="line">    echo ""</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function parse()</span><br><span class="line">&#123;</span><br><span class="line">    RET=`getopt -o hf: \</span><br><span class="line">                --long help,file: \</span><br><span class="line">                -n "ERROR" -- "$@"`</span><br><span class="line">    if [ $? -ne 0 ]</span><br><span class="line">    then</span><br><span class="line">        usage</span><br><span class="line">        exit 1</span><br><span class="line">    fi</span><br><span class="line">    </span><br><span class="line">    eval set -- "$RET"</span><br><span class="line">    while true</span><br><span class="line">    do</span><br><span class="line">        case "$1" in</span><br><span class="line">            -h | --help)</span><br><span class="line">                usage</span><br><span class="line">                exit 0</span><br><span class="line">                ;;</span><br><span class="line">            -f | --file)</span><br><span class="line">                configure_file=$2</span><br><span class="line">                shift 2</span><br><span class="line">                ;;</span><br><span class="line">            --)</span><br><span class="line">                shift</span><br><span class="line">                break</span><br><span class="line">                ;;</span><br><span class="line">            *)</span><br><span class="line">                usage</span><br><span class="line">                exit 1</span><br><span class="line">                ;;</span><br><span class="line">        esac</span><br><span class="line">    done</span><br><span class="line">    </span><br><span class="line">    if [[ -n $configure_file ]] &amp;&amp; [[ -f "$&#123;SCRIPTE_PATH&#125;/$&#123;configure_file&#125;" ]]</span><br><span class="line">    then</span><br><span class="line">        source $&#123;SCRIPTE_PATH&#125;/$&#123;configure_file&#125;</span><br><span class="line">    else</span><br><span class="line">        usage</span><br><span class="line">        exit 1</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function main()</span><br><span class="line">&#123;</span><br><span class="line">    VERSION="SNBS_$&#123;GITBRANCH##*_&#125;"</span><br><span class="line">    VERSION_FUSE="SNBSFUSE_$&#123;GITBRANCH##*_&#125;"</span><br><span class="line">    rm -rf $&#123;SCRIPTE_PATH&#125;/snbs_git</span><br><span class="line">    </span><br><span class="line">    $GIT clone $GITURL 2&gt;&amp;1 &gt;/dev/null</span><br><span class="line">    cd $&#123;SCRIPTE_PATH&#125;/snbs_git</span><br><span class="line">    $GIT checkout $GITBRANCH 2&gt;&amp;1 &gt;/dev/null</span><br><span class="line">    $GIT checkout $GITCOMMIT 2&gt;&amp;1 &gt;/dev/null</span><br><span class="line">    </span><br><span class="line">    if [ $? -ne 0 ]</span><br><span class="line">    then</span><br><span class="line">        exit 1</span><br><span class="line">    fi</span><br><span class="line"></span><br><span class="line">    export GOROOT="$&#123;SCRIPTE_PATH&#125;/go1.10"</span><br><span class="line">    export PATH=$PATH:$GOROOT/bin</span><br><span class="line">    export GOPATH="$&#123;SCRIPTE_PATH&#125;/snbs_git/go/snbs" </span><br><span class="line">    LD_FLAG="-X code.suning.com/util.VERSION=$&#123;VERSION&#125;-CentOS7.3-$&#123;GITNUM&#125;-256M"</span><br><span class="line">    LD_FLAG_FUSE="-X code.suning.com/util.VERSION=$&#123;VERSION_FUSE&#125;-CentOS7.3-$&#123;GITNUM&#125;-256M"</span><br><span class="line">    go install -tags "256MB" -ldflags "$LD_FLAG" code.suning.com/server</span><br><span class="line">    go install -tags "256MB" -ldflags "$LD_FLAG_FUSE" code.suning.com/snbsfuse</span><br><span class="line">    #go build /opt/compile/snbs/snbs_git/go/snbs/src/code.suning.com/test/mastertool.go</span><br><span class="line">    if [ $? -ne 0 ]</span><br><span class="line">    then</span><br><span class="line">        echo "[Error] compile $&#123;VERSION&#125; fail, exit!"</span><br><span class="line">        exit</span><br><span class="line">    else</span><br><span class="line">        echo "[INFO] compile $&#123;VERSION&#125; success!"</span><br><span class="line">    fi</span><br><span class="line">    cd ..</span><br><span class="line">    echo "[`date +'%F %T'`]" &gt;&gt; compile.log</span><br><span class="line">    echo "-------" &gt;&gt; compile.log</span><br><span class="line">    cat $configure_file &gt;&gt; compile.log</span><br><span class="line">    echo "-------" &gt;&gt; compile.log</span><br><span class="line">    mkdir -p $&#123;VERSION_PATH&#125;/$&#123;GITNUM&#125;/ETCD</span><br><span class="line">    $CP ./snbs_git/go/snbs/bin/* $&#123;VERSION_PATH&#125;/$&#123;GITNUM&#125;</span><br><span class="line">    cd $&#123;SCRIPTE_PATH&#125;/snbs_git/c/</span><br><span class="line">    tar -zcvf tgt-1.0.73.tar.gz tgt-1.0.73 &gt;&gt; /dev/null</span><br><span class="line">    cd $&#123;SCRIPTE_PATH&#125;</span><br><span class="line">    $CP ./snbs_git/c/tgt-1.0.73.tar.gz $&#123;VERSION_PATH&#125;/$&#123;GITNUM&#125;</span><br><span class="line">    $CP ./snbs_git/c/*.rpm $&#123;VERSION_PATH&#125;/$&#123;GITNUM&#125;</span><br><span class="line">    $CP ./snbs_git/thirdparty/etcd/etcd-v3.3.12-linux-amd64.tar.gz $&#123;VERSION_PATH&#125;/$&#123;GITNUM&#125;/ETCD/</span><br><span class="line">    $CP ./snbs_git/thirdparty/etcd/run-etcd.sh $&#123;VERSION_PATH&#125;/$&#123;GITNUM&#125;/ETCD/</span><br><span class="line">    $CP -r ./snbs_git/snbs_supervisor/ $&#123;VERSION_PATH&#125;/$&#123;GITNUM&#125;</span><br><span class="line">    $CP -r ./snbs_git/thirdparty/nrpe/CentOS7.3/SNBS-Deps $&#123;VERSION_PATH&#125;/$&#123;GITNUM&#125;</span><br><span class="line">    cd $&#123;VERSION_PATH&#125;/$&#123;GITNUM&#125;</span><br><span class="line">    tar -zcvf snbs_supervisor.tar.gz snbs_supervisor &gt;&gt; /dev/null</span><br><span class="line">    mv SNBS-Deps SNBS-nrpe</span><br><span class="line">    tar -zcvf SNBS-nrpe.tar.gz SNBS-nrpe &gt;&gt; /dev/null</span><br><span class="line">    rm -rf snbs_supervisor SNBS-nrpe</span><br><span class="line">    #chmod +x $&#123;VERSION_PATH&#125;/$&#123;GITNUM&#125;/*.sh</span><br><span class="line">    echo "VERSION PATH:  $&#123;VERSION_PATH&#125;/$&#123;GITNUM&#125;"</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#</span><span class="bash"> -------------------Main-----------------------</span></span><br><span class="line">parse $@ &amp;&amp; main</span><br></pre></td></tr></table></figure>
+
+<p>snbs.cfg.Ft_Sherman</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">GITURL</span>=<span class="string">"git@git.cnsuning.com:snbs/snbs_git.git"</span></span><br><span class="line"><span class="comment">#GITURL="http://git.cnsuning.com/snbs/snbs_git.git"</span></span><br><span class="line"><span class="attr">GITBRANCH</span>=<span class="string">"origin/Ft_Sherman"</span></span><br><span class="line"><span class="attr">GITCOMMIT</span>=<span class="string">"5c36def146e1497cdfd5ad1824dbda03af58c73e"</span></span><br><span class="line"><span class="attr">GITNUM</span>=<span class="string">"191115a"</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="snbs筛选错误日志"><a href="#snbs筛选错误日志" class="headerlink" title="snbs筛选错误日志"></a>snbs筛选错误日志</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">LOG="server.INFO-`date  +"%Y%m%d".gz`"</span><br><span class="line">LOG_PATH="/mnt/snbslog/snbs"</span><br><span class="line">KEYWORDeyword="false|fail|err|no"</span><br><span class="line">IP=(</span><br><span class="line">"10.238.161.1"</span><br><span class="line">"10.238.161.2"</span><br><span class="line">"10.238.161.3"</span><br><span class="line">"10.238.161.4"</span><br><span class="line">"10.238.161.5"</span><br><span class="line">"10.238.161.6")</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">rm -rf /tmp/log</span><br><span class="line">mkdir -p /tmp/log</span><br><span class="line">for ip in $&#123;IP[@]&#125;</span><br><span class="line">do </span><br><span class="line">	for i in Master ChunkServer TgtMaster DiskCheck Iscsiserver</span><br><span class="line">	do</span><br><span class="line">		echo $&#123;ip&#125; &gt;&gt; /tmp/log/$&#123;i&#125;.log</span><br><span class="line">		echo "=======================================" &gt;&gt;/tmp/log/$&#123;i&#125;.log</span><br><span class="line">		ssh root@$&#123;ip&#125; "cd $&#123;LOG_PATH&#125;/$&#123;i&#125;;gunzip -c stackfile-20191116.gz |grep -iE '$&#123;KEYWORDeyword&#125;'" &gt;&gt; /tmp/log/$&#123;i&#125;.log</span><br><span class="line">	done</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">echo "cd /tmp/log/;ls"</span><br></pre></td></tr></table></figure>
+
+<h1 id="启动脚本"><a href="#启动脚本" class="headerlink" title="启动脚本"></a>启动脚本</h1><p>sh start-fuse.sh –start/restart/status</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#------------------Variable------------------</span></span></span><br><span class="line">MntDir="/mnt/data/"  #fuse mount dir</span><br><span class="line">LOG="/home/snbs/snbsfuse/log"   #log dir for snbsfuse</span><br><span class="line">WEED="/home/snbs/snbsfuse/snbsfuse"   #snbsfuse exe file path</span><br><span class="line">GATEWAYPORT="8686" #gateway http port</span><br><span class="line">GATEWAYTCPPORT="8585" #gateway tcp port scsi</span><br><span class="line">TGTMASTERIP="10.244.25.49"</span><br><span class="line">TGTTMASTERPORT="8888"</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#------------------Function------------------</span></span></span><br><span class="line">function _init()</span><br><span class="line">&#123;</span><br><span class="line">    mkdir -p $LOG</span><br><span class="line">    sysctl -w net.ipv4.tcp_tw_reuse=1 &gt;/dev/null</span><br><span class="line">    sysctl -w net.ipv4.tcp_tw_recycle=0 &gt;/dev/null</span><br><span class="line">    sysctl -w vm.overcommit_memory=1 &gt;/dev/null</span><br><span class="line">    export OMP_NUM_THREADS=1</span><br><span class="line">    export GOGC=20</span><br><span class="line">    export OMP_NUM_THREADS=2</span><br><span class="line">    ulimit -SHn 51200</span><br><span class="line">    ulimit -c unlimited</span><br><span class="line">    export GOTRACEBACK=crash</span><br><span class="line">    sysctl -w kernel.core_pattern=/home/snbs/snbsfuse/core.%e.%p.%t</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function _start()</span><br><span class="line">&#123;</span><br><span class="line">    ps -ef |grep "$WEED" |grep -v grep &gt;/dev/null</span><br><span class="line">    if [ $? -ne 0 ]</span><br><span class="line">    then</span><br><span class="line">       $WEED -v=0 -http=true -log_dir=$LOG snbsfuse \</span><br><span class="line">          -mountpoint=$MntDir \</span><br><span class="line">            -maxvolumelist=1 \</span><br><span class="line">	      -debug=false \</span><br><span class="line">                  -tgtmasterIp=$TGTMASTERIP \</span><br><span class="line">                  -tgtmasterPort=$TGTTMASTERPORT \</span><br><span class="line">		  -gatewayPort=$GATEWAYPORT \</span><br><span class="line">		  -gatewayTcpPort=$GATEWAYTCPPORT \</span><br><span class="line">              &gt;/dev/null 2&gt;&gt;$&#123;LOG&#125;/stackfile &amp;</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function _stop()</span><br><span class="line">&#123;</span><br><span class="line">    pid=`ps -ef |grep "$WEED" |grep -v grep |awk '&#123;print $2&#125;'`</span><br><span class="line">    if [ -n $pid ]</span><br><span class="line">    then</span><br><span class="line">        kill  $pid</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function _restart()</span><br><span class="line">&#123;</span><br><span class="line">    _stop</span><br><span class="line">    sleep 2</span><br><span class="line">    _start</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function main()</span><br><span class="line">&#123;</span><br><span class="line">    if [[ "$*" == "--start" ]]</span><br><span class="line">    then</span><br><span class="line">        _init &amp;&amp; _start </span><br><span class="line">    elif [[ "$*" == "--stop" ]]</span><br><span class="line">    then</span><br><span class="line">        _stop</span><br><span class="line">    elif [[ "$*" == "--restart" ]]</span><br><span class="line">    then</span><br><span class="line">        _init &amp;&amp; _restart</span><br><span class="line">    else</span><br><span class="line">        echo "*** excute volume script param error! ***"</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#--------------------Main--------------------</span></span></span><br><span class="line">main $@</span><br></pre></td></tr></table></figure>
+
+<h1 id="创建镜像卷"><a href="#创建镜像卷" class="headerlink" title="创建镜像卷"></a>创建镜像卷</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">current=`pwd`</span><br><span class="line">serverlist=`cat $current/serverlist.txt`</span><br><span class="line">for SERVER in  $serverlist</span><br><span class="line">do</span><br><span class="line">	TAB1=`curl -s -X PUT "http://127.0.0.1:8686/region/pool/vol/fullclone?volname=$&#123;SERVER&#125;"|awk -F \" '&#123;print $4&#125;'`</span><br><span class="line">	set i=0</span><br><span class="line">	set j=0</span><br><span class="line">	for((i=0;i&lt;10;))</span><br><span class="line">	do</span><br><span class="line">        	let "j=j+1"</span><br><span class="line">        	TAB2=`curl -s -X GET "http://127.0.0.1:8686/region/pool/vol/snapshot?volname=$&#123;SERVER&#125;&amp;newname=$&#123;TAB1&#125;&amp;type=fullclone"|awk -F \" '&#123;print $4&#125;'`</span><br><span class="line">		if [ "$TAB2" = "newname exist" ];then</span><br><span class="line">			break;</span><br><span class="line">		fi</span><br><span class="line">	done</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+<h1 id="openstack安装脚本"><a href="#openstack安装脚本" class="headerlink" title="openstack安装脚本"></a>openstack安装脚本</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">CRIPTION: copy image from ftp to os controller.</span></span><br><span class="line"><span class="meta">#</span><span class="bash">  ORGANIZATION: Suning</span></span><br><span class="line"><span class="meta">#</span><span class="bash">       CREATED: 2016/09/01</span></span><br><span class="line"><span class="meta">#</span><span class="bash">        AUTHOR: linan</span></span><br><span class="line"><span class="meta">#</span><span class="bash">=========================================================</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">return</span> code返回码</span></span><br><span class="line">NORMAL=0</span><br><span class="line">ERROR_NO_PARAMETER_INCORRECT=100</span><br><span class="line">ERROR_NO_GET_FTP_FILE_FAILED=101</span><br><span class="line">ERROR_NO_IMPORT_IMAGE_BY_GLANCE_FAILED=102</span><br><span class="line">ERROR_NO_OTHERS=200</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">全局变量</span></span><br><span class="line">SCRTIP_NAME="cp_image.sh"  #脚本名</span><br><span class="line">exec 5&gt;&gt;/tmp/$&#123;SCRTIP_NAME/.sh/&#125;.log #带&gt;&amp;5都输出到这个日志</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">---  FUNCTION 函数-------------------------------------------</span></span><br><span class="line"><span class="meta">#</span><span class="bash">          NAME:  echolog</span></span><br><span class="line"><span class="meta">#</span><span class="bash">   DESCRIPTION:  Echo <span class="built_in">log</span> information to stdout.</span></span><br><span class="line"><span class="meta">#</span><span class="bash">-------------------------------------------------------------</span></span><br><span class="line">echolog() &#123;</span><br><span class="line">  printf "[`date "+%Y/%m/%d %H:%M:%S"`]: %s\n" "$@";  #输出当前时间格式：[2019/11/10 15:43:01]:</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">---  FUNCTION  -------------------------------------------</span></span><br><span class="line"><span class="meta">#</span><span class="bash">         NAME:  usage</span></span><br><span class="line"><span class="meta">#</span><span class="bash">  DESCRIPTION:  Display usage information.</span></span><br><span class="line"><span class="meta">#</span><span class="bash">----------------------------------------------------------</span></span><br><span class="line">usage() &#123;</span><br><span class="line">    cat &lt;&lt; EOT</span><br><span class="line"></span><br><span class="line">  Usage :  cp_image.sh -U &lt;ftpAddress&gt; -P &lt;filePath&gt; -N &lt;fileName&gt; -R &lt;openstackRelease&gt;</span><br><span class="line"></span><br><span class="line">  Examples:</span><br><span class="line">    - cp_image.sh -U "ftp://10.27.97.1" -P "/rh63/x86_64/mirror/1.0.4/" -N "RHEL6U3_64bit_75G_20150804_APP.qcow2" -I "redhat6.3_X64_20G" -R "JUNO" -Q "LOCALLVM"</span><br><span class="line"></span><br><span class="line">  Options:</span><br><span class="line">  -h  Display this message</span><br><span class="line">  -U  ftp image file address. </span><br><span class="line">  -P  image file path</span><br><span class="line">  -N  image file name</span><br><span class="line">  -I  image file name recorded in glance</span><br><span class="line">  -R  the openstack releases "ICEHOUSE" "JUNO" "OCATA"</span><br><span class="line">  -Q  the openstack imageBackendType "LOCALLVM" "SNBS"</span><br><span class="line">EOT</span><br><span class="line">&#125;   # ----------  end of function usage  ----------</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">function main()</span><br><span class="line">&#123;</span><br><span class="line">echolog "$&#123;SCRTIP_NAME&#125; START." &gt;&amp;5</span><br><span class="line">while getopts ":hU:P:N:I:R:Q:" opt</span><br><span class="line">do</span><br><span class="line">  case "$&#123;opt&#125;" in</span><br><span class="line"></span><br><span class="line">    h )  usage; exit 0                        ;;</span><br><span class="line">    U )  FTP_URL=$OPTARG                      ;;</span><br><span class="line">    P )  FILE_PATH=$OPTARG                    ;;</span><br><span class="line">    N )  FILE_NAME=$OPTARG                    ;;</span><br><span class="line">    I )  IMAGE_NAME=$OPTARG                   ;;  </span><br><span class="line">    R )  OPENSTACK_RELEASE=$OPTARG            ;; </span><br><span class="line">    Q )  imageBackendType=$OPTARG             ;;</span><br><span class="line">    \?)  echo</span><br><span class="line">         echolog "Option does not exist : $OPTARG"</span><br><span class="line">         usage</span><br><span class="line">         exit 1</span><br><span class="line">         ;;</span><br><span class="line"></span><br><span class="line">  esac    # --- end of case ---</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">if [ $&#123;OPENSTACK_RELEASE&#125; == "OCATA" ] &amp;&amp; [ $&#123;imageBackendType&#125; == "SNBS" ];then</span><br><span class="line">    gluster_glance=`df -Ph | grep -E '/gluster_glance' | awk '&#123;print $5&#125;'| sed -n 1p | sed 's/%//g'`</span><br><span class="line">    if [ $gluster_glance -gt 90 ];then</span><br><span class="line">        echo "echolog "failed, out of disk space." &gt;&amp;5" </span><br><span class="line">    else </span><br><span class="line">        WORK_PATH="/gluster_glance/"</span><br><span class="line">        cd $&#123;WORK_PATH&#125;</span><br><span class="line">        wget -qP $&#123;WORK_PATH&#125; $&#123;FTP_URL&#125;$&#123;FILE_PATH&#125;$&#123;FILE_NAME&#125;</span><br><span class="line">    fi</span><br><span class="line">else</span><br><span class="line">    os_gluster_glance=`df -Ph | grep -E '/os_gluster_glance' | awk '&#123;print $5&#125;'| sed -n 1p | sed 's/%//g'`</span><br><span class="line">    if [ $os_gluster_glance -gt 90 ];then  </span><br><span class="line">        echo "echolog "failed, out of disk space." &gt;&amp;5" </span><br><span class="line">    else  </span><br><span class="line">        WORK_PATH="/os_gluster_glance/"</span><br><span class="line">        cd $&#123;WORK_PATH&#125;</span><br><span class="line">        wget -qP $&#123;WORK_PATH&#125; $&#123;FTP_URL&#125;$&#123;FILE_PATH&#125;$&#123;FILE_NAME&#125;</span><br><span class="line">    fi</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">ls $&#123;WORK_PATH&#125;$&#123;FILE_NAME&#125; &gt;/dev/null 2&gt;&amp;1</span><br><span class="line">if [ $? -eq 0 ];then</span><br><span class="line">    echolog "OK, Get image file from ftp" &gt;&amp;5</span><br><span class="line">    #3.Create image by glance cmd</span><br><span class="line">    source /root/openrc</span><br><span class="line">    if [ $&#123;OPENSTACK_RELEASE&#125; == "ICEHOUSE" -o $&#123;OPENSTACK_RELEASE&#125; == "JUNO" ];then</span><br><span class="line">        glance image-create --name=$&#123;IMAGE_NAME&#125; --disk-format=qcow2 --container-format=bare --is-public=true --file=./$&#123;FILE_NAME&#125;  | grep '| id ' | awk -F'|' '&#123;print $3&#125;' | sed 's/ //g'</span><br><span class="line">    fi</span><br><span class="line">    if [ $&#123;OPENSTACK_RELEASE&#125; == "OCATA" ] &amp;&amp; [ $&#123;imageBackendType&#125; == "LOCALLVM" ];then</span><br><span class="line">        openstack image create --container-format bare --disk-format qcow2 --public --file ./$&#123;FILE_NAME&#125;  $&#123;IMAGE_NAME&#125; |grep '| id ' | awk -F'|' '&#123;print $3&#125;' | sed 's/ //g'</span><br><span class="line">    fi</span><br><span class="line">    if [ $&#123;OPENSTACK_RELEASE&#125; == "OCATA" ] &amp;&amp; [ $&#123;imageBackendType&#125; == "SNBS" ];then</span><br><span class="line">        glanceConf=/etc/glance/glance-api.conf</span><br><span class="line">        #imageDesPath="/mnt/snbsfuse/snpool001"</span><br><span class="line">	imageDesPath="/mnt/snbsfuse/pool-openstack"</span><br><span class="line">		imageId=`glance image-create --name $&#123;IMAGE_NAME&#125; --container-format bare --disk-format raw --tag snbs|grep id | awk -F '|' '&#123;print $3&#125;'`</span><br><span class="line">		imageId=`echo $imageId`</span><br><span class="line">		res=`qemu-img convert -S 8k -f qcow2 -O raw $&#123;WORK_PATH&#125;$&#123;FILE_NAME&#125; $&#123;imageDesPath&#125;/$&#123;imageId&#125;`</span><br><span class="line">		if [ $? -ne 0 ];then</span><br><span class="line">		  echolog "error convert img to snbs error！" &gt;&amp;5</span><br><span class="line">          exit $&#123;ERROR_NO_IMPORT_IMAGE_BY_GLANCE_FAILED&#125;</span><br><span class="line">		fi</span><br><span class="line">		imageSize=`qemu-img info $&#123;WORK_PATH&#125;$&#123;FILE_NAME&#125; |grep 'virtual size'|awk -F '(' '&#123;print $2&#125;'|awk -F ' ' '&#123;print $1&#125;'`</span><br><span class="line">		dbUser=`cat $glanceConf|grep mysql|grep connection|awk -F '@' '&#123;print $1&#125;'|awk -F '//' '&#123;print $2&#125;'|awk -F ':' '&#123;print $1&#125;'`</span><br><span class="line">		dbPass=`cat $glanceConf|grep mysql|grep connection|awk -F '@' '&#123;print $1&#125;'|awk -F '//' '&#123;print $2&#125;'|awk -F ':' '&#123;print $2&#125;'`</span><br><span class="line">		dbHost=`cat $glanceConf|grep mysql|grep connection|awk -F '@' '&#123;print $2&#125;'|awk -F '/' '&#123;print $1&#125;'`</span><br><span class="line">		insertLocation="INSERT INTO image_locations(image_id,value,created_at,deleted) VALUES('$&#123;imageId&#125;','snbsfuse://$&#123;imageId&#125;',NOW(),0)"</span><br><span class="line">		mysql -u$&#123;dbUser&#125; -p$&#123;dbPass&#125; -h$&#123;dbHost&#125; -Dglance -e "$&#123;insertLocation&#125;"</span><br><span class="line">		updateImage="UPDATE images SET status='active',size='$&#123;imageSize&#125;' WHERE id='$&#123;imageId&#125;'"</span><br><span class="line">		mysql -u$&#123;dbUser&#125; -p$&#123;dbPass&#125; -h$&#123;dbHost&#125; -Dglance -e "$&#123;updateImage&#125;" </span><br><span class="line">		echo "$&#123;imageId&#125;"</span><br><span class="line">        		</span><br><span class="line">    fi</span><br><span class="line">    if [ -z "$FILE_NAME" ];then</span><br><span class="line">        echolog "FAIL,Input parameter is empty" &gt;&amp;5</span><br><span class="line">    else </span><br><span class="line">        glance image-list | grep $&#123;IMAGE_NAME&#125; &gt;/dev/null 2&gt;&amp;1</span><br><span class="line">        if [ $? -eq 0 ];then </span><br><span class="line">            echolog "OK, Import image to glance" &gt;&amp;5</span><br><span class="line">            rm -rf $&#123;WORK_PATH&#125;$&#123;FILE_NAME&#125;      </span><br><span class="line">            echolog "OK, Deleted the image file." &gt;&amp;5   </span><br><span class="line">        else</span><br><span class="line">            rm -rf ./$&#123;FILE_NAME&#125;</span><br><span class="line">            echolog "Error, Delete the image file failed!" &gt;&amp;5</span><br><span class="line">            exit $&#123;ERROR_NO_IMPORT_IMAGE_BY_GLANCE_FAILED&#125;</span><br><span class="line">        fi	</span><br><span class="line">    fi </span><br><span class="line">  else </span><br><span class="line">      echolog "Error, Get image file from ftp failed!"</span><br><span class="line">      exit $&#123;ERROR_NO_GET_FTP_FILE_FAILED&#125;</span><br><span class="line">fi</span><br><span class="line">echolog "$&#123;SCRTIP_NAME&#125; END." &gt;&amp;5</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#--------------------Main--------------------</span></span></span><br><span class="line">main $@</span><br><span class="line">exit $&#123;NORMAL&#125;   #退出的时候返回NORMAL，脚本开头</span><br></pre></td></tr></table></figure>
+
+<h1 id="snbs功能集合脚本"><a href="#snbs功能集合脚本" class="headerlink" title="snbs功能集合脚本"></a>snbs功能集合脚本</h1><p>sh tool.sh -t checkRepair -f tool.conf<br>sh tool.sh -t checkExtent -f tool.conf</p>
+<p>tool.sh</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">/bin/bash</span></span><br><span class="line">usage() &#123;</span><br><span class="line">    cat &lt;&lt; EOT</span><br><span class="line">Usage :  sh tool.sh -T &lt;TYPE&gt; -F &lt;CONFIG_FILE&gt;</span><br><span class="line"></span><br><span class="line">Examples:</span><br><span class="line">- sh tool.sh -t checkRepair -f tool.conf</span><br><span class="line">- sh tool.sh -t checkExtent -f tool.conf</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">-h  Display this message.</span><br><span class="line">-t  TYPE. </span><br><span class="line">-f  Config file.</span><br><span class="line">  </span><br><span class="line">&lt;TYPE&gt; :</span><br><span class="line"><span class="meta">checkExtent#</span><span class="bash">以zone1为基准，校验三个zone之间相同extent的seq是否一致</span></span><br><span class="line"><span class="meta">checkRepair#</span><span class="bash">需要在任意etcd节点执行，查看集群repair任务</span></span><br><span class="line">EOT</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function parse()</span><br><span class="line">&#123;</span><br><span class="line">    RET=`getopt -o h,t:,f: \</span><br><span class="line">                -n "ERROR" -- "$@"`</span><br><span class="line">	</span><br><span class="line">    if [ $? -ne 0 ]</span><br><span class="line">    then</span><br><span class="line">        usage</span><br><span class="line">        exit 0</span><br><span class="line">    fi</span><br><span class="line"></span><br><span class="line">    CLEANUP=1</span><br><span class="line">    eval set -- "$RET"</span><br><span class="line">    while true</span><br><span class="line">    do</span><br><span class="line">        case "$1" in</span><br><span class="line">            -h)</span><br><span class="line">                usage</span><br><span class="line">                exit 0</span><br><span class="line">                ;;</span><br><span class="line">            -t)</span><br><span class="line">                TYPE=$2</span><br><span class="line">                shift 2</span><br><span class="line">                ;;</span><br><span class="line">            -f)</span><br><span class="line">                CONFIG_FILE=$2</span><br><span class="line">                shift 2</span><br><span class="line">                ;;			</span><br><span class="line">            --)</span><br><span class="line">                shift</span><br><span class="line">                break</span><br><span class="line">                ;;</span><br><span class="line">            *)</span><br><span class="line">                usage</span><br><span class="line">                exit 0</span><br><span class="line">                ;;</span><br><span class="line">        esac</span><br><span class="line">    done	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">LOCAL_PATH=$(cd `dirname $0`; pwd)</span><br><span class="line">rm -rf $&#123;LOCAL_PATH&#125;/zone*.log $&#123;LOCAL_PATH&#125;/result.log $&#123;LOCAL_PATH&#125;/rol.log</span><br><span class="line"></span><br><span class="line">exec 5&gt;&gt;$&#123;LOCAL_PATH&#125;/zone1.log</span><br><span class="line">exec 6&gt;&gt;$&#123;LOCAL_PATH&#125;/zone2.log</span><br><span class="line">exec 7&gt;&gt;$&#123;LOCAL_PATH&#125;/zone3.log</span><br><span class="line">exec 9&gt;&gt;$&#123;LOCAL_PATH&#125;/result.log</span><br><span class="line">exec 3&gt;&gt;$&#123;LOCAL_PATH&#125;/rol.log</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">thread_num=1000</span></span><br><span class="line"></span><br><span class="line">tempfifo="my_temp_fifo"</span><br><span class="line">mkfifo $&#123;tempfifo&#125;</span><br><span class="line">exec 8&lt;&gt;$&#123;tempfifo&#125;</span><br><span class="line">rm -f $&#123;tempfifo&#125;</span><br><span class="line"></span><br><span class="line">ProgressBar()</span><br><span class="line">&#123;</span><br><span class="line">  local current=$1; local total=$2</span><br><span class="line">  local now=$((current*100/total))</span><br><span class="line">  local last=$(((current-1)*100/total))</span><br><span class="line">  [[ $((last % 2)) -eq 1 ]]&amp;&amp;let last++</span><br><span class="line">  local str=$(for i in `seq 1 $((last/2))`; do printf '#'; done)</span><br><span class="line">  use_time=`ps -p $$ -o etime|column -t|tail -1`</span><br><span class="line">  for ((i=$last;$i&lt;=$now;i+=2));do printf "\r[%-50s]%d%%[%03d/%03d][%-5s]\r" "$str" $i $current $total $&#123;use_time&#125;;str+='#';done</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ex_zone1() &#123; </span><br><span class="line">		curl -s -X GET "http://$&#123;ZONE1[0]&#125;:8080/sys/debug/extentlist?pretty=y"|grep -E "extentId|tranSeq"|sed -n '&#123;N;s/\n/ /p&#125;'|sed 's/      //g'|sed 's/ //g'|sed 's/"extentId":"//g'|sed 's/","/:/g'|sed 's/tranSeq"://g'|sed 's/,//g' &gt;&gt; ZONE1.log</span><br><span class="line">		curl -s -X GET "http://$&#123;ZONE1[1]&#125;:8080/sys/debug/extentlist?pretty=y"|grep -E "extentId|tranSeq"|sed -n '&#123;N;s/\n/ /p&#125;'|sed 's/      //g'|sed 's/ //g'|sed 's/"extentId":"//g'|sed 's/","/:/g'|sed 's/tranSeq"://g'|sed 's/,//g' &gt;&gt; ZONE1.log</span><br><span class="line">		sort -t ":" -n -k2 ZONE1.log &gt;&amp;5</span><br><span class="line">		rm -rf ZONE1.log</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ex_zone2() &#123; </span><br><span class="line">		curl -s -X GET "http://$&#123;ZONE2[0]&#125;:8080/sys/debug/extentlist?pretty=y"|grep -E "extentId|tranSeq"|sed -n '&#123;N;s/\n/ /p&#125;'|sed 's/      //g'|sed 's/ //g'|sed 's/"extentId":"//g'|sed 's/","/:/g'|sed 's/tranSeq"://g'|sed 's/,//g' &gt;&gt; ZONE2.log</span><br><span class="line">		curl -s -X GET "http://$&#123;ZONE2[1]&#125;:8080/sys/debug/extentlist?pretty=y"|grep -E "extentId|tranSeq"|sed -n '&#123;N;s/\n/ /p&#125;'|sed 's/      //g'|sed 's/ //g'|sed 's/"extentId":"//g'|sed 's/","/:/g'|sed 's/tranSeq"://g'|sed 's/,//g' &gt;&gt; ZONE2.log</span><br><span class="line">		sort -t ":" -n -k2 ZONE2.log &gt;&amp;6</span><br><span class="line">		rm -rf ZONE2.log</span><br><span class="line">&#125;</span><br><span class="line">	</span><br><span class="line">ex_zone3() &#123; </span><br><span class="line">		curl -s -X GET "http://$&#123;ZONE3[0]&#125;:8080/sys/debug/extentlist?pretty=y"|grep -E "extentId|tranSeq"|sed -n '&#123;N;s/\n/ /p&#125;'|sed 's/      //g'|sed 's/ //g'|sed 's/"extentId":"//g'|sed 's/","/:/g'|sed 's/tranSeq"://g'|sed 's/,//g' &gt;&gt; ZONE3.log</span><br><span class="line">		curl -s -X GET "http://$&#123;ZONE3[1]&#125;:8080/sys/debug/extentlist?pretty=y"|grep -E "extentId|tranSeq"|sed -n '&#123;N;s/\n/ /p&#125;'|sed 's/      //g'|sed 's/ //g'|sed 's/"extentId":"//g'|sed 's/","/:/g'|sed 's/tranSeq"://g'|sed 's/,//g' &gt;&gt; ZONE3.log</span><br><span class="line">		sort -t ":" -n -k2 ZONE3.log &gt;&amp;7</span><br><span class="line">		rm -rf ZONE3.log</span><br><span class="line">&#125;</span><br><span class="line">check_extent() &#123; </span><br><span class="line">	for ((i=1;i&lt;=$&#123;thread_num&#125;;i++))</span><br><span class="line">	do</span><br><span class="line">	&#123;</span><br><span class="line">		echo </span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	done &gt;&amp;8</span><br><span class="line">	</span><br><span class="line">	num=0</span><br><span class="line">	len=$(wc -l $&#123;LOCAL_PATH&#125;/zone1.log | sed 's/^[ \t]*//g' | cut -d ' ' -f1)</span><br><span class="line">	mi_len=`expr $len / 2`</span><br><span class="line">	cat $&#123;LOCAL_PATH&#125;/zone1.log |awk -F ":" '&#123;print $1&#125;'| while read line</span><br><span class="line">	do</span><br><span class="line">	&#123;</span><br><span class="line">		let num=$&#123;num&#125;+1</span><br><span class="line">		if [ $(($num%4000)) = '0' ] || [ $num == $len ];then</span><br><span class="line">                	ProgressBar $num $len</span><br><span class="line">                fi</span><br><span class="line">			</span><br><span class="line">		read -u8</span><br><span class="line">		&#123;</span><br><span class="line">			readzone1=`cat $&#123;LOCAL_PATH&#125;/zone1.log|grep $&#123;line&#125;`</span><br><span class="line">			readzone2=`cat $&#123;LOCAL_PATH&#125;/zone2.log|grep $&#123;line&#125;`</span><br><span class="line">			readzone3=`cat $&#123;LOCAL_PATH&#125;/zone3.log|grep $&#123;line&#125;`</span><br><span class="line">			if [ "$&#123;readzone1&#125;" == "$&#123;readzone2&#125;" ] &amp;&amp; [ "$&#123;readzone2&#125;" == "$&#123;readzone3&#125;" ];then</span><br><span class="line">				echo  &gt;&gt; /dev/null</span><br><span class="line">			else</span><br><span class="line">				num1=`echo $&#123;readzone1&#125;|sed 's/'"$&#123;line&#125;:"'//g'`</span><br><span class="line">                        	num2=`echo $&#123;readzone2&#125;|sed 's/'"$&#123;line&#125;:"'//g'`</span><br><span class="line">                        	num3=`echo $&#123;readzone3&#125;|sed 's/'"$&#123;line&#125;:"'//g'`</span><br><span class="line">				echo A:$&#123;readzone1&#125;"|"B:$&#123;readzone2&#125;"|"C:$&#123;readzone3&#125; &gt;&amp;9</span><br><span class="line">				if [[ $num1 -gt $num2 ]];then</span><br><span class="line">                                	tmp=$num1</span><br><span class="line">                                	num1=$num2</span><br><span class="line">                                	num2=$tmp</span><br><span class="line">                        	fi</span><br><span class="line">                        	if [[ $num1 -gt $num3 ]];then</span><br><span class="line">                                        tmp=$num1</span><br><span class="line">                                        num1=$num3</span><br><span class="line">                                        num3=$tmp</span><br><span class="line">                        	fi</span><br><span class="line">                        	if [[ $num2 -gt $num3 ]];then</span><br><span class="line">                                        tmp=$num2</span><br><span class="line">                                        num2=$num3</span><br><span class="line">                                        num3=$tmp</span><br><span class="line">                        	fi</span><br><span class="line">                        	if [[ $num1 -eq $num2 ]];then</span><br><span class="line">                                        echo A:$&#123;readzone1&#125;"|"B:$&#123;readzone2&#125;"|"C:$&#123;readzone3&#125; &gt;&amp;3</span><br><span class="line">                        	fi</span><br><span class="line">			fi</span><br><span class="line">			echo "" &gt;&amp;8</span><br><span class="line">		&#125; &amp; </span><br><span class="line">	&#125;</span><br><span class="line">	done</span><br><span class="line">	printf "\n"</span><br><span class="line">	wait</span><br><span class="line">	exec 8&gt;&amp;-</span><br><span class="line">&#125;</span><br><span class="line">check_repair() &#123;</span><br><span class="line"><span class="meta">	#</span><span class="bash">etcdctl get repair --prefix|sed <span class="string">'/^\s*$/d'</span></span></span><br><span class="line">	ETCDCTL_API=3 etcdctl --endpoints="http://$&#123;MASTER&#125;:2379" get repair --prefix|sed '/^\s*$/d'</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function checkExtent_main()</span><br><span class="line">&#123;</span><br><span class="line">	ex_zone1</span><br><span class="line">	ex_zone2</span><br><span class="line">	ex_zone3</span><br><span class="line">	check_extent</span><br><span class="line">	exit 0</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function checkRepair_main()</span><br><span class="line">&#123;</span><br><span class="line">	check_repair</span><br><span class="line">    	exit 0</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function main()</span><br><span class="line">&#123;				</span><br><span class="line">	source $&#123;LOCAL_PATH&#125;/$&#123;CONFIG_FILE&#125; 2&gt; /dev/null</span><br><span class="line">	case "$&#123;TYPE&#125;" in</span><br><span class="line">		checkExtent)</span><br><span class="line">			checkExtent_main</span><br><span class="line">			exit 0</span><br><span class="line">			;;			</span><br><span class="line">		checkRepair)</span><br><span class="line">			checkRepair_main</span><br><span class="line">			exit 0</span><br><span class="line">			;;</span><br><span class="line">		*)</span><br><span class="line">			usage</span><br><span class="line">			exit 0</span><br><span class="line">			;;</span><br><span class="line">	esac</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>tool.conf</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">thread_num=4000</span><br><span class="line">MASTER="10.238.161.1"</span><br><span class="line">ZONE1=(</span><br><span class="line">"10.238.161.1"</span><br><span class="line">"10.238.161.2")</span><br><span class="line">ZONE2=(</span><br><span class="line">"10.238.161.3"</span><br><span class="line">"10.238.161.4")</span><br><span class="line">ZONE3=(</span><br><span class="line">"10.238.161.5"</span><br><span class="line">"10.238.161.6")</span><br></pre></td></tr></table></figure>
+
+<h1 id="判断设备是否正常"><a href="#判断设备是否正常" class="headerlink" title="判断设备是否正常"></a>判断设备是否正常</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">https://blog.csdn.net/xzx208/article/details/82707344</span></span><br><span class="line"><span class="meta">#</span><span class="bash">https://www.cnblogs.com/Kinge/p/9844783.html</span></span><br><span class="line"></span><br><span class="line">ssh -o ConnectTimeout=1 -o NumberOfPasswordPrompts=0 -o StrictHostKeyChecking=no $&#123;siteip&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">for siteip in `cat ip-bad.txt`</span><br><span class="line">do</span><br><span class="line">    site="$&#123;siteip&#125;"</span><br><span class="line">    echo $&#123;siteip&#125;</span><br><span class="line">    ssh -o</span><br></pre></td></tr></table></figure>
+
+<h1 id="关闭redhatswap"><a href="#关闭redhatswap" class="headerlink" title="关闭redhatswap"></a>关闭redhatswap</h1><p>disableswap.sh</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="built_in">test</span> <span class="keyword">if</span> system<span class="string">'s freemem fit with swapped pages</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">disbale swap by: swapoff -a</span></span><br><span class="line"><span class="meta">#</span><span class="bash">disbale swap on booting by: commenting swap entry  <span class="keyword">in</span> /etc/fstab</span></span><br><span class="line"><span class="meta">#</span><span class="bash">disableswap.sh  -d  to <span class="built_in">test</span> only</span></span><br><span class="line"></span><br><span class="line">cg="\033[32m"</span><br><span class="line">cr="\033[31m"</span><br><span class="line">cn="\033[0m"</span><br><span class="line"></span><br><span class="line">function info</span><br><span class="line">&#123;</span><br><span class="line">	echo -e "$cg""$*"$cn</span><br><span class="line">&#125;</span><br><span class="line">function warn</span><br><span class="line">&#123;</span><br><span class="line">	echo -e "$cr""$*"$cn</span><br><span class="line">&#125;</span><br><span class="line">function rmswap</span><br><span class="line">&#123;</span><br><span class="line">	file=$1</span><br><span class="line">	cp $file $file.bak</span><br><span class="line">	sed -i '/swap/s/.*/#&amp;/' $file</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function isok</span><br><span class="line">&#123;</span><br><span class="line">	freemem=`cat /proc/meminfo|egrep "MemFree|Cached|Buffers"|awk '&#123;sum += $2&#125; END &#123;print sum &#125;'`</span><br><span class="line">	echo  freemem :	`expr $freemem / 1024` mb</span><br><span class="line">	swapused=`cat /proc/meminfo|egrep "SwapTotal|SwapFree"|awk 'BEGIN&#123;sum=0&#125; &#123;if(NR==1) &#123;sum += $2&#125; else &#123;sum -= $2&#125; fi&#125;END &#123;print sum&#125;'`</span><br><span class="line">	echo  swapused: `expr $swapused / 1024` mb</span><br><span class="line">	</span><br><span class="line">	total=`cat /proc/meminfo |egrep "MemTotal"|awk '&#123;print $2&#125;'`</span><br><span class="line">	threshhold=`expr $total / 50`</span><br><span class="line">	</span><br><span class="line">	tmp=`expr $swapused + $threshhold`</span><br><span class="line">	echo reserved: `expr $tmp / 1024` mb</span><br><span class="line">	if [ "$freemem" -ge "$tmp" ];</span><br><span class="line">	then</span><br><span class="line">		return 0</span><br><span class="line">	else</span><br><span class="line">		return 1</span><br><span class="line">	fi</span><br><span class="line">&#125;</span><br><span class="line">function swapdisabled</span><br><span class="line">&#123;</span><br><span class="line">	swaptotal=`cat /proc/meminfo|egrep "SwapTotal"|awk '&#123;print $2&#125;'`</span><br><span class="line">	if [ "$swaptotal" == 0 ];</span><br><span class="line">	then</span><br><span class="line">		return 0</span><br><span class="line">	else</span><br><span class="line">		return 1</span><br><span class="line">	fi</span><br><span class="line">&#125;</span><br><span class="line">if [ "$1" == "-d" ];</span><br><span class="line">then</span><br><span class="line">	isok</span><br><span class="line">	if [ "$?" == 0 ]</span><br><span class="line">	then</span><br><span class="line">		info "ok to disableswap"</span><br><span class="line">	else</span><br><span class="line">		warn "not ready!!"</span><br><span class="line">	fi</span><br><span class="line">	exit</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">isok</span><br><span class="line">if [ "$?" == 0 ]</span><br><span class="line">then</span><br><span class="line">	info "disabling swap..."</span><br><span class="line">	swapoff -a</span><br><span class="line">	sleep 2</span><br><span class="line">	swapdisabled</span><br><span class="line">	if [ "$?" == 0 ]</span><br><span class="line">        then</span><br><span class="line">                info "disabled swap"</span><br><span class="line">        else</span><br><span class="line">                exit </span><br><span class="line">        fi	</span><br><span class="line"></span><br><span class="line">	info "rm swap from fstab"</span><br><span class="line">	rmswap /etc/fstab</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="数据一致性："><a href="#数据一致性：" class="headerlink" title="数据一致性："></a>数据一致性：</h1><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">1. 有时间复现一下磁盘损坏的问题</span><br><span class="line"></span><br><span class="line">2. 文件在 全闪.6 /root/verify，本地没测。。。。 运行案例：python gw_rw_test2.py -t dev0 -s dev160 -T origin -g 10.37.2.20 -n 2 -v crc32 -b 4096 -k 400 -c 40000</span><br><span class="line"></span><br><span class="line">3. 各个参数</span><br><span class="line">p. add_option(<span class="string">'--gw'</span>,<span class="string">'-g'</span>)# gateway IP</span><br><span class="line">p. add_option(<span class="string">'--target'</span>,<span class="string">'-t")# target volume</span></span><br><span class="line"><span class="string">p. add_option('</span>--source<span class="string">','</span>-s<span class="string">')# source volume</span></span><br><span class="line"><span class="string">p. add_option("--type'</span>,<span class="string">'-T'</span>, <span class="attribute">default</span>=<span class="string">"origin"</span>)# source volume type(origin/local)</span><br><span class="line">p. add_option(<span class="string">'--blocksize'</span>,<span class="string">'-b'</span>, <span class="attribute">default</span>=4194304)# blocksize</span><br><span class="line">p. add_option(<span class="string">'--skip'</span>,<span class="string">'-k", default=e)# skip k of blocksize, begin offset=blocksize* skip</span></span><br><span class="line"><span class="string">p. add_option('</span>--count<span class="string">','</span>-c<span class="string">', default=-1)# block count</span></span><br><span class="line"><span class="string">p. add_option('</span>--verify<span class="string">','</span>-v<span class="string">', default="crc32")# verify hash method, crc32 only now</span></span><br><span class="line"><span class="string">p. add option('</span>--num<span class="string">','</span>-n<span class="string">', default=4)# number of process</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">-t是克隆卷/上传卷</span></span><br><span class="line"><span class="string">-s是原卷/本地卷</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+      
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-tool/" title="BlockStorage-tool">https://tongsiying.github.io/2008/01/04/BlockStorage/2008-01-04-BlockStorage-tool/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/BlockStorage-tool/" rel="tag"># BlockStorage-tool</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-%E4%B8%80%E8%87%B4%E6%80%A7%E5%AF%B9%E6%AF%94/" rel="prev" title="BlockStorage-一致性对比">
+      <i class="fa fa-chevron-left"></i> BlockStorage-一致性对比
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2008/01/04/BlockStorage/2008-01-04-BlockStorage-vdbench/" rel="next" title="BlockStorage-vdbench">
+      BlockStorage-vdbench <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#校验副本间extent、seq是否一致"><span class="nav-text">校验副本间extent、seq是否一致</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#snbs版本编译脚本"><span class="nav-text">snbs版本编译脚本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#snbs筛选错误日志"><span class="nav-text">snbs筛选错误日志</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启动脚本"><span class="nav-text">启动脚本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建镜像卷"><span class="nav-text">创建镜像卷</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#openstack安装脚本"><span class="nav-text">openstack安装脚本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#snbs功能集合脚本"><span class="nav-text">snbs功能集合脚本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#判断设备是否正常"><span class="nav-text">判断设备是否正常</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关闭redhatswap"><span class="nav-text">关闭redhatswap</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据一致性："><span class="nav-text">数据一致性：</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">What hurts more, the pain of hard work or the pain of regret?</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">34:51</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
