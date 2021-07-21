@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="Linux上天之路系列目录">
+<meta property="og:url" content="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%85%AD%EF%BC%89%E4%B9%8BLinux%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-05-17T10:37:19.000Z">
+<meta property="article:modified_time" content="2021-07-21T14:23:55.552Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%85%AD%EF%BC%89%E4%B9%8BLinux%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Linux上天之路系列目录 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%85%AD%EF%BC%89%E4%B9%8BLinux%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux上天之路系列目录
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-17 18:37:19" itemprop="dateCreated datePublished" datetime="2022-05-17T18:37:19+08:00">2022-05-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-21 22:23:55" itemprop="dateModified" datetime="2021-07-21T22:23:55+08:00">2021-07-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+<h1 id="Linux上天之路（六）之Linux文件管理"><a href="#Linux上天之路（六）之Linux文件管理" class="headerlink" title="Linux上天之路（六）之Linux文件管理"></a><a href="https://www.cnblogs.com/zhangyafei/p/11579939.html" target="_blank" rel="noopener external nofollow noreferrer">Linux上天之路（六）之Linux文件管理</a></h1><p>文件与文件夹的操作</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>) 新建</span><br><span class="line"><span class="number">2</span>）改名</span><br><span class="line"><span class="number">3</span>）查看</span><br><span class="line"><span class="number">4</span>）删除</span><br><span class="line"><span class="number">5</span>）拷贝</span><br><span class="line"><span class="number">6</span>）移动</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-文件的操作"><a href="#1-文件的操作" class="headerlink" title="1. 文件的操作"></a>1. 文件的操作</h3><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">文件的新建：touch filename</span><br><span class="line">文件的改名：mv</span><br><span class="line">文件的查看：<span class="keyword">ls</span></span><br><span class="line">文件内容的查看：<span class="keyword">cat</span></span><br><span class="line">文件的删除：<span class="keyword">rm</span>     [-r -f]</span><br><span class="line">文件的拷贝：cp     [-r -f -p]</span><br><span class="line">文件的移动：mv</span><br></pre></td></tr></table></figure>
+
+<h4 id="文件的创建-touch"><a href="#文件的创建-touch" class="headerlink" title="文件的创建-touch"></a>文件的创建-touch</h4><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">touch命令   新建文件和修改文件或者文件的时间戳</span><br><span class="line">命令语法：</span><br><span class="line">      touch  【选项】 【文件名或者目录名】</span><br><span class="line">命令选项：</span><br><span class="line">      -a  只修改文件的access(访问)时间.</span><br><span class="line">      -c  或—no-<span class="keyword">create</span> 　不创建不存在的文件。</span><br><span class="line">      -d  使用指定的日期时间，而非现在的时间</span><br><span class="line">      -m 指修改Modify(修改)时间,而不修改access(访问)时间</span><br><span class="line">      -r  file  使用指定file文件的时间戳（access，modify）更新文件的时间戳（access，modify）</span><br><span class="line">      -t  将时间修改为参数指定的日期，如：<span class="number">10011150</span>代表<span class="number">10</span>月<span class="number">8</span>号<span class="number">11</span>点<span class="number">55</span>分</span><br><span class="line"> </span><br><span class="line">拓展：linux文件的三time</span><br><span class="line">stat命令:打印信息节点(inode)内容</span><br><span class="line">atime:（access time）显示的是文件中的数据最后被访问的时间，比如系统的进程直接使用或通过一些命令和脚本间接使用。</span><br><span class="line">mtime: （modify time）显示的是文件内容被修改的最后时间。</span><br><span class="line">ctime: （change time）显示的是文件的权限、拥有者、所属的组、链接数发生改变时的时间。当然当内容改变时也会随之改变 rm命令touch命令  新建文件和修改文件或者文件的时间戳<span class="symbol">``</span>命令语法：<span class="symbol">``</span>   <span class="symbol">``</span>touch 【选项】 【文件名或者目录名】<span class="symbol">``</span>命令选项：<span class="symbol">``</span>   <span class="symbol">``</span>-<span class="symbol">``</span>a 只修改文件的access(访问)时间.<span class="symbol">``</span>   <span class="symbol">``</span>-<span class="symbol">``</span>c 或—no<span class="symbol">``</span>-<span class="symbol">``</span><span class="keyword">create</span> 　不创建不存在的文件。<span class="symbol">``</span>   <span class="symbol">``</span>-<span class="symbol">``</span>d 使用指定的日期时间，而非现在的时间<span class="symbol">``</span>   <span class="symbol">``</span>-<span class="symbol">``</span>m 指修改Modify(修改)时间,而不修改access(访问)时间<span class="symbol">``</span>   <span class="symbol">``</span>-<span class="symbol">``</span>r <span class="symbol">``</span>file<span class="symbol">` `</span>使用指定<span class="symbol">``</span>file<span class="symbol">``</span>文件的时间戳（access，modify）更新文件的时间戳（access，modify）<span class="symbol">``</span>   <span class="symbol">``</span>-<span class="symbol">``</span>t 将时间修改为参数指定的日期，如：<span class="symbol">``</span><span class="number">10011150</span><span class="symbol">``</span>代表<span class="symbol">``</span><span class="number">10</span><span class="symbol">``</span>月<span class="symbol">``</span><span class="number">8</span><span class="symbol">``</span>号<span class="symbol">``</span><span class="number">11</span><span class="symbol">``</span>点<span class="symbol">``</span><span class="number">55</span><span class="symbol">``</span>分<span class="symbol">` `</span>拓展：linux文件的三time<span class="symbol">``</span>stat命令:打印信息节点(inode)内容<span class="symbol">``</span>atime:（access time）显示的是文件中的数据最后被访问的时间，比如系统的进程直接使用或通过一些命令和脚本间接使用。<span class="symbol">``</span>mtime: （modify time）显示的是文件内容被修改的最后时间。<span class="symbol">``</span>ctime: （change time）显示的是文件的权限、拥有者、所属的组、链接数发生改变时的时间。当然当内容改变时也会随之改变 rm命令</span><br></pre></td></tr></table></figure>
+
+<h4 id="文件的删除-rm"><a href="#文件的删除-rm" class="headerlink" title="文件的删除-rm"></a>文件的删除-rm</h4><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">rm命令  删除文件</span><br><span class="line">命令语法</span><br><span class="line">  rm [options] name…</span><br><span class="line">命令选项</span><br><span class="line">  -<span class="ruby">i 删除前逐一询问确认。</span></span><br><span class="line"><span class="ruby">  -f 即使原档案属性设为唯读，亦直接删除，无需逐一确认。</span></span><br><span class="line"><span class="ruby">  -r 将目录及以下之档案亦逐一删除。</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="文件改名-mv"><a href="#文件改名-mv" class="headerlink" title="文件改名-mv"></a>文件改名-mv</h4><figure class="highlight cos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">mv</span>命令  文件改名</span><br><span class="line">命令语法：</span><br><span class="line"><span class="keyword">mv</span>  old_file   new_file</span><br></pre></td></tr></table></figure>
+
+<h4 id="文件查看"><a href="#文件查看" class="headerlink" title="文件查看"></a>文件查看</h4><ul>
+<li>cat</li>
+</ul>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">cat 命令用于连接文件并打印到标准输出设备上。 </span><br><span class="line">  命令语法 </span><br><span class="line">       cat [选项列表] [文件列表]</span><br><span class="line">  命令选项 </span><br><span class="line">  -<span class="ruby">n 或 --number：        由 <span class="number">1</span> 开始对所有输出的行数编号。 </span></span><br><span class="line"><span class="ruby">  -b 或 --number-nonblank：    和 -n 相似，只不过对于空白行不编号。 </span></span><br><span class="line"><span class="ruby">  -s 或 --squeeze-blank：        当遇到有连续两行以上的空白行，就代换为一行的空白行。 </span></span><br><span class="line"><span class="ruby">  -v 或 --show-nonprinting：    使用 ^ 和 M- 符号，除了 LFD 和 TAB 之外。 </span></span><br><span class="line"><span class="ruby">  -E 或 --show-ends :         在每行结束处显示 $。 </span></span><br><span class="line"><span class="ruby">  -T 或 --show-<span class="symbol">tabs:</span>         将 TAB 字符显示为 ^I。 </span></span><br><span class="line"><span class="ruby">  -A, --show-all：        等价于 -vET。 </span></span><br><span class="line"><span class="ruby">  -e：                等价于<span class="string">"-vE"</span>选项； </span></span><br><span class="line"><span class="ruby">  -t：                等价于<span class="string">"-vT"</span>选项；</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>head</li>
+</ul>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">head</span> <span class="literal">-</span> <span class="comment">输出文件的开始部分</span></span><br><span class="line"><span class="comment">命令语法</span> </span><br><span class="line">      <span class="comment">head</span> <span class="comment">\</span><span class="title">[</span><span class="comment">OPTION\</span><span class="title">]</span> <span class="comment">\</span><span class="title">[</span><span class="comment">FILE\</span><span class="title">]</span></span><br><span class="line"><span class="comment">命令选项</span> </span><br><span class="line">  <span class="literal">-</span><span class="comment">c</span><span class="string">,</span> --<span class="comment">bytes=SIZE</span>          <span class="comment">打印起始的SIZE字节</span> </span><br><span class="line">  <span class="literal">-</span><span class="comment">n</span><span class="string">,</span> --<span class="comment">lines=NUMBER</span>         <span class="comment">显示起始的NUMBER行</span><span class="string">,</span><span class="comment">而非默认的起始10行</span> </span><br><span class="line">  <span class="literal">-</span><span class="comment">q</span><span class="string">,</span> --<span class="comment">quiet</span><span class="string">,</span> --<span class="comment">silent</span>         <span class="comment">从不显示给出文件名的首部</span> </span><br><span class="line">  <span class="literal">-</span><span class="comment">v</span><span class="string">,</span> --<span class="comment">verbose</span>             <span class="comment">总是显示给出文件名的首部</span> </span><br><span class="line">  --<span class="comment">help</span>             <span class="comment">显示帮助后退出</span> </span><br><span class="line">  --<span class="comment">version</span>             <span class="comment">输出版本信息后退出</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>tail</li>
+</ul>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">tail - 输出文件的末尾部分</span><br><span class="line">命令语法 </span><br><span class="line">      tail \[OPTION\]   \[FILE\]</span><br><span class="line">命令选项 </span><br><span class="line">  -<span class="ruby">f 循环读取 </span></span><br><span class="line"><span class="ruby">  -v 显示详细的处理信息 </span></span><br><span class="line"><span class="ruby">  -c&lt;数目&gt; 显示的字节数 </span></span><br><span class="line"><span class="ruby">  -n&lt;行数&gt; 显示文件的尾部 n 行内容</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>file</li>
+</ul>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[zhangyafei<span class="meta">@centos</span> <span class="regexp">/]$ file /</span>home<span class="regexp">/zhangyafei/</span>test.py</span><br><span class="line"><span class="regexp">/home/</span>zhangyafei/test.<span class="string">py:</span> ASCII text</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>stat</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[<span class="symbol">zhangyafei@</span>centos /]$ stat /home/zhangyafei/test.py</span><br><span class="line">  文件：<span class="string">"/home/zhangyafei/test.py"</span></span><br><span class="line">  大小：<span class="number">50</span>         块：<span class="number">8</span>          IO 块：<span class="number">4096</span>   普通文件</span><br><span class="line">设备：fd01h/<span class="number">64769</span>d Inode：<span class="number">368654</span>      硬链接：<span class="number">1</span></span><br><span class="line">权限：(<span class="number">0664</span>/-rw-rw-r--)  Uid：( <span class="number">1000</span>/zhangyafei)   Gid：( <span class="number">1000</span>/zhangyafei)</span><br><span class="line">最近访问：<span class="number">2019</span><span class="number">-09</span><span class="number">-24</span> <span class="number">17</span>:<span class="number">51</span>:<span class="number">37.167020785</span> +<span class="number">0800</span></span><br><span class="line">最近更改：<span class="number">2019</span><span class="number">-09</span><span class="number">-24</span> <span class="number">17</span>:<span class="number">51</span>:<span class="number">37.167020785</span> +<span class="number">0800</span></span><br><span class="line">最近改动：<span class="number">2019</span><span class="number">-09</span><span class="number">-24</span> <span class="number">17</span>:<span class="number">51</span>:<span class="number">37.179020788</span> +<span class="number">0800</span></span><br><span class="line">创建时间：-</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>文件类型</li>
+</ul>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">普通文件</span></span><br><span class="line"><span class="attr">d</span> <span class="string">目录</span></span><br><span class="line"><span class="attr">l</span> <span class="string">链接文件</span></span><br><span class="line"><span class="attr">b</span> <span class="string">设备文件</span></span><br><span class="line"><span class="attr">c</span> <span class="string">字符设备</span></span><br><span class="line"><span class="attr">s</span> <span class="string">套接字文件</span></span><br><span class="line"><span class="attr">p</span> <span class="string">管道文件</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>linux 文件颜色意义</li>
+</ul>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">绿色文件： 可执行文件，可执行的程序</span><br><span class="line">红色文件：压缩文件或者包文件</span><br><span class="line">蓝色文件：目录</span><br><span class="line">白色文件：一般性文件，如文本文件，配置文件，源码文件等</span><br><span class="line">浅蓝色文件：链接文件，主要是使用<span class="built_in">ln</span>命令建立的文件</span><br><span class="line">红色闪烁：表示链接的文件有问题</span><br><span class="line">黄色：表示设备文件</span><br><span class="line">灰色：表示其他文件</span><br></pre></td></tr></table></figure>
+
+<h4 id="文件移动-mv"><a href="#文件移动-mv" class="headerlink" title="　文件移动-mv"></a>　文件移动-mv</h4><figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">mv命令  文件移动</span><br><span class="line"> </span><br><span class="line">命令语法：</span><br><span class="line">mv [选项] 源文件或目录       目标文件或目录</span><br><span class="line"> </span><br><span class="line">命令选项</span><br><span class="line"><span class="deletion">-b：若需覆盖文件，则覆盖前先行备份。</span></span><br><span class="line"><span class="deletion">-i：若指定目录已有同名文件，则先询问是否覆盖旧文件;</span></span><br><span class="line"><span class="deletion">-f：force 强制的意思，如果目标文件已经存在，不会询问而直接覆盖；</span></span><br><span class="line"><span class="deletion">-u：若目标文件已经存在，且 source 比较新，才会更新(update)</span></span><br><span class="line"> </span><br><span class="line">拓展：mv src dST</span><br><span class="line">    改名 dst是一个文件夹的时候  执行是移动</span><br><span class="line">        dst不是一个文件夹的时候 执行改名</span><br></pre></td></tr></table></figure>
+
+<h4 id="文件拷贝-cp"><a href="#文件拷贝-cp" class="headerlink" title="　文件拷贝-cp"></a>　文件拷贝-cp</h4><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">cp命令  拷贝文件</span><br><span class="line">命令语法 </span><br><span class="line">  cp [options] 源文件或目录    目标目录</span><br><span class="line">命令选项 </span><br><span class="line">  -<span class="ruby">a：此选项通常在复制目录时使用，它保留链接、文件属性，并复制目录下的所有内容 </span></span><br><span class="line"><span class="ruby">  -d：复制时保留链接。这里所说的链接相当于Windows系统中的快捷方式。 </span></span><br><span class="line"><span class="ruby">  -f：覆盖已经存在的目标文件而不给出提示。 </span></span><br><span class="line"><span class="ruby">  -i：与-f选项相反，在覆盖目标文件之前给出提示，要求用户确认是否覆盖，回答<span class="string">"y"</span>时目标文件将被覆盖。 </span></span><br><span class="line"><span class="ruby">  -p：除复制文件的内容外，还把修改时间和访问权限也复制到新文件中。 </span></span><br><span class="line"><span class="ruby">  -r：若给出的源文件是一个目录文件，此时将复制该目录下所有的子目录和文件。 </span></span><br><span class="line"><span class="ruby">  -l：不复制文件，只是生成链接文件。</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-文件夹的操作"><a href="#2-文件夹的操作" class="headerlink" title="2. 文件夹的操作"></a>2. 文件夹的操作</h3><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">新建文件夹：<span class="keyword">mkdir</span></span><br><span class="line">文件夹改名：mv</span><br><span class="line">文件夹插卡：<span class="keyword">ls</span></span><br><span class="line">空文件夹的删除：<span class="keyword">rmdir</span></span><br><span class="line">不为空的文件夹的删除：<span class="keyword">rm</span> -rf 递归删除</span><br><span class="line">文件夹移动：mv</span><br><span class="line">文件夹拷贝：cp [-r -p -f]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>mkdir</li>
+</ul>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span>  建立目录</span><br><span class="line">命令语法</span><br><span class="line">      <span class="built_in">mkdir</span> [选项] 目录</span><br><span class="line">命令选项</span><br><span class="line">  -v   显示信息</span><br><span class="line">  -p   递归创建</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>rmdir</li>
+</ul>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rmdir</span> 删除空目录</span><br><span class="line">命令语法</span><br><span class="line">  <span class="built_in">rmdir</span>  [options]  <span class="built_in">directory</span></span><br><span class="line">命令选项</span><br><span class="line">  -p   递归删除空目录</span><br></pre></td></tr></table></figure>
+
+<p>　　</p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2007\01\16\linux\2007-01-16-linux-LinuxDeploy\" rel="bookmark">安卓Linux</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux上天之路\2022-05-17-Linux上天之路系列目录\" rel="bookmark">Linux上天之路系列目录</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux上天之路\2022-05-17-Linux上天之路（九）之文件和文件夹的权限\" rel="bookmark">Linux上天之路系列目录</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux上天之路\2022-05-17-Linux上天之路（七）之Vim编辑器\" rel="bookmark">Linux上天之路系列目录</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux上天之路\2022-05-17-Linux上天之路（五）之Linux基本命令\" rel="bookmark">Linux上天之路系列目录</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%85%AD%EF%BC%89%E4%B9%8BLinux%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" title="Linux上天之路系列目录">https://tongsiying.github.io/2022/05/17/linux/Linux上天之路/2022-05-17-Linux上天之路（六）之Linux文件管理/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/29/CDN/2021-06-29-CDN/" rel="prev" title="CND">
+      <i class="fa fa-chevron-left"></i> CND
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8BLinux%E7%95%8C%E9%9D%A2%E4%BB%8B%E7%BB%8D/" rel="next" title="Linux上天之路（四）之Linux界面介绍">
+      Linux上天之路（四）之Linux界面介绍 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux上天之路（六）之Linux文件管理"><span class="nav-text">Linux上天之路（六）之Linux文件管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-文件的操作"><span class="nav-text">1. 文件的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#文件的创建-touch"><span class="nav-text">文件的创建-touch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件的删除-rm"><span class="nav-text">文件的删除-rm</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件改名-mv"><span class="nav-text">文件改名-mv</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件查看"><span class="nav-text">文件查看</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件移动-mv"><span class="nav-text">　文件移动-mv</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件拷贝-cp"><span class="nav-text">　文件拷贝-cp</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-文件夹的操作"><span class="nav-text">2. 文件夹的操作</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">94</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">35:16</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="Linux上天之路系列目录">
+<meta property="og:url" content="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%85%AB%EF%BC%89%E4%B9%8B%E7%94%A8%E6%88%B7%E5%92%8C%E7%BB%84/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-05-17T10:37:19.000Z">
+<meta property="article:modified_time" content="2021-07-21T14:36:13.840Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%85%AB%EF%BC%89%E4%B9%8B%E7%94%A8%E6%88%B7%E5%92%8C%E7%BB%84/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Linux上天之路系列目录 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%85%AB%EF%BC%89%E4%B9%8B%E7%94%A8%E6%88%B7%E5%92%8C%E7%BB%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux上天之路系列目录
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-17 18:37:19" itemprop="dateCreated datePublished" datetime="2022-05-17T18:37:19+08:00">2022-05-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-21 22:36:13" itemprop="dateModified" datetime="2021-07-21T22:36:13+08:00">2021-07-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+<h1 id="Linux上天之路（八）之用户和组"><a href="#Linux上天之路（八）之用户和组" class="headerlink" title="Linux上天之路（八）之用户和组"></a><a href="https://www.cnblogs.com/zhangyafei/p/11580065.html" target="_blank" rel="noopener external nofollow noreferrer">Linux上天之路（八）之用户和组</a></h1><h3 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h3><ul>
+<li>用户创建，删除，修改</li>
+<li>密码及密码文件</li>
+<li>组创建，删除，修改</li>
+<li>组密码及组配置文件</li>
+<li>相关文件</li>
+</ul>
+<h3 id="Linux用户分类"><a href="#Linux用户分类" class="headerlink" title="Linux用户分类"></a>Linux用户分类</h3><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">超级管理员: UID为<span class="number">0</span> root用户拥有至高无上的命令，root用户不能改名</span><br><span class="line">系统用户:UID小于<span class="number">1000</span>，用于管理服务，一般不允许登陆</span><br><span class="line">普通用户:UID大于或等于<span class="number">1000</span>，权限较小，允许登陆，只能使用bin下命令</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-用户的创建、删除。修改"><a href="#1-用户的创建、删除。修改" class="headerlink" title="1. 用户的创建、删除。修改"></a>1. 用户的创建、删除。修改</h3><ul>
+<li>useradd</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">useradd - create a new<span class="built_in"> user </span><span class="keyword">or</span> update<span class="built_in"> default </span>new<span class="built_in"> user </span>information</span><br><span class="line">-c,  --comment  描述</span><br><span class="line">-d,  --home HOME_DIR 家目录</span><br><span class="line">-e, --expiredate EXPIRE_DATE  过期时间</span><br><span class="line">-f, --inactive INACTIVE 是否启用过期机制</span><br><span class="line">-g, --gid<span class="built_in"> GROUP </span>  指定组ID号</span><br><span class="line">-G, --groups GROUP1[,GROUP2,<span class="built_in">..</span>.[,GROUPN]]]  附加组</span><br><span class="line">-m, --create-home     建立家目录          </span><br><span class="line">-M                    不建立家目录</span><br><span class="line">           <span class="keyword">Do</span> <span class="keyword">not</span> create the user′s home directory, even <span class="keyword">if</span> the<span class="built_in"> system </span>wide</span><br><span class="line">           setting <span class="keyword">from</span> /etc/login.defs (CREATE_HOME) is <span class="builtin-name">set</span> <span class="keyword">to</span> <span class="literal">yes</span>.</span><br><span class="line">-N, --no-user-group 不指定用户同名组</span><br><span class="line">-r, --system    指定该帐号是系统帐号</span><br><span class="line">-s, --shell SHELL  指定登录shell</span><br><span class="line">-u, --uid UID   指定用户ID号</span><br><span class="line">-U, --user-group 指定用户创建用户同名组</span><br><span class="line">-o 创建用户是可以uid重复</span><br><span class="line">注意：用户名不能超过 32 个字符</span><br><span class="line"> </span><br><span class="line">example</span><br><span class="line">建立一个新用户账户testuser1，并设置UID为544，主目录为/usr/testuser1，属于users组：</span><br><span class="line">useradd -u 544 -d /usr/testuser1 -g<span class="built_in"> users </span>-m testuser1</span><br><span class="line">使用管理员账号登陆系统，建立用户tmp_3452 密码3sdt5:Eawhg</span><br><span class="line">[root@ptr228 ~]# adduser tmp_3452</span><br><span class="line">[root@ptr228 ~]# passwd tmp_3452</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>usermod</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">usermod - modify a<span class="built_in"> user </span>account</span><br><span class="line">-a, --append</span><br><span class="line">-L, --lock</span><br><span class="line">-U, --unlock</span><br><span class="line">-m, --move-home with -d</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>userdel</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">userdel - delete a<span class="built_in"> user </span>account <span class="keyword">and</span> related files</span><br><span class="line">-f, --force</span><br><span class="line">-r, --<span class="builtin-name">remove</span> 删除主目录及邮箱</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>chage命令</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">chage</span><br><span class="line">-h, --help    display this help message and <span class="keyword">exit</span></span><br><span class="line">-m 密码可更改的最小天数。为零时代表任何时候都可以更改密码。</span><br><span class="line">-M 密码保持有效的最大天数。</span><br><span class="line">-W 用户密码到期前，提前收到警告信息的天数。</span><br><span class="line">-E 帐号到期的日期。过了这天，此帐号将不可用。</span><br><span class="line">-d 上一次更改的日期    如果设置为<span class="number">0</span> 用户下次登录必须改密码</span><br><span class="line">-i 停滞时期。如果一个密码已过期这些天，那么此帐号将不可用</span><br><span class="line">-l 例出当前的设置。由非特权用户来确定他们的密码或帐号何时过期。</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-密码设置及密码文件"><a href="#2-密码设置及密码文件" class="headerlink" title="2. 密码设置及密码文件"></a>2. 密码设置及密码文件</h3><ul>
+<li>passwd</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">passwd - <span class="keyword">set</span> <span class="keyword">user</span> <span class="keyword">password</span></span><br><span class="line">-l <span class="keyword">lock</span></span><br><span class="line">-u <span class="keyword">unlock</span></span><br><span class="line">-d <span class="keyword">delete</span> a passwd  <span class="keyword">for</span> an <span class="keyword">account</span></span><br><span class="line">-S  This will <span class="keyword">output</span> a <span class="keyword">short</span> information about  the  <span class="keyword">status</span>  <span class="keyword">of</span>  the <span class="keyword">password</span> <span class="keyword">for</span> a given account.</span><br><span class="line"><span class="comment">--stdin</span></span><br><span class="line">    echo linux |passwd <span class="comment">--stdin vfast    1 &gt; 0</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>密码文件</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">/etc/passwd</span><br><span class="line">User account information.</span><br><span class="line">[用户名]：[密码]：[UID]：[GID]：[身份描述]：[主目录]：[登录shell]</span><br><span class="line"></span><br><span class="line">/etc/shadow</span><br><span class="line">Secure<span class="built_in"> user </span>account information.</span><br><span class="line">用户名:这是用户登录系统时使用的用户名，它在系统中是惟一的</span><br><span class="line">口令:此字段存放加密的口令</span><br><span class="line">最后一次修改的时间:标识从某一时刻起到用户最后一次修改口令的天数</span><br><span class="line">最小时间间隔:两次修改口令之间的最小天数</span><br><span class="line">最大时间间隔:口令保持有效的最多天数，即多少天后必须修改口令</span><br><span class="line">警告时间:从系统开始警告到口令正式失效的天数</span><br><span class="line">不活动时间:口令过期多少天后，该账号被禁用</span><br><span class="line">失效时间:指示口令失效的绝对天数（从1970年1月1日开始计算）</span><br><span class="line">标志:未使用</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-组的管理"><a href="#3-组的管理" class="headerlink" title="3. 组的管理"></a>3. 组的管理</h3><ul>
+<li>groupadd</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">groupadd - create a new group</span><br><span class="line">命令语法</span><br><span class="line">groupadd [选项] 组名</span><br><span class="line">命令选项</span><br><span class="line">-g, --gid GID        指定GID</span><br><span class="line">-r, --system        创建一个系统组</span><br><span class="line">-o, --non-unique    此选项允许添加一个使用非唯一 GID 的组</span><br><span class="line">注意：组名最长为 32 个字符</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>groupmod</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">groupmod - modify a<span class="built_in"> group </span>definition on the system</span><br><span class="line">命令语法</span><br><span class="line">groupmod [选项] 组名</span><br><span class="line">命令选项</span><br><span class="line">-g, --gid GID</span><br><span class="line">-n, --new-name NEW_GROUP  给组改名</span><br><span class="line">-o, --non-unique</span><br><span class="line">例子 </span><br><span class="line">1、将组名为test3的名字改为baism</span><br><span class="line">groupmod test3 -n baism</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>groupdel</li>
+</ul>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">groupdel - <span class="keyword">delete</span> a <span class="keyword">group</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-组密码和组配置文件"><a href="#4-组密码和组配置文件" class="headerlink" title="4. 组密码和组配置文件"></a>4. 组密码和组配置文件</h3><ul>
+<li>gpasswd</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">gpasswd - administer /etc<span class="built_in">/group </span><span class="keyword">and</span> /etc/gshadow</span><br><span class="line">-a, --<span class="builtin-name">add</span><span class="built_in"> USER </span>               <span class="builtin-name">add</span><span class="built_in"> USER </span><span class="keyword">to</span> GROUP</span><br><span class="line">-d, --delete<span class="built_in"> USER </span>            <span class="builtin-name">remove</span><span class="built_in"> USER </span><span class="keyword">from</span> GROUP</span><br><span class="line">-r, --remove-password         <span class="builtin-name">remove</span> the GROUP<span class="string">'s password</span></span><br><span class="line"><span class="string">-R, --restrict                restrict access to GROUP to its members 限制用户登录该组，除了组成员。</span></span><br><span class="line"><span class="string">-M, --members USER,...        set the list of members of GROUP</span></span><br><span class="line"><span class="string">-A, --administrators ADMIN,...</span></span><br><span class="line"><span class="string">                                set the list of administrators for GROUP</span></span><br><span class="line"><span class="string">案例：</span></span><br><span class="line"><span class="string">设置组root密码    #gpasswd root</span></span><br><span class="line"><span class="string">用户组身份切换为root $newgrp root</span></span><br><span class="line"><span class="string">组管理员设置 #gpasswd test -A user3</span></span><br><span class="line"><span class="string">限制陌生用户切换到组 #gpasswd -R test</span></span><br><span class="line"><span class="string">指定组的成员列表   # gpasswd test -M user3,user2</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/etc/group</span><br><span class="line">Group account information.</span><br><span class="line">[组名]：[密码域]：[GID]：[组员列表]</span><br><span class="line"> </span><br><span class="line">/etc/gshadow</span><br><span class="line">Secure<span class="built_in"> group </span>account information</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-相关文件"><a href="#5-相关文件" class="headerlink" title="5. 相关文件"></a>5. 相关文件</h3><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta-keyword">/etc/</span>passwd				<span class="meta">#用户账户信息。</span></span><br><span class="line"><span class="meta-keyword">/etc/</span>shadow				<span class="meta">#安全用户账户信息。</span></span><br><span class="line"><span class="meta-keyword">/etc/</span>group				<span class="meta">#组账户信息。</span></span><br><span class="line"><span class="meta-keyword">/etc/</span>gshadow			<span class="meta">#安全组账户信息。</span></span><br><span class="line"><span class="meta-keyword">/etc/</span>default/useradd	<span class="meta">#账户创建的默认值。</span></span><br><span class="line"><span class="meta-keyword">/etc/</span>skel/				<span class="meta">#包含默认文件的目录。</span></span><br><span class="line"><span class="meta-keyword">/etc/</span>login.defs			<span class="meta">#Shadow 密码套件配置。</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-问题"><a href="#6-问题" class="headerlink" title="6. 问题"></a>6. 问题</h3><figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">当一个用户同时属于多个组，如何切换组身份  <span class="keyword">new</span><span class="type">grp</span> 命令</span><br><span class="line">su - user1</span><br><span class="line"><span class="keyword">new</span><span class="type">grp</span> test     切换到test组</span><br><span class="line"></span><br><span class="line">如何临时切换到某个外组【用户本身不属于这个组】</span><br><span class="line"><span class="number">1</span>）首先给外组设置一个组密码</span><br><span class="line">gpasswd root</span><br><span class="line">正在修改 root 组的密码</span><br><span class="line">新密码：</span><br><span class="line">请重新输入新密码</span><br><span class="line">su - user1</span><br><span class="line"><span class="keyword">new</span><span class="type">grp</span> root</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2007\01\16\linux\2007-01-16-linux-LinuxDeploy\" rel="bookmark">安卓Linux</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux上天之路\2022-05-17-Linux上天之路系列目录\" rel="bookmark">Linux上天之路系列目录</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux上天之路\2022-05-17-Linux上天之路（九）之文件和文件夹的权限\" rel="bookmark">Linux上天之路系列目录</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux上天之路\2022-05-17-Linux上天之路（七）之Vim编辑器\" rel="bookmark">Linux上天之路系列目录</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux上天之路\2022-05-17-Linux上天之路（五）之Linux基本命令\" rel="bookmark">Linux上天之路系列目录</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%85%AB%EF%BC%89%E4%B9%8B%E7%94%A8%E6%88%B7%E5%92%8C%E7%BB%84/" title="Linux上天之路系列目录">https://tongsiying.github.io/2022/05/17/linux/Linux上天之路/2022-05-17-Linux上天之路（八）之用户和组/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8BLinux%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/" rel="prev" title="Linux上天之路系列目录">
+      <i class="fa fa-chevron-left"></i> Linux上天之路系列目录
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E4%B8%89%EF%BC%89%E4%B9%8BLinux%E7%B3%BB%E7%BB%9F%E7%9B%AE%E5%BD%95/" rel="next" title="Linux上天之路（三）之Linux系统目录">
+      Linux上天之路（三）之Linux系统目录 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux上天之路（八）之用户和组"><span class="nav-text">Linux上天之路（八）之用户和组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主要内容"><span class="nav-text">主要内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux用户分类"><span class="nav-text">Linux用户分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-用户的创建、删除。修改"><span class="nav-text">1. 用户的创建、删除。修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-密码设置及密码文件"><span class="nav-text">2. 密码设置及密码文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-组的管理"><span class="nav-text">3. 组的管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-组密码和组配置文件"><span class="nav-text">4. 组密码和组配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-相关文件"><span class="nav-text">5. 相关文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-问题"><span class="nav-text">6. 问题</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">94</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">35:16</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

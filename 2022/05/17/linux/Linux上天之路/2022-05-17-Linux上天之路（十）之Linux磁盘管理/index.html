@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="Linux上天之路系列目录">
+<meta property="og:url" content="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%8D%81%EF%BC%89%E4%B9%8BLinux%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://book.apeland.cn/media/images/2019/05/08/lsmxkh.jpg">
+<meta property="article:published_time" content="2022-05-17T10:37:19.000Z">
+<meta property="article:modified_time" content="2021-07-21T14:45:10.758Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://book.apeland.cn/media/images/2019/05/08/lsmxkh.jpg">
+
+<link rel="canonical" href="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%8D%81%EF%BC%89%E4%B9%8BLinux%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Linux上天之路系列目录 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%8D%81%EF%BC%89%E4%B9%8BLinux%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux上天之路系列目录
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-17 18:37:19" itemprop="dateCreated datePublished" datetime="2022-05-17T18:37:19+08:00">2022-05-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-21 22:45:10" itemprop="dateModified" datetime="2021-07-21T22:45:10+08:00">2021-07-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+<h1 id="Linux上天之路（十）之Linux磁盘管理"><a href="#Linux上天之路（十）之Linux磁盘管理" class="headerlink" title="Linux上天之路（十）之Linux磁盘管理"></a><a href="https://www.cnblogs.com/zhangyafei/p/11580974.html" target="_blank" rel="noopener external nofollow noreferrer">Linux上天之路（十）之Linux磁盘管理</a></h1><h3 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h3><ul>
+<li>磁盘介绍</li>
+<li>磁盘管理</li>
+<li>磁盘限额</li>
+<li>逻辑卷管理</li>
+<li>磁盘阵列</li>
+</ul>
+<h3 id="1-磁盘介绍"><a href="#1-磁盘介绍" class="headerlink" title="1. 磁盘介绍"></a>1. 磁盘介绍</h3><p>硬盘最基本的组成部分是由坚硬金属材料制成的涂以磁性介质的盘片，不同容量硬盘的盘片数不等。每个盘片有两面，都可记录信息。盘片被分成许多扇形的区域，每个区域叫一个扇区，每个扇区可存储128×2的N次方（N＝0.1.2.3）字节信息。在DOS中每扇区是128×2的2次方＝512字节，盘片表面上以盘片中心为圆心，不同半径的同心圆称为磁道。硬盘中，不同盘片相同半径的磁道所组成的圆柱称为柱面。磁道与柱面都是表示不同半径的圆，在许多场合，磁道和柱面可以互换使用，我们知道，每个磁盘有两个面，每个面都有一个磁头，习惯用磁头号来区分。扇区，磁道（或柱面）和磁头数构成了硬盘结构的基本参数，帮这些参数可以得到硬盘的容量，基计算公式为：</p>
+<p>存储容量＝磁头数×磁道（柱面）数×每道扇区数×每扇区字节数</p>
+<p>磁盘结构</p>
+<p><img src="https://book.apeland.cn/media/images/2019/05/08/lsmxkh.jpg" alt="img"></p>
+<p>MBR(主引导记录)位于硬盘第一个物理扇区（绝对扇区）柱面0，磁头0，扇区1处。由于DOS是由柱面0，磁头1，扇区1开始，故MBR不属于DOS扇区，DOS不能直接访问。MBR中包含硬盘的主引导程序和硬盘分区表。分区表有4个分区记录区。记录区就是记录有关分区信息的一张表。它从主引导记录偏移地址01BEH处连续存放，每个分区记录区占16个字节。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">磁盘的表示方法</span><br><span class="line">/dev/sda1</span><br><span class="line">sd 代表磁盘接口类型   USB SATA SAS等接口   IDE 用hd表示</span><br><span class="line">a b c 磁盘的顺序</span><br><span class="line"><span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span>磁盘中的分区号</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-磁盘管理"><a href="#2-磁盘管理" class="headerlink" title="2. 磁盘管理"></a>2. 磁盘管理</h3><p>磁盘分区、格式化、挂载</p>
+<p>计算机中存放信息的主要的存储设备就是硬盘，但是硬盘不能直接使用，必须对硬盘进行分割，分割成的一块一块的硬盘区域就是磁盘分区。在传统的磁盘管理中，将一个硬盘分为两大类分区：主分区和扩展分区。主分区是能够安装操作系统，能够进行计算机启动的分区，这样的分区可以直接格式化，然后安装系统，直接存放文件。</p>
+<p>分区是将一个硬盘驱动器分成若干个逻辑驱动器，分区是把硬盘连续的区块当做一个独立的磁硬使用。分区表是一个硬盘分区的索引,分区的信息都会写进分区表。</p>
+<ul>
+<li>fdisk命令</li>
+</ul>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">fdisk磁盘分区命令</span></span><br><span class="line"><span class="attr">fidsk</span>  <span class="string">[命令选项] [参数]</span></span><br><span class="line"><span class="attr">命令选项</span></span><br><span class="line"><span class="meta">-l</span>   <span class="string">list 列出磁盘分区</span></span><br><span class="line"><span class="meta">-u</span>   <span class="string">与-l一起使用，显示分区的相关信息</span></span><br><span class="line"><span class="attr">fdisk</span> <span class="string">/dev/sda    为/dev/sda分区</span></span><br><span class="line"><span class="attr">m</span> <span class="string">：显示菜单和帮助信息</span></span><br><span class="line"><span class="attr">a</span> <span class="string">：活动分区标记/引导分区</span></span><br><span class="line"><span class="attr">d</span> <span class="string">：删除分区</span></span><br><span class="line"><span class="attr">l</span> <span class="string">：显示分区类型</span></span><br><span class="line"><span class="attr">n</span> <span class="string">：新建分区</span></span><br><span class="line"><span class="attr">p</span> <span class="string">：显示分区信息</span></span><br><span class="line"><span class="attr">q</span> <span class="string">：退出不保存</span></span><br><span class="line"><span class="attr">t</span> <span class="string">：设置分区号</span></span><br><span class="line"><span class="attr">v</span> <span class="string">：进行分区检查</span></span><br><span class="line"><span class="attr">w</span> <span class="string">：保存修改</span></span><br><span class="line"><span class="attr">x</span> <span class="string">：扩展应用，高级功能</span></span><br><span class="line"><span class="meta">命令缺点：单个分区不能超过2T</span> <span class="string">超过的话需要用parted命令</span></span><br><span class="line"><span class="meta">在linux</span> <span class="string">下大磁盘的分区不能再采用fdisk了，MBR分区表只支持2T磁盘，所以大于2T的磁盘必须使用GPT分区表。</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>　parted磁盘分区命令</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">分区步骤</span><br><span class="line"><span class="number">1</span>）将磁盘指定为GPT格式</span><br><span class="line"><span class="number">2</span>）分区</span><br></pre></td></tr></table></figure>
+
+<p>分区信息显示：</p>
+<ul>
+<li>dumpe2fs命令</li>
+</ul>
+<p>注意：dumpe2fs是查看ext2/ext3/ext4 文件系统信息的命令</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">dumpe2fs</span> <span class="string">/dev/sda1</span></span><br><span class="line"><span class="string">dumpe2fs</span> <span class="number">1.39</span> <span class="string">(29-May-2006)</span></span><br><span class="line"><span class="attr">Filesystem volume name:</span>   <span class="string">/boot</span></span><br><span class="line"><span class="attr">Last mounted on:</span>         </span><br><span class="line"><span class="attr">Filesystem UUID:</span>          <span class="string">e8697a35-7768-45c3-8063-15b0ba67d796</span></span><br><span class="line"><span class="attr">Filesystem magic number:</span>  <span class="number">0xEF53</span></span><br><span class="line"><span class="string">Filesystem</span> <span class="string">revision</span> <span class="comment">#:    1 (dynamic)</span></span><br><span class="line"><span class="attr">Filesystem features:</span>      <span class="string">has_journal</span> <span class="string">ext_attr</span> <span class="string">resize_inode</span> <span class="string">dir_index</span> <span class="string">filetype</span> <span class="string">needs_recovery</span> <span class="string">sparse_super</span></span><br><span class="line"><span class="attr">Default mount options:</span>    <span class="string">user_xattr</span> <span class="string">acl</span></span><br><span class="line"><span class="attr">Filesystem state:</span>         <span class="string">clean</span></span><br><span class="line"><span class="attr">Errors behavior:</span>          <span class="string">Continue</span></span><br><span class="line"><span class="attr">Filesystem OS type:</span>       <span class="string">Linux</span></span><br><span class="line"><span class="attr">Inode count:</span>              <span class="number">26104</span></span><br><span class="line"><span class="attr">Block count:</span>              <span class="number">104388</span></span><br><span class="line"><span class="attr">Reserved block count:</span>     <span class="number">5219</span></span><br><span class="line"><span class="attr">Free blocks:</span>              <span class="number">89714</span></span><br><span class="line"><span class="attr">Free inodes:</span>              <span class="number">26070</span></span><br><span class="line"><span class="attr">First block:</span>              <span class="number">1</span></span><br><span class="line"><span class="attr">Block size:</span>               <span class="number">1024</span></span><br><span class="line"><span class="attr">Fragment size:</span>            <span class="number">1024</span></span><br><span class="line"><span class="attr">Reserved GDT blocks:</span>      <span class="number">256</span></span><br><span class="line"><span class="attr">Blocks per group:</span>         <span class="number">8192</span></span><br><span class="line"><span class="attr">Fragments per group:</span>      <span class="number">8192</span></span><br><span class="line"><span class="attr">Inodes per group:</span>         <span class="number">2008</span></span><br><span class="line"><span class="attr">Inode blocks per group:</span>   <span class="number">251</span></span><br><span class="line"><span class="attr">Filesystem created:</span>       <span class="string">Tue</span> <span class="string">Oct</span> <span class="number">15</span> <span class="number">10</span><span class="string">:37:16</span> <span class="number">2013</span></span><br><span class="line"><span class="attr">Last mount time:</span>          <span class="string">Wed</span> <span class="string">Oct</span> <span class="number">16</span> <span class="number">06</span><span class="string">:20:21</span> <span class="number">2013</span></span><br><span class="line"><span class="attr">Last write time:</span>          <span class="string">Wed</span> <span class="string">Oct</span> <span class="number">16</span> <span class="number">06</span><span class="string">:20:21</span> <span class="number">2013</span></span><br><span class="line"><span class="attr">Mount count:</span>              <span class="number">3</span></span><br><span class="line"><span class="attr">Maximum mount count:</span>      <span class="number">-1</span></span><br><span class="line"><span class="attr">Last checked:</span>             <span class="string">Tue</span> <span class="string">Oct</span> <span class="number">15</span> <span class="number">10</span><span class="string">:37:16</span> <span class="number">2013</span></span><br><span class="line"><span class="attr">Check interval:</span>           <span class="number">0</span> <span class="string">()</span></span><br><span class="line"><span class="attr">Reserved blocks uid:</span>      <span class="number">0</span> <span class="string">(user</span> <span class="string">root)</span></span><br><span class="line"><span class="attr">Reserved blocks gid:</span>      <span class="number">0</span> <span class="string">(group</span> <span class="string">root)</span></span><br><span class="line"><span class="attr">First inode:</span>              <span class="number">11</span></span><br><span class="line"><span class="attr">Inode size:</span>               <span class="number">128</span></span><br><span class="line"><span class="attr">Journal inode:</span>            <span class="number">8</span></span><br><span class="line"><span class="attr">Default directory hash:</span>   <span class="string">tea</span></span><br><span class="line"><span class="attr">Directory Hash Seed:</span>      <span class="string">4e3f02e9-f3d1-4ad1-b87c-8f6258c50435</span></span><br><span class="line"><span class="attr">Journal backup:</span>           <span class="string">inode</span> <span class="string">blocks</span></span><br><span class="line"><span class="attr">Journal size:</span>             <span class="string">4114k</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>blkid命令 查看磁盘分区 UUID信息</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># blkid  /dev/vda1</span></span><br><span class="line">/dev/vda1: <span class="attribute">UUID</span>=<span class="string">"eb448abb-3012-4d8d-bcde-94434d586a31"</span> <span class="attribute">TYPE</span>=<span class="string">"ext4"</span></span><br></pre></td></tr></table></figure>
+
+<p>mkfs命令 磁盘格式化</p>
+<p>格式化(format)是指对磁盘或磁盘中的分区（partition）进行初始化的一种操作，这种操作通常会导致现有的磁盘或分区中所有的文件被清除。格式化通常分为低级格式化和高级格式化。如果没有特别指明，对硬盘的格式化通常是指高级格式化，而对软盘的格式化则通常同时包括这两者。</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">-L 标签名</span><br><span class="line">-V : 详细显示模式</span><br><span class="line">-t : 给定档案系统的型式，Linux 的预设值为 ext2</span><br><span class="line">-c : 在制做档案系统前，检查该partition 是否有坏轨</span><br><span class="line">-l <span class="keyword">bad_blocks_file </span>: 将有坏轨的<span class="keyword">block资料加到 </span><span class="keyword">bad_blocks_file </span>里面</span><br><span class="line">-<span class="keyword">b </span>: 给定 <span class="keyword">block </span>的大小</span><br><span class="line">关于<span class="keyword">block </span><span class="keyword">and </span>inode  dentry</span><br><span class="line">实验发现这句话不对</span><br><span class="line"><span class="keyword">block越大，inode越少，适合存储大文件的文件系统；block越小，inode越多，适合存储文件多而小的文件系统。</span></span><br><span class="line"><span class="keyword">磁盘分区格式化</span></span><br><span class="line"><span class="keyword">mkfs.ext4 </span>/dev/sda3</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>mount</li>
+</ul>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mount - mount a filesystem</span><br><span class="line">命令语法</span><br><span class="line">mount device dir</span><br><span class="line">命令选线</span><br><span class="line"><span class="deletion">-a   挂载所有文件系统，参考文件 /etc/fstab</span></span><br><span class="line"><span class="deletion">-l   显示当前挂载</span></span><br><span class="line"><span class="deletion">-t   文件系统类型</span></span><br><span class="line"><span class="deletion">-o   指定挂载权限</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>umount</li>
+</ul>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mount - mount a filesystem</span><br><span class="line">命令语法</span><br><span class="line">mount device dir</span><br><span class="line">命令选线</span><br><span class="line"><span class="deletion">-a   挂载所有文件系统，参考文件 /etc/fstab</span></span><br><span class="line"><span class="deletion">-l   显示当前挂载</span></span><br><span class="line"><span class="deletion">-t   文件系统类型</span></span><br><span class="line"><span class="deletion">-o   指定挂载权限</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>自动挂载 /etc/fstab文件</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">设备       挂载点     文件系统    权限     备份   检测</span><br><span class="line">第一列    设备源文件或者UUID</span><br><span class="line">第二列    设备挂载点</span><br><span class="line">第三列    文件系统类型</span><br><span class="line">第四列</span><br><span class="line">auto: 系统自动挂载，fstab默认就是这个选项</span><br><span class="line">defaults: rw, suid, dev, exec, auto, nouser, <span class="keyword">and</span> async.</span><br><span class="line">noauto 开机不自动挂载</span><br><span class="line">nouser 只有超级用户可以挂载</span><br><span class="line">ro 按只读权限挂载</span><br><span class="line">rw 按可读可写权限挂载</span><br><span class="line">user 任何用户都可以挂载</span><br><span class="line"> </span><br><span class="line">第五列是dump备份设置。</span><br><span class="line">当其值设置为1时，将允许dump备份程序备份；设置为0时，忽略备份操作；</span><br><span class="line"> </span><br><span class="line">第六列是fsck磁盘检查设置。</span><br><span class="line">其值是一个顺序。当其值为0时，永远不检查；而 / 根目录分区永远都为1。其它分区从2开始，数字越小越先检查，如果两个分区的数字相同，则同时检查。</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-磁盘限额"><a href="#3-磁盘限额" class="headerlink" title="3. 磁盘限额"></a>3. 磁盘限额</h3><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">解决了共用存储环境中，用户使用量的问题。</span></span><br><span class="line"><span class="attr">1）开启磁盘限额功能</span></span><br><span class="line"><span class="meta">修改/etc/fstab</span> <span class="string">文件，在指定的分区权限字段加入对应的限额项（usrquota,grpquota）</span></span><br><span class="line"><span class="attr">usrquota</span>   <span class="string">针对用户做限额</span></span><br><span class="line"><span class="attr">grpquota</span>   <span class="string">针对组做限额</span></span><br><span class="line"><span class="attr">2）重挂磁盘生效</span></span><br><span class="line"><span class="attr">mount</span> <span class="string">-o remount /dev/sdb1</span></span><br><span class="line"><span class="attr">3）扫描磁盘，统计用户现在的使用情况</span></span><br><span class="line"><span class="attr">quotacheck</span> <span class="string">-avug</span></span><br><span class="line"><span class="attr">4）编辑限额项</span></span><br><span class="line"> <span class="attr">edquota</span> <span class="string">username | groupname</span></span><br><span class="line">        <span class="meta">-u</span>   <span class="string">设置用户的quota，这是预设的参数。</span></span><br><span class="line">        <span class="meta">-g</span>   <span class="string">设置群组的quota。</span></span><br><span class="line">        <span class="meta">-p&lt;源用户名称&gt;</span>   <span class="string">将源用户的quota设置套用至其他用户或群组</span></span><br><span class="line">        <span class="meta">-t</span>   <span class="string">设置宽限期限。</span></span><br><span class="line">        <span class="meta">-vu/g</span>   <span class="string">查看用户/组使用情况</span></span><br><span class="line"><span class="attr">5）开启限额</span></span><br><span class="line"><span class="attr">quotaon</span> <span class="string">-a</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-LVM逻辑卷管理"><a href="#4-LVM逻辑卷管理" class="headerlink" title="4. LVM逻辑卷管理"></a>4. LVM逻辑卷管理</h3><p>在分区的时候，每个分区应该分多大是令人头疼的，而且随着长时间的运行，分区不管你分多大，都会被数据给占满。当遇到某个分区不够用时管理员可能甚至要备份整个系统、清除硬盘、重新对硬盘分区，然后恢复数据到新分区。</p>
+<p>虽然现在有很多动态调整磁盘的工具可以使用，但是它并不能完全解决问题，因为某个分区可能会再次被耗尽；另外一个方面这需要重新引导系统才能实现，对于很多关键的服务器，停机是不可接受的，而且对于添加新硬盘，希望一个能跨越多个硬盘驱动器的文件系统时，分区调整程序就不能解决问题。</p>
+<p>因此完美的解决方法应该是在零停机前提下可以自如对文件系统的大小进行调整，可以方便实现文件系统跨越不同磁盘和分区。那么我们可以通过逻辑盘卷管理（LVM，Logical Volume Manager）的方式来非常完美的实现这一功能。</p>
+<p>解决思路：将所有可用存储汇集成池，当池中某个分区空间不够时就会从池中继续划分空间给分区，池中空间不够就可以通过加硬盘的方式来解决。</p>
+<p>使用逻辑：inux 分区——（转换）物理卷—（N个组成）卷组——（分为N个）逻辑卷</p>
+<p>名词解释：</p>
+<p>物理卷</p>
+<p>物理卷就是指硬盘分区或从逻辑上与磁盘分区具有同样功能的设备(如RAID)，是LVM的基本存储逻辑块，但和基本的物理存储介质（如分区、磁盘等）比较，却包含有与LVM相关的管理参数</p>
+<p>卷组</p>
+<p>LVM卷组类似于非LVM系统中的物理硬盘，其由物理卷组成。可以在卷组上创建一个或多个“LVM分区”（逻辑卷），LVM卷组由一个或多个物理卷组成。</p>
+<p>逻辑卷</p>
+<p>LVM的逻辑卷类似于非LVM系统中的硬盘分区，在逻辑卷之上可以建立文件系统(比如/home或者/usr等)。</p>
+<p>PE</p>
+<p>每一个物理卷被划分为称为PE(Physical Extents)的基本单元，具有唯一编号的PE是可以被LVM寻址的最小单元。PE的大小是可配置的，默认为4MB。</p>
+<p>LE</p>
+<p>逻辑卷也被划分为被称为LE(Logical Extents) 的可被寻址的基本单位。在同一个卷组中，LE的大小和PE是相同的，并且一一对应。</p>
+<p>物理卷管理</p>
+<p>物理卷的创建—-pvcreate命令</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pvcreate    [命令选项]    [参数]</span><br><span class="line">将物理分区转换为物理卷</span><br><span class="line">命令选项</span><br><span class="line"><span class="deletion">-f：强制创建物理卷，不需要用户确认；</span></span><br><span class="line"><span class="deletion">-u：指定设备的UUID；</span></span><br><span class="line"><span class="deletion">-y：所有的问题都回答“yes”；</span></span><br><span class="line"><span class="deletion">-Z：是否利用前4个扇区。</span></span><br></pre></td></tr></table></figure>
+
+<p>物理卷的移除—-pvremove命令</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pvremove    [命令选项]    [参数]</span><br><span class="line">将物理卷转换为普通linux分区</span><br><span class="line">命令选项</span><br><span class="line"><span class="deletion">-d  调试模式</span></span><br><span class="line"><span class="deletion">-f  强制删除</span></span><br><span class="line"><span class="deletion">-y  对提问回答“yes</span></span><br></pre></td></tr></table></figure>
+
+<p>物理卷查看命令</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pvs     显示<span class="built_in">PV</span>简况</span><br><span class="line">pvdisplay   显示<span class="built_in">PV</span>详细信息</span><br></pre></td></tr></table></figure>
+
+<p>物理卷扫描命令—-pvscan</p>
+<p>卷组管理</p>
+<p>将多个物理卷组成一个卷组，形成一个存储池</p>
+<p>vgcreate命令</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vgcreate -s <span class="number">32</span> vg1000 <span class="regexp">/dev/</span>sdb1 <span class="regexp">/dev/</span>sdc1</span><br></pre></td></tr></table></figure>
+
+<p>vgcreate命令</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vgcreate -s <span class="number">32</span> vg1000 <span class="regexp">/dev/</span>sdb1 <span class="regexp">/dev/</span>sdc1</span><br></pre></td></tr></table></figure>
+
+<p>vgreduce命令</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vgreduce <span class="regexp">/dev/</span>vg1000 <span class="regexp">/dev/</span>sdb1</span><br></pre></td></tr></table></figure>
+
+<p>vgextend命令</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vgextend <span class="regexp">/dev/</span>vg1000 <span class="regexp">/dev/</span>sdb1</span><br></pre></td></tr></table></figure>
+
+<p>逻辑卷管理</p>
+<p>lvcreate命令</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">l<span class="attr">vcreate -n lv99</span> -L <span class="number">3</span>G /dev/v<span class="name">g1000</span></span><br></pre></td></tr></table></figure>
+
+<p>lvextend命令</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#enlarge logical volume</span></span><br><span class="line">lvextend -L <span class="number">3.5</span>G <span class="meta-keyword">/dev/</span>vg1000/lv99</span><br><span class="line">resize2fs <span class="meta-keyword">/dev/</span>vg1000/lv99</span><br></pre></td></tr></table></figure>
+
+<p>lvreduce命令</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">#shrink logical volume</span></span><br><span class="line"><span class="attr">e2</span>fsck -f /dev/v<span class="name">g1000</span>/lv<span class="number">99</span></span><br><span class="line">resize<span class="number">2</span>fs /dev/v<span class="name">g1000</span>/lv<span class="number">99</span> <span class="number">2</span>G</span><br><span class="line">lvreduce -L <span class="number">2</span>G /dev/v<span class="name">g1000</span>/lv<span class="number">99</span> <span class="comment">(lvresize)</span></span><br></pre></td></tr></table></figure>
+
+<p>逻辑卷移除</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#remove LVM</span></span><br><span class="line">umount <span class="meta-keyword">/dev/</span>vg1000/lv99</span><br><span class="line">lvremove <span class="meta-keyword">/dev/</span>vg1000/lv99</span><br><span class="line">vgremove <span class="meta-keyword">/dev/</span>vg1000/</span><br><span class="line">pvremove <span class="meta-keyword">/dev/</span>sdb1 <span class="meta-keyword">/dev/</span>sdc1</span><br></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<p>PE 和 LE的说明及应用策略</p>
+<p>PE（physicalextent）</p>
+<p>每一个物理卷被划分为称为PE(PhysicalExtents)的基本单元，具有唯一编号的PE是可以被LVM寻址的最小单元。PE的大小是可配置的，默认为4MB。</p>
+<p>*LE（logicalextent）</p>
+<p>逻辑卷也被划分为被称为LE(LogicalExtents)的可被寻址的基本单位。在同一个卷组中，LE的大小和PE是相同的，并且一一对应。</p>
+<p>设置使用大小为4MB的PE（默认为4MB），这表示卷组上创建的所有逻辑卷都以4MB为增量单位来进行扩充 或缩减。由于内核原因，PE大小决定了逻辑卷的最大大小，4MB的PE决定了单个逻辑卷最大容量为256GB，若希望使用大于256G的逻辑卷则创建卷组 时指定更大的PE。PE大小范围为8KB到512MB，并且必须总是2的倍数</p>
+<h3 id="5-磁盘阵列"><a href="#5-磁盘阵列" class="headerlink" title="5. 磁盘阵列"></a>5. 磁盘阵列</h3><p>mdadm命令</p>
+<figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">mdadm tools</span><br><span class="line">mdadm -C  /dev/md1 -l <span class="number">5</span> -n <span class="number">3</span> /dev/sd&#123;b,c,d&#125;<span class="number">1</span></span><br><span class="line">cat /<span class="keyword">proc</span>/mdstat</span><br><span class="line">mdadm —detail /dev/md1</span><br><span class="line">#create<span class="title"> raid</span> config<span class="title"> file</span></span><br><span class="line"><span class="title">echo</span> “DEVICE /dev/sdb1 /dev/sdc1 /dev/sdd1 “ &gt;&gt; /etc/mdadm.conf</span><br><span class="line">mdadm -Ds  &gt;&gt; /etc/mdadm.conf</span><br><span class="line">#mount<span class="title"> raid</span> 5</span><br><span class="line">mkfs.exte /dev/md1</span><br><span class="line">mount /dev/md1 /data</span><br><span class="line">#stop<span class="title"> raid</span> 5</span><br><span class="line">umount /data</span><br><span class="line">mdadm -S /dev/md1</span><br><span class="line"> </span><br><span class="line">故障模拟</span><br><span class="line">新添加一块新盘到系统<span class="title"> sde5</span></span><br><span class="line"><span class="title">mdadm</span> /dev/md1 —add /dev/sde         (mdadm -a /dev/md1 /dev/sde1)</span><br><span class="line">mdadm -f /dev/md1 /dev/sdc1</span><br><span class="line"> </span><br><span class="line">cat /<span class="keyword">proc</span>/mdstat</span><br><span class="line">md1 :<span class="title"> active</span> raid5<span class="title"> sde[3]</span> sdd1[2]<span class="title"> sdc14</span> sdb1[0]</span><br><span class="line">      4192768<span class="title"> blocks</span> level 5, 64k<span class="title"> chunk,</span> algorithm 2 [3/2] [U_U]</span><br><span class="line">      [=&gt;……………….]<span class="title">  recovery</span> =  5.7% (121300/2096384)<span class="title"> finish=0.8min</span> s</span><br><span class="line">[=&gt;……………….]<span class="title">  recovery</span> =  5.7%<span class="title">  sde</span> recovery 开始接替sdc工作</span><br><span class="line"> [===================&gt;.]<span class="title">  recovery</span> = 95.5%</span><br><span class="line"> </span><br><span class="line">#remove /dev/sdc1</span><br><span class="line">mdadm -r /dev/md1 /dev/sdc1</span><br><span class="line"> </span><br><span class="line">#boot<span class="title"> raid</span></span><br><span class="line"><span class="title">mdadm</span> -As</span><br><span class="line"> </span><br><span class="line">思考<span class="title"> raid10</span> <span class="title"> raid1+raid1—&gt;raid0</span> (启动raid中先启动raid1 后启动<span class="title"> raid0</span>   关闭raid 先关上层raid0，在关闭raid1)</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2007\01\16\linux\2007-01-16-linux-LinuxDeploy\" rel="bookmark">安卓Linux</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux上天之路\2022-05-17-Linux上天之路系列目录\" rel="bookmark">Linux上天之路系列目录</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux上天之路\2022-05-17-Linux上天之路（九）之文件和文件夹的权限\" rel="bookmark">Linux上天之路系列目录</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux上天之路\2022-05-17-Linux上天之路（七）之Vim编辑器\" rel="bookmark">Linux上天之路系列目录</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux上天之路\2022-05-17-Linux上天之路（五）之Linux基本命令\" rel="bookmark">Linux上天之路系列目录</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%8D%81%EF%BC%89%E4%B9%8BLinux%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/" title="Linux上天之路系列目录">https://tongsiying.github.io/2022/05/17/linux/Linux上天之路/2022-05-17-Linux上天之路（十）之Linux磁盘管理/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%9B%9B%EF%BC%89%E4%B9%8BLinux%E7%95%8C%E9%9D%A2%E4%BB%8B%E7%BB%8D/" rel="prev" title="Linux上天之路（四）之Linux界面介绍">
+      <i class="fa fa-chevron-left"></i> Linux上天之路（四）之Linux界面介绍
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E4%B8%80%EF%BC%89%E4%B9%8BLinux%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/" rel="next" title="Linux上天之路系列目录">
+      Linux上天之路系列目录 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux上天之路（十）之Linux磁盘管理"><span class="nav-text">Linux上天之路（十）之Linux磁盘管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主要内容"><span class="nav-text">主要内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-磁盘介绍"><span class="nav-text">1. 磁盘介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-磁盘管理"><span class="nav-text">2. 磁盘管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-磁盘限额"><span class="nav-text">3. 磁盘限额</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-LVM逻辑卷管理"><span class="nav-text">4. LVM逻辑卷管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-磁盘阵列"><span class="nav-text">5. 磁盘阵列</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">94</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">35:16</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
