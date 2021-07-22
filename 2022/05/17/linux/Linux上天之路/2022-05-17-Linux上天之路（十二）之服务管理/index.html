@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="Linux上天之路（十二）之服务管理">
+<meta property="og:url" content="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%E4%B9%8B%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://book.apeland.cn/media/images/2019/05/08/ovinxd.png">
+<meta property="og:image" content="https://book.apeland.cn/media/images/2019/05/08/dznouq.png">
+<meta property="og:image" content="https://book.apeland.cn/media/images/2019/05/08/xinetd.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1476293/201909/1476293-20190924222017092-106700282.png">
+<meta property="article:published_time" content="2022-05-17T10:37:19.000Z">
+<meta property="article:modified_time" content="2021-07-21T23:44:33.954Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://book.apeland.cn/media/images/2019/05/08/ovinxd.png">
+
+<link rel="canonical" href="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%E4%B9%8B%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Linux上天之路（十二）之服务管理 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%E4%B9%8B%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux上天之路（十二）之服务管理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-17 18:37:19" itemprop="dateCreated datePublished" datetime="2022-05-17T18:37:19+08:00">2022-05-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-22 07:44:33" itemprop="dateModified" datetime="2021-07-22T07:44:33+08:00">2021-07-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+<h1 id="Linux上天之路（十二）之服务管理"><a href="#Linux上天之路（十二）之服务管理" class="headerlink" title="Linux上天之路（十二）之服务管理"></a><a href="https://www.cnblogs.com/zhangyafei/p/11581541.html" target="_blank" rel="noopener external nofollow noreferrer">Linux上天之路（十二）之服务管理</a></h1><h2 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h2><ul>
+<li>服务介绍</li>
+<li>独立服务</li>
+<li>非独立服务</li>
+</ul>
+<h2 id="1-服务介绍"><a href="#1-服务介绍" class="headerlink" title="1. 服务介绍"></a>1. 服务介绍</h2><p>服务：常驻在内存中的程序，且可以提供一些系统或网络功能，那就是服务。</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">计算机中的系统服务有很多，比如：</span><br><span class="line">apache提供web服务</span><br><span class="line"><span class="keyword">ftp</span>提供文件下载上传服务</span><br><span class="line">ssh提供了远程连接服务</span><br><span class="line">防火墙提供了安全防护服务等等</span><br></pre></td></tr></table></figure>
+
+<p>可以把计算机理解为一个地点 比如中关村大街 系统服务 理解为 中关村大街的理发店、饭店、商场等等，每一个都是一个系统服务，为客户提供不同内容的服务，计算机中的系统服务比如apache提供web服务、ftp提供文件下载上传服务、ssh提供了远程连接服务、防火墙提供了安全防护服务等等。</p>
+<p>Linux服务器的主要任务就是为本地或远程用户提供各种服务。通常Linux系统上提供服务的程序是由运行在后台的守护进程（Daemon）来执行。一个实际运行中的Linux系统一般会有多个这样的程序在运行。这些后台守护进程在系统开机后就运行了，并且在时刻地监听前台客户地服务请求，一旦客户发出了服务请求，守护进程便为它们提供服务。</p>
+<p>系统初始化进程是一个特殊的的守护进程，其PID为1，它是所有其他守护进程的父进程或者祖先进程。也就是说，系统上所有的守护进程都是由系统初始化进程进行管理的（如启动、停止等）。</p>
+<p>rhel7之前采用的是systemV，rhel7开始采用的是systemd来管理服务</p>
+<p>系统上所有的守护进程都是由系统初始化进程进行管理的（如启动、停止等）。</p>
+<p>systemV介绍</p>
+<p>启动系统服务的管理方式被称为 SysV 的 init, 同时init也是唯一一个由内核直接启动的进程 ， 然后 init 去唤醒所有的系统所需要的服务，不论是本地服务还是网络服务。</p>
+<p>• 服务的启动、关闭与查看等方式：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">所有的服务启动脚本通通放置于 /etc/init.d/ 底下，基本上都是使用 bash shell<span class="built_in"> script </span>所写成的脚本程序，需要启动、关闭、重新启动、观察状态时，可以通过如下的方式来处理：</span><br><span class="line">启动：/etc/init.d/daemon start</span><br><span class="line">关闭：/etc/init.d/daemon stop  </span><br><span class="line">重新启动：/etc/init.d/daemon restart</span><br><span class="line">状态查看：/etc/init.d/daemon status</span><br></pre></td></tr></table></figure>
+
+<p>• 服务的依赖关系：</p>
+<p>服务是会有依赖关系的,例如，你想使用nfs服务,在使用之前你必须启动portmap/rpcbind服务,否则nfs无法正常使用.init是无法帮管理员实现协同启动的,管理员必须时刻记得这些依赖关系</p>
+<p>• 运行级别的分类：</p>
+<p>上面说到 init 是由内核启动的， 然后 init 可以根据用户自定义的运行级别 (runlevel) 来唤醒不同的服务，以进入不同的操作界面。基本上 Linux 提供 7 个运行级别，分别是 0, 1, 2…6 ，</p>
+<p>比较重要的是</p>
+<p>1 单人维护模式、</p>
+<p>3 纯文本模式、</p>
+<p>5 文字加图形界面。</p>
+<p>而各个运行级别的启动脚本是通过 /etc/rc.d/rc[0-6]/SXXdaemon 连结到 /etc/init.d/daemon ， 连结名 (SXXdaemon) 的功能为： S为启动该服务，XX是数字，为启动的顺序。由于有 SXX 的设置，因此在开机时可以『依序执行』所有需要的服务， 同时也能解决相依服务的问题。</p>
+<p>• 制定运行级别默认要启动的服务：</p>
+<p>若要建立如上提到的 SXXdaemon 的话，不需要管理员手动建立连结， 通过如下的命令可以来处理默认启动、不启动以及查看启动状态 使用方法为:</p>
+<p>默认启动： chkconfig daemon on</p>
+<p>默认不启动： chkconfig daemon off</p>
+<p>查看启动状态： chkconfig —list daemon</p>
+<p>默认不启动： chkconfig daemon off</p>
+<p>查看启动状态： chkconfig —list daemon</p>
+<p>• 运行级别的切换行为：</p>
+<p>当你要从纯文本界面 (runlevel 3) 切换到图形界面 (runlevel 5)， 不需要手动启动、关闭该运行级别的相关服务，只要（init 5 ）即可切换</p>
+<p>systemd</p>
+<p>• 并行处理所有服务，加速开机流程：</p>
+<p>旧的 init 启动脚本是串行启动的模式，因此不相依的服务也是得要一个一个的等待。但目前我们的硬件主机系统与操作系统几乎都支持多核心架构了， systemd 就是可以让所有的服务同时启动，因此你会发现到，系统启动的速度变快了！</p>
+<p>• 立即响应的启动方式：</p>
+<p>systemd 全部就是仅有一个 systemd 服务搭配 systemctl 命令来处理，无须其他额外的命令来支持。不像 systemV 还要 init, chkconfig, service… 等等命令。 此外， systemd 由于常驻内存，因此任何要求都可以立即响应</p>
+<p>• 服务依赖性的自我检查：</p>
+<p>由于 systemd 可以自定义服务依赖性的检查，因此如果 B 服务是在 A 服务上面启动的，那当你在没有启动 A 服务的情况下仅手动启动 B 服务时， systemd 会自动帮你启动 A 服务</p>
+<p>• 依 daemon 功能分类：</p>
+<p>systemd管理的服务非常多，为了理清所有服务的功能，因此，首先 systemd 先定义所有的服务为一个服务单位 (unit)，并将该 unit 归类到不同的服务类型 (type) 去。 旧的 init 仅分为 stand alone 与 super daemon，systemd 将服务单位 (unit) 区分为 service, socket, target, path, snapshot, timer 等多种不同的类型(type)， 方便管理员的分类与记忆。</p>
+<p>• 将多个 daemons 集合成为一个群组：</p>
+<p>如同 systemV 的 init 里头有个 runlevel 的特色，systemd 亦将许多的功能集合成为一个所谓的 target 项目，这个项目主要在设计操作环境的建置， 所以是集合了许多的 daemons，亦即是执行某个 target 就是执行好多个 daemon 的意思！</p>
+<p>• 向下兼容旧有的 init 服务脚本：</p>
+<p>基本上， systemd 是可以兼容于 init 的启动脚本的，因此，旧的 init 启动脚本也能够通过 systemd 来管理，只是更高级的 systemd 功能就没有办法支持就是了。</p>
+<p>虽然如此，不过 systemd 也是有些地方无法完全取代 init 的！包括：</p>
+<p>1）在 runlevel 的对应上，大概仅有 runlevel 1, 3, 5 有对应到 systemd 的某些 target 类型而已，没有全部对应；</p>
+<p>2）全部的 systemd 都用 systemctl 这个管理程序管理，而 systemctl 支持的语法有限制，不像 /etc/init.d/daemon 就是纯脚本可以自定义参数，systemctl 不可自定义参数。</p>
+<p>3）如果某个服务启动是管理员自己手动执行启动，而不是使用 systemctl 去启动的 (例如你自己手动输入 crond 以启动 crond 服务)，那么 systemd 将无法侦测到该服务，而无法进一步管理。</p>
+<p>4）systemd 启动过程中，无法与管理员互动！因此，自行编写 systemd 的启动设置时，务必要取消互动机制</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">独立的服务和基于xinetd服务的区别：</span><br><span class="line">独立的服务：服务独立的运行在内存中，服务响应速度快，但占用更多内存。</span><br><span class="line">基于xinetd服务： xinetd服务是超级守护进程的一种。xinetd服务本身独立存在，管理一些服务。用户通过xinetd服务请求其管理的一些服务，然后xinetd返回请求服务的回复给用户，xinetd服务相当于proxy一样的角色。xinetd服务逐步被淘汰，大多数服务都是独立的服务。</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-独立服务"><a href="#2-独立服务" class="headerlink" title="2. 独立服务"></a>2. 独立服务</h2><p>从CentOS7 Linux开始，系统里的网络服务启动已经从传统的service改成了systemctl（一个systemd工具，主要负责控制systemd系统和服务管理器），管理开机自启动的命令也从chkconfig改为了systemctl，由systemctl一个命令代替了CentOS7以前系统中的service和chkconfig两个命令。</p>
+<p>独立服务原理图</p>
+<p><img src="https://book.apeland.cn/media/images/2019/05/08/ovinxd.png" alt="img"></p>
+<p>系统服务的脚本也从传统的路的/etc/init.d(/etc/rc.d/init.d/)，改到了/usr/lib/systemd(除此之外还有/etc/systemd/system)，需要自启动运行的程序，一般存在这个系统服务目录下，即：/usr/lib/systemd/system目录，每一个服务以“服务名.service”结尾，该文件的内容一般分为3部分：</p>
+<p>即[Unit]、[Service]和[Install]。</p>
+<p>Unit]: 服务的说明</p>
+<p>Description: 描述服务</p>
+<p>After: 描述服务类别</p>
+<p>服务启动程序文件</p>
+<p>[Service] 服务运行参数的设置</p>
+<p>Type=forking 是后台运行的形式</p>
+<p>ExecStart 为服务的具体运行命令</p>
+<p>ExecReload 为重启命令</p>
+<p>ExecStop 为停止命令</p>
+<p>PrivateTmp=True 表示给服务分配独立的临时空间</p>
+<p>注意：启动、重启、停止命令全部要求使用绝对路径</p>
+<p>[Install] 服务安装的相关设置，可设置为多用户</p>
+<p>WantedBy=multi-user.target</p>
+<p>服务管理方式</p>
+<p>systemctl [command] [unit]</p>
+<p>command 主要有：</p>
+<p>start：立刻启动后面接的 unit。</p>
+<p>stop：立刻关闭后面接的 unit。</p>
+<p>restart：立刻关闭后启动后面接的 unit，亦即执行 stop 再 start 的意思。</p>
+<p>reload：不关闭 unit 的情况下，重新载入配置文件，让设置生效。</p>
+<p>enabled：设置下次开机时，后面接的 unit 会被启动。</p>
+<p>disable：设置下次开机时，后面接的 unit 不会被启动。</p>
+<p>status：目前后面接的这个 unit 的状态，会列出有没有正在执行、开机时是否启动等信息。</p>
+<p>is-active：目前有没有正在运行中。</p>
+<p>is-enable：开机时有没有默认要启用这个 unit。</p>
+<p>kill ：不要被 kill 这个名字吓着了，它其实是向运行 unit 的进程发送信号。</p>
+<p>show：列出 unit 的配置。</p>
+<p>mask：注销 unit，注销后你就无法启动这个 unit 了。</p>
+<p>unmask：取消对 unit 的注销。</p>
+<h2 id="3-非独立服务"><a href="#3-非独立服务" class="headerlink" title="3. 非独立服务"></a>3. 非独立服务</h2><p>Xinetd 托管服务。又名：超级守护进程，可以把一些小服务放到xinetd里进行托管。拖管后的好处就是可以使用xinetd强大的参数来控制这些服务，并且增强安全性。（比如一个小服务没有一些控制功能，但支持xinetd拖管，你就可以拖管并使用xinetd的参数来控制它)。</p>
+<p>Xinetd提供类似于inetd + TCP Wrappers的功能，但是更加强大和安全。后面xinetd已经取代了inetd，并且提供了访问控制、加强的日志和资源管理功能。</p>
+<p>TCP Wrappers是一个应用层的访问控制程序，其原理是在服务器向外提供的TCP服务上包裹一层安全检测机制。外来的连接请求首先要通过这层安全检测，获得认证之后才能被系统服务接收。TCP Wrappers的功能有两种实现方式：一种是由tcpd守护进程实现的，常被用于inetd + TCP Wrappers的系统中（如FreeBSD等）；另一种是通过每种服务程序调用libwrap.so链接库实现的，即libwrap.so库支持的网络服务程序都能使用TCP Wrappers来实现访问控制，常用于xinetd + TCP Wrappers的系统中（如CentOS等）。</p>
+<p>非独立服务原理图</p>
+<p><img src="https://book.apeland.cn/media/images/2019/05/08/dznouq.png" alt="img"></p>
+<p>超级守护进程：银行里还有一种窗口，提供综合服务，像汇款，转账，提款等业务；这种窗口附近也始终坐着一个人（xinet），她可能不提供具体的服务，提供具体服务的人在里面闲着聊天啊，喝茶啊，但是当有人来汇款时他会大声喊一句，小王，有人汇款啦，然后里面管汇款的小王会立马跑过来帮忙办完汇款业务。其他的人继续聊天，喝茶。这些负责具体业务的人我们就称之为超级守护进程。当然可能汇款人会有一些规则，可能不能往北京汇款，他就会提早告诉xinet，所以如果有人来汇款想汇往北京的话，管理员就直接告诉他这个我们这里办不到的，于是就根本不会去喊汇款员了，相当于提供了一层管理机制。</p>
+<p>xinetd服务的主配置文件： /etc/xinetd.conf —保持默认即可</p>
+<p>用于存放被托管的服务的目录：/etc/xinetd.d/</p>
+<p>xinetd提供类似于inetd+tcp_wrapper的功能，但是更加强大和安全。它能提供以下特色：</p>
+<p>* 支持对tcp、udp、RPC服务(但是当前对RPC的支持不够稳定)</p>
+<p>* 基于时间段的访问控制</p>
+<p>* 功能完备的log功能，即可以记录连接成功也可以记录连接失败的行为</p>
+<p>* 能有效的防止DoS攻击(Denial of Services)</p>
+<p>* 能限制同时运行的同一类型的服务器数目</p>
+<p>* 能限制启动的所有服务器数目</p>
+<p>* 能限制log文件大小</p>
+<p>* 将某个服务绑定在特定的系统接口上，从而能实现只允许私有网络访问某项服务</p>
+<p>* 能实现作为其他系统的代理。如果和ip伪装结合可以实现对内部私有网络的访问</p>
+<p>它最大的缺点是对RPC支持的不稳定性，但是可以启动portmap，与xinetd共存来解决这个问题。</p>
+<p>原则上任何系统服务都可以使用xinetd，然 而最适合的应该是那些常用的网络服务，同时，这个服务的请求数目和频繁程度不会太高。像DNS和Apache就不适合采用这种方式，而像FTP、 Telnet、SSH等就适合使用xinetd模式，系统默认使用xinetd的服务可以分为如下几类。</p>
+<p>① 标准Internet服务：telnet、ftp。</p>
+<p>② 信息服务：finger、netstat、systat。</p>
+<p>③ 邮件服务：imap、imaps、pop2、pop3、pops。</p>
+<p>④ RPC服务：rquotad、rstatd、rusersd、sprayd、walld。</p>
+<p>⑤ BSD服务：comsat、exec、login、ntalk、shell、talk。</p>
+<p>⑥ 内部服务：chargen、daytime、echo、servers、services、time。</p>
+<p>⑦ 安全服务：irc。</p>
+<p>⑧ 其他服务：name、tftp、uucp。</p>
+<p>部署一个非独立服务 Telnet</p>
+<p>#yum -y install telnet-server telnet xinetd</p>
+<p>#cat /etc/xinetd.d/telnet</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">service telnet        </span><br><span class="line">&#123; </span><br><span class="line">  flags = REUSE </span><br><span class="line">  socket_type = stream </span><br><span class="line">  wait = <span class="literal">no</span> </span><br><span class="line"> <span class="built_in"> user </span>= root </span><br><span class="line"> <span class="built_in"> server </span>=/usr/sbin/<span class="keyword">in</span>.telnetd </span><br><span class="line">  log_on_failure += USERID </span><br><span class="line">  <span class="builtin-name">disable</span> = <span class="literal">no</span>  </span><br><span class="line">&#125;</span><br><span class="line">================</span><br><span class="line"><span class="comment">#可以设置为yes或no， 设置为yes将禁用一个服务，详见flags的disable标 签</span></span><br><span class="line">         <span class="builtin-name">disable</span> = <span class="literal">no</span></span><br><span class="line"><span class="comment">#指定 失败时登记的信息。总是登记表明错误性质的消息，默认时不登记任何信息。该属性支持所有操作符。USERID： 通过RFC1413调用捕获客户机用户的UID。只可用于多 线程的流服务。</span></span><br><span class="line">        log_on_failure += USERID</span><br><span class="line"><span class="comment">#使用的TCP/IP socket类型，值可能为stream（TCP），dgram（UDP），raw和seqpacket（可 靠的有序数据包）   </span></span><br><span class="line">        socket_type = stream</span><br><span class="line"><span class="comment">#指定 传送给该进程的参数，但是不包括服务程序名</span></span><br><span class="line">        server_args = --daemon</span><br><span class="line"><span class="comment">#用来 设定连接速率。它需要两个参数，第一个参数表示每秒可以处理的连接数，如果超过了这个连接数时，之后进入的 连接将被暂时停止处理；第二个参数表示停止处理多少秒后，继续处理先前暂停处理的连接</span></span><br><span class="line">        cps = 25 30</span><br><span class="line"><span class="comment">#指定该服务使用的协议，其值必须是在/etc/protocols中 定义的。如果不指定，使用该项服务的默认协议</span></span><br><span class="line">        protocol = tcp</span><br><span class="line"><span class="comment">#这个属性 有两个可能的值。如果是yes，那么xinetd会启动对方 请求的进程，并停止处理该项服务的其他请求直到该进程终止，适合于单线程服务；如果是no，那xinetd会 为每个请求启动的一个进程，而不管先前启动的进程的状态，适合于多线程服务</span></span><br><span class="line">        wait = <span class="literal">no</span></span><br><span class="line"><span class="comment">#设置服务进程的UID。 若xinetd的有效UID不是0， 该属性无效</span></span><br><span class="line">       <span class="built_in"> user </span>= root</span><br><span class="line"><span class="comment">#要激 活的进程，必须指定完整的路径</span></span><br><span class="line">       <span class="built_in"> server </span>= /usr/sbin/sshd</span><br><span class="line"><span class="comment">#指定 传送给该进程的参数，但是不包括服务程序名</span></span><br><span class="line">        server_args = -i</span><br><span class="line"><span class="comment">#用空 格分开的允许访问服务的客户机列表。如果不为该属性指定一个值，就拒绝任何人访问这项服务。该属性支持所有操作符。</span></span><br><span class="line">        only_from = 192.168.1.0/24</span><br><span class="line">        no_access = 192.168.1.20 192.168.1.200</span><br><span class="line"><span class="comment"># 最大连接数为3</span></span><br><span class="line">        instances = 3</span><br><span class="line"><span class="comment"># 每个源IP只能有1个连接                                  </span></span><br><span class="line">        per_source = 1</span><br><span class="line"><span class="comment"># 只能9：00到18：00才能ssh连接                                 </span></span><br><span class="line">        access_times = 9:00-18:00</span><br><span class="line"><span class="comment"># 指定日志记录到/var/log/xinetd_ssh.log里                      </span></span><br><span class="line">        log_type = file /var/log/xinetd_ssh.log         # 指定日志记录到/var/log/xinetd_ssh.log里</span><br><span class="line"><span class="comment">#服务端口</span></span><br><span class="line">   <span class="built_in"> port </span>= 7722</span><br></pre></td></tr></table></figure>
+
+<p>#systemctl restart xinetd</p>
+<p>#netstat -ntpl 查看启动情况</p>
+<p><img src="https://book.apeland.cn/media/images/2019/05/08/xinetd.png" alt="img"></p>
+<p>客户端连接测试</p>
+<p><img src="https://img2018.cnblogs.com/blog/1476293/201909/1476293-20190924222017092-106700282.png" alt="img"></p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2007\01\16\linux\2007-01-16-linux-LinuxDeploy\" rel="bookmark">安卓Linux</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux上天之路\2022-05-17-Linux上天之路系列目录\" rel="bookmark">Linux上天之路系列目录</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux上天之路\2022-05-17-Linux上天之路（七）之Vim编辑器\" rel="bookmark">Linux上天之路（七）之Vim编辑器</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux上天之路\2022-05-17-Linux上天之路（一）之Linux前世今生\" rel="bookmark">Linux上天之路（一）之Linux前世今生</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux上天之路\2022-05-17-Linux上天之路（三）之Linux系统目录\" rel="bookmark">Linux上天之路（三）之Linux系统目录</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%E4%B9%8B%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/" title="Linux上天之路（十二）之服务管理">https://tongsiying.github.io/2022/05/17/linux/Linux上天之路/2022-05-17-Linux上天之路（十二）之服务管理/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%8D%81%E5%9B%9B%EF%BC%89%E4%B9%8BLinux%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/" rel="prev" title="Linux上天之路（十四）之Linux数据处理">
+      <i class="fa fa-chevron-left"></i> Linux上天之路（十四）之Linux数据处理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%E4%B9%8B%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/" rel="next" title="Linux上天之路（十一）之软件管理">
+      Linux上天之路（十一）之软件管理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux上天之路（十二）之服务管理"><span class="nav-text">Linux上天之路（十二）之服务管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#主要内容"><span class="nav-text">主要内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-服务介绍"><span class="nav-text">1. 服务介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-独立服务"><span class="nav-text">2. 独立服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-非独立服务"><span class="nav-text">3. 非独立服务</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">35:32</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

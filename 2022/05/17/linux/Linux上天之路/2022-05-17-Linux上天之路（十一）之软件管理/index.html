@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="Linux上天之路（十一）之软件管理">
+<meta property="og:url" content="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%E4%B9%8B%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-05-17T10:37:19.000Z">
+<meta property="article:modified_time" content="2021-07-21T23:39:44.684Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%E4%B9%8B%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Linux上天之路（十一）之软件管理 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%E4%B9%8B%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux上天之路（十一）之软件管理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-17 18:37:19" itemprop="dateCreated datePublished" datetime="2022-05-17T18:37:19+08:00">2022-05-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-22 07:39:44" itemprop="dateModified" datetime="2021-07-22T07:39:44+08:00">2021-07-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+<h1 id="Linux上天之路（十一）之软件管理"><a href="#Linux上天之路（十一）之软件管理" class="headerlink" title="Linux上天之路（十一）之软件管理"></a><a href="https://www.cnblogs.com/zhangyafei/p/11581077.html" target="_blank" rel="noopener external nofollow noreferrer">Linux上天之路（十一）之软件管理</a></h1><p>软件包格式：</p>
+<ul>
+<li>RPM：源码封装后的格式，类似于exe文件</li>
+<li>源码：软件源代码，可以修改，优化</li>
+</ul>
+<h2 id="1-RPM软件包管理"><a href="#1-RPM软件包管理" class="headerlink" title="1. RPM软件包管理"></a>1. RPM软件包管理</h2><blockquote>
+<p>rpm是一个很有用的包管理器，可以用于生成、安装、查询、核实、更新以及卸载单个软件包</p>
+<p>适用于redhat redflag centos suse</p>
+</blockquote>
+<ul>
+<li>rpm命令：rpm -ivh</li>
+</ul>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">i 安装</span><br><span class="line">v 显示安装过程</span><br><span class="line">h hash  [Use with -v|--verbose for a nicer display.]</span><br><span class="line">q 查找  查询</span><br><span class="line"><span class="deletion">-qf 查看某个文件时属于哪个软件包</span></span><br><span class="line"><span class="deletion">-qi 查看软件包的信息【出厂信息】</span></span><br><span class="line"><span class="deletion">-qa 查找已安装所有匹配XXX关键字的软件包</span></span><br><span class="line"><span class="deletion">-e  卸载rpm软件包</span></span><br><span class="line"><span class="deletion">-ql 查看软件包包含哪些文件</span></span><br><span class="line"><span class="deletion">-U   升级软件包</span></span><br><span class="line">—nodeps 忽略依赖</span><br><span class="line">软包安装不完整 重新安装 —replacepkgs —force</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>问题</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>非官方提供的rpm格式的包是由别人基于源码打包的，安全无法保证</span><br><span class="line"> </span><br><span class="line"><span class="number">2.</span>rpm格式的包一般都比较旧，除非官方提供</span><br><span class="line"> </span><br><span class="line"><span class="number">3.</span>rpm包的依赖问题比较致命</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>yum安装</li>
+</ul>
+<p>YUM C/S架构</p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">YUM源服务器    [共享所有软件包]  通过文件服务器  【http ftp file】  存储大量RPM软件包，通过FTP|<span class="type">HTTP</span>|<span class="type">HTTPS</span>|<span class="type">FILE</span>方式共享软件包</span><br><span class="line"></span><br><span class="line">YUM客户端：从yum仓库下载软件包并安装</span><br><span class="line">优点：</span><br><span class="line">    自动解决依赖</span><br><span class="line">    自动下包</span><br><span class="line">    自动安装</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>YUM 客户端配置文件: /etc/yum.repos.d/</li>
+</ul>
+<p>配置文件名字两部分组成 *.repo 前半部分可以随便写 后半部分必须是repo</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[baism]</span>       </span><br><span class="line"><span class="attr">name</span>=www.ayitula.com       </span><br><span class="line"><span class="attr">baseurl</span>=ftp://<span class="number">192.168</span>.<span class="number">10.253</span>/pub       </span><br><span class="line"><span class="attr">enabled</span>=<span class="number">1</span>       </span><br><span class="line"><span class="attr">gpgcheck</span>=<span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>配置第三方yum源</li>
+</ul>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta"># wget http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm</span></span><br><span class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta"># rpm -ivh epel-release-latest-7.noarch.rpm</span></span><br><span class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta"># yum repolist      ##检查是否已添加至源列表</span></span><br><span class="line">[root<span class="symbol">@localhost</span> ~]<span class="meta"># yum -y install epel-release</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>相关命令</li>
+</ul>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">yum</span> <span class="string">clean all  清除缓存目录下的软件包及旧的headers</span></span><br><span class="line"><span class="attr">yum</span> <span class="string">update   清除缓存目录下的软件包及旧的headers</span></span><br><span class="line"><span class="attr">yum</span> <span class="string">install 软件包名字  -y   安装</span></span><br><span class="line"><span class="attr">yum</span> <span class="string">remove  软件包名字  -y   删除</span></span><br><span class="line"><span class="attr">yum</span> <span class="string">update  软件包名字  -y   升级</span></span><br><span class="line"><span class="attr">yum</span> <span class="string">search 软件包名字  查找软件包</span></span><br><span class="line"><span class="attr">yum</span> <span class="string">list 软件包名字  列出所有可安裝的软件清单</span></span><br><span class="line"><span class="attr">yum</span> <span class="string">localinstall 软件包名字  -y  安装本地软件包</span></span><br><span class="line"><span class="attr">yum</span> <span class="string">groupinstall 组名</span></span><br><span class="line"><span class="attr">yum</span> <span class="string">groupupdate 组名</span></span><br><span class="line"><span class="attr">yum</span> <span class="string">grouplist 组名</span></span><br><span class="line"><span class="attr">yum</span> <span class="string">groupremove 组名</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>协议配置</li>
+</ul>
+<p>ftp协议安装</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[zhangyafei<span class="variable">@centos</span> ~]<span class="variable">$ </span>rpm -qa|grep vsftpd</span><br><span class="line">[zhangyafei<span class="variable">@centos</span> ~]<span class="variable">$ </span>yum install -y vsftpd</span><br><span class="line">[root<span class="variable">@centos</span> /]<span class="comment"># systemctl start vsftpd  # systemctl restart vsftpd systemctl stop vsftpd</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建FTP使用的用户</span></span><br><span class="line">useradd -s /sbin/nologin -d /var/www/html ftpuser</span><br><span class="line">passwd ftpuser</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-源码包安装"><a href="#2-源码包安装" class="headerlink" title="2. 源码包安装"></a>2. 源码包安装</h2><p>适用于所有linux发行版本</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">解压</span><br><span class="line">配置【configure】          <span class="comment">#指定软件功能及安装路径  </span></span><br><span class="line">编译 【make】            	<span class="comment">#将源码进行编译生成安装文件  </span></span><br><span class="line">安装 【make <span class="keyword">install</span>】            <span class="comment">#将安装文件安装到目标路径</span></span><br><span class="line"></span><br><span class="line">启动</span><br><span class="line">注意：多看<span class="keyword">install</span> readme 官网 有安装教程</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-压缩与解压缩"><a href="#3-压缩与解压缩" class="headerlink" title="3. 压缩与解压缩"></a>3. 压缩与解压缩</h2><p>压缩文件的好处有如下几点：</p>
+<p>1、文件更小，便于网络传输，效率高；</p>
+<p>2、避免杂乱，可以减少文件个数，多个文件一起压缩；</p>
+<p>3、有些文件不能直接传输，比如安装程序，压缩后就可以传输了</p>
+<p>常见的压缩格式:tar tar.gz tar.bz2 zip gz bz2 rar xz</p>
+<ul>
+<li>tar 压缩或解压</li>
+</ul>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">tar</span> <span class="string">压缩或解压时根据其后面所跟的名令选项决定</span></span><br><span class="line"><span class="attr">命令语法</span></span><br><span class="line"><span class="attr">tar</span> <span class="string">压缩或者解压 </span></span><br><span class="line"><span class="meta">gz、bz2、xz格式包tar</span> <span class="string">[OPTION...] [FILE]...</span></span><br><span class="line"><span class="attr">命令选项</span></span><br><span class="line"><span class="attr">c</span> <span class="string">建立压缩包</span></span><br><span class="line"><span class="attr">v</span> <span class="string">显示过程</span></span><br><span class="line"><span class="attr">x</span> <span class="string">解压压缩包</span></span><br><span class="line"><span class="attr">f</span> <span class="string">必选项 归档文件名</span></span><br><span class="line"><span class="attr">t</span>  <span class="string">查看压缩包内容</span></span><br><span class="line"><span class="attr">j</span> <span class="string">二次压缩使用bz2格式</span></span><br><span class="line"><span class="attr">z</span> <span class="string">二次压缩使用gz格式</span></span><br><span class="line"><span class="attr">J</span> <span class="string">二次压缩使用xz格式</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>　zip格式</li>
+</ul>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">安装压缩与解压命令</span><br><span class="line">yum -y install <span class="keyword">zip</span> unzip</span><br><span class="line"><span class="keyword">zip</span>- package and <span class="keyword">compress</span> (archive) files  压缩文件或文件夹</span><br><span class="line">压缩</span><br><span class="line">-r 选项指定你想递归地（recursively）包括所有包括在 filesdir 目录中的文件</span><br><span class="line"><span class="keyword">zip</span> -r etc.<span class="keyword">zip</span> /etc</span><br><span class="line">解压</span><br><span class="line">unzip - <span class="keyword">list</span>, <span class="keyword">test</span> and extract compressed files <span class="keyword">in</span> a <span class="keyword">ZIP</span> archive  显示、测试、解压<span class="keyword">ZIP</span>包</span><br><span class="line">-v 显示压缩目录内容，但是不解压               unzip -v etc.<span class="keyword">zip</span></span><br><span class="line">-t 检查压缩文件是否正确、完整，但是不解压      unzip -t etc.<span class="keyword">zip</span></span><br><span class="line">-<span class="keyword">l</span> 列出压缩文件内容，但是不解压               unzip -<span class="keyword">l</span> etc.<span class="keyword">zip</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>　　压缩文件</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">相关命令</span><br><span class="line"><span class="selector-attr">[root@www ~]</span># <span class="selector-tag">rpm</span> <span class="selector-tag">-qf</span> <span class="selector-tag">which</span> <span class="selector-tag">bzip2bzip2-1</span><span class="selector-class">.0</span><span class="selector-class">.6-13</span><span class="selector-class">.el7</span><span class="selector-class">.x86_64</span></span><br><span class="line"><span class="selector-attr">[root@www ~]</span># <span class="selector-tag">rpm</span> <span class="selector-tag">-qf</span> <span class="selector-tag">which</span> <span class="selector-tag">bunzip2bzip2-1</span><span class="selector-class">.0</span><span class="selector-class">.6-13</span><span class="selector-class">.el7</span><span class="selector-class">.x86_64</span></span><br><span class="line"><span class="selector-attr">[root@www ~]</span># <span class="selector-tag">rpm</span> <span class="selector-tag">-qf</span> `<span class="selector-tag">which</span> <span class="selector-tag">gunzip</span>`<span class="selector-tag">gzip-1</span><span class="selector-class">.5-10</span><span class="selector-class">.el7</span><span class="selector-class">.x86_64</span></span><br><span class="line"><span class="selector-attr">[root@www ~]</span># <span class="selector-tag">rpm</span> <span class="selector-tag">-qf</span> `<span class="selector-tag">which</span> <span class="selector-tag">gzip</span>`<span class="selector-tag">gzip-1</span><span class="selector-class">.5-10</span><span class="selector-class">.el7</span><span class="selector-class">.x86_64</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>　　源码包的解压与压缩总结</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>压缩</th>
+<th>解压</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>tar -cvzf etc.tar.gz /etc</td>
+<td>tar xvzf etc.tar.gz</td>
+</tr>
+<tr>
+<td>tar -cjvf etc.tar.bz2 /etc</td>
+<td>tar -jvxf etc.tar.bz2</td>
+</tr>
+<tr>
+<td>tar -cvJf etc.tar.xz /etc</td>
+<td>tar -Jvxf etc.tar.xz</td>
+</tr>
+<tr>
+<td>tar -cvf etc.tar /etc</td>
+<td>tar xvf etc.tar</td>
+</tr>
+<tr>
+<td>zip -r tmp.zip /tmp</td>
+<td>unzip tmp.zip</td>
+</tr>
+<tr>
+<td>bzip2 anaconda-ks.cfg <br>#压缩文件基于块排序压缩</td>
+<td>bunzip2 install.log.bz2<br>bzcat install.log.bz2     #查看压缩文件内容</td>
+</tr>
+<tr>
+<td>gzip anaconda-ks.cfg</td>
+<td>gunzip install.log.gz          <br>zcat install.log.gz 查看压缩文件内容</td>
+</tr>
+<tr>
+<td>zip install.log.zip install.log</td>
+<td>unzip install.log.zip</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<ul>
+<li>nginx的安装</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">yum install -y pcre pcre-devel</span><br><span class="line">yum install -y zlib zlib-devel</span><br><span class="line">yum install gcc-c++</span><br><span class="line">yum install -y openssl openssl-devel</span><br><span class="line">wget -c https:<span class="comment">//nginx.org/download/nginx-1.14.0.tar.gz</span></span><br><span class="line">tar -zxvf nginx<span class="number">-1.14</span><span class="number">.0</span>.tar.gz</span><br><span class="line">cd nginx<span class="number">-1.14</span><span class="number">.0</span></span><br><span class="line">./configure --prefix=/usr/local/nginx \</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line">whereis nginx</span><br><span class="line">进入sbin目录，可以看到有一个可执行文件nginx，直接./执行就OK了。</span><br><span class="line">运行起来之后访问服务器ip，可以看到nginx的欢迎页面</span><br><span class="line">[<span class="symbol">root@</span>centos /]# /usr/sbin/nginx</span><br><span class="line">浏览器输入：http:<span class="comment">//182.254.179.186/</span></span><br><span class="line">nginx服务的停止：</span><br><span class="line">nginx -s stop 或者</span><br><span class="line">[<span class="symbol">root@</span>centos shell_learn]# ps -ef|grep nginx</span><br><span class="line">root <span class="number">1939</span> <span class="number">1</span> <span class="number">0</span> <span class="number">21</span>:<span class="number">53</span> ? <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> nginx: master process nginx</span><br><span class="line">nginx <span class="number">1940</span> <span class="number">1939</span> <span class="number">0</span> <span class="number">21</span>:<span class="number">53</span> ? <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> nginx: worker process</span><br><span class="line">root <span class="number">1945</span> <span class="number">12666</span> <span class="number">0</span> <span class="number">21</span>:<span class="number">53</span> pts/<span class="number">0</span> <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> grep --color=<span class="built_in">auto</span> nginx</span><br><span class="line">[<span class="symbol">root@</span>centos shell_learn]# kill <span class="number">1939</span></span><br><span class="line">[<span class="symbol">root@</span>centos shell_learn]# ps -ef|grep nginx</span><br><span class="line">root <span class="number">1979</span> <span class="number">12666</span> <span class="number">0</span> <span class="number">21</span>:<span class="number">53</span> pts/<span class="number">0</span> <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> grep --color=<span class="built_in">auto</span> nginx</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">./configure</span> <span class="params">--prefix=/usr/local/nginx</span> <span class="params">--with-http_ssl_module</span> <span class="params">--with-http_flv_module</span> <span class="params">--with-http_stub_status_module</span> <span class="params">--with-http_gzip_static_module</span> <span class="params">--with-pcre=</span><span class="string">../pcre-8.39</span> <span class="params">--with-zlib=</span><span class="string">../zlib-1.2.8</span> <span class="params">--with-openssl=</span><span class="string">../openssl-master</span></span><br></pre></td></tr></table></figure>
+
+<p>相关文件：默认</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">配置文件：<span class="meta-keyword">/etc/</span>nginx</span><br><span class="line">可执行文件：<span class="meta-keyword">/usr/</span>sbin/nginx</span><br><span class="line">html文件：<span class="meta-keyword">/usr/</span>share<span class="meta-keyword">/nginx/</span>html</span><br><span class="line">日志文件</span><br><span class="line"><span class="meta-keyword">/var/</span>log<span class="meta-keyword">/nginx/</span>error.log</span><br><span class="line"><span class="meta-keyword">/var/</span>log<span class="meta-keyword">/nginx/</span>access.log</span><br></pre></td></tr></table></figure>
+
+<p>　　</p>
+<p>　</p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2007\01\16\linux\2007-01-16-linux-LinuxDeploy\" rel="bookmark">安卓Linux</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux上天之路\2022-05-17-Linux上天之路系列目录\" rel="bookmark">Linux上天之路系列目录</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux上天之路\2022-05-17-Linux上天之路（七）之Vim编辑器\" rel="bookmark">Linux上天之路（七）之Vim编辑器</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux上天之路\2022-05-17-Linux上天之路（一）之Linux前世今生\" rel="bookmark">Linux上天之路（一）之Linux前世今生</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux上天之路\2022-05-17-Linux上天之路（三）之Linux系统目录\" rel="bookmark">Linux上天之路（三）之Linux系统目录</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%E4%B9%8B%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/" title="Linux上天之路（十一）之软件管理">https://tongsiying.github.io/2022/05/17/linux/Linux上天之路/2022-05-17-Linux上天之路（十一）之软件管理/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%E4%B9%8B%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/" rel="prev" title="Linux上天之路（十二）之服务管理">
+      <i class="fa fa-chevron-left"></i> Linux上天之路（十二）之服务管理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%85%AD%EF%BC%89%E4%B9%8BLinux%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" rel="next" title="Linux上天之路（六）之Linux文件管理">
+      Linux上天之路（六）之Linux文件管理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux上天之路（十一）之软件管理"><span class="nav-text">Linux上天之路（十一）之软件管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-RPM软件包管理"><span class="nav-text">1. RPM软件包管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-源码包安装"><span class="nav-text">2. 源码包安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-压缩与解压缩"><span class="nav-text">3. 压缩与解压缩</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">35:32</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

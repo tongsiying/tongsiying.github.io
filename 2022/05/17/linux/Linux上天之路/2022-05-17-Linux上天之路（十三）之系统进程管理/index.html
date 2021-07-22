@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="Linux上天之路（十三）之系统进程管理">
+<meta property="og:url" content="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%8D%81%E4%B8%89%EF%BC%89%E4%B9%8B%E7%B3%BB%E7%BB%9F%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-05-17T10:37:19.000Z">
+<meta property="article:modified_time" content="2021-07-21T23:58:07.455Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%8D%81%E4%B8%89%EF%BC%89%E4%B9%8B%E7%B3%BB%E7%BB%9F%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Linux上天之路（十三）之系统进程管理 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%8D%81%E4%B8%89%EF%BC%89%E4%B9%8B%E7%B3%BB%E7%BB%9F%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux上天之路（十三）之系统进程管理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-17 18:37:19" itemprop="dateCreated datePublished" datetime="2022-05-17T18:37:19+08:00">2022-05-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-22 07:58:07" itemprop="dateModified" datetime="2021-07-22T07:58:07+08:00">2021-07-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+<h1 id="Linux上天之路（十三）之系统进程管理"><a href="#Linux上天之路（十三）之系统进程管理" class="headerlink" title="Linux上天之路（十三）之系统进程管理"></a><a href="https://www.cnblogs.com/zhangyafei/p/11581610.html" target="_blank" rel="noopener external nofollow noreferrer">Linux上天之路（十三）之系统进程管理</a></h1><h2 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h2><ul>
+<li>进程介绍</li>
+<li>进程管理</li>
+<li>进程优先级</li>
+</ul>
+<h2 id="1-进程介绍"><a href="#1-进程介绍" class="headerlink" title="1. 进程介绍"></a>1. 进程介绍</h2><p>Linux系统中的几乎任何行动都会以进程的形式进行。如果你用网络浏览器查看网页，浏览器就作为进程运行。如果键入bash shell的命令行，这个shell就作为进程运行。如果你用chmod命令来更改文件权限，chmod就作为单独的进程来执行。进程是完成工作的形式，linux内核的基本职责就是为进程提供做事情的地方，不让彼此撞车。</p>
+<p>进程是已启动的可执进程序的运行实例，进程有以下组成部分:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">已分配内存的地址空间</span><br><span class="line">安全属性，包括所有权凭据个特权</span><br><span class="line">程序代码的一个或多个执行进程</span><br><span class="line">进程状态</span><br></pre></td></tr></table></figure>
+
+<p>进程与程序区分<br>程序：二进制文件，静态。<br>进程：是程序运行的过程，动态，有生命周期及运行状态<br>进程的属性：</p>
+<figure class="highlight tp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">进程ID（PID）：是唯一的值，用来区分进程</span><br><span class="line">父进程（PPID）</span><br><span class="line">启动进程的用户ID（UID）和所归属的组（GID）</span><br><span class="line">进程状态：分为运行<span class="keyword">R</span>，休眠S，僵尸<span class="keyword">Z</span></span><br><span class="line">进程执行的优先级</span><br><span class="line">进程所连接的终端名</span><br><span class="line">进程资源占用：如内存、CPU等</span><br></pre></td></tr></table></figure>
+
+<p>进程（Process）是一个程序在其自身的虚拟地址空间中的一次执行活动。之所以要创建进程，就是为了使多个程序可以并发的执行，从而提高系统的资源利用率和吞吐量。</p>
+<p>程序只是一个静态的指令集合；而进程是一个程序的动态执行过程，它具有生命期，是动态的产生和消亡的。</p>
+<p>ps top gnome-system-monitor pstree linux并发执行 jobs fg bg crtl+z at crontab</p>
+<p>进程家族</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">引导系统时，Linux内核的一个职责是启动第一个进程（通常是<span class="regexp">/sbin/i</span>nit）。因为一个业已存在的进程继续派生，所有其他进程得以启动。</span><br></pre></td></tr></table></figure>
+<p>如何终止进程</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">当进程终止时，可能是通过选择退出（<span class="keyword">exit</span>）正常终止，也可以是因为接收到信号而非正常终止。</span><br></pre></td></tr></table></figure>
+<p>孤儿进程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如果说处理子进程终止后的善后事宜是父进程的职责的话，那么如果父进程在子进程之前终止该怎么办？这个子进程就变成了孤儿进程。</span><br></pre></td></tr></table></figure>
+<p>僵尸进程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">当进程退出，释放大多数资源和它的父进程收集它的返回值、释放剩余资源这两段时间之间，子进程处于一个特殊状态，被称为僵尸进程（zombie）。每个进程都会经过一个短暂的僵尸状态。</span><br></pre></td></tr></table></figure>
+<p>五种进程状态</p>
+<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">可运行（R）</span><br><span class="line">处于可运行状态的进程，一旦有机会，就会访问CPU。多个进程可以（而且经常）处于可以运行状态，但是因为在任何给定时间内只有一个进程可以在CPU上运行，所以实际上这些进程中只有一个在任何给定的实例上运行。</span><br><span class="line">      </span><br><span class="line">自愿（可中断的）睡眠（s）</span><br><span class="line">从名称中可以看出，处于自愿睡眠状态的进程选择处于该状态。通常，这一进程在某事发生之前无事可做。</span><br><span class="line">      </span><br><span class="line">非自愿（不可中断或强制）睡眠<span class="symbol">\(</span>D<span class="symbol">\)</span></span><br><span class="line">内核迫使进程进入非自愿睡眠状态。该进程并没有选择休眠，它情愿运行以便做完事情。当资源被释放时，内核会唤醒进程并将设置为可运行状态。</span><br><span class="line">      </span><br><span class="line">停止的（挂起的）进程（T）</span><br><span class="line">用户有时决定挂起进程，被挂起的进程在被用户重新启动前不会执行任何操作。</span><br><span class="line">      </span><br><span class="line">僵尸进程（Z）</span><br><span class="line">每个快要终止的进程会经历一个短暂的僵尸状态，然而有时有些进程会一直停留在僵尸状态。</span><br></pre></td></tr></table></figure>
+
+<p>静态任务管理器</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">ps</span> <span class="string">- report a snapshot of the current processes</span></span><br><span class="line"></span><br><span class="line"><span class="attr">语法</span></span><br><span class="line"><span class="attr">ps</span> <span class="string">[options]</span></span><br><span class="line"></span><br><span class="line"><span class="attr">命令选项：</span></span><br><span class="line"><span class="attr">a</span>: <span class="string">显示跟当前终端关联的所有进程</span></span><br><span class="line"><span class="attr">u</span>: <span class="string">基于用户的格式显示</span></span><br><span class="line"><span class="attr">x</span>: <span class="string">显示所有进程，不以终端机来区分</span></span><br><span class="line"><span class="attr">U</span>: <span class="string">显示某用户ID所有的进程</span></span><br><span class="line"><span class="attr">A</span>: <span class="string">显示所有程序</span></span><br><span class="line"><span class="attr">e</span>: <span class="string">此参数的效果和指定”A”参数相同</span></span><br><span class="line"><span class="attr">f</span>: <span class="string">用ASCII字符显示树状结构，表达程序间的相互关系</span></span><br><span class="line"><span class="attr">o</span>: <span class="string">自定义输出格式</span></span><br></pre></td></tr></table></figure>
+
+<p>ps -aux 输出解释</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">[zhangyafei@centos</span> <span class="string">~]$</span> <span class="string">ps</span> <span class="string">aux</span></span><br><span class="line"><span class="string">USER</span>       <span class="string">PID</span> <span class="string">%CPU</span> <span class="string">%MEM</span>    <span class="string">VSZ</span>   <span class="string">RSS</span> <span class="string">TTY</span>      <span class="string">STAT</span> <span class="string">START</span>   <span class="string">TIME</span> <span class="string">COMMAND</span></span><br><span class="line"><span class="string">root</span>         <span class="number">1</span>  <span class="number">0.0</span>  <span class="number">0.1</span> <span class="number">123024</span>  <span class="number">3276</span> <span class="string">?</span>        <span class="string">Ss</span>   <span class="number">2</span><span class="string">月22</span>  <span class="number">14</span><span class="string">:28</span> <span class="string">/usr/lib/systemd/systemd</span> <span class="string">--system</span> <span class="string">--deserialize</span> <span class="number">21</span></span><br><span class="line"><span class="string">root</span>         <span class="number">2</span>  <span class="number">0.0</span>  <span class="number">0.0</span>      <span class="number">0</span>     <span class="number">0</span> <span class="string">?</span>        <span class="string">S</span>    <span class="number">2</span><span class="string">月22</span>   <span class="number">0</span><span class="string">:01</span> <span class="string">[kthreadd]</span></span><br><span class="line"><span class="string">USER</span> <span class="string">PID</span> <span class="string">%CPU</span> <span class="string">%MEM</span> <span class="string">VSZ</span> <span class="string">RSS</span> <span class="string">TTY</span> <span class="string">STAT</span> <span class="string">START</span> <span class="string">TIME</span> <span class="string">COMMAND</span></span><br><span class="line"><span class="attr">USER:</span> <span class="string">进程拥有者</span></span><br><span class="line"><span class="attr">PID:</span> <span class="string">pid</span> <span class="string">%CPU:</span> <span class="string">占用的</span> <span class="string">CPU</span> <span class="string">使用率</span></span><br><span class="line"><span class="string">%MEM:</span> <span class="string">占用的内存使用率</span></span><br><span class="line"><span class="attr">VSZ:</span> <span class="string">占用的虚拟内存大小</span></span><br><span class="line"><span class="attr">RSS:</span> <span class="string">占用的内存大小</span></span><br><span class="line"><span class="attr">TTY:</span> <span class="string">终端的次要装置号码</span> <span class="string">(minor</span> <span class="string">device</span> <span class="string">number</span> <span class="string">of</span> <span class="string">tty)</span></span><br><span class="line"><span class="attr">STAT:</span> <span class="string">该进程的状态:</span></span><br><span class="line"><span class="attr">D:</span> <span class="string">不可中断的静止</span></span><br><span class="line"><span class="attr">R:</span> <span class="string">正在执行中</span></span><br><span class="line"><span class="attr">S:</span> <span class="string">静止状态</span></span><br><span class="line"><span class="attr">T:</span> <span class="string">暂停执行</span></span><br><span class="line"><span class="attr">Z:</span> <span class="string">不存在但暂时无法消除</span></span><br><span class="line"><span class="attr">W:</span> <span class="string">没有足够的内存分页可分配</span></span><br><span class="line"><span class="string">&lt;:</span> <span class="string">高优先序的进程</span></span><br><span class="line"><span class="attr">N:</span> <span class="string">低优先序的进程</span></span><br><span class="line"><span class="attr">L:</span> <span class="string">有内存分页分配并锁在内存内</span> <span class="string">(即时系统或捱A</span> <span class="string">I/O)</span></span><br><span class="line"><span class="string">s</span> <span class="string">表示进程是控制进程</span></span><br><span class="line"><span class="string">l</span> <span class="string">表示进程是多线程</span></span><br><span class="line"><span class="string">+表示当前进程运行在前台</span></span><br><span class="line"><span class="attr">START:</span> <span class="string">进程开始时间</span> <span class="attr">TIME:</span> <span class="string">执行的时间</span> <span class="string">COMMAND:所执行的指令</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>top动态管理进程</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[<span class="symbol">zhangyafei@</span>centos ~]$ top</span><br><span class="line">top - <span class="number">10</span>:<span class="number">02</span>:<span class="number">38</span> up <span class="number">213</span> days, <span class="number">20</span>:<span class="number">39</span>,  <span class="number">1</span> user,  load average: <span class="number">0.00</span>, <span class="number">0.01</span>, <span class="number">0.05</span></span><br><span class="line">Tasks:  <span class="number">74</span> total,   <span class="number">2</span> running,  <span class="number">72</span> sleeping,   <span class="number">0</span> stopped,   <span class="number">0</span> zombie</span><br><span class="line">%Cpu(s):  <span class="number">0.3</span> us,  <span class="number">0.7</span> sy,  <span class="number">0.0</span> ni, <span class="number">99.0</span> id,  <span class="number">0.0</span> wa,  <span class="number">0.0</span> hi,  <span class="number">0.0</span> si,  <span class="number">0.0</span> st</span><br><span class="line">KiB Mem :  <span class="number">1883844</span> total,    <span class="number">85196</span> free,   <span class="number">333120</span> used,  <span class="number">1465528</span> buff/cache</span><br><span class="line">KiB Swap:        <span class="number">0</span> total,        <span class="number">0</span> free,        <span class="number">0</span> used.  <span class="number">1359848</span> avail Mem</span><br><span class="line"> </span><br><span class="line">  PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND                                                                                                 </span><br><span class="line"><span class="number">17490</span> root      <span class="number">20</span>   <span class="number">0</span>  <span class="number">611180</span>  <span class="number">13396</span>   <span class="number">1984</span> S  <span class="number">0.7</span>  <span class="number">0.7</span> <span class="number">405</span>:<span class="number">48.20</span> barad_agent                                                                                             </span><br><span class="line"><span class="number">17489</span> root      <span class="number">20</span>   <span class="number">0</span>  <span class="number">158132</span>   <span class="number">9072</span>   <span class="number">1756</span> S  <span class="number">0.3</span>  <span class="number">0.5</span>  <span class="number">79</span>:<span class="number">48.97</span> barad_agent</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">第一行：当前时间</span><br><span class="line"><span class="number">1.</span> 运行时间</span><br><span class="line"><span class="number">2.</span> 当前登陆系统的用户数量，</span><br><span class="line"><span class="number">3.</span> load average后面的三个数字分别表示距离现在一分钟，五分钟，十五分钟的负载情况。</span><br><span class="line"> </span><br><span class="line">第二行：</span><br><span class="line"><span class="number">1.</span> Tasks: <span class="number">119</span> total 总进程数为<span class="number">119</span></span><br><span class="line"><span class="number">2.</span> <span class="number">1</span> running 正在运行的进程数</span><br><span class="line"><span class="number">3.</span> <span class="number">118</span> sleeping 睡眠的进程数</span><br><span class="line"><span class="number">4.</span> <span class="number">0</span> stopped 停止的进程数</span><br><span class="line"><span class="number">5.</span> <span class="number">0</span> zombie 僵尸进程数</span><br><span class="line"> </span><br><span class="line">第三行：</span><br><span class="line"><span class="number">1.</span> <span class="number">0.2</span> us 系统用户进程使用CPU百分比</span><br><span class="line"><span class="number">2.</span> <span class="number">0.2</span> sy 内核中的进程占用CPU百分比</span><br><span class="line"><span class="number">3.</span> <span class="number">0.0</span> ni 用户进程空间内改变过优先级的进程占用CPU百分比</span><br><span class="line"><span class="number">4.</span> <span class="number">99.5</span> id 空闲的CPU百分比</span><br><span class="line"><span class="number">5.</span> <span class="number">0.2</span> wa CPU等待I/O完成的时间总量</span><br><span class="line"><span class="number">6.</span> <span class="number">0.0</span> hi 硬中断占比</span><br><span class="line"><span class="number">7.</span> <span class="number">0.0</span> si 软中断占比</span><br><span class="line"><span class="number">8.</span> <span class="number">0.0</span> st 虚拟机占用物理的时间，例如物理机运行了KVM，则表示KVM占用物理机的CPU时间</span><br><span class="line"> </span><br><span class="line">第四行：</span><br><span class="line"><span class="number">1.</span> Mem:物理内存</span><br><span class="line"><span class="number">2.</span> <span class="number">3881692</span> total 物理内存总量</span><br><span class="line"><span class="number">3.</span> <span class="number">240764</span> free 空闲内存总量</span><br><span class="line"><span class="number">4.</span> <span class="number">683188</span> used 使用的物理内存总量</span><br><span class="line"><span class="number">5.</span> <span class="number">2957740</span> buff/cache 内核缓存内存量</span><br><span class="line"> </span><br><span class="line">第五行:</span><br><span class="line"><span class="number">1.</span> Swap： 交换内存</span><br><span class="line"><span class="number">2.</span> <span class="number">0</span> total 交换分区总量</span><br><span class="line"><span class="number">3.</span> <span class="number">0</span> used 使用的交换分区总量</span><br><span class="line"><span class="number">4.</span> <span class="number">0f</span>ree 空闲交换分区总量</span><br><span class="line"><span class="number">5.</span> <span class="number">2886156</span> cached 可利用内存总量</span><br><span class="line"> </span><br><span class="line">第六行:</span><br><span class="line"><span class="number">1.</span> PID 进程号</span><br><span class="line"><span class="number">2.</span> USER 进程管理用户</span><br><span class="line"><span class="number">3.</span> PR 进程优先级</span><br><span class="line"><span class="number">4.</span> NI nice值 负值表示高优先级，正值表示低优先级</span><br><span class="line"><span class="number">5.</span> VIRT 虚拟内存</span><br><span class="line"><span class="number">6.</span> RES 物理内存</span><br><span class="line"><span class="number">7.</span> SHR 共享内存</span><br><span class="line"><span class="number">8.</span> S 进程状态</span><br><span class="line"><span class="number">9.</span> %CPU 上次更新到现在的CPU时间占用百分比</span><br><span class="line"><span class="number">10.</span> %MEM 进程使用的物理内存百分比</span><br><span class="line"><span class="number">11.</span> TIME+ 进程使用的CPU时间总计，单位<span class="number">1</span>/<span class="number">100</span>秒</span><br><span class="line"><span class="number">12.</span> COMMAND 进程名称</span><br><span class="line"> </span><br><span class="line">top快捷键：</span><br><span class="line">s: 默认三秒刷新一次，按s修改刷新时间</span><br><span class="line">空格： 立即刷新</span><br><span class="line">q： 退出</span><br><span class="line">P； 按CPU排序按CPU排序</span><br><span class="line">M： 按内存排序</span><br><span class="line">T： 按时间排序</span><br><span class="line">数字<span class="number">1</span>： 显示每个内核的CPU使用率</span><br><span class="line">u/U: 指定显示的用户</span><br><span class="line">h: 帮助</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-进程管理"><a href="#2-进程管理" class="headerlink" title="2. 进程管理"></a>2. 进程管理</h2><p>1）kill - terminate a process</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">语法</span><br><span class="line">kill[选项][进程号]</span><br><span class="line"></span><br><span class="line">选项</span><br><span class="line">-l 打印信号编号，若果不加信号的编号参数，则使用“-l”参数会列出全部的信号名称</span><br><span class="line">-a 当处理当前进程时，不限制命令名和进程号的对应关系</span><br><span class="line">-p 只打印相关进程的进程号，而不发送任何信号</span><br><span class="line">-s 指定发送信号</span><br><span class="line">-u 指定用户，kill某个用户的所有进程</span><br><span class="line"></span><br><span class="line">Kill命令工作原理：</span><br><span class="line">向Linux内核发送一个系统操作信号和某个程序的进程标识号，然后系统内核就可以对进程标识号指定的进程进行操作</span><br><span class="line"></span><br><span class="line">信号</span><br><span class="line">HUP <span class="number">1</span> 重载配置文件</span><br><span class="line">INT <span class="number">2</span> 中断（同 Ctrl + C）</span><br><span class="line">QUIT <span class="number">3</span> 退出（同 Ctrl + \）</span><br><span class="line">TERM <span class="number">15</span> 终止</span><br><span class="line">KILL <span class="number">9</span> 强制终止</span><br><span class="line">CONT <span class="number">18</span> 继续（与STOP相反， fg/bg命令）</span><br><span class="line">STOP <span class="number">19</span> 暂停（同 Ctrl + Z）</span><br><span class="line">应注意，信号使进程强行终止，这常会带来一些副作用，如数据丢失或者终端无法恢复到正常状态。发送信号时必须小心，只有在万不得已时，才用kill信号(<span class="number">9</span>)，因为进程不能首先捕获它。要撤销所有的后台作业，可以输入kill <span class="number">0</span>。因为有些在后台运行的命令会启动多个进程，跟踪并找到所有要杀掉的进程的PID是件很麻烦的事。这时，使用kill <span class="number">0</span>来终止所有由当前shell启动的进程，是个有效的方法。</span><br><span class="line"></span><br><span class="line">kill <span class="number">-9</span> 强制结束</span><br><span class="line">kill <span class="number">-0</span> 检测进程是否存在</span><br><span class="line">如何调整优先级</span><br><span class="line">注意：普通用户只能降低程序的优先级 不能提高程序优先级，root随便</span><br></pre></td></tr></table></figure>
+
+<p>2）killall</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Linux系统中的killall命令用于杀死指定名字的进程（kill processes by name）</span><br><span class="line"></span><br><span class="line">命令格式：</span><br><span class="line">killall[<span class="string">选项</span>][<span class="symbol">进程名</span>]</span><br><span class="line"></span><br><span class="line">命令选项：</span><br><span class="line">-I 忽略小写</span><br><span class="line">-g 杀死进程组而不是进程</span><br><span class="line">-i 交互模式，杀死进程前先询问用户</span><br><span class="line">-l 列出所有的已知信号名称</span><br><span class="line">-q 不输出警告信息</span><br><span class="line">-s 发送指定的信号</span><br><span class="line">-v 报告信号是否成功发送</span><br><span class="line">-w 等待进程死亡</span><br><span class="line">—help 显示帮助信息</span><br><span class="line">—version 显示版本显示</span><br><span class="line">-u：杀死指定用户的进程</span><br><span class="line">-r：使用正规表达式匹配要杀死的进程名称</span><br><span class="line">-p：杀死进程所属的进程组</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-进程优先级管理"><a href="#3-进程优先级管理" class="headerlink" title="3. 进程优先级管理"></a>3. 进程优先级管理</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">nice - <span class="builtin-name">run</span> a program with modified scheduling priority</span><br><span class="line">语法</span><br><span class="line">nice [OPTION] [COMMAND [ARG]…]</span><br><span class="line"></span><br><span class="line">选项</span><br><span class="line">-n <span class="builtin-name">add</span> integer N <span class="keyword">to</span> the niceness (default 10)</span><br><span class="line">设定一个优先级 默认为10</span><br><span class="line">linux porcess 优先级为-20 - 19 数字越小优先级越大</span><br><span class="line">调整优先级命令nice</span><br><span class="line">nice —19<span class="built_in"> ping </span>-c 500 localhost -19优先级</span><br><span class="line">nice -19<span class="built_in"> ping </span>-c 500 localhost 19优先级</span><br><span class="line">renice - alter priority of running processes</span><br><span class="line">renice -n -19 -p 16863</span><br><span class="line">renice -n -20 -u root</span><br><span class="line">0 (用户 ID) 旧优先级为 -10，新优先级为 -20</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2007\01\16\linux\2007-01-16-linux-LinuxDeploy\" rel="bookmark">安卓Linux</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux上天之路\2022-05-17-Linux上天之路系列目录\" rel="bookmark">Linux上天之路系列目录</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux上天之路\2022-05-17-Linux上天之路（七）之Vim编辑器\" rel="bookmark">Linux上天之路（七）之Vim编辑器</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux上天之路\2022-05-17-Linux上天之路（一）之Linux前世今生\" rel="bookmark">Linux上天之路（一）之Linux前世今生</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux上天之路\2022-05-17-Linux上天之路（三）之Linux系统目录\" rel="bookmark">Linux上天之路（三）之Linux系统目录</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%8D%81%E4%B8%89%EF%BC%89%E4%B9%8B%E7%B3%BB%E7%BB%9F%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" title="Linux上天之路（十三）之系统进程管理">https://tongsiying.github.io/2022/05/17/linux/Linux上天之路/2022-05-17-Linux上天之路（十三）之系统进程管理/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%85%AD%EF%BC%89%E4%B9%8BLinux%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" rel="prev" title="Linux上天之路（六）之Linux文件管理">
+      <i class="fa fa-chevron-left"></i> Linux上天之路（六）之Linux文件管理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%85%AB%EF%BC%89%E4%B9%8B%E7%94%A8%E6%88%B7%E5%92%8C%E7%BB%84/" rel="next" title="Linux上天之路（八）之用户和组">
+      Linux上天之路（八）之用户和组 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux上天之路（十三）之系统进程管理"><span class="nav-text">Linux上天之路（十三）之系统进程管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#主要内容"><span class="nav-text">主要内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-进程介绍"><span class="nav-text">1. 进程介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-进程管理"><span class="nav-text">2. 进程管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-进程优先级管理"><span class="nav-text">3. 进程优先级管理</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">2.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">35:32</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
